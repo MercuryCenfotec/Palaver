@@ -1,0 +1,33 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="testQuestion">
+            <h2><span>Test Question</span> {{testQuestion.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Question</span></dt>
+                <dd>
+                    <span>{{testQuestion.question}}</span>
+                </dd>
+                <dt><span>Aptitude Test</span></dt>
+                <dd>
+                    <div *ngIf="testQuestion.aptitudeTest">
+                        <a [routerLink]="['/aptitude-test', testQuestion.aptitudeTest?.id, 'view']">{{testQuestion.aptitudeTest?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/test-question', testQuestion.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

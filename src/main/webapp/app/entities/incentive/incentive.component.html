@@ -1,0 +1,60 @@
+<div>
+    <h2 id="page-heading">
+        <span>Incentives</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-incentive" [routerLink]="['/incentive/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create new Incentive
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="incentives">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Name</span></th>
+            <th><span>Image</span></th>
+            <th><span>Quantity</span></th>
+            <th><span>Description</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let incentive of incentives ;trackBy: trackId">
+                <td><a [routerLink]="['/incentive', incentive.id, 'view' ]">{{incentive.id}}</a></td>
+                <td>{{incentive.name}}</td>
+                <td>{{incentive.image}}</td>
+                <td>{{incentive.quantity}}</td>
+                <td>{{incentive.description}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/incentive', incentive.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/incentive', incentive.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', 'incentive', { outlets: { popup: incentive.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

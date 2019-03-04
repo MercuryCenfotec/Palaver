@@ -1,0 +1,67 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="focusGroup">
+            <h2><span>Focus Group</span> {{focusGroup.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Name</span></dt>
+                <dd>
+                    <span>{{focusGroup.name}}</span>
+                </dd>
+                <dt><span>Description</span></dt>
+                <dd>
+                    <span>{{focusGroup.description}}</span>
+                </dd>
+                <dt><span>Begin Date</span></dt>
+                <dd>
+                    <span>{{focusGroup.beginDate}}</span>
+                </dd>
+                <dt><span>End Date</span></dt>
+                <dd>
+                    <span>{{focusGroup.endDate}}</span>
+                </dd>
+                <dt><span>Code</span></dt>
+                <dd>
+                    <span>{{focusGroup.code}}</span>
+                </dd>
+                <dt><span>Incentive</span></dt>
+                <dd>
+                    <div *ngIf="focusGroup.incentive">
+                        <a [routerLink]="['/incentive', focusGroup.incentive?.id, 'view']">{{focusGroup.incentive?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span>Institution</span></dt>
+                <dd>
+                    <div *ngIf="focusGroup.institution">
+                        <a [routerLink]="['/institution', focusGroup.institution?.id, 'view']">{{focusGroup.institution?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span>Category</span></dt>
+                <dd>
+                    <span *ngFor="let category of focusGroup.categories; let last = last">
+                        <a [routerLink]="['/category', category?.id, 'view' ]">{{category.id}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+                <dt><span>Participant</span></dt>
+                <dd>
+                    <span *ngFor="let participant of focusGroup.participants; let last = last">
+                        <a [routerLink]="['/participant', participant?.id, 'view' ]">{{participant.id}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/focus-group', focusGroup.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

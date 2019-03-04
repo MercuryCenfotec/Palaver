@@ -1,0 +1,65 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-membership-heading">Create or edit a Membership</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!membership.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="membership.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_typeMembership">Type Membership</label>
+                    <input type="text" class="form-control" name="typeMembership" id="field_typeMembership"
+                        [(ngModel)]="membership.typeMembership" required/>
+                    <div [hidden]="!(editForm.controls.typeMembership?.dirty && editForm.controls.typeMembership?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.typeMembership?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_cost">Cost</label>
+                    <input type="number" class="form-control" name="cost" id="field_cost"
+                        [(ngModel)]="membership.cost" required/>
+                    <div [hidden]="!(editForm.controls.cost?.dirty && editForm.controls.cost?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.cost?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.cost?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_duration">Duration</label>
+                    <input type="number" class="form-control" name="duration" id="field_duration"
+                        [(ngModel)]="membership.duration" required/>
+                    <div [hidden]="!(editForm.controls.duration?.dirty && editForm.controls.duration?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.duration?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.duration?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

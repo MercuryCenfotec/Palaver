@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity TestResult.
+    -->
+    <changeSet id="20190304115739-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="focus_group_id"
+                                 baseTableName="test_result"
+                                 constraintName="fk_test_result_focus_group_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="focus_group"/>
+
+        <addForeignKeyConstraint baseColumnNames="participant_id"
+                                 baseTableName="test_result"
+                                 constraintName="fk_test_result_participant_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="participant"/>
+
+    </changeSet>
+</databaseChangeLog>

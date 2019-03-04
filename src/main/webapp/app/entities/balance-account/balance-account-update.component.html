@@ -1,0 +1,87 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-balance-account-heading">Create or edit a Balance Account</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!balanceAccount.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="balanceAccount.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_balance">Balance</label>
+                    <input type="number" class="form-control" name="balance" id="field_balance"
+                        [(ngModel)]="balanceAccount.balance" required/>
+                    <div [hidden]="!(editForm.controls.balance?.dirty && editForm.controls.balance?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.balance?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.balance?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_debitBalance">Debit Balance</label>
+                    <input type="number" class="form-control" name="debitBalance" id="field_debitBalance"
+                        [(ngModel)]="balanceAccount.debitBalance" required/>
+                    <div [hidden]="!(editForm.controls.debitBalance?.dirty && editForm.controls.debitBalance?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.debitBalance?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.debitBalance?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_creditBalance">Credit Balance</label>
+                    <input type="number" class="form-control" name="creditBalance" id="field_creditBalance"
+                        [(ngModel)]="balanceAccount.creditBalance" required/>
+                    <div [hidden]="!(editForm.controls.creditBalance?.dirty && editForm.controls.creditBalance?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.creditBalance?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.creditBalance?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_description">Description</label>
+                    <input type="text" class="form-control" name="description" id="field_description"
+                        [(ngModel)]="balanceAccount.description" required/>
+                    <div [hidden]="!(editForm.controls.description?.dirty && editForm.controls.description?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.description?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_user">User</label>
+                    <select class="form-control" id="field_user" name="user" [(ngModel)]="balanceAccount.user">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="userAppOption.id === balanceAccount.user?.id ? balanceAccount.user : userAppOption" *ngFor="let userAppOption of users; trackBy: trackUserAppById">{{userAppOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

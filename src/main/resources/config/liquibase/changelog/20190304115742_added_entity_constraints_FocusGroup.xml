@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity FocusGroup.
+    -->
+    <changeSet id="20190304115742-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="incentive_id"
+                                 baseTableName="focus_group"
+                                 constraintName="fk_focus_group_incentive_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="incentive"/>
+
+        <addForeignKeyConstraint baseColumnNames="institution_id"
+                                 baseTableName="focus_group"
+                                 constraintName="fk_focus_group_institution_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="institution"/>
+
+        <addForeignKeyConstraint baseColumnNames="focus_group_id"
+                                 baseTableName="focus_group_category"
+                                 constraintName="fk_focus_group_category_focus_group_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="focus_group"/>
+        <addForeignKeyConstraint baseColumnNames="category_id"
+                                 baseTableName="focus_group_category"
+                                 constraintName="fk_focus_group_category_category_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="category"/>
+        
+        <addForeignKeyConstraint baseColumnNames="focus_group_id"
+                                 baseTableName="focus_group_participant"
+                                 constraintName="fk_focus_group_participant_focus_group_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="focus_group"/>
+        <addForeignKeyConstraint baseColumnNames="participant_id"
+                                 baseTableName="focus_group_participant"
+                                 constraintName="fk_focus_group_participant_participant_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="participant"/>
+        
+    </changeSet>
+</databaseChangeLog>

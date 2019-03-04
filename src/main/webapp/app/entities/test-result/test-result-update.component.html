@@ -1,0 +1,49 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-test-result-heading">Create or edit a Test Result</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!testResult.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="testResult.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_grade">Grade</label>
+                    <input type="text" class="form-control" name="grade" id="field_grade"
+                        [(ngModel)]="testResult.grade" required/>
+                    <div [hidden]="!(editForm.controls.grade?.dirty && editForm.controls.grade?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.grade?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_focusGroup">Focus Group</label>
+                    <select class="form-control" id="field_focusGroup" name="focusGroup" [(ngModel)]="testResult.focusGroup" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="focusGroupOption.id === testResult.focusGroup?.id ? testResult.focusGroup : focusGroupOption" *ngFor="let focusGroupOption of focusgroups; trackBy: trackFocusGroupById">{{focusGroupOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_participant">Participant</label>
+                    <select class="form-control" id="field_participant" name="participant" [(ngModel)]="testResult.participant" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="participantOption.id === testResult.participant?.id ? testResult.participant : participantOption" *ngFor="let participantOption of participants; trackBy: trackParticipantById">{{participantOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,75 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-payment-heading">Create or edit a Payment</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!payment.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="payment.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_date">Date</label>
+                    <input type="text" class="form-control" name="date" id="field_date"
+                        [(ngModel)]="payment.date" required/>
+                    <div [hidden]="!(editForm.controls.date?.dirty && editForm.controls.date?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.date?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_description">Description</label>
+                    <input type="text" class="form-control" name="description" id="field_description"
+                        [(ngModel)]="payment.description" required/>
+                    <div [hidden]="!(editForm.controls.description?.dirty && editForm.controls.description?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.description?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ammount">Ammount</label>
+                    <input type="number" class="form-control" name="ammount" id="field_ammount"
+                        [(ngModel)]="payment.ammount" required/>
+                    <div [hidden]="!(editForm.controls.ammount?.dirty && editForm.controls.ammount?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.ammount?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.ammount?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_destinyAccount">Destiny Account</label>
+                    <select class="form-control" id="field_destinyAccount" name="destinyAccount" [(ngModel)]="payment.destinyAccount" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="balanceAccountOption.id === payment.destinyAccount?.id ? payment.destinyAccount : balanceAccountOption" *ngFor="let balanceAccountOption of balanceaccounts; trackBy: trackBalanceAccountById">{{balanceAccountOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oringAccount">Oring Account</label>
+                    <select class="form-control" id="field_oringAccount" name="oringAccount" [(ngModel)]="payment.oringAccount" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="balanceAccountOption.id === payment.oringAccount?.id ? payment.oringAccount : balanceAccountOption" *ngFor="let balanceAccountOption of balanceaccounts; trackBy: trackBalanceAccountById">{{balanceAccountOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

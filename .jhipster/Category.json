@@ -1,0 +1,44 @@
+{
+    "name": "Category",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "focusGroup",
+            "otherEntityName": "focusGroup",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "category"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "participant",
+            "otherEntityName": "participant",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "category"
+        }
+    ],
+    "changelogDate": "20190304115747",
+    "entityTableName": "category",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

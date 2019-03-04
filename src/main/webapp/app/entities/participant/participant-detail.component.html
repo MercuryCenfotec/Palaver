@@ -1,0 +1,51 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="participant">
+            <h2><span>Participant</span> {{participant.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Birthdate</span></dt>
+                <dd>
+                    <span>{{participant.birthdate}}</span>
+                </dd>
+                <dt><span>Gender</span></dt>
+                <dd>
+                    <span>{{participant.gender}}</span>
+                </dd>
+                <dt><span>Civil Status</span></dt>
+                <dd>
+                    <span>{{participant.civilStatus}}</span>
+                </dd>
+                <dt><span>Picture</span></dt>
+                <dd>
+                    <span>{{participant.picture}}</span>
+                </dd>
+                <dt><span>User</span></dt>
+                <dd>
+                    <div *ngIf="participant.user">
+                        <a [routerLink]="['/user-app', participant.user?.id, 'view']">{{participant.user?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span>Category</span></dt>
+                <dd>
+                    <span *ngFor="let category of participant.categories; let last = last">
+                        <a [routerLink]="['/category', category?.id, 'view' ]">{{category.id}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/participant', participant.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

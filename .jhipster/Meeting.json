@@ -1,0 +1,56 @@
+{
+    "name": "Meeting",
+    "fields": [
+        {
+            "fieldName": "date",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "time",
+            "fieldType": "ZonedDateTime",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "callURL",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "callCode",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "focusGroup",
+            "otherEntityName": "focusGroup",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "meeting"
+        }
+    ],
+    "changelogDate": "20190304115743",
+    "entityTableName": "meeting",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -1,0 +1,45 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="balanceAccount">
+            <h2><span>Balance Account</span> {{balanceAccount.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Balance</span></dt>
+                <dd>
+                    <span>{{balanceAccount.balance}}</span>
+                </dd>
+                <dt><span>Debit Balance</span></dt>
+                <dd>
+                    <span>{{balanceAccount.debitBalance}}</span>
+                </dd>
+                <dt><span>Credit Balance</span></dt>
+                <dd>
+                    <span>{{balanceAccount.creditBalance}}</span>
+                </dd>
+                <dt><span>Description</span></dt>
+                <dd>
+                    <span>{{balanceAccount.description}}</span>
+                </dd>
+                <dt><span>User</span></dt>
+                <dd>
+                    <div *ngIf="balanceAccount.user">
+                        <a [routerLink]="['/user-app', balanceAccount.user?.id, 'view']">{{balanceAccount.user?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/balance-account', balanceAccount.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

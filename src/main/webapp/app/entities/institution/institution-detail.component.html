@@ -1,0 +1,51 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="institution">
+            <h2><span>Institution</span> {{institution.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Name</span></dt>
+                <dd>
+                    <span>{{institution.name}}</span>
+                </dd>
+                <dt><span>Description</span></dt>
+                <dd>
+                    <span>{{institution.description}}</span>
+                </dd>
+                <dt><span>Logo</span></dt>
+                <dd>
+                    <span>{{institution.logo}}</span>
+                </dd>
+                <dt><span>Telephone</span></dt>
+                <dd>
+                    <span>{{institution.telephone}}</span>
+                </dd>
+                <dt><span>User</span></dt>
+                <dd>
+                    <div *ngIf="institution.user">
+                        <a [routerLink]="['/user-app', institution.user?.id, 'view']">{{institution.user?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span>Membership</span></dt>
+                <dd>
+                    <div *ngIf="institution.membership">
+                        <a [routerLink]="['/membership', institution.membership?.id, 'view']">{{institution.membership?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/institution', institution.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

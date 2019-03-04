@@ -5,6 +5,33 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115734_added_entity_UserApp.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115735_added_entity_Participant.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115736_added_entity_Institution.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115737_added_entity_Incentive.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115738_added_entity_AptitudeTest.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115739_added_entity_TestResult.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115740_added_entity_TestQuestion.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115741_added_entity_TestAnswerOption.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115742_added_entity_FocusGroup.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115743_added_entity_Meeting.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115744_added_entity_Membership.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115745_added_entity_PaymentMethod.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115746_added_entity_SystemVariable.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115747_added_entity_Category.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115748_added_entity_BalanceAccount.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115749_added_entity_Payment.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20190304115735_added_entity_constraints_Participant.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115736_added_entity_constraints_Institution.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115738_added_entity_constraints_AptitudeTest.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115739_added_entity_constraints_TestResult.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115740_added_entity_constraints_TestQuestion.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115741_added_entity_constraints_TestAnswerOption.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115742_added_entity_constraints_FocusGroup.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115743_added_entity_constraints_Meeting.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115745_added_entity_constraints_PaymentMethod.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115748_added_entity_constraints_BalanceAccount.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115749_added_entity_constraints_Payment.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

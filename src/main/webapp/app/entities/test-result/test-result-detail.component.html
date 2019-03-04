@@ -1,0 +1,39 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="testResult">
+            <h2><span>Test Result</span> {{testResult.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Grade</span></dt>
+                <dd>
+                    <span>{{testResult.grade}}</span>
+                </dd>
+                <dt><span>Focus Group</span></dt>
+                <dd>
+                    <div *ngIf="testResult.focusGroup">
+                        <a [routerLink]="['/focus-group', testResult.focusGroup?.id, 'view']">{{testResult.focusGroup?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span>Participant</span></dt>
+                <dd>
+                    <div *ngIf="testResult.participant">
+                        <a [routerLink]="['/participant', testResult.participant?.id, 'view']">{{testResult.participant?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/test-result', testResult.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

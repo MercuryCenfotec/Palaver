@@ -1,0 +1,37 @@
+{
+    "name": "TestAnswerOption",
+    "fields": [
+        {
+            "fieldName": "answer",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "desired",
+            "fieldType": "Boolean",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "testQuestion",
+            "otherEntityName": "testQuestion",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "testAnswerOption"
+        }
+    ],
+    "changelogDate": "20190304115741",
+    "entityTableName": "test_answer_option",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

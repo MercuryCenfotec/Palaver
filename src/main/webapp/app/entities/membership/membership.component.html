@@ -1,0 +1,58 @@
+<div>
+    <h2 id="page-heading">
+        <span>Memberships</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-membership" [routerLink]="['/membership/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create new Membership
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="memberships">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Type Membership</span></th>
+            <th><span>Cost</span></th>
+            <th><span>Duration</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let membership of memberships ;trackBy: trackId">
+                <td><a [routerLink]="['/membership', membership.id, 'view' ]">{{membership.id}}</a></td>
+                <td>{{membership.typeMembership}}</td>
+                <td>{{membership.cost}}</td>
+                <td>{{membership.duration}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/membership', membership.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/membership', membership.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', 'membership', { outlets: { popup: membership.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

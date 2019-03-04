@@ -1,0 +1,51 @@
+{
+    "name": "Payment",
+    "fields": [
+        {
+            "fieldName": "date",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "ammount",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "destinyAccount",
+            "otherEntityName": "balanceAccount",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "payment"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "oringAccount",
+            "otherEntityName": "balanceAccount",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "payment"
+        }
+    ],
+    "changelogDate": "20190304115749",
+    "entityTableName": "payment",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

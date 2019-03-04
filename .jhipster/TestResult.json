@@ -1,0 +1,37 @@
+{
+    "name": "TestResult",
+    "fields": [
+        {
+            "fieldName": "grade",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "focusGroup",
+            "otherEntityName": "focusGroup",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "testResult"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "participant",
+            "otherEntityName": "participant",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "testResult"
+        }
+    ],
+    "changelogDate": "20190304115739",
+    "entityTableName": "test_result",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

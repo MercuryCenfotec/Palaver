@@ -1,0 +1,53 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="meeting">
+            <h2><span>Meeting</span> {{meeting.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Date</span></dt>
+                <dd>
+                    <span>{{meeting.date}}</span>
+                </dd>
+                <dt><span>Time</span></dt>
+                <dd>
+                    <span>{{meeting.time}}</span>
+                </dd>
+                <dt><span>Name</span></dt>
+                <dd>
+                    <span>{{meeting.name}}</span>
+                </dd>
+                <dt><span>Description</span></dt>
+                <dd>
+                    <span>{{meeting.description}}</span>
+                </dd>
+                <dt><span>Call URL</span></dt>
+                <dd>
+                    <span>{{meeting.callURL}}</span>
+                </dd>
+                <dt><span>Call Code</span></dt>
+                <dd>
+                    <span>{{meeting.callCode}}</span>
+                </dd>
+                <dt><span>Focus Group</span></dt>
+                <dd>
+                    <div *ngIf="meeting.focusGroup">
+                        <a [routerLink]="['/focus-group', meeting.focusGroup?.id, 'view']">{{meeting.focusGroup?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/meeting', meeting.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

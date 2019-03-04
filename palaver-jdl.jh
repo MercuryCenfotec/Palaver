@@ -1,0 +1,142 @@
+entity UserApp {
+	name String required,
+    identificationNumber String required,
+	mail String required,
+	address String,
+    password String required,
+	rol String required
+}
+
+entity Participant {
+	birthdate LocalDate required,
+	gender Gender required,
+    civilStatus CivilStatus required,
+    picture String
+}
+
+entity Institution {
+	name String required,
+	description String required,
+    logo String required,
+	telephone String required,
+}
+
+entity Incentive {
+	name String required,
+	image String,
+	quantity Integer required,
+	description String
+}
+
+entity AptitudeTest {
+	name String required,
+    createdDate String required
+}
+
+entity TestResult {
+	grade String required
+}
+/**
+ * The TestQuestion entity.
+ */
+entity TestQuestion {
+	question String required
+}
+
+entity TestAnswerOption {
+	answer String required,
+    desired Boolean required,
+}
+
+entity FocusGroup {
+	name String required,
+	description String required,
+	beginDate LocalDate required,
+	endDate LocalDate required,
+    code String
+}
+
+entity Meeting {
+	date LocalDate required,
+	time ZonedDateTime required,
+	name String required,
+	description String,
+    callURL String,
+    callCode String
+}
+
+entity Membership {
+	typeMembership String required,
+	cost Integer required,
+	duration Integer required
+}
+
+entity PaymentMethod {
+	cardNumber Integer required,
+    expirationDate LocalDate required,
+	cardName String required,
+	cardCVV Integer required
+}
+
+entity SystemVariable {
+	name String required,
+	code String required,
+	value String required
+}
+
+entity Category {
+	name String required,
+	description String required
+}
+
+entity BalanceAccount {
+	balance Integer required,
+    debitBalance Integer required,
+    creditBalance Integer required,
+	description String required
+}
+
+entity Payment {
+	date String required,
+	description String required,
+    ammount Integer required
+}
+
+enum Gender {
+    MALE, FEMALE, UNDEFINED
+}
+
+enum CivilStatus {
+    MARRIED, WIDOWED, SEPARATED, DIVORCED, SINGLE
+}
+
+relationship ManyToMany {
+	FocusGroup to Category,
+    FocusGroup to Participant,
+	Participant to Category
+}
+
+relationship ManyToOne {
+	Institution{membership} to Membership,
+    FocusGroup{incentive} to Incentive,
+    TestResult{focusGroup} to FocusGroup,
+    TestAnswerOption{testQuestion} to TestQuestion,
+	TestQuestion{aptitudeTest} to AptitudeTest,
+	Meeting{focusGroup} to FocusGroup,
+    TestResult{Participant} to Participant,
+	FocusGroup{institution} to Institution,
+    PaymentMethod{user} to UserApp,
+    Payment{destinyAccount} to BalanceAccount,
+    Payment{oringAccount} to BalanceAccount
+}
+
+relationship OneToMany {
+	Institution{aptitudeTest} to AptitudeTest,
+}
+
+relationship OneToOne {
+	Institution{user} to UserApp,
+	Participant{user} to UserApp,
+    BalanceAccount{user} to UserApp
+}
+

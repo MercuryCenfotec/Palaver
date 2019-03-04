@@ -1,0 +1,72 @@
+<div>
+    <h2 id="page-heading">
+        <span>Institutions</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-institution" [routerLink]="['/institution/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create new Institution
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="institutions">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Name</span></th>
+            <th><span>Description</span></th>
+            <th><span>Logo</span></th>
+            <th><span>Telephone</span></th>
+            <th><span>User</span></th>
+            <th><span>Membership</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let institution of institutions ;trackBy: trackId">
+                <td><a [routerLink]="['/institution', institution.id, 'view' ]">{{institution.id}}</a></td>
+                <td>{{institution.name}}</td>
+                <td>{{institution.description}}</td>
+                <td>{{institution.logo}}</td>
+                <td>{{institution.telephone}}</td>
+                <td>
+                    <div *ngIf="institution.user">
+                        <a [routerLink]="['../user-app', institution.user?.id, 'view' ]" >{{institution.user?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="institution.membership">
+                        <a [routerLink]="['../membership', institution.membership?.id, 'view' ]" >{{institution.membership?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/institution', institution.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/institution', institution.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', 'institution', { outlets: { popup: institution.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

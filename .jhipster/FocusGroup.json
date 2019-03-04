@@ -1,0 +1,78 @@
+{
+    "name": "FocusGroup",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "beginDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "endDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "code",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "incentive",
+            "otherEntityName": "incentive",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "focusGroup"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "institution",
+            "otherEntityName": "institution",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "focusGroup"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "focusGroup",
+            "relationshipName": "category",
+            "otherEntityName": "category",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "focusGroup",
+            "relationshipName": "participant",
+            "otherEntityName": "participant",
+            "otherEntityField": "id",
+            "ownerSide": true
+        }
+    ],
+    "changelogDate": "20190304115742",
+    "entityTableName": "focus_group",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}
