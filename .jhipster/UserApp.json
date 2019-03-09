@@ -41,7 +41,16 @@
             ]
         }
     ],
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "userApp"
+        }
+    ],
     "changelogDate": "20190304115734",
     "entityTableName": "user_app",
     "dto": "no",

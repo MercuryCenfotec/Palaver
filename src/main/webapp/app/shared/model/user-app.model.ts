@@ -1,3 +1,5 @@
+import { IUser } from 'app/core/user/user.model';
+
 export interface IUserApp {
     id?: number;
     name?: string;
@@ -6,6 +8,7 @@ export interface IUserApp {
     address?: string;
     password?: string;
     rol?: string;
+    user?: IUser;
 }
 
 export class UserApp implements IUserApp {
@@ -16,6 +19,7 @@ export class UserApp implements IUserApp {
         public mail?: string,
         public address?: string,
         public password?: string,
-        public rol?: string
+        public rol?: string,
+        public user?: IUser
     ) {}
 }
