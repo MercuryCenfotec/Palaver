@@ -8,6 +8,7 @@ import {
     InstitutionUpdateComponent,
     InstitutionDeletePopupComponent,
     InstitutionDeleteDialogComponent,
+    InstitutionFormComponent,
     institutionRoute,
     institutionPopupRoute
 } from './';
@@ -21,9 +22,10 @@ const ENTITY_STATES = [...institutionRoute, ...institutionPopupRoute];
         InstitutionDetailComponent,
         InstitutionUpdateComponent,
         InstitutionDeleteDialogComponent,
-        InstitutionDeletePopupComponent
+        InstitutionDeletePopupComponent,
+        InstitutionFormComponent
     ],
-    entryComponents: [InstitutionComponent, InstitutionUpdateComponent, InstitutionDeleteDialogComponent, InstitutionDeletePopupComponent],
+    entryComponents: [InstitutionComponent, InstitutionUpdateComponent, InstitutionFormComponent, InstitutionDeleteDialogComponent, InstitutionDeletePopupComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PalaverInstitutionModule {}

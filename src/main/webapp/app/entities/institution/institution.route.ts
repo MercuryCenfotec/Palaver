@@ -11,6 +11,7 @@ import { InstitutionDetailComponent } from './institution-detail.component';
 import { InstitutionUpdateComponent } from './institution-update.component';
 import { InstitutionDeletePopupComponent } from './institution-delete-dialog.component';
 import { IInstitution } from 'app/shared/model/institution.model';
+import {InstitutionFormComponent} from "app/entities/institution/institution-form.component";
 
 @Injectable({ providedIn: 'root' })
 export class InstitutionResolve implements Resolve<IInstitution> {
@@ -33,7 +34,7 @@ export const institutionRoute: Routes = [
         path: '',
         component: InstitutionComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Institutions'
         },
         canActivate: [UserRouteAccessService]
@@ -45,19 +46,19 @@ export const institutionRoute: Routes = [
             institution: InstitutionResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Institutions'
         },
         canActivate: [UserRouteAccessService]
     },
     {
         path: 'new',
-        component: InstitutionUpdateComponent,
+        component: InstitutionFormComponent,
         resolve: {
             institution: InstitutionResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Institutions'
         },
         canActivate: [UserRouteAccessService]
@@ -69,7 +70,7 @@ export const institutionRoute: Routes = [
             institution: InstitutionResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Institutions'
         },
         canActivate: [UserRouteAccessService]
@@ -84,7 +85,7 @@ export const institutionPopupRoute: Routes = [
             institution: InstitutionResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Institutions'
         },
         canActivate: [UserRouteAccessService],
