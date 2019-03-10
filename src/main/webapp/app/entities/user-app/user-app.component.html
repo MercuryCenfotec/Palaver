@@ -21,6 +21,7 @@
             <th><span>Address</span></th>
             <th><span>Password</span></th>
             <th><span>Rol</span></th>
+            <th><span>User</span></th>
             <th></th>
             </tr>
             </thead>
@@ -33,6 +34,9 @@
                 <td>{{userApp.address}}</td>
                 <td>{{userApp.password}}</td>
                 <td>{{userApp.rol}}</td>
+                <td>
+                    {{userApp.user?.id}}
+                </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

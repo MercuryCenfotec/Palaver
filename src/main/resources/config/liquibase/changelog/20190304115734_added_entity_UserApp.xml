@@ -45,7 +45,9 @@
             <column name="rol" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-
+            <column name="user_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_user_app_user_id" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         
