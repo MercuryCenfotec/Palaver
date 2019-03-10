@@ -47,15 +47,15 @@
                         <div class="col-12 col-md-6 col-lg-4">
                             <ul class="no-list-style">
                                 <li class="mb-2">
-                                    <span class="text-bold-500 primary"><a><i class="icon-present font-small-3"></i> Nombre:</a></span>
+                                    <span class="text-bold-500 primary"><a><i class="ft ft-clipboard"></i> Nombre:</a></span>
                                     <span class="display-block overflow-hidden">{{institution.name}}</span>
                                 </li>
                                 <li class="mb-2" *ngIf="institution.user">
-                                    <span class="text-bold-500 primary"><a><i class="ft-map-pin font-small-3"></i> Usuario:</a></span>
+                                    <span class="text-bold-500 primary"><a><i class="ft ft-user"></i> Usuario:</a></span>
                                     <span class="display-block overflow-hidden" [routerLink]="['/user-app', institution.user?.id, 'view']">{{institution.user.name}}</span>
                                 </li>
                                 <li class="mb-2" *ngIf="institution.user">
-                                    <span class="text-bold-500 primary"><a><i class="ft-globe font-small-3"></i> Dirección:</a></span>
+                                    <span class="text-bold-500 primary"><a><i class="ft ft-map-pin"></i> Dirección:</a></span>
                                     <span class="display-block overflow-hidden" [routerLink]="['/user-app', institution.user?.id, 'view']">{{institution.user.address}}</span>
                                 </li>
                             </ul>
@@ -63,15 +63,15 @@
                         <div class="col-12 col-md-6 col-lg-4">
                             <ul class="no-list-style">
                                 <li class="mb-2">
-                                    <span class="text-bold-500 primary"><a><i class="ft-user font-small-3"></i> Descripción:</a></span>
+                                    <span class="text-bold-500 primary"><a><i class="ft ft-message-square"></i> Descripción:</a></span>
                                     <span class="display-block overflow-hidden">{{institution.description}}</span>
                                 </li>
                                 <li class="mb-2" *ngIf="institution.user">
-                                    <span class="text-bold-500 primary"><a><i class="ft-mail font-small-3"></i> Cédula jurídica:</a></span>
+                                    <span class="text-bold-500 primary"><a><i class="ft ft-lock"></i> Cédula jurídica:</a></span>
                                     <span class="display-block overflow-hidden" [routerLink]="['/user-app', institution.user?.id, 'view']">{{institution.user.identificationNumber}}</span>
                                 </li>
                                 <li class="mb-2" *ngIf="institution.membership">
-                                    <span class="text-bold-500 primary"><a><i class="ft-mail font-small-3"></i> Membresía:</a></span>
+                                    <span class="text-bold-500 primary"><a><i class="ft ft-credit-card"></i> Membresía:</a></span>
                                     <span class="display-block overflow-hidden" [routerLink]="['/membership', institution.membership?.id, 'view']">{{institution.membership.typeMembership}}</span>
                                 </li>
                             </ul>
@@ -79,11 +79,11 @@
                         <div class="col-12 col-md-6 col-lg-4">
                             <ul class="no-list-style">
                                 <li class="mb-2">
-                                    <span class="text-bold-500 primary"><a><i class="ft-smartphone font-small-3"></i> Teléfono:</a></span>
+                                    <span class="text-bold-500 primary"><a><i class="ft ft-smartphone"></i> Teléfono:</a></span>
                                     <span class="display-block overflow-hidden">{{institution.telephone}}</span>
                                 </li>
                                 <li class="mb-2" *ngIf="institution.user">
-                                    <span class="text-bold-500 primary"><a><i class="ft-briefcase font-small-3"></i> E-mail:</a></span>
+                                    <span class="text-bold-500 primary"><a><i class="ft ft-mail"></i> E-mail:</a></span>
                                     <span class="display-block overflow-hidden" [routerLink]="['/user-app', institution.user?.id, 'view']">{{institution.user.mail}}</span>
                                 </li>
                             </ul>
