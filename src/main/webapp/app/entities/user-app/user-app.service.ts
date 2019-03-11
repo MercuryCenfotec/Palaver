@@ -27,6 +27,10 @@ export class UserAppService {
         return this.http.get<IUserApp>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
+    findByUserId(id: number): Observable<IUserApp> {
+        return this.http.get<IUserApp>(`${this.resourceUrl}/user_id/${id}`);
+    }
+
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
         return this.http.get<IUserApp[]>(this.resourceUrl, { params: options, observe: 'response' });

@@ -10,6 +10,7 @@ import { IUserApp } from 'app/shared/model/user-app.model';
 import { UserAppService } from 'app/entities/user-app';
 import { IMembership } from 'app/shared/model/membership.model';
 import { MembershipService } from 'app/entities/membership';
+import { IUser, UserService } from 'app/core';
 
 @Component({
     selector: 'jhi-institution-form',
@@ -18,9 +19,9 @@ import { MembershipService } from 'app/entities/membership';
 export class InstitutionFormComponent implements OnInit {
     institution: IInstitution;
     isSaving: boolean;
-
+    user: IUser;
+    userApp: IUserApp;
     users: IUserApp[];
-
     memberships: IMembership[];
 
     constructor(
@@ -28,10 +29,17 @@ export class InstitutionFormComponent implements OnInit {
         protected institutionService: InstitutionService,
         protected userAppService: UserAppService,
         protected membershipService: MembershipService,
-        protected activatedRoute: ActivatedRoute
+        protected activatedRoute: ActivatedRoute,
+        protected userService: UserService
     ) {}
 
     ngOnInit() {
+        this.userService.getUserWithAuthorities().subscribe(data => {
+            this.user = data;
+            this.userAppService.findByUserId(this.user.id).subscribe(userAppData => {
+                this.userApp = userAppData;
+            });
+        });
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ institution }) => {
             this.institution = institution;
@@ -76,11 +84,13 @@ export class InstitutionFormComponent implements OnInit {
 
     save() {
         this.isSaving = true;
+        this.institution.user = this.userApp;
         this.subscribeToSaveResponse(this.institutionService.create(this.institution));
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IInstitution>>) {
         result.subscribe((res: HttpResponse<IInstitution>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+        this.userService.updateUserRole('institution', this.user);
     }
 
     protected onSaveSuccess() {

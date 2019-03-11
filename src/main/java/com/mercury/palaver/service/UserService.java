@@ -192,6 +192,27 @@ public class UserService {
     }
 
     /**
+     * Update role for the current user.
+     *  @param role role of the user
+     * @param userDTO user
+     */
+    public User updateUserRole(String role, UserDTO userDTO) {
+        Set<Authority> authorities = new HashSet<>();
+        User user = null;
+        if(userRepository.findById(userDTO.getId()).isPresent()){
+            user = userRepository.findById(userDTO.getId()).get();
+            if(role.equals("institution")){
+                authorityRepository.findById(AuthoritiesConstants.INSTITUTION).ifPresent(authorities::add);
+            }else if(role.equals("participant")){
+                authorityRepository.findById(AuthoritiesConstants.PARTICIPANT).ifPresent(authorities::add);
+            }
+            user.setAuthorities(authorities);
+
+        }
+        return userRepository.save(user);
+    }
+
+    /**
      * Update all information for a specific user, and return the modified user.
      *
      * @param userDTO user to update

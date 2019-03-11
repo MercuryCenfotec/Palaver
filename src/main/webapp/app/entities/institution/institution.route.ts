@@ -58,7 +58,7 @@ export const institutionRoute: Routes = [
             institution: InstitutionResolve
         },
         data: {
-            authorities: ['ROLE_ADMIN'],
+            authorities: ['ROLE_ADMIN', 'ROLE_USER'],
             pageTitle: 'Institutions'
         },
         canActivate: [UserRouteAccessService]

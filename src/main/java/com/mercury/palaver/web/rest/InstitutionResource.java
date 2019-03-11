@@ -47,6 +47,7 @@ public class InstitutionResource {
             throw new BadRequestAlertException("A new institution cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Institution result = institutionRepository.save(institution);
+
         return ResponseEntity.created(new URI("/api/institutions/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);

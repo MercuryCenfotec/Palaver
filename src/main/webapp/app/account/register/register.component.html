@@ -5,23 +5,23 @@
                 <h4 class="card-title" id="basic-layout-form-center">Formulario de registro:</h4>
 
                 <div class="alert alert-success" *ngIf="success">
-                    <strong>Su registro ha sido exitoso!</strong> Please check your email for confirmation.
+                    <strong>Su registro ha sido exitoso!</strong> Por favor revise su correo para verificar su cuenta.
                 </div>
 
                 <div class="alert alert-danger" *ngIf="error">
-                    <strong>Registro fallido!</strong> Please try again later.
+                    <strong>Registro fallido!</strong> Por favor intente de nuevo.
                 </div>
 
                 <div class="alert alert-danger" *ngIf="errorUserExists">
-                    <strong>Login name already registered!</strong> Please choose another one.
+                    <strong>El nombre de usuario ya se encuentra registrado!</strong> Por favor utilice otro.
                 </div>
 
                 <div class="alert alert-danger" *ngIf="errorEmailExists">
-                    <strong>Email is already in use!</strong> Please choose another one.
+                    <strong>El correo electronico ya se encuentra en uso!</strong> Por favor utilice otro.
                 </div>
 
                 <div class="alert alert-danger" *ngIf="doNotMatch">
-                    The password and its confirmation do not match!
+                    La contraseña y la confirmacion no concuerdan!
                 </div>
             </div>
             <div class="card-body">
@@ -103,7 +103,7 @@
                                             </small>
                                             <small class="form-text text-danger" *ngIf="email.errors.minlength"
                                             >
-                                                Su correo debe tener al menos 5 caracter de largo.
+                                                Su correo debe tener al menos 5 caracteres de largo.
                                             </small>
                                             <small class="form-text text-danger" *ngIf="email.errors.maxlength"
                                             >
@@ -126,15 +126,15 @@
                                         <div *ngIf="password.dirty && password.invalid">
                                             <small class="form-text text-danger" *ngIf="password.errors.required"
                                             >
-                                                Your password is required.
+                                                Este campo es requerido.
                                             </small>
                                             <small class="form-text text-danger" *ngIf="password.errors.minlength"
                                             >
-                                                Your password is required to be at least 4 characters.
+                                                Su contraseña debe tener al menos 4 caracteres de largo.
                                             </small>
                                             <small class="form-text text-danger" *ngIf="password.errors.maxlength"
                                             >
-                                                Your password cannot be longer than 50 characters.
+                                                Su contraseña no debe tener mas de 50 caracteres de largo.
                                             </small>
                                         </div>
                                         <p></p>
@@ -155,17 +155,17 @@
                                             <small class="form-text text-danger"
                                                    *ngIf="confirmPasswordInput.errors.required"
                                             >
-                                                Your confirmation password is required.
+                                                Este campo es requerido.
                                             </small>
                                             <small class="form-text text-danger"
                                                    *ngIf="confirmPasswordInput.errors.minlength"
                                             >
-                                                Your confirmation password is required to be at least 4 characters.
+                                                Su contraseña de confirmación debe tener al menos 4 caracteres de largo.
                                             </small>
                                             <small class="form-text text-danger"
                                                    *ngIf="confirmPasswordInput.errors.maxlength"
                                             >
-                                                Your confirmation password cannot be longer than 50 characters.
+                                                Su contraseña de confirmación no debe tener mas de 50 caracteres de largo.
                                             </small>
                                         </div>
                                     </div>

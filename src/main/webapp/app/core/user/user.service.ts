@@ -36,4 +36,12 @@ export class UserService {
     authorities(): Observable<string[]> {
         return this.http.get<string[]>(SERVER_API_URL + 'api/users/authorities');
     }
+
+    getUserWithAuthorities(): Observable<IUser> {
+        return this.http.get<IUser>(SERVER_API_URL + 'api/account');
+    }
+
+    updateUserRole(role: String, user: IUser): Observable<HttpResponse<IUser>> {
+        return this.http.put<IUser>(`${this.resourceUrl}/api/add_authorization/${role}`, user, { observe: 'response' });
+    }
 }
