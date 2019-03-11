@@ -85,11 +85,7 @@ export class FocusGroupUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        if (this.focusGroup.id !== undefined) {
-            this.subscribeToSaveResponse(this.focusGroupService.update(this.focusGroup));
-        } else {
-            this.subscribeToSaveResponse(this.focusGroupService.create(this.focusGroup));
-        }
+        this.subscribeToSaveResponse(this.focusGroupService.update(this.focusGroup));
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IFocusGroup>>) {
