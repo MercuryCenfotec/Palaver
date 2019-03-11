@@ -52,9 +52,6 @@ public class UserAppResourceIntTest {
     private static final String DEFAULT_ADDRESS = "AAAAAAAAAA";
     private static final String UPDATED_ADDRESS = "BBBBBBBBBB";
 
-    private static final String DEFAULT_PASSWORD = "AAAAAAAAAA";
-    private static final String UPDATED_PASSWORD = "BBBBBBBBBB";
-
     private static final String DEFAULT_ROL = "AAAAAAAAAA";
     private static final String UPDATED_ROL = "BBBBBBBBBB";
 
@@ -104,7 +101,6 @@ public class UserAppResourceIntTest {
             .identificationNumber(DEFAULT_IDENTIFICATION_NUMBER)
             .mail(DEFAULT_MAIL)
             .address(DEFAULT_ADDRESS)
-            .password(DEFAULT_PASSWORD)
             .rol(DEFAULT_ROL);
         return userApp;
     }
@@ -133,7 +129,6 @@ public class UserAppResourceIntTest {
         assertThat(testUserApp.getIdentificationNumber()).isEqualTo(DEFAULT_IDENTIFICATION_NUMBER);
         assertThat(testUserApp.getMail()).isEqualTo(DEFAULT_MAIL);
         assertThat(testUserApp.getAddress()).isEqualTo(DEFAULT_ADDRESS);
-        assertThat(testUserApp.getPassword()).isEqualTo(DEFAULT_PASSWORD);
         assertThat(testUserApp.getRol()).isEqualTo(DEFAULT_ROL);
     }
 
@@ -212,24 +207,6 @@ public class UserAppResourceIntTest {
 
     @Test
     @Transactional
-    public void checkPasswordIsRequired() throws Exception {
-        int databaseSizeBeforeTest = userAppRepository.findAll().size();
-        // set the field null
-        userApp.setPassword(null);
-
-        // Create the UserApp, which fails.
-
-        restUserAppMockMvc.perform(post("/api/user-apps")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(userApp)))
-            .andExpect(status().isBadRequest());
-
-        List<UserApp> userAppList = userAppRepository.findAll();
-        assertThat(userAppList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void checkRolIsRequired() throws Exception {
         int databaseSizeBeforeTest = userAppRepository.findAll().size();
         // set the field null
@@ -261,7 +238,6 @@ public class UserAppResourceIntTest {
             .andExpect(jsonPath("$.[*].identificationNumber").value(hasItem(DEFAULT_IDENTIFICATION_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].mail").value(hasItem(DEFAULT_MAIL.toString())))
             .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())))
-            .andExpect(jsonPath("$.[*].password").value(hasItem(DEFAULT_PASSWORD.toString())))
             .andExpect(jsonPath("$.[*].rol").value(hasItem(DEFAULT_ROL.toString())));
     }
     
@@ -280,7 +256,6 @@ public class UserAppResourceIntTest {
             .andExpect(jsonPath("$.identificationNumber").value(DEFAULT_IDENTIFICATION_NUMBER.toString()))
             .andExpect(jsonPath("$.mail").value(DEFAULT_MAIL.toString()))
             .andExpect(jsonPath("$.address").value(DEFAULT_ADDRESS.toString()))
-            .andExpect(jsonPath("$.password").value(DEFAULT_PASSWORD.toString()))
             .andExpect(jsonPath("$.rol").value(DEFAULT_ROL.toString()));
     }
 
@@ -309,7 +284,6 @@ public class UserAppResourceIntTest {
             .identificationNumber(UPDATED_IDENTIFICATION_NUMBER)
             .mail(UPDATED_MAIL)
             .address(UPDATED_ADDRESS)
-            .password(UPDATED_PASSWORD)
             .rol(UPDATED_ROL);
 
         restUserAppMockMvc.perform(put("/api/user-apps")
@@ -325,7 +299,6 @@ public class UserAppResourceIntTest {
         assertThat(testUserApp.getIdentificationNumber()).isEqualTo(UPDATED_IDENTIFICATION_NUMBER);
         assertThat(testUserApp.getMail()).isEqualTo(UPDATED_MAIL);
         assertThat(testUserApp.getAddress()).isEqualTo(UPDATED_ADDRESS);
-        assertThat(testUserApp.getPassword()).isEqualTo(UPDATED_PASSWORD);
         assertThat(testUserApp.getRol()).isEqualTo(UPDATED_ROL);
     }
 

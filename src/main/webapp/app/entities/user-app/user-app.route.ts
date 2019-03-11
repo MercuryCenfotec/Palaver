@@ -11,6 +11,7 @@ import { UserAppDetailComponent } from './user-app-detail.component';
 import { UserAppUpdateComponent } from './user-app-update.component';
 import { UserAppDeletePopupComponent } from './user-app-delete-dialog.component';
 import { IUserApp } from 'app/shared/model/user-app.model';
+import { UserAppFormComponent } from 'app/entities/user-app/user-app-form.component';
 
 @Injectable({ providedIn: 'root' })
 export class UserAppResolve implements Resolve<IUserApp> {
@@ -52,7 +53,7 @@ export const userAppRoute: Routes = [
     },
     {
         path: 'new',
-        component: UserAppUpdateComponent,
+        component: UserAppFormComponent,
         resolve: {
             userApp: UserAppResolve
         },
