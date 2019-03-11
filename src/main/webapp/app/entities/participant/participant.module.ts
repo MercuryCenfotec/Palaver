@@ -6,6 +6,7 @@ import {
     ParticipantComponent,
     ParticipantDetailComponent,
     ParticipantUpdateComponent,
+    ParticipantCreateComponent,
     ParticipantDeletePopupComponent,
     ParticipantDeleteDialogComponent,
     participantRoute,
@@ -18,12 +19,19 @@ const ENTITY_STATES = [...participantRoute, ...participantPopupRoute];
     imports: [PalaverSharedModule, RouterModule.forChild(ENTITY_STATES)],
     declarations: [
         ParticipantComponent,
+        ParticipantCreateComponent,
         ParticipantDetailComponent,
         ParticipantUpdateComponent,
         ParticipantDeleteDialogComponent,
         ParticipantDeletePopupComponent
     ],
-    entryComponents: [ParticipantComponent, ParticipantUpdateComponent, ParticipantDeleteDialogComponent, ParticipantDeletePopupComponent],
+    entryComponents: [
+        ParticipantComponent,
+        ParticipantCreateComponent,
+        ParticipantUpdateComponent,
+        ParticipantDeleteDialogComponent,
+        ParticipantDeletePopupComponent
+    ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PalaverParticipantModule {}
