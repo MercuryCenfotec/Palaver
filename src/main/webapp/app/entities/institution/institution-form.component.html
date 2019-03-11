@@ -55,7 +55,7 @@
                                     <option [ngValue]="null"></option>
                                     <option
                                         [ngValue]="userAppOption.id === institution.user?.id ? institution.user : userAppOption"
-                                        *ngFor="let userAppOption of users; trackBy: trackUserAppById">{{userAppOption.id}}</option>
+                                        *ngFor="let userAppOption of users; trackBy: trackUserAppById">{{userAppOption.name}}</option>
                                 </select>
                             </div>
                             <div class="form-group">
