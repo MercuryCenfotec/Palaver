@@ -5,6 +5,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from 'app/shared';
 import { LoginModalService } from 'app/core';
 import { Register } from './register.service';
+import { IUserApp } from 'app/shared/model/user-app.model';
 
 @Component({
     selector: 'jhi-register',
@@ -17,6 +18,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     errorEmailExists: string;
     errorUserExists: string;
     registerAccount: any;
+    userApp: IUserApp;
     success: boolean;
     modalRef: NgbModalRef;
 
