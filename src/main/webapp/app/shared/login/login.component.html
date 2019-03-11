@@ -1,43 +1,66 @@
-<div class="modal-header">
-    <h4 class="modal-title">Sign in</h4>
-    <button aria-label="Close" data-dismiss="modal" class="close" type="button" (click)="activeModal.dismiss('closed')"><span aria-hidden="true">x</span>
-    </button>
-</div>
-<div class="modal-body">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="alert alert-danger" *ngIf="authenticationError">
-                <strong>Failed to sign in!</strong> Please check your credentials and try again.
-            </div>
-        </div>
-        <div class="col-md-8">
-            <form class="form" role="form" (ngSubmit)="login()">
-                <div class="form-group">
-                    <label class="username-label" for="username">Login</label>
-                    <input type="text" class="form-control" name="username" id="username" placeholder="Your username"
-                    [(ngModel)]="username">
+<!--Login Page Starts-->
+<section id="login">
+    <div class="container-fluid">
+        <div class="row full-height-vh">
+            <div class="col-12 d-flex align-items-center justify-content-center">
+                <div class="card gradient-indigo-purple text-center width-400">
+                    <div class="card-img overlap">
+                        <img alt="element 06" class="mb-1"
+                             src="http://lofrev.net/wp-content/photos/2017/03/user_blue_logo.png" width="190">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-block">
+                            <h2 class="white">Inicio de sesión</h2>
+                            <form novalidate="" role="form" (ngSubmit)="login()">
+
+                                    <div class="alert alert-warning" *ngIf="authenticationError">
+                                        <strong>¡Fallo al iniciar sesión!</strong> Por favor revise sus credenciales y
+                                        vuelva a intentar.
+                                    </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control" name="username" id="username"
+                                               placeholder="Nombre de usuario" required [(ngModel)]="username">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <input type="password" class="form-control" name="password" id="password"
+                                               placeholder="Contraseña" required [(ngModel)]="password">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0 ml-3">
+                                                <input type="checkbox" class="custom-control-input" checked
+                                                       id="rememberMe" [(ngModel)]="rememberMe">
+                                                <label class="custom-control-label float-left white" for="rememberMe">Recuérdame</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-pink btn-block btn-raised">Iniciar sesión</button>
+                                        <button type="button" class="btn btn-secondary btn-block btn-raised"
+                                                (click)="activeModal.dismiss('closed')">Cancelar
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="float-left"><a (click)="requestResetPassword()" class="white">Recuperar contraseña</a>
+                        </div>
+                        <div class="float-right"><a (click)="register()" class="white">Registrarse</a></div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" name="password" id="password" placeholder="Your password"
-                           [(ngModel)]="password">
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label" for="rememberMe">
-                        <input class="form-check-input" type="checkbox" name="rememberMe" id="rememberMe" [(ngModel)]="rememberMe" checked>
-                        <span>Remember me</span>
-                    </label>
-                </div>
-                <button type="submit" class="btn btn-primary">Sign in</button>
-            </form>
-            <p></p>
-            <div class="alert alert-warning">
-                <a class="alert-link" (click)="requestResetPassword()">Did you forget your password?</a>
-            </div>
-            <div class="alert alert-warning">
-                <span>You don't have an account yet?</span>
-                <a class="alert-link" (click)="register()">Register a new account</a>
             </div>
         </div>
     </div>
-</div>
+</section>
+<!--Login Page Ends-->
