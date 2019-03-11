@@ -91,10 +91,10 @@ export class FocusGroupFormComponent implements OnInit {
             this.institutionService.getByUserUser(data.id).subscribe(innerData => {
                 console.log(innerData);
                 this.focusGroup.institution = innerData.body;
+                this.subscribeToSaveResponse(this.focusGroupService.create(this.focusGroup));
             });
         });
         console.log(this.focusGroup);
-        this.subscribeToSaveResponse(this.focusGroupService.create(this.focusGroup));
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IFocusGroup>>) {
@@ -103,7 +103,7 @@ export class FocusGroupFormComponent implements OnInit {
 
     protected onSaveSuccess() {
         this.isSaving = false;
-        this.previousState();
+        // this.previousState();
     }
 
     protected onSaveError() {

@@ -50,7 +50,7 @@ public class FocusGroupResource {
         if (focusGroup.getId() != null) {
             throw new BadRequestAlertException("A new focusGroup cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Optional<String> login = SecurityUtils.getCurrentUserLogin();
+
         FocusGroup result = focusGroupRepository.save(focusGroup);
         return ResponseEntity.created(new URI("/api/focus-groups/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))

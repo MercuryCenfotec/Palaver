@@ -75,7 +75,6 @@ export class InstitutionFormComponent implements OnInit {
     }
 
     save() {
-        debugger
         this.isSaving = true;
         this.subscribeToSaveResponse(this.institutionService.create(this.institution));
     }
