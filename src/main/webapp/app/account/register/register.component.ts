@@ -5,7 +5,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from 'app/shared';
 import { LoginModalService } from 'app/core';
 import { Register } from './register.service';
-import { IUserApp } from 'app/shared/model/user-app.model';
+import { UserApp } from 'app/shared/model/user-app.model';
 
 @Component({
     selector: 'jhi-register',
@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     errorEmailExists: string;
     errorUserExists: string;
     registerAccount: any;
-    userApp: IUserApp;
+    userApp: any;
     success: boolean;
     modalRef: NgbModalRef;
 
@@ -32,6 +32,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         this.success = false;
         this.registerAccount = {};
+        this.userApp = {};
     }
 
     ngAfterViewInit() {
@@ -47,8 +48,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
             this.errorUserExists = null;
             this.errorEmailExists = null;
             this.registerAccount.langKey = 'en';
-            this.registerService.save(this.registerAccount).subscribe(
-                () => {
+            this.registerService.saveRetrieve(this.registerAccount).subscribe(
+                data => {
                     this.success = true;
                 },
                 response => this.processError(response)
@@ -69,5 +70,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         } else {
             this.error = 'ERROR';
         }
+    }
+
+    setRole(rol: string) {
+        this.userApp.rol = rol;
     }
 }

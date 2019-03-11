@@ -76,6 +76,10 @@ public class UserService {
             });
     }
 
+    public Optional<User> getByEmail(String mail) {
+        return userRepository.findOneByEmailIgnoreCase(mail);
+    }
+
     public Optional<User> requestPasswordReset(String mail) {
         return userRepository.findOneByEmailIgnoreCase(mail)
             .filter(User::getActivated)
