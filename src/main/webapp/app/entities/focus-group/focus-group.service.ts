@@ -20,6 +20,7 @@ export class FocusGroupService {
 
     create(focusGroup: IFocusGroup): Observable<EntityResponseType> {
         const copy = this.convertDateFromClient(focusGroup);
+        console.log(focusGroup);
         return this.http
             .post<IFocusGroup>(this.resourceUrl, copy, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));

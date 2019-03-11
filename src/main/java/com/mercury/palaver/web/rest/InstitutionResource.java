@@ -1,5 +1,6 @@
 package com.mercury.palaver.web.rest;
 import com.mercury.palaver.domain.Institution;
+import com.mercury.palaver.domain.User;
 import com.mercury.palaver.repository.InstitutionRepository;
 import com.mercury.palaver.web.rest.errors.BadRequestAlertException;
 import com.mercury.palaver.web.rest.util.HeaderUtil;
@@ -108,5 +109,14 @@ public class InstitutionResource {
         log.debug("REST request to delete Institution : {}", id);
         institutionRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/institutions/user/{userId}")
+    public ResponseEntity<Institution> getInstitutionByUserId(@PathVariable Long userId) {
+        log.debug("REST request to get an institution by userID : {}", userId);
+        User user = new User();
+        user.setId(userId);
+        Optional<Institution> institution = institutionRepository.findByUser_User(user);
+        return ResponseUtil.wrapOrNotFound(institution);
     }
 }
