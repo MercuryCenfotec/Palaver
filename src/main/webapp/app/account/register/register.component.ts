@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     errorEmailExists: string;
     errorUserExists: string;
     registerAccount: any;
-    userApp: any;
+    userApp: UserApp;
     success: boolean;
     modalRef: NgbModalRef;
 
@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         this.success = false;
         this.registerAccount = {};
-        this.userApp = {};
+        this.userApp = new UserApp(null, '', '', '', '', '', null);
     }
 
     ngAfterViewInit() {
@@ -50,7 +50,10 @@ export class RegisterComponent implements OnInit, AfterViewInit {
             this.registerAccount.langKey = 'en';
             this.registerService.saveRetrieve(this.registerAccount).subscribe(
                 data => {
-                    this.success = true;
+                    this.userApp.user = data;
+                    this.registerService.saveUserApp(this.userApp).subscribe(() => {
+                        this.success = true;
+                    });
                 },
                 response => this.processError(response)
             );

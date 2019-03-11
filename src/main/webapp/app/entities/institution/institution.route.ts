@@ -11,7 +11,7 @@ import { InstitutionDetailComponent } from './institution-detail.component';
 import { InstitutionUpdateComponent } from './institution-update.component';
 import { InstitutionDeletePopupComponent } from './institution-delete-dialog.component';
 import { IInstitution } from 'app/shared/model/institution.model';
-import {InstitutionFormComponent} from "app/entities/institution/institution-form.component";
+import { InstitutionFormComponent } from 'app/entities/institution/institution-form.component';
 
 @Injectable({ providedIn: 'root' })
 export class InstitutionResolve implements Resolve<IInstitution> {

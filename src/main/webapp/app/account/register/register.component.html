@@ -27,13 +27,15 @@
             <div class="card-body">
                 <div class="px-3">
 
-                    <form class="form" name="form" role="form" (ngSubmit)="register()" #registerForm="ngForm" *ngIf="!success">
+                    <form class="form" name="form" role="form" (ngSubmit)="register()" #registerForm="ngForm"
+                          *ngIf="!success">
                         <div class="row justify-content-md-center">
                             <div class="col-md-6">
                                 <div class="form-body">
                                     <div class="form-group">
                                         <label for="login"><i class="ft-edit-3"></i> Nombre de usuario</label>
-                                        <input type="text" class="form-control"  [(ngModel)]="registerAccount.login" id="login" name="login" #login="ngModel" placeholder="Nombre de usuario"
+                                        <input type="text" class="form-control" [(ngModel)]="registerAccount.login"
+                                               id="login" name="login" #login="ngModel" placeholder="Nombre de usuario"
                                                required minlength="1" maxlength="50">
                                         <div *ngIf="login.dirty && login.invalid">
                                             <small class="form-text text-danger" *ngIf="login.errors.required">
@@ -52,7 +54,8 @@
 
                                     <div class="form-group">
                                         <label for="name"><i class="ft-user"></i> Nombre</label>
-                                        <input type="text" class="form-control"  [(ngModel)]="userApp.name" id="name" name="name"  placeholder="Nombre"
+                                        <input type="text" class="form-control" [(ngModel)]="userApp.name" id="name"
+                                               name="name" placeholder="Nombre"
                                                required>
                                         <div *ngIf="login.dirty && login.invalid">
                                             <small class="form-text text-danger" *ngIf="login.errors.required">
@@ -62,8 +65,11 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="identification"><i class="ft-hash"></i> Número de identificación</label>
-                                        <input type="text" class="form-control" [(ngModel)]="userApp.identificationNumber" id="identification" name="login" #login="ngModel" placeholder="Número de identificación"
+                                        <label for="identification"><i class="ft-hash"></i> Número de
+                                            identificación</label>
+                                        <input type="text" class="form-control"
+                                               [(ngModel)]="userApp.identificationNumber" id="identification"
+                                               name="login" #login="ngModel" placeholder="Número de identificación"
                                                required minlength="1" maxlength="200">
                                         <div *ngIf="login.dirty && login.invalid">
                                             <small class="form-text text-danger" *ngIf="login.errors.required">
@@ -82,8 +88,10 @@
 
                                     <div class="form-group">
                                         <label for="email"><i class="ft-at-sign"></i> Correo electronico</label>
-                                        <input type="email" class="form-control" id="email" name="email" #email="ngModel" placeholder="ejemplo@correo.com"
-                                               [(ngModel)]="userApp.mail" [(ngModel)]="registerAccount.email" minlength=5 maxlength=254 email required>
+                                        <input type="email" class="form-control" id="email" name="email"
+                                               #email="ngModel" placeholder="ejemplo@correo.com"
+                                               [(ngModel)]="userApp.mail" [(ngModel)]="registerAccount.email"
+                                               minlength=5 maxlength=254 email required>
                                         <div *ngIf="email.dirty && email.invalid">
                                             <small class="form-text text-danger" *ngIf="email.errors.required"
                                             >
@@ -106,12 +114,14 @@
 
                                     <div class="form-group">
                                         <label for="address"><i class="ft-globe"></i> Dirección</label>
-                                        <input type="text" class="form-control"  [(ngModel)]="userApp.address" id="address" name="address" #login="ngModel" placeholder="Dirección">
+                                        <input type="text" class="form-control" [(ngModel)]="userApp.address"
+                                               id="address" name="address" #login="ngModel" placeholder="Dirección">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="password"><i class="ft-lock"></i> Contraseña</label>
-                                        <input type="password" class="form-control" id="password" name="password" #password="ngModel" placeholder="Contraseña"
+                                        <input type="password" class="form-control" id="password" name="password"
+                                               #password="ngModel" placeholder="Contraseña"
                                                [(ngModel)]="registerAccount.password" minlength=4 maxlength=50 required>
                                         <div *ngIf="password.dirty && password.invalid">
                                             <small class="form-text text-danger" *ngIf="password.errors.required"
@@ -130,23 +140,30 @@
                                         <p></p>
                                         <label>Fortaleza:</label>
 
-                                        <jhi-password-strength-bar [passwordToCheck]="registerAccount.password"></jhi-password-strength-bar>
+                                        <jhi-password-strength-bar
+                                            [passwordToCheck]="registerAccount.password"></jhi-password-strength-bar>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="confirmPassword"><i class="ft-lock"></i> Confirmar contraseña</label>
-                                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" #confirmPasswordInput="ngModel" placeholder="Confirmar contraseña"
-                                                [(ngModel)]="confirmPassword" minlength=4 maxlength=50 required>
+                                        <label for="confirmPassword"><i class="ft-lock"></i> Confirmar
+                                            contraseña</label>
+                                        <input type="password" class="form-control" id="confirmPassword"
+                                               name="confirmPassword" #confirmPasswordInput="ngModel"
+                                               placeholder="Confirmar contraseña"
+                                               [(ngModel)]="confirmPassword" minlength=4 maxlength=50 required>
                                         <div *ngIf="confirmPasswordInput.dirty && confirmPasswordInput.invalid">
-                                            <small class="form-text text-danger" *ngIf="confirmPasswordInput.errors.required"
+                                            <small class="form-text text-danger"
+                                                   *ngIf="confirmPasswordInput.errors.required"
                                             >
                                                 Your confirmation password is required.
                                             </small>
-                                            <small class="form-text text-danger" *ngIf="confirmPasswordInput.errors.minlength"
+                                            <small class="form-text text-danger"
+                                                   *ngIf="confirmPasswordInput.errors.minlength"
                                             >
                                                 Your confirmation password is required to be at least 4 characters.
                                             </small>
-                                            <small class="form-text text-danger" *ngIf="confirmPasswordInput.errors.maxlength"
+                                            <small class="form-text text-danger"
+                                                   *ngIf="confirmPasswordInput.errors.maxlength"
                                             >
                                                 Your confirmation password cannot be longer than 50 characters.
                                             </small>
@@ -156,15 +173,20 @@
                                     <div class="form-group">
                                         <label>Que tipo de usuario desea ser?</label>
                                         <div class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" id="customRadioInline1" value="institution" name="customRadioInline1" class="custom-control-input" (change)="setRole('institution')">
-                                            <label class="custom-control-label" for="customRadioInline1">Institución</label>
+                                            <input type="radio" id="customRadioInline1" value="institution"
+                                                   name="customRadioInline1" class="custom-control-input"
+                                                   (change)="setRole('institution')">
+                                            <label class="custom-control-label"
+                                                   for="customRadioInline1">Institución</label>
                                         </div>
                                         <div class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" id="customRadioInline2" value="participant" checked name="customRadioInline1"  class="custom-control-input" (change)="setRole('participant')">
-                                            <label class="custom-control-label" for="customRadioInline2">Participante</label>
+                                            <input type="radio" id="customRadioInline2" value="participant"
+                                                   name="customRadioInline1" class="custom-control-input"
+                                                   (change)="setRole('participant')">
+                                            <label class="custom-control-label"
+                                                   for="customRadioInline2">Participante</label>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -173,7 +195,8 @@
                             <button type="button" class="btn btn-raised btn-warning mr-1">
                                 <i class="ft-x"></i> Atras
                             </button>
-                            <button type="submit" [disabled]="registerForm.form.invalid" class="btn btn-raised btn-primary">
+                            <button type="submit" [disabled]="userApp.rol === ''" [disabled]="registerForm.form.invalid"
+                                    class="btn btn-raised btn-primary">
                                 <i class="ft-check"></i> Confirmar
                             </button>
                         </div>

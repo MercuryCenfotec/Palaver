@@ -2,6 +2,8 @@ package com.mercury.palaver.web.rest;
 
 
 import com.mercury.palaver.domain.User;
+import com.mercury.palaver.domain.UserApp;
+import com.mercury.palaver.repository.UserAppRepository;
 import com.mercury.palaver.repository.UserRepository;
 import com.mercury.palaver.security.SecurityUtils;
 import com.mercury.palaver.service.MailService;
@@ -20,7 +22,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.net.URISyntaxException;
 import java.util.*;
+
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 
 /**
  * REST controller for managing the current user's account.
@@ -37,11 +42,14 @@ public class AccountResource {
 
     private final MailService mailService;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
+    private final UserAppRepository userAppRepository;
+
+    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService, UserAppRepository userAppRepository) {
 
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
+        this.userAppRepository = userAppRepository;
     }
 
     /**
@@ -63,12 +71,13 @@ public class AccountResource {
     }
 
     /**
-     * POST  /register : register the user.
+     * POST  /register_retrieve : register the user and retrieves it by the email.
      *
      * @param managedUserVM the managed user View Model
      * @throws InvalidPasswordException 400 (Bad Request) if the password is incorrect
      * @throws EmailAlreadyUsedException 400 (Bad Request) if the email is already used
      * @throws LoginAlreadyUsedException 400 (Bad Request) if the login is already used
+     * @return registered user
      */
     @PostMapping("/register_retrieve")
     @ResponseStatus(HttpStatus.CREATED)
@@ -77,8 +86,22 @@ public class AccountResource {
             throw new InvalidPasswordException();
         }
         User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
-        mailService.sendActivationEmail(user);
+//        mailService.sendActivationEmail(user);
         return userService.getByEmail(user.getEmail());
+    }/**
+     * POST  /user-apps : Create a new userApp.
+     *
+     * @param userApp the userApp to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new userApp, or with status 400 (Bad Request) if the userApp has already an ID
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PostMapping("/register_user_app")
+    public void createUserApp(@Valid @RequestBody UserApp userApp) {
+        log.debug("REST request to save UserApp : {}", userApp);
+        if (userApp.getId() != null) {
+            throw new BadRequestAlertException("A new userApp cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        userAppRepository.save(userApp);
     }
 
     /**

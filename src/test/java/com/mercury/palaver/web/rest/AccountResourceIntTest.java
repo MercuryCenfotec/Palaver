@@ -5,6 +5,7 @@ import com.mercury.palaver.config.Constants;
 import com.mercury.palaver.domain.Authority;
 import com.mercury.palaver.domain.User;
 import com.mercury.palaver.repository.AuthorityRepository;
+import com.mercury.palaver.repository.UserAppRepository;
 import com.mercury.palaver.repository.UserRepository;
 import com.mercury.palaver.security.AuthoritiesConstants;
 import com.mercury.palaver.service.MailService;
@@ -55,6 +56,8 @@ public class AccountResourceIntTest {
     private UserRepository userRepository;
 
     @Autowired
+    private UserAppRepository userAppRepository;
+    @Autowired
     private AuthorityRepository authorityRepository;
 
     @Autowired
@@ -84,10 +87,10 @@ public class AccountResourceIntTest {
         MockitoAnnotations.initMocks(this);
         doNothing().when(mockMailService).sendActivationEmail(any());
         AccountResource accountResource =
-            new AccountResource(userRepository, userService, mockMailService);
+            new AccountResource(userRepository, userService, mockMailService,userAppRepository);
 
         AccountResource accountUserMockResource =
-            new AccountResource(userRepository, mockUserService, mockMailService);
+            new AccountResource(userRepository, mockUserService, mockMailService,userAppRepository);
         this.restMvc = MockMvcBuilders.standaloneSetup(accountResource)
             .setMessageConverters(httpMessageConverters)
             .setControllerAdvice(exceptionTranslator)
