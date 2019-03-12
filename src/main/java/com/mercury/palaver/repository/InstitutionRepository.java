@@ -1,8 +1,11 @@
 package com.mercury.palaver.repository;
 
 import com.mercury.palaver.domain.Institution;
+import com.mercury.palaver.domain.User;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 
 /**
@@ -11,5 +14,5 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface InstitutionRepository extends JpaRepository<Institution, Long> {
-
+    Optional<Institution> findByUser_User(User user);
 }

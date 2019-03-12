@@ -11,6 +11,7 @@ import { FocusGroupDetailComponent } from './focus-group-detail.component';
 import { FocusGroupUpdateComponent } from './focus-group-update.component';
 import { FocusGroupDeletePopupComponent } from './focus-group-delete-dialog.component';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
+import { FocusGroupFormComponent } from 'app/entities/focus-group/focus-group-form.component';
 
 @Injectable({ providedIn: 'root' })
 export class FocusGroupResolve implements Resolve<IFocusGroup> {
@@ -52,12 +53,12 @@ export const focusGroupRoute: Routes = [
     },
     {
         path: 'new',
-        component: FocusGroupUpdateComponent,
+        component: FocusGroupFormComponent,
         resolve: {
             focusGroup: FocusGroupResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN', 'ROLE_USER'],
             pageTitle: 'FocusGroups'
         },
         canActivate: [UserRouteAccessService]

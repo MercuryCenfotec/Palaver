@@ -1,7 +1,8 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-            <h2 id="jhi-focus-group-heading">Edición de grupos de enfoque</h2>
+            <div class="row justify-content-md-center"></div>
+            <h2 id="jhi-focus-group-heading">Creación de grupos de enfoque</h2>
             <div>
                 <jhi-alert-error></jhi-alert-error>
                 <h4 class="form-section"><i class="ft-users"></i>Información</h4>
@@ -10,7 +11,7 @@
                     <input type="text" class="form-control" id="id" name="id"
                            [(ngModel)]="focusGroup.id" readonly/>
                 </div>
-                <div class="form-group">
+                <div class="form-group" >
                     <label class="form-control-label" for="field_name">Nombre</label>
                     <input type="text" class="form-control" name="name" id="field_name"
                            [(ngModel)]="focusGroup.name" required/>
@@ -66,63 +67,63 @@
                         <div [hidden]="!(editForm.controls.endDate?.dirty && editForm.controls.endDate?.invalid)">
                             <small class="form-text text-danger"
                                    [hidden]="!editForm.controls.endDate?.errors?.required">
-                                This field is required.
+                                ¡Fecha de finalización requerida!
                             </small>
                         </div>
                     </div>
-
-                    <div class="form-group" [hidden]="true">
-                        <label class="form-control-label" for="field_code">Code</label>
-                        <input type="text" class="form-control" name="code" id="field_code"
-                               [(ngModel)]="focusGroup.code"/>
-                    </div>
-
-                    <div class="form-group" [hidden]="true">
-                        <label class="form-control-label" for="field_incentive">Incentive</label>
-                        <select class="form-control" id="field_incentive" name="incentive"
-                                [(ngModel)]="focusGroup.incentive">
-                            <option [ngValue]="null"></option>
-                            <option
-                                [ngValue]="incentiveOption.id === focusGroup.incentive?.id ? focusGroup.incentive : incentiveOption"
-                                *ngFor="let incentiveOption of incentives; trackBy: trackIncentiveById">{{incentiveOption.id}}</option>
-                        </select>
-                    </div>
-                    <div class="form-group" [hidden]="true">
-                        <label class="form-control-label" for="field_institution">Institution</label>
-                        <select class="form-control" id="field_institution" name="institution"
-                                [(ngModel)]="focusGroup.institution">
-                            <option [ngValue]="null"></option>
-                            <option
-                                [ngValue]="institutionOption.id === focusGroup.institution?.id ? focusGroup.institution : institutionOption"
-                                *ngFor="let institutionOption of institutions; trackBy: trackInstitutionById">{{institutionOption.id}}</option>
-                        </select>
-                    </div>
-                    <div class="form-group" [hidden]="true">
-                        <label for="field_category">Category</label>
-                        <select class="form-control" id="field_category" multiple name="category"
-                                [(ngModel)]="focusGroup.categories">
-                            <option [ngValue]="getSelected(focusGroup.categories, categoryOption)"
-                                    *ngFor="let categoryOption of categories; trackBy: trackCategoryById">{{categoryOption.id}}</option>
-                        </select>
-                    </div>
-                    <div class="form-group" [hidden]="true">
-                        <label for="field_participant">Participant</label>
-                        <select class="form-control" id="field_participant" multiple name="participant"
-                                [(ngModel)]="focusGroup.participants">
-                            <option [ngValue]="getSelected(focusGroup.participants, participantOption)"
-                                    *ngFor="let participantOption of participants; trackBy: trackParticipantById">{{participantOption.id}}</option>
-                        </select>
-                    </div>
                 </div>
-                <div>
-                    <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-                        <i class="ft-x"></i>&nbsp;<span>Cancel</span>
-                    </button>
-                    <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving"
-                            class="btn btn-primary">
-                        <i class="ft-save"></i>&nbsp;<span>Save</span>
-                    </button>
+
+                <div class="form-group" [hidden]="true">
+                    <label class="form-control-label" for="field_code">Code</label>
+                    <input type="text" class="form-control" name="code" id="field_code"
+                           [(ngModel)]="focusGroup.code"/>
                 </div>
+
+                <div class="form-group" [hidden]="true">
+                    <label class="form-control-label" for="field_incentive">Incentive</label>
+                    <select class="form-control" id="field_incentive" name="incentive"
+                            [(ngModel)]="focusGroup.incentive">
+                        <option [ngValue]="null"></option>
+                        <option
+                            [ngValue]="incentiveOption.id === focusGroup.incentive?.id ? focusGroup.incentive : incentiveOption"
+                            *ngFor="let incentiveOption of incentives; trackBy: trackIncentiveById">{{incentiveOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group" [hidden]="true">
+                    <label class="form-control-label" for="field_institution">Institution</label>
+                    <select class="form-control" id="field_institution" name="institution"
+                            [(ngModel)]="focusGroup.institution">
+                        <option [ngValue]="null"></option>
+                        <option
+                            [ngValue]="institutionOption.id === focusGroup.institution?.id ? focusGroup.institution : institutionOption"
+                            *ngFor="let institutionOption of institutions; trackBy: trackInstitutionById">{{institutionOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group" [hidden]="true">
+                    <label for="field_category">Category</label>
+                    <select class="form-control" id="field_category" multiple name="category"
+                            [(ngModel)]="focusGroup.categories">
+                        <option [ngValue]="getSelected(focusGroup.categories, categoryOption)"
+                                *ngFor="let categoryOption of categories; trackBy: trackCategoryById">{{categoryOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group" [hidden]="true">
+                    <label for="field_participant">Participant</label>
+                    <select class="form-control" id="field_participant" multiple name="participant"
+                            [(ngModel)]="focusGroup.participants">
+                        <option [ngValue]="getSelected(focusGroup.participants, participantOption)"
+                                *ngFor="let participantOption of participants; trackBy: trackParticipantById">{{participantOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <i class="ft-x"></i>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" class="btn btn-primary">
+                    <i class="ft-save"></i>&nbsp;<span>Save</span>
+                </button>
+            </div>
         </form>
     </div>
 </div>

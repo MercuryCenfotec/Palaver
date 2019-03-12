@@ -1,5 +1,6 @@
 package com.mercury.palaver.repository;
 
+import com.mercury.palaver.domain.User;
 import com.mercury.palaver.domain.UserApp;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
@@ -14,4 +15,5 @@ import java.util.Optional;
 @Repository
 public interface UserAppRepository extends JpaRepository<UserApp, Long> {
     Optional<UserApp> findByUser_Id(Long id);
+    Optional<UserApp> findByUser(User user);
 }
