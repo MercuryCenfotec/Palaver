@@ -49,7 +49,6 @@ public class FocusGroup implements Serializable {
     private Incentive incentive;
 
     @ManyToOne
-    @JsonIgnoreProperties("focusGroups")
     private Institution institution;
 
     @ManyToMany

@@ -35,4 +35,10 @@ export class InstitutionService {
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
+
+    getByUserUser(id: number): Observable<EntityResponseType> {
+        console.log(id);
+        console.log(`${this.resourceUrl}/user/${id}`);
+        return this.http.get<IInstitution>(`${this.resourceUrl}/user/${id}`, { observe: 'response' });
+    }
 }
