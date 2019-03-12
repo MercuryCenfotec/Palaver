@@ -34,7 +34,7 @@ export const userAppRoute: Routes = [
         component: UserAppComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'UserApps'
+            pageTitle: 'Usuarios'
         },
         canActivate: [UserRouteAccessService]
     },
