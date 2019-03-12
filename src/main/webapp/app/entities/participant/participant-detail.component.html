@@ -1,51 +1,89 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <div *ngIf="participant">
-            <h2><span>Participant</span> {{participant.id}}</h2>
-            <hr>
-            <jhi-alert-error></jhi-alert-error>
-            <dl class="row-md jh-entity-details">
-                <dt><span>Birthdate</span></dt>
-                <dd>
-                    <span>{{participant.birthdate}}</span>
-                </dd>
-                <dt><span>Gender</span></dt>
-                <dd>
-                    <span>{{participant.gender}}</span>
-                </dd>
-                <dt><span>Civil Status</span></dt>
-                <dd>
-                    <span>{{participant.civilStatus}}</span>
-                </dd>
-                <dt><span>Picture</span></dt>
-                <dd>
-                    <span>{{participant.picture}}</span>
-                </dd>
-                <dt><span>User</span></dt>
-                <dd>
-                    <div *ngIf="participant.user">
-                        <a [routerLink]="['/user-app', participant.user?.id, 'view']">{{participant.user?.id}}</a>
+<div *ngIf="participant">
+    <section id="user-profile">
+        <div class="row">
+            <div class="col-12">
+                <div class="card profile-with-cover">
+                    <div class="card-img-top img-fluid bg-cover height-300" style="background: url('https://i.ytimg.com/vi/sOfdDibgjbk/maxresdefault.jpg') 50%;"></div>
+                    <div class="media profil-cover-details row">
+                        <div class="col-5">
+                            <div class="align-self-start halfway-fab pl-3 pt-2">
+                                <div class="text-left">
+                                    <h3 class="card-title white">{{participant.user?.name}}</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="align-self-center halfway-fab text-center">
+                                <a class="profile-image">
+                                    <img src="https://lh3.googleusercontent.com/2aJfB6trLglywvIh6MSN58qh-r2b-_2GoXk4dWL5fIZmMAWdTN3f98Ugpi6U_glIm0w" class="rounded-circle img-border gradient-summer width-100" alt="Card image">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                        </div>
                     </div>
-                </dd>
-                <dt><span>Category</span></dt>
-                <dd>
-                    <span *ngFor="let category of participant.categories; let last = last">
-                        <a [routerLink]="['/category', category?.id, 'view' ]">{{category.id}}</a>{{last ? '' : ', '}}
-                    </span>
-                </dd>
-            </dl>
-
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
-            </button>
-
-            <button type="button"
-                    [routerLink]="['/participant', participant.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
-            </button>
+                    <div class="profile-cover-buttons">
+                        <div class="media-body halfway-fab align-self-end">
+                            <div class="text-right d-none d-sm-none d-md-none d-lg-block">
+                                <button type="button" class="btn btn-primary btn-raised mr-2" (click)="previousState()"><i class="ft ft-arrow-left"></i> Atrás</button>
+                                <button type="button" class="btn btn-success btn-raised mr-3" [routerLink]="['/participant', participant.id, 'edit']"><i class="ft ft-edit"></i> Modificar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Basic User Details Ends-->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Información general</h5>
+                </div>
+                <div class="card-body">
+                    <hr>
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <ul class="no-list-style">
+                                <li class="mb-2" *ngIf="participant.user">
+                                    <span class="text-bold-500 primary"><a><i class="ft ft-clipboard"></i> Nombre:</a></span>
+                                    <span class="display-block overflow-hidden">
+                                        <a class="black" [routerLink]="['/user-app', participant.user?.id, 'view']">{{participant.user?.name}}</a>
+                                    </span>
+                                </li>
+                                <li class="mb-2">
+                                    <span class="text-bold-500 primary"><a><i class="ft ft-map-pin"></i> Fecha de nacimiento:</a></span>
+                                    <span class="display-block overflow-hidden">{{participant.birthdate}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <ul class="no-list-style">
+                                <li class="mb-2">
+                                    <span class="text-bold-500 primary"><a><i class="ft ft-message-square"></i> Estado civil:</a></span>
+                                    <span class="display-block overflow-hidden">{{participant.civilStatus}}</span>
+                                </li>
+                                <li class="mb-2">
+                                    <span class="text-bold-500 primary"><a><i class="ft ft-user"></i> Género:</a></span>
+                                    <span class="display-block overflow-hidden">{{participant.gender}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <ul class="no-list-style">
+                                <li class="mb-2">
+                                    <span class="text-bold-500 primary"><a><i class="ft ft-smartphone"></i> Categorias:</a></span>
+                                    <span class="display-block overflow-hidden" *ngFor="let category of participant.categories; let last = last">
+                                        <a class="black" [routerLink]="['/category', category?.id, 'view' ]">{{category.name}}</a>
+                                        {{last ? '' : ''}}
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
