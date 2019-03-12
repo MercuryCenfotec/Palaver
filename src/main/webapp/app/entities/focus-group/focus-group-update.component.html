@@ -39,7 +39,7 @@
                         <div class="input-group">
                             <input id="field_beginDate" type="text" class="form-control" name="beginDate" ngbDatepicker
                                    #beginDateDp="ngbDatepicker" [(ngModel)]="focusGroup.beginDate"
-                                   required/>
+                                   required [readonly]="true"/>
                             <span class="input-group-append">
                             <button type="button" class="btn btn-secondary" (click)="beginDateDp.toggle()"><fa-icon
                                 [icon]="'calendar-alt'"></fa-icon></button>
@@ -57,7 +57,7 @@
                         <div class="input-group">
                             <input id="field_endDate" type="text" class="form-control" name="endDate" ngbDatepicker
                                    #endDateDp="ngbDatepicker" [(ngModel)]="focusGroup.endDate"
-                                   required/>
+                                   required [readonly]="true"/>
                             <span class="input-group-append">
                             <button type="button" class="btn btn-secondary" (click)="endDateDp.toggle()"><fa-icon
                                 [icon]="'calendar-alt'"></fa-icon></button>
@@ -115,12 +115,12 @@
                     </div>
                 </div>
                 <div>
-                    <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-                        <i class="ft-x"></i>&nbsp;<span>Cancel</span>
+                    <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1" (click)="previousState()">
+                        <i class="ft-x"></i>&nbsp;<span> Cancelar</span>
                     </button>
                     <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving"
-                            class="btn btn-primary">
-                        <i class="ft-save"></i>&nbsp;<span>Save</span>
+                            class="btn btn-raised btn-primary">
+                        <i class="ft-save"></i>&nbsp;<span> Editar</span>
                     </button>
                 </div>
         </form>
