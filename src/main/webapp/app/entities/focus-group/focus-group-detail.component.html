@@ -1,89 +1,64 @@
 <div class="row justify-content-center">
-    <div class="col-8">
-        <div *ngIf="focusGroup">
-            <h2><span>Focus Group</span> {{focusGroup.id}}</h2>
-            <hr>
-            <jhi-alert-error></jhi-alert-error>
-            <dl class="row-md jh-entity-details">
-                <dt><span>Name</span></dt>
-                <dd>
-                    <span>{{focusGroup.name}}</span>
-                </dd>
-                <dt><span>Description</span></dt>
-                <dd>
-                    <span>{{focusGroup.description}}</span>
-                </dd>
-                <dt><span>Begin Date</span></dt>
-                <dd>
-                    <span>{{focusGroup.beginDate}}</span>
-                </dd>
-                <dt><span>End Date</span></dt>
-                <dd>
-                    <span>{{focusGroup.endDate}}</span>
-                </dd>
-                <dt><span>Code</span></dt>
-                <dd>
-                    <span>{{focusGroup.code}}</span>
-                </dd>
-                <dt><span>Incentive</span></dt>
-                <dd>
-                    <div *ngIf="focusGroup.incentive">
-                        <a [routerLink]="['/incentive', focusGroup.incentive?.id, 'view']">{{focusGroup.incentive?.id}}</a>
-                    </div>
-                </dd>
-                <dt><span>Institution</span></dt>
-                <dd>
-                    <div *ngIf="focusGroup.institution">
-                        <a [routerLink]="['/institution', focusGroup.institution?.id, 'view']">{{focusGroup.institution?.id}}</a>
-                    </div>
-                </dd>
-                <dt><span>Category</span></dt>
-                <dd>
-                    <span *ngFor="let category of focusGroup.categories; let last = last">
-                        <a [routerLink]="['/category', category?.id, 'view' ]">{{category.id}}</a>{{last ? '' : ', '}}
-                    </span>
-                </dd>
-                <dt><span>Participant</span></dt>
-                <dd>
-                    <span *ngFor="let participant of focusGroup.participants; let last = last">
-                        <a [routerLink]="['/participant', participant?.id, 'view' ]">{{participant.id}}</a>{{last ? '' : ', '}}
-                    </span>
-                </dd>
-            </dl>
-
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
-            </button>
-
-            <button type="button"
-                    [routerLink]="['/focus-group', focusGroup.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
-            </button>
+    <div class="col-8 card">
+        <div class="card-header row">
+            <div class="col-xl-8 col-lg-7 col-md-12 col-sm-12">
+                <h2>Grupo de enfoque - {{focusGroup.name}}</h2>
+            </div>
         </div>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-header">
-        <h2>Grupo de enfoque - {{focusGroup.name}}</h2>
-    </div>
-    <div class="card-body">
-        <div class="card-block">
-            {{focusGroup.description}}
-        </div>
-        <div class="card-block">
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12">
-                    <div class="title">
-                        <p>Fecha de inicio: {{focusGroup.beginDate}}</p>
+        <hr>
+        <div class="card-body">
+            <div class="card-block row justify-content-between">
+                <div class="col-lg-7 col-md-12 col-sm-12">
+                    <div class="">
+                        <span class="text-bold-500 primary display-block">Descripción:</span>
+                        <span>{{focusGroup.description}}</span>
                     </div>
-                    </div>
-                        <p>Fecha de finalización: {{focusGroup.endDate}}</p>
-                    <div class="col-lg-6 col-md-6 col-sm-12">
                 </div>
+                <div class="col-lg-5 col-md-12 col-sm-12">
+                    <div id="codeCard" class="card bg-primary">
+                        <div class="card-body col-12">
+                            <div class="px-3 py-3">
+                                <div class="media">
+                                    <div class="media-left align-self-center">
+                                        <i class="ft-clipboard white font-large-1 float-left"></i>
+                                    </div>
+                                    <div class="media-body white text-right">
+                                        <span class="text-bold-500 display-block">Código del grupo</span>
+                                        <span>{{focusGroup.code}}<!-- Haga click para copiar.--></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-block">
+                <span class="text-bold-500 primary display-block">Fecha de inicio:</span>
+                <span>{{focusGroup.beginDate | date:'longDate'}}</span>
+            </div>
+            <div class="card-block">
+                <span class="text-bold-500 primary display-block">Fecha de finalización:</span>
+                <span>{{focusGroup.endDate | date:'longDate'}}</span>
+            </div>
+            <div class="card-block">
+                <span class="text-bold-500 primary display-block">Incentivo:</span>
+                <span *ngIf="focusGroup.incentive; else noIncentive">{{focusGroup.incentive}}</span>
+                <ng-template #noIncentive>
+                    <span>No hay incentivos seleccionados.</span>
+                </ng-template>
+            </div>
+            <div class="card-block">
+                <button type="submit"
+                        (click)="previousState()"
+                        class="btn btn-raised btn-warning mr-1">
+                    <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Volver</span>
+                </button>
+
+                <button type="button"
+                        [routerLink]="['/focus-group', focusGroup.id, 'edit']"
+                        class="btn btn-raised btn-primary">
+                    <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Editar</span>
+                </button>
             </div>
         </div>
     </div>
