@@ -1,0 +1,3 @@
+id;name;identification_number;mail;address;rol;user_id
+1;Institution;1234567;institution@localhost;address;institution;5
+2;Participant;1234567;participant@localhost;address;participant;6

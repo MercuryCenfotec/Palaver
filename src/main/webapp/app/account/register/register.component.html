@@ -56,10 +56,10 @@
                                     <div class="form-group">
                                         <label for="name"><i class="ft-user"></i> Nombre</label>
                                         <input type="text" class="form-control" [(ngModel)]="userApp.name" id="name"
-                                               name="name" placeholder="Nombre"
+                                               name="name" placeholder="Nombre" #name="ngModel"
                                                required>
-                                        <div *ngIf="login.dirty && login.invalid">
-                                            <small class="form-text text-danger" *ngIf="login.errors.required">
+                                        <div *ngIf="name.dirty && name.invalid">
+                                            <small class="form-text text-danger" *ngIf="name.errors.required">
                                                 Este campo es requerido.
                                             </small>
                                         </div>
@@ -70,17 +70,17 @@
                                             identificación</label>
                                         <input type="text" class="form-control"
                                                [(ngModel)]="userApp.identificationNumber" id="identification"
-                                               name="login" #login="ngModel" placeholder="Número de identificación"
+                                               name="identification" #identification="ngModel" placeholder="Número de identificación"
                                                required minlength="1" maxlength="200">
-                                        <div *ngIf="login.dirty && login.invalid">
-                                            <small class="form-text text-danger" *ngIf="login.errors.required">
+                                        <div *ngIf="identification.dirty && identification.invalid">
+                                            <small class="form-text text-danger" *ngIf="identification.errors.required">
                                                 Este campo es requerido.
                                             </small>
-                                            <small class="form-text text-danger" *ngIf="login.errors.minlength"
+                                            <small class="form-text text-danger" *ngIf="identification.errors.minlength"
                                             >
                                                 Su número de identificación debe tener al menos 1 caracter de largo.
                                             </small>
-                                            <small class="form-text text-danger" *ngIf="login.errors.maxlength"
+                                            <small class="form-text text-danger" *ngIf="identification.errors.maxlength"
                                             >
                                                 Su número de identificación no debe tener mas de 50 caracteres de largo.
                                             </small>
@@ -166,7 +166,8 @@
                                             <small class="form-text text-danger"
                                                    *ngIf="confirmPasswordInput.errors.maxlength"
                                             >
-                                                Su contraseña de confirmación no debe tener mas de 50 caracteres de largo.
+                                                Su contraseña de confirmación no debe tener mas de 50 caracteres de
+                                                largo.
                                             </small>
                                         </div>
                                     </div>
@@ -193,10 +194,11 @@
                         </div>
 
                         <div class="form-actions center">
-                            <button type="button" class="btn btn-raised btn-warning mr-1">
+                            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="previousState()">
                                 <i class="ft-x"></i> Atras
                             </button>
-                            <button type="submit" [disabled]="userApp.rol === ''" [disabled]="registerForm.form.invalid"
+                            <button type="submit"
+                                    [disabled]="registerForm.form.invalid ||userApp.rol === ''"
                                     class="btn btn-raised btn-primary">
                                 <i class="ft-check"></i> Confirmar
                             </button>
