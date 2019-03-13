@@ -11,6 +11,7 @@ import { AptitudeTestDetailComponent } from './aptitude-test-detail.component';
 import { AptitudeTestUpdateComponent } from './aptitude-test-update.component';
 import { AptitudeTestDeletePopupComponent } from './aptitude-test-delete-dialog.component';
 import { IAptitudeTest } from 'app/shared/model/aptitude-test.model';
+import { AptitudeTestFormComponent } from 'app/entities/aptitude-test/aptitude-test-form.component';
 
 @Injectable({ providedIn: 'root' })
 export class AptitudeTestResolve implements Resolve<IAptitudeTest> {
@@ -52,12 +53,12 @@ export const aptitudeTestRoute: Routes = [
     },
     {
         path: 'new',
-        component: AptitudeTestUpdateComponent,
+        component: AptitudeTestFormComponent,
         resolve: {
             aptitudeTest: AptitudeTestResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER', 'ROLE_ADMIN'],
             pageTitle: 'AptitudeTests'
         },
         canActivate: [UserRouteAccessService]
