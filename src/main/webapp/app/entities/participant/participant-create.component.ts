@@ -13,6 +13,7 @@ import { ICategory } from 'app/shared/model/category.model';
 import { CategoryService } from 'app/entities/category';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { FocusGroupService } from 'app/entities/focus-group';
+import * as AWS from 'aws-sdk';
 import { IUser, UserService } from 'app/core';
 
 @Component({
@@ -20,6 +21,8 @@ import { IUser, UserService } from 'app/core';
     templateUrl: './participant-create.component.html'
 })
 export class ParticipantCreateComponent implements OnInit {
+    public image;
+
     participant: IParticipant;
     isSaving: boolean;
     user: IUser;
@@ -145,5 +148,29 @@ export class ParticipantCreateComponent implements OnInit {
             }
         }
         return option;
+    }
+
+    fileEvent(fileInput: any) {
+        const file = fileInput.target.files[0];
+
+        console.log(file);
+
+        AWS.config.region = 'us-east-1'; // Region
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: 'us-east-1:68b4abc4-89a0-4c98-b8ad-481d305b5eca'
+        });
+
+        const s3 = new AWS.S3({
+            apiVersion: '2006-03-01',
+            params: { Bucket: 'palaverapp' }
+        });
+
+        this.image = file.name;
+
+        s3.upload({ Key: file.name, Bucket: 'palaverapp', Body: file, ACL: 'public-read' }, function(err, data) {
+            if (err) {
+                console.log(err, 'there was an error uploading your file');
+            }
+        });
     }
 }
