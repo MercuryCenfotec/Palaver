@@ -78,4 +78,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     setRole(rol: string) {
         this.userApp.rol = rol;
     }
+
+    previousState() {}
 }

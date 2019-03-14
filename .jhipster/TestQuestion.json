@@ -1,5 +1,23 @@
 {
-    "name": "TestQuestion",
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "aptitudeTest",
+            "otherEntityName": "aptitudeTest",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "testQuestion",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipName": "answers",
+            "otherEntityName": "testAnswerOption",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "testQuestion",
+            "otherEntityRelationshipNameUndefined": false
+        }
+    ],
     "fields": [
         {
             "fieldName": "question",
@@ -9,23 +27,13 @@
             ]
         }
     ],
-    "relationships": [
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "aptitudeTest",
-            "otherEntityName": "aptitudeTest",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "testQuestion"
-        }
-    ],
     "changelogDate": "20190304115740",
-    "javadoc": "The TestQuestion entity.",
-    "entityTableName": "test_question",
     "dto": "no",
-    "pagination": "no",
+    "searchEngine": false,
     "service": "no",
+    "entityTableName": "test_question",
+    "databaseType": "sql",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*"
+    "pagination": "no",
+    "javadoc": "The TestQuestion entity."
 }

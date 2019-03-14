@@ -6,6 +6,7 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { IUserApp } from 'app/shared/model/user-app.model';
 import { UserAppService } from './user-app.service';
+import { UserService } from 'app/core';
 
 @Component({
     selector: 'jhi-user-app-delete-dialog',
@@ -14,7 +15,12 @@ import { UserAppService } from './user-app.service';
 export class UserAppDeleteDialogComponent {
     userApp: IUserApp;
 
-    constructor(protected userAppService: UserAppService, public activeModal: NgbActiveModal, protected eventManager: JhiEventManager) {}
+    constructor(
+        protected userAppService: UserAppService,
+        protected userService: UserService,
+        public activeModal: NgbActiveModal,
+        protected eventManager: JhiEventManager
+    ) {}
 
     clear() {
         this.activeModal.dismiss('cancel');
@@ -22,6 +28,7 @@ export class UserAppDeleteDialogComponent {
 
     confirmDelete(id: number) {
         this.userAppService.delete(id).subscribe(response => {
+            // this.userService.delete(this.userApp.user.login).subscribe(result=>{})
             this.eventManager.broadcast({
                 name: 'userAppListModification',
                 content: 'Deleted an userApp'
@@ -43,7 +50,10 @@ export class UserAppDeletePopupComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ userApp }) => {
             setTimeout(() => {
-                this.ngbModalRef = this.modalService.open(UserAppDeleteDialogComponent as Component, { size: 'lg', backdrop: 'static' });
+                this.ngbModalRef = this.modalService.open(UserAppDeleteDialogComponent as Component, {
+                    size: 'lg',
+                    backdrop: 'static'
+                });
                 this.ngbModalRef.componentInstance.userApp = userApp;
                 this.ngbModalRef.result.then(
                     result => {

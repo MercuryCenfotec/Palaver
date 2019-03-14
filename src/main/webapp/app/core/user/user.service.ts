@@ -33,6 +33,10 @@ export class UserService {
         return this.http.delete(`${this.resourceUrl}/${login}`, { observe: 'response' });
     }
 
+    getByLogin(login: string): Observable<IUser> {
+        return this.http.get<IUser>(SERVER_API_URL + 'api/users/' + login);
+    }
+
     authorities(): Observable<string[]> {
         return this.http.get<string[]>(SERVER_API_URL + 'api/users/authorities');
     }
