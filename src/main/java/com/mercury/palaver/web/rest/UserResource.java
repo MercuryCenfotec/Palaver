@@ -105,7 +105,7 @@ public class UserResource {
         }
     }
 
-    @PostMapping("/users/add_authorization/{role}")
+    @PutMapping("/users/add_authorization/{role}")
     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.USER + "\")")
     public ResponseEntity setAuthority(@Valid @RequestBody UserDTO userDTO, @PathVariable String role) {
         User updatedUser;
@@ -122,7 +122,7 @@ public class UserResource {
      * @throws LoginAlreadyUsedException 400 (Bad Request) if the login is already in use
      */
     @PutMapping("/users")
-    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.USER + "\")")
     public ResponseEntity<UserDTO> updateUser(@Valid @RequestBody UserDTO userDTO) {
         log.debug("REST request to update User : {}", userDTO);
         Optional<User> existingUser = userRepository.findOneByEmailIgnoreCase(userDTO.getEmail());
@@ -175,6 +175,8 @@ public class UserResource {
                 .map(UserDTO::new));
     }
 
+    @GetMapping("/user/")
+
     /**
      * DELETE /users/:login : delete the "login" User.
      *
@@ -182,7 +184,6 @@ public class UserResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/users/{login:" + Constants.LOGIN_REGEX + "}")
-    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Void> deleteUser(@PathVariable String login) {
         log.debug("REST request to delete User: {}", login);
         userService.deleteUser(login);

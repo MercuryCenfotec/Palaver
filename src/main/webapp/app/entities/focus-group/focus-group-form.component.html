@@ -1,0 +1,120 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()">
+            <div class="row justify-content-md-center"></div>
+            <h2 id="jhi-focus-group-heading">Creación de grupos de enfoque</h2>
+            <div>
+                <h4 class="form-section"><i class="ft-users"></i>Información</h4>
+                <div class="form-group" [hidden]="true">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                           [(ngModel)]="focusGroup.id" readonly/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_name">Nombre</label>
+                    <input #floatName="ngModel" type="text" class="form-control" name="name" id="field_name"
+                           [(ngModel)]="focusGroup.name" required/>
+                    <small class="form-text text-muted danger" *ngIf="!floatName.valid && (floatName.dirty ||
+                                 floatName.touched)">¡Nombre requerido!
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_description">Descripción</label>
+                    <input #floatDescription="ngModel" type="text" class="form-control" name="description"
+                           id="field_description"
+                           [(ngModel)]="focusGroup.description" required/>
+                    <small class="form-text text-muted danger" *ngIf="!floatDescription.valid && (floatDescription.dirty ||
+                                 floatDescription.touched)">¡Descripción requerida!
+                    </small>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                        <label class="form-control-label" for="field_beginDate">Fecha de inicio estimada</label>
+                        <div class="input-group">
+                            <input #floatStartDate="ngModel" id="field_beginDate" type="text" class="form-control"
+                                   name="beginDate" ngbDatepicker
+                                   #beginDateDp="ngbDatepicker" [(ngModel)]="focusGroup.beginDate"
+                                   required [readonly]="true"/>
+                            <span class="input-group-append">
+                                <button type="button" class="btn btn-secondary" (click)="beginDateDp.toggle()"><fa-icon
+                                    [icon]="'calendar-alt'"></fa-icon></button>
+                            </span>
+                        </div>
+                        <small class="form-text text-muted danger" *ngIf="!floatStartDate.valid && (floatStartDate.dirty ||
+                                 floatStartDate.touched)">¡Fecha de inicio requerida!
+                        </small>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                        <label class="form-control-label" for="field_endDate">Fecha de finalización estimada</label>
+                        <div class="input-group">
+                            <input #floatEndDate="ngModel" id="field_endDate" type="text" class="form-control"
+                                   name="endDate" ngbDatepicker
+                                   #endDateDp="ngbDatepicker" [(ngModel)]="focusGroup.endDate"
+                                   required [readonly]="true"/>
+                            <span class="input-group-append">
+                                <button type="button" class="btn btn-secondary" (click)="endDateDp.toggle()"><fa-icon
+                                    [icon]="'calendar-alt'"></fa-icon></button>
+                            </span>
+                        </div>
+                        <small class="form-text text-muted danger" *ngIf="!floatEndDate.valid && (floatEndDate.dirty ||
+                                 floatEndDate.touched)">¡Fecha de finalización requerida!
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group" [hidden]="true">
+                    <label class="form-control-label" for="field_code">Code</label>
+                    <input type="text" class="form-control" name="code" id="field_code"
+                           [(ngModel)]="focusGroup.code"/>
+                </div>
+
+                <div class="form-group" [hidden]="true">
+                    <label class="form-control-label" for="field_incentive">Incentive</label>
+                    <select class="form-control" id="field_incentive" name="incentive"
+                            [(ngModel)]="focusGroup.incentive">
+                        <option [ngValue]="null"></option>
+                        <option
+                            [ngValue]="incentiveOption.id === focusGroup.incentive?.id ? focusGroup.incentive : incentiveOption"
+                            *ngFor="let incentiveOption of incentives; trackBy: trackIncentiveById">{{incentiveOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group" [hidden]="true">
+                    <label class="form-control-label" for="field_institution">Institution</label>
+                    <select class="form-control" id="field_institution" name="institution"
+                            [(ngModel)]="focusGroup.institution">
+                        <option [ngValue]="null"></option>
+                        <option
+                            [ngValue]="institutionOption.id === focusGroup.institution?.id ? focusGroup.institution : institutionOption"
+                            *ngFor="let institutionOption of institutions; trackBy: trackInstitutionById">{{institutionOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group" [hidden]="true">
+                    <label for="field_category">Category</label>
+                    <select class="form-control" id="field_category" multiple name="category"
+                            [(ngModel)]="focusGroup.categories">
+                        <option [ngValue]="getSelected(focusGroup.categories, categoryOption)"
+                                *ngFor="let categoryOption of categories; trackBy: trackCategoryById">{{categoryOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group" [hidden]="true">
+                    <label for="field_participant">Participant</label>
+                    <select class="form-control" id="field_participant" multiple name="participant"
+                            [(ngModel)]="focusGroup.participants">
+                        <option [ngValue]="getSelected(focusGroup.participants, participantOption)"
+                                *ngFor="let participantOption of participants; trackBy: trackParticipantById">{{participantOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
+                        (click)="previousState()">
+                    <i class="ft-x"></i>&nbsp;<span> Cancelar</span>
+                </button>
+                <button type="submit" id="save-entity" class="btn btn-raised btn-primary">
+                    <i class="ft-save"></i>&nbsp;<span> Registrar</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

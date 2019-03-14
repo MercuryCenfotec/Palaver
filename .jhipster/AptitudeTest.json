@@ -1,5 +1,23 @@
 {
-    "name": "AptitudeTest",
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "institution",
+            "otherEntityName": "institution",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id",
+            "otherEntityRelationshipNameUndefined": true,
+            "otherEntityRelationshipName": "aptitudeTest"
+        },
+        {
+            "relationshipName": "questions",
+            "otherEntityName": "testQuestion",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "aptitudeTest",
+            "otherEntityRelationshipNameUndefined": false
+        }
+    ],
     "fields": [
         {
             "fieldName": "name",
@@ -16,21 +34,12 @@
             ]
         }
     ],
-    "relationships": [
-        {
-            "relationshipName": "institution",
-            "otherEntityName": "institution",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id"
-        }
-    ],
     "changelogDate": "20190304115738",
-    "entityTableName": "aptitude_test",
     "dto": "no",
-    "pagination": "no",
+    "searchEngine": false,
     "service": "no",
+    "entityTableName": "aptitude_test",
+    "databaseType": "sql",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*"
+    "pagination": "no"
 }

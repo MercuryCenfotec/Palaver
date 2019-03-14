@@ -11,6 +11,7 @@ import {
     focusGroupRoute,
     focusGroupPopupRoute
 } from './';
+import { FocusGroupFormComponent } from 'app/entities/focus-group/focus-group-form.component';
 
 const ENTITY_STATES = [...focusGroupRoute, ...focusGroupPopupRoute];
 
@@ -21,7 +22,8 @@ const ENTITY_STATES = [...focusGroupRoute, ...focusGroupPopupRoute];
         FocusGroupDetailComponent,
         FocusGroupUpdateComponent,
         FocusGroupDeleteDialogComponent,
-        FocusGroupDeletePopupComponent
+        FocusGroupDeletePopupComponent,
+        FocusGroupFormComponent
     ],
     entryComponents: [FocusGroupComponent, FocusGroupUpdateComponent, FocusGroupDeleteDialogComponent, FocusGroupDeletePopupComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

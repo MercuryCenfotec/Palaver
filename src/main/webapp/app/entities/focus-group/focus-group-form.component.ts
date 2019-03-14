@@ -15,12 +15,13 @@ import { ICategory } from 'app/shared/model/category.model';
 import { CategoryService } from 'app/entities/category';
 import { IParticipant } from 'app/shared/model/participant.model';
 import { ParticipantService } from 'app/entities/participant';
+import { UserService } from 'app/core';
 
 @Component({
-    selector: 'jhi-focus-group-update',
-    templateUrl: './focus-group-update.component.html'
+    selector: 'jhi-focus-group-form',
+    templateUrl: './focus-group-form.component.html'
 })
-export class FocusGroupUpdateComponent implements OnInit {
+export class FocusGroupFormComponent implements OnInit {
     focusGroup: IFocusGroup;
     isSaving: boolean;
 
@@ -41,7 +42,8 @@ export class FocusGroupUpdateComponent implements OnInit {
         protected institutionService: InstitutionService,
         protected categoryService: CategoryService,
         protected participantService: ParticipantService,
-        protected activatedRoute: ActivatedRoute
+        protected activatedRoute: ActivatedRoute,
+        protected userService: UserService
     ) {}
 
     ngOnInit() {
@@ -85,7 +87,14 @@ export class FocusGroupUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        this.subscribeToSaveResponse(this.focusGroupService.update(this.focusGroup));
+        this.userService.getUserWithAuthorities().subscribe(data => {
+            this.institutionService.getByUserUser(data.id).subscribe(innerData => {
+                console.log(innerData);
+                this.focusGroup.institution = innerData.body;
+                this.subscribeToSaveResponse(this.focusGroupService.create(this.focusGroup));
+            });
+        });
+        console.log(this.focusGroup);
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IFocusGroup>>) {
