@@ -91,6 +91,10 @@ import { RouterModule } from '@angular/router';
             {
                 path: 'test-question',
                 loadChildren: './test-question/test-question.module#PalaverTestQuestionModule'
+            },
+            {
+                path: 'focus-group',
+                loadChildren: './focus-group/focus-group.module#PalaverFocusGroupModule'
             }
             /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
         ])

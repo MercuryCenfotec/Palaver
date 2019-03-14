@@ -62,6 +62,9 @@ public class FocusGroupResourceIntTest {
     private static final String DEFAULT_CODE = "AAAAAAAAAA";
     private static final String UPDATED_CODE = "BBBBBBBBBB";
 
+    private static final Integer DEFAULT_PASSING_GRADE = 1;
+    private static final Integer UPDATED_PASSING_GRADE = 2;
+
     @Autowired
     private FocusGroupRepository focusGroupRepository;
 
@@ -111,7 +114,8 @@ public class FocusGroupResourceIntTest {
             .description(DEFAULT_DESCRIPTION)
             .beginDate(DEFAULT_BEGIN_DATE)
             .endDate(DEFAULT_END_DATE)
-            .code(DEFAULT_CODE);
+            .code(DEFAULT_CODE)
+            .passingGrade(DEFAULT_PASSING_GRADE);
         return focusGroup;
     }
 
@@ -140,6 +144,7 @@ public class FocusGroupResourceIntTest {
         assertThat(testFocusGroup.getBeginDate()).isEqualTo(DEFAULT_BEGIN_DATE);
         assertThat(testFocusGroup.getEndDate()).isEqualTo(DEFAULT_END_DATE);
         assertThat(testFocusGroup.getCode()).isEqualTo(DEFAULT_CODE);
+        assertThat(testFocusGroup.getPassingGrade()).isEqualTo(DEFAULT_PASSING_GRADE);
     }
 
     @Test
@@ -248,7 +253,8 @@ public class FocusGroupResourceIntTest {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
             .andExpect(jsonPath("$.[*].beginDate").value(hasItem(DEFAULT_BEGIN_DATE.toString())))
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
-            .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())));
+            .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
+            .andExpect(jsonPath("$.[*].passingGrade").value(hasItem(DEFAULT_PASSING_GRADE)));
     }
     
     @SuppressWarnings({"unchecked"})
@@ -299,7 +305,8 @@ public class FocusGroupResourceIntTest {
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
             .andExpect(jsonPath("$.beginDate").value(DEFAULT_BEGIN_DATE.toString()))
             .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
-            .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()));
+            .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
+            .andExpect(jsonPath("$.passingGrade").value(DEFAULT_PASSING_GRADE));
     }
 
     @Test
@@ -327,7 +334,8 @@ public class FocusGroupResourceIntTest {
             .description(UPDATED_DESCRIPTION)
             .beginDate(UPDATED_BEGIN_DATE)
             .endDate(UPDATED_END_DATE)
-            .code(UPDATED_CODE);
+            .code(UPDATED_CODE)
+            .passingGrade(UPDATED_PASSING_GRADE);
 
         restFocusGroupMockMvc.perform(put("/api/focus-groups")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -343,6 +351,7 @@ public class FocusGroupResourceIntTest {
         assertThat(testFocusGroup.getBeginDate()).isEqualTo(UPDATED_BEGIN_DATE);
         assertThat(testFocusGroup.getEndDate()).isEqualTo(UPDATED_END_DATE);
         assertThat(testFocusGroup.getCode()).isEqualTo(UPDATED_CODE);
+        assertThat(testFocusGroup.getPassingGrade()).isEqualTo(UPDATED_PASSING_GRADE);
     }
 
     @Test
