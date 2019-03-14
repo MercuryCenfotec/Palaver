@@ -97,9 +97,12 @@
                             </div>
 
                             <div _ngcontent-c5="" class="form-group">
-                                <label _ngcontent-c16="">Seleccionar imagen</label>
-                                <input _ngcontent-c16="" class="form-control-file" name="picture" id="field_picture"
-                                       [(ngModel)]="participant.picture" type="file">
+                                <!--<label _ngcontent-c16=""></label>-->
+                                <!--<input _ngcontent-c16="" class="form-control-file" name="picture" id="field_picture"-->
+                                        <!--type="file">-->
+
+                                <label for="imageUpload">Seleccionar imagen</label>
+                                <input class="form-control-file" type="file" [(ngModel)]="participant.picture" (change)="fileEvent($event)" name="imageUpload" id="imageUpload"/>
                             </div>
 
                             <h4 _ngcontent-c5="" class="form-section">
