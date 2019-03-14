@@ -1,52 +1,69 @@
 <div class="row justify-content-center">
     <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()">
             <h2 id="jhi-aptitude-test-heading">Create Aptitude Test</h2>
             <div>
-                <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!aptitudeTest.id">
-                    <label for="id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id"
-                           [(ngModel)]="aptitudeTest.id" readonly />
-                </div>
+                <h4 class="form-section"><i class="ft-info"></i>Información</h4>
                 <div class="form-group">
-                    <label class="form-control-label" for="field_name">Name</label>
-                    <input type="text" class="form-control" name="name" id="field_name"
+                    <label class="form-control-label" for="field_name">Nombre</label>
+                    <input #floatName="ngModel" type="text" class="form-control" name="name" id="field_name"
                            [(ngModel)]="aptitudeTest.name" required/>
-                    <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
-                        <small class="form-text text-danger"
-                               [hidden]="!editForm.controls.name?.errors?.required">
-                            This field is required.
-                        </small>
+                    <small class="form-text text-muted danger" *ngIf="!floatName.valid && (floatName.dirty ||
+                                 floatName.touched)">¡Nombre requerido!
+                    </small>
+                </div>
+                <div>
+                    <h4 class="form-section"><i class="ft-clipboard"></i>Preguntas</h4>
+                    <div class="form-group">
+                        <label class="form-control-label" for="field_name">Pregunta</label>
+                        <input #floatQuestion="ngModel" type="text" class="form-control" name="name" id="field_question"
+                               [(ngModel)]="newQuestion.question" required/>
+                        <!--<small class="form-text text-muted danger" *ngIf="!floatQuestion.valid && (floatName.dirty || floatName.touched)">-->
+                            <!--¡Pregunta requerida!-->
+                        <!--</small>-->
+                    </div>
+                    <div>
+                        <button type="button" (click)="addQuestion()" id="addQuestionBtn" class="btn btn-raised btn-primary">
+                            <i class="ft-plus"></i><span> Agregar pregunta</span>
+                        </button>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_createdDate">Created Date</label>
-                    <input type="text" class="form-control" name="createdDate" id="field_createdDate"
-                           [(ngModel)]="aptitudeTest.createdDate" required/>
-                    <div [hidden]="!(editForm.controls.createdDate?.dirty && editForm.controls.createdDate?.invalid)">
-                        <small class="form-text text-danger"
-                               [hidden]="!editForm.controls.createdDate?.errors?.required">
-                            This field is required.
-                        </small>
-                    </div>
-                </div>
+                <div id="questionCardSection" class="">
+                    <div class="card" *ngFor="let question of questions; let i = index">
+                        <div class="card-header">
+                            <span class="text-bold-500 primary display-block">{{question.question}}</span>
+                        </div>
+                        <div class="card-body">
+                            <div id="addedAnswersSection" class="card-block">
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_institution">Institution</label>
-                    <select class="form-control" id="field_institution" name="institution" [(ngModel)]="aptitudeTest.institution" >
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="institutionOption.id === aptitudeTest.institution?.id ? aptitudeTest.institution : institutionOption" *ngFor="let institutionOption of institutions; trackBy: trackInstitutionById">{{institutionOption.id}}</option>
-                    </select>
+                            </div>
+                            <div id="addAnswersSection" class="card-block">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="field_name">Pregunta</label>
+                                    <input #floatQuestion="ngModel" type="text" class="form-control" name="name" id="field_answer"
+                                           [(ngModel)]="newQuestion.question" required/>
+                                    <!--<small class="form-text text-muted danger" *ngIf="!floatQuestion.valid && (floatName.dirty || floatName.touched)">-->
+                                    <!--¡Pregunta requerida!-->
+                                    <!--</small>-->
+                                </div>
+                                <div>
+                                    <button #parentQuestion="{{question}}" type="button" (click)="addAnswer(parentQuestion)" id="addAnswerBtn" class="btn btn-raised btn-primary">
+                                        <i class="ft-plus"></i><span> Agregar pregunta</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
-                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
-                </button>
-                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
-                </button>
+                <div>
+                    <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
+                            (click)="previousState()">
+                        <i class="ft-x"></i><span> Cancelar</span>
+                    </button>
+                    <button type="submit" id="save-entity" class="btn btn-raised btn-primary">
+                        <i class="ft-save"></i><span> Registrar</span>
+                    </button>
+                </div>
             </div>
         </form>
     </div>

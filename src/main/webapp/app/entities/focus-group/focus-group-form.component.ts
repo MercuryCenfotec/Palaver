@@ -89,7 +89,6 @@ export class FocusGroupFormComponent implements OnInit {
         this.isSaving = true;
         this.userService.getUserWithAuthorities().subscribe(data => {
             this.institutionService.getByUserUser(data.id).subscribe(innerData => {
-                console.log(innerData);
                 this.focusGroup.institution = innerData.body;
                 this.subscribeToSaveResponse(this.focusGroupService.create(this.focusGroup));
             });

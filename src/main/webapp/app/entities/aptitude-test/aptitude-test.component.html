@@ -1,7 +1,7 @@
 <div>
     <h2 id="page-heading">
         <span>Aptitude Tests</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-aptitude-test" [routerLink]="['/aptitude-test/new']">
+        <button id="jh-create-entity" class="btn btn-raised btn-primary float-right jh-create-entity create-aptitude-test" [routerLink]="['/aptitude-test/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span >
             Create new Aptitude Test
@@ -14,23 +14,15 @@
         <table class="table table-striped">
             <thead>
             <tr>
-            <th><span>ID</span></th>
             <th><span>Name</span></th>
             <th><span>Created Date</span></th>
-            <th><span>Institution</span></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let aptitudeTest of aptitudeTests ;trackBy: trackId">
-                <td><a [routerLink]="['/aptitude-test', aptitudeTest.id, 'view' ]">{{aptitudeTest.id}}</a></td>
                 <td>{{aptitudeTest.name}}</td>
-                <td>{{aptitudeTest.createdDate}}</td>
-                <td>
-                    <div *ngIf="aptitudeTest.institution">
-                        <a [routerLink]="['../institution', aptitudeTest.institution?.id, 'view' ]" >{{aptitudeTest.institution?.id}}</a>
-                    </div>
-                </td>
+                <td>{{aptitudeTest.createdDate | date:'longDate'}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
