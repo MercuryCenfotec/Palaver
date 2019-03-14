@@ -46,6 +46,6 @@ export class UserService {
     }
 
     updateUserRole(role: String, user: IUser): Observable<HttpResponse<IUser>> {
-        return this.http.put<IUser>(`${this.resourceUrl}/api/add_authorization/${role}`, user, { observe: 'response' });
+        return this.http.put<IUser>(`${this.resourceUrl}/add_authorization/${role}`, user, { observe: 'response' });
     }
 }

@@ -83,17 +83,6 @@
                                     </div>
                                 </div>
 
-                                <div _ngcontent-c5="" class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="field_user">User</label>
-                                        <select class="form-control" id="field_user" name="user" [(ngModel)]="participant.user">
-                                            <option [ngValue]="null"></option>
-                                            <option [ngValue]="userAppOption.id === participant.user?.id ? participant.user : userAppOption"
-                                                    *ngFor="let userAppOption of users; trackBy: trackUserAppById">{{userAppOption.id}}</option>
-                                        </select>
-                                    </div>
-                                </div>
-
                             </div>
 
                             <div _ngcontent-c5="" class="form-group">

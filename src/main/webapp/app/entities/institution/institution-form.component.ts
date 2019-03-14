@@ -89,8 +89,12 @@ export class InstitutionFormComponent implements OnInit {
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IInstitution>>) {
-        result.subscribe((res: HttpResponse<IInstitution>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
-        this.userService.updateUserRole('institution', this.user);
+        result.subscribe(
+            (res: HttpResponse<IInstitution>) => {
+                this.userService.updateUserRole('institution', this.user).subscribe(data => this.onSaveSuccess());
+            },
+            (res: HttpErrorResponse) => this.onSaveError()
+        );
     }
 
     protected onSaveSuccess() {

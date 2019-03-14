@@ -13,6 +13,7 @@ import { ICategory } from 'app/shared/model/category.model';
 import { CategoryService } from 'app/entities/category';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { FocusGroupService } from 'app/entities/focus-group';
+import { IUser, UserService } from 'app/core';
 
 @Component({
     selector: 'jhi-participant-create',
@@ -21,7 +22,8 @@ import { FocusGroupService } from 'app/entities/focus-group';
 export class ParticipantCreateComponent implements OnInit {
     participant: IParticipant;
     isSaving: boolean;
-
+    user: IUser;
+    userApp: IUserApp;
     users: IUserApp[];
 
     categories: ICategory[];
@@ -35,10 +37,17 @@ export class ParticipantCreateComponent implements OnInit {
         protected userAppService: UserAppService,
         protected categoryService: CategoryService,
         protected focusGroupService: FocusGroupService,
-        protected activatedRoute: ActivatedRoute
+        protected activatedRoute: ActivatedRoute,
+        protected userService: UserService
     ) {}
 
     ngOnInit() {
+        this.userService.getUserWithAuthorities().subscribe(data => {
+            this.user = data;
+            this.userAppService.findByUserId(this.user.id).subscribe(userAppData => {
+                this.userApp = userAppData;
+            });
+        });
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ participant }) => {
             this.participant = participant;
@@ -93,6 +102,7 @@ export class ParticipantCreateComponent implements OnInit {
         if (this.participant.id !== undefined) {
             this.subscribeToSaveResponse(this.participantService.update(this.participant));
         } else {
+            this.participant.user = this.userApp;
             this.subscribeToSaveResponse(this.participantService.create(this.participant));
         }
     }
