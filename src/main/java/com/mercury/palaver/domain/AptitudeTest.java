@@ -1,12 +1,15 @@
 package com.mercury.palaver.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -34,6 +37,8 @@ public class AptitudeTest implements Serializable {
     @JsonIgnoreProperties("aptitudeTests")
     private Institution institution;
 
+    @OneToMany(mappedBy = "aptitudeTest")
+    private Set<TestQuestion> questions = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -80,6 +85,31 @@ public class AptitudeTest implements Serializable {
 
     public void setInstitution(Institution institution) {
         this.institution = institution;
+    }
+
+    public Set<TestQuestion> getQuestions() {
+        return questions;
+    }
+
+    public AptitudeTest questions(Set<TestQuestion> testQuestions) {
+        this.questions = testQuestions;
+        return this;
+    }
+
+    public AptitudeTest addQuestions(TestQuestion testQuestion) {
+        this.questions.add(testQuestion);
+        testQuestion.setAptitudeTest(this);
+        return this;
+    }
+
+    public AptitudeTest removeQuestions(TestQuestion testQuestion) {
+        this.questions.remove(testQuestion);
+        testQuestion.setAptitudeTest(null);
+        return this;
+    }
+
+    public void setQuestions(Set<TestQuestion> testQuestions) {
+        this.questions = testQuestions;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
