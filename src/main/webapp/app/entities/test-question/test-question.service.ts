@@ -32,6 +32,10 @@ export class TestQuestionService {
         return this.http.get<ITestQuestion[]>(this.resourceUrl, { params: options, observe: 'response' });
     }
 
+    findAllByAptituteTest(id: number): Observable<EntityArrayResponseType> {
+        return this.http.get<ITestQuestion[]>(`${this.resourceUrl}/aptitude/${id}`, { observe: 'response' });
+    }
+
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }

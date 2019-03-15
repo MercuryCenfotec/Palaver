@@ -1,6 +1,8 @@
 package com.mercury.palaver.web.rest;
+
 import com.mercury.palaver.domain.TestQuestion;
 import com.mercury.palaver.repository.TestQuestionRepository;
+import com.mercury.palaver.service.TestQuestionService;
 import com.mercury.palaver.web.rest.errors.BadRequestAlertException;
 import com.mercury.palaver.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -29,8 +31,11 @@ public class TestQuestionResource {
 
     private final TestQuestionRepository testQuestionRepository;
 
-    public TestQuestionResource(TestQuestionRepository testQuestionRepository) {
+    private final TestQuestionService testQuestionService;
+
+    public TestQuestionResource(TestQuestionRepository testQuestionRepository, TestQuestionService testQuestionService) {
         this.testQuestionRepository = testQuestionRepository;
+        this.testQuestionService = testQuestionService;
     }
 
     /**
@@ -108,5 +113,11 @@ public class TestQuestionResource {
         log.debug("REST request to delete TestQuestion : {}", id);
         testQuestionRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/test-questions/aptitude/{id}")
+    public List<TestQuestion> getAllByAptitudeTest(@PathVariable Long id) {
+        log.debug("REST request to get all TestQuestions");
+        return testQuestionService.findAllQuestionsAndAnswersByAptitudeTestId(id);
     }
 }

@@ -45,16 +45,15 @@ public class AptitudeTestResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/aptitude-tests")
-    public void createAptitudeTest(@Valid @RequestBody AptitudeTest aptitudeTest) throws URISyntaxException {
+    public ResponseEntity<AptitudeTest> createAptitudeTest(@Valid @RequestBody AptitudeTest aptitudeTest) throws URISyntaxException {
         log.debug("REST request to save AptitudeTest : {}", aptitudeTest);
         if (aptitudeTest.getId() != null) {
             throw new BadRequestAlertException("A new aptitudeTest cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        aptitudeTest = aptitudeTestService.save(aptitudeTest);
-//        AptitudeTest result = aptitudeTestRepository.save(aptitudeTest);
-//        return ResponseEntity.created(new URI("/api/aptitude-tests/" + result.getId()))
-//            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-//            .body(result);
+        AptitudeTest result = aptitudeTestService.save(aptitudeTest);
+        return ResponseEntity.created(new URI("/api/aptitude-tests/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .body(result);
     }
 
     /**

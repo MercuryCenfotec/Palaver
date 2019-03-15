@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { JhiAlertService } from 'ng-jhipster';
@@ -21,24 +20,26 @@ export class AptitudeTestFormComponent implements OnInit {
     isSaving: boolean;
     newQuestion: ITestQuestion;
     newAnswer: ITestAnswerOption;
-    questions: ITestQuestion[];
     institutions: IInstitution[];
 
     constructor(
         protected jhiAlertService: JhiAlertService,
         protected aptitudeTestService: AptitudeTestService,
         protected institutionService: InstitutionService,
-        protected activatedRoute: ActivatedRoute,
         protected userService: UserService
     ) {}
 
     ngOnInit() {
         this.isSaving = false;
-        this.activatedRoute.data.subscribe(({ aptitudeTest }) => {
-            this.aptitudeTest = aptitudeTest;
-        });
-        //Hay que cambiar esto para los nuevas clases.
+        this.aptitudeTest = new class implements IAptitudeTest {
+            createdDate: string;
+            id: number;
+            institution: IInstitution;
+            name: string;
+            questions: ITestQuestion[] = [];
+        }();
         this.newQuestion = new class implements ITestQuestion {
+            answers: ITestAnswerOption[] = [];
             aptitudeTest: IAptitudeTest;
             id: number;
             question: string;
@@ -66,7 +67,6 @@ export class AptitudeTestFormComponent implements OnInit {
         this.isSaving = true;
         this.userService.getUserWithAuthorities().subscribe(data => {
             this.institutionService.getByUserUser(data.id).subscribe(innerData => {
-                console.log(innerData);
                 this.aptitudeTest.institution = innerData.body;
                 this.aptitudeTest.createdDate = new Date().toJSON();
                 this.subscribeToSaveResponse(this.aptitudeTestService.create(this.aptitudeTest));
@@ -75,7 +75,7 @@ export class AptitudeTestFormComponent implements OnInit {
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IAptitudeTest>>) {
-        result.subscribe((res: HttpResponse<IAptitudeTest>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+        result.subscribe((res: HttpResponse<IAptitudeTest>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError(res));
     }
 
     protected onSaveSuccess() {
@@ -83,15 +83,41 @@ export class AptitudeTestFormComponent implements OnInit {
         this.previousState();
     }
 
-    protected onSaveError() {
+    protected onSaveError(err: HttpErrorResponse) {
         this.isSaving = false;
+        console.log(err);
     }
 
     protected onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
     }
 
-    addQuestion() {}
+    addAnswerToQuestion() {
+        const answer: ITestAnswerOption = new class implements ITestAnswerOption {
+            answer: string;
+            desired: boolean;
+            id: number;
+            testQuestion: ITestQuestion;
+        }();
+        answer.answer = this.newAnswer.answer;
+        console.log(answer);
+        answer.desired = false;
+        this.newQuestion.answers.push(answer);
+        this.newAnswer.answer = '';
+    }
 
-    addAnswer(question: ITestQuestion) {}
+    addQuestionToTest() {
+        const question: ITestQuestion = new class implements ITestQuestion {
+            answers: ITestAnswerOption[] = [];
+            aptitudeTest: IAptitudeTest;
+            id: number;
+            question: string;
+        }();
+        question.question = this.newQuestion.question;
+        question.answers = this.newQuestion.answers;
+        this.aptitudeTest.questions.push(question);
+        this.newQuestion.question = '';
+        this.newQuestion.answers = [];
+        console.log(this.aptitudeTest);
+    }
 }

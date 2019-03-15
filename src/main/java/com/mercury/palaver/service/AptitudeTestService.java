@@ -9,8 +9,6 @@ import com.mercury.palaver.repository.TestQuestionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 @Transactional
 public class AptitudeTestService {
@@ -29,6 +27,14 @@ public class AptitudeTestService {
 
     public AptitudeTest save(AptitudeTest aptitudeTest) {
         aptitudeTest = aptitudeTestRepo.save(aptitudeTest);
+        for(TestQuestion question : aptitudeTest.getQuestions()){
+            question.setAptitudeTest(aptitudeTest);
+            question = testQuestionRepo.save(question);
+            for (TestAnswerOption answer : question.getAnswers()){
+                answer.setTestQuestion(question);
+                testAnswerOptionRepo.save(answer);
+            }
+        }
         return aptitudeTest;
     }
 }

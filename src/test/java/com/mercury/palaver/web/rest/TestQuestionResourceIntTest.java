@@ -4,6 +4,7 @@ import com.mercury.palaver.PalaverApp;
 
 import com.mercury.palaver.domain.TestQuestion;
 import com.mercury.palaver.repository.TestQuestionRepository;
+import com.mercury.palaver.service.TestQuestionService;
 import com.mercury.palaver.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -65,10 +66,12 @@ public class TestQuestionResourceIntTest {
 
     private TestQuestion testQuestion;
 
+    private TestQuestionService testQuestionService;
+
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final TestQuestionResource testQuestionResource = new TestQuestionResource(testQuestionRepository);
+        final TestQuestionResource testQuestionResource = new TestQuestionResource(testQuestionRepository, testQuestionService);
         this.restTestQuestionMockMvc = MockMvcBuilders.standaloneSetup(testQuestionResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

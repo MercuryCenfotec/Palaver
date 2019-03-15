@@ -14,11 +14,6 @@
                     <span>{{aptitudeTest.createdDate}}</span>
                 </dd>
                 <dt><span>Institution</span></dt>
-                <dd>
-                    <div *ngIf="aptitudeTest.institution">
-                        <a [routerLink]="['/institution', aptitudeTest.institution?.id, 'view']">{{aptitudeTest.institution?.id}}</a>
-                    </div>
-                </dd>
             </dl>
 
             <button type="submit"
