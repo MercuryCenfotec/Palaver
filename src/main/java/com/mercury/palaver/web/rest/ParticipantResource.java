@@ -110,4 +110,11 @@ public class ParticipantResource {
         participantRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    @GetMapping("/participants/user/{id}")
+    public ResponseEntity<Participant> getParticipantByUser(@PathVariable Long id) {
+        log.debug("REST request to get Participant : {}", id);
+        Optional<Participant> participant = participantRepository.findByUser_Id(id);
+        return ResponseUtil.wrapOrNotFound(participant);
+    }
 }

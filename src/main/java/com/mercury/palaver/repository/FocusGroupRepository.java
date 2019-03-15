@@ -26,5 +26,4 @@ public interface FocusGroupRepository extends JpaRepository<FocusGroup, Long> {
 
     @Query("select focus_group from FocusGroup focus_group left join fetch focus_group.categories left join fetch focus_group.participants where focus_group.id =:id")
     Optional<FocusGroup> findOneWithEagerRelationships(@Param("id") Long id);
-
 }

@@ -9,7 +9,8 @@ import {
     FocusGroupDeletePopupComponent,
     FocusGroupDeleteDialogComponent,
     focusGroupRoute,
-    focusGroupPopupRoute
+    focusGroupPopupRoute,
+    ParticipateComponent
 } from './';
 import { FocusGroupFormComponent } from 'app/entities/focus-group/focus-group-form.component';
 
@@ -23,9 +24,10 @@ const ENTITY_STATES = [...focusGroupRoute, ...focusGroupPopupRoute];
         FocusGroupUpdateComponent,
         FocusGroupDeleteDialogComponent,
         FocusGroupDeletePopupComponent,
-        FocusGroupFormComponent
+        FocusGroupFormComponent,
+        ParticipateComponent
     ],
-    entryComponents: [FocusGroupComponent, FocusGroupUpdateComponent, FocusGroupDeleteDialogComponent, FocusGroupDeletePopupComponent],
+    entryComponents: [FocusGroupComponent, FocusGroupUpdateComponent, FocusGroupDeleteDialogComponent, FocusGroupDeletePopupComponent, ParticipateComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PalaverFocusGroupModule {}

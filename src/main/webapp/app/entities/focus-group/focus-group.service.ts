@@ -50,6 +50,13 @@ export class FocusGroupService {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
+    merge(focusGroup: IFocusGroup) {
+        const url = `${this.resourceUrl}/merge`;
+        this.http.post<IFocusGroup>(url, focusGroup).subscribe(data => {
+            console.log('POST Request is successful ');
+        });
+    }
+
     protected convertDateFromClient(focusGroup: IFocusGroup): IFocusGroup {
         const copy: IFocusGroup = Object.assign({}, focusGroup, {
             beginDate: focusGroup.beginDate != null && focusGroup.beginDate.isValid() ? focusGroup.beginDate.format(DATE_FORMAT) : null,
