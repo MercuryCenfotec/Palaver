@@ -105,7 +105,7 @@ public class UserResource {
         }
     }
 
-    @PostMapping("/users/add_authorization/{role}")
+    @PutMapping("/users/add_authorization/{role}")
     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.USER + "\")")
     public ResponseEntity setAuthority(@Valid @RequestBody UserDTO userDTO, @PathVariable String role) {
         User updatedUser;

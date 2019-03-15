@@ -13,15 +13,20 @@ import { ICategory } from 'app/shared/model/category.model';
 import { CategoryService } from 'app/entities/category';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { FocusGroupService } from 'app/entities/focus-group';
+import * as AWS from 'aws-sdk';
+import { IUser, UserService } from 'app/core';
 
 @Component({
     selector: 'jhi-participant-create',
     templateUrl: './participant-create.component.html'
 })
 export class ParticipantCreateComponent implements OnInit {
+    public image;
+
     participant: IParticipant;
     isSaving: boolean;
-
+    user: IUser;
+    userApp: IUserApp;
     users: IUserApp[];
 
     categories: ICategory[];
@@ -35,10 +40,17 @@ export class ParticipantCreateComponent implements OnInit {
         protected userAppService: UserAppService,
         protected categoryService: CategoryService,
         protected focusGroupService: FocusGroupService,
-        protected activatedRoute: ActivatedRoute
+        protected activatedRoute: ActivatedRoute,
+        protected userService: UserService
     ) {}
 
     ngOnInit() {
+        this.userService.getUserWithAuthorities().subscribe(data => {
+            this.user = data;
+            this.userAppService.findByUserId(this.user.id).subscribe(userAppData => {
+                this.userApp = userAppData;
+            });
+        });
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ participant }) => {
             this.participant = participant;
@@ -93,6 +105,7 @@ export class ParticipantCreateComponent implements OnInit {
         if (this.participant.id !== undefined) {
             this.subscribeToSaveResponse(this.participantService.update(this.participant));
         } else {
+            this.participant.user = this.userApp;
             this.subscribeToSaveResponse(this.participantService.create(this.participant));
         }
     }
@@ -135,5 +148,29 @@ export class ParticipantCreateComponent implements OnInit {
             }
         }
         return option;
+    }
+
+    fileEvent(fileInput: any) {
+        const file = fileInput.target.files[0];
+
+        console.log(file);
+
+        AWS.config.region = 'us-east-1'; // Region
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: 'us-east-1:68b4abc4-89a0-4c98-b8ad-481d305b5eca'
+        });
+
+        const s3 = new AWS.S3({
+            apiVersion: '2006-03-01',
+            params: { Bucket: 'palaverapp' }
+        });
+
+        this.image = file.name;
+
+        s3.upload({ Key: file.name, Bucket: 'palaverapp', Body: file, ACL: 'public-read' }, function(err, data) {
+            if (err) {
+                console.log(err, 'there was an error uploading your file');
+            }
+        });
     }
 }
