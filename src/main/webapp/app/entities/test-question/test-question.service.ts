@@ -20,6 +20,7 @@ export class TestQuestionService {
     }
 
     update(testQuestion: ITestQuestion): Observable<EntityResponseType> {
+        console.log(testQuestion);
         return this.http.put<ITestQuestion>(this.resourceUrl, testQuestion, { observe: 'response' });
     }
 
@@ -30,6 +31,10 @@ export class TestQuestionService {
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
         return this.http.get<ITestQuestion[]>(this.resourceUrl, { params: options, observe: 'response' });
+    }
+
+    findAllByAptituteTest(id: number): Observable<EntityArrayResponseType> {
+        return this.http.get<ITestQuestion[]>(`${this.resourceUrl}/aptitude/${id}`, { observe: 'response' });
     }
 
     delete(id: number): Observable<HttpResponse<any>> {

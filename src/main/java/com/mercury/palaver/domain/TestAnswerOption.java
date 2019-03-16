@@ -31,7 +31,7 @@ public class TestAnswerOption implements Serializable {
     private Boolean desired;
 
     @ManyToOne
-    @JsonIgnoreProperties("testAnswerOptions")
+    @JsonIgnoreProperties("answers")
     private TestQuestion testQuestion;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

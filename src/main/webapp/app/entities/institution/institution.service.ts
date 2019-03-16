@@ -37,8 +37,6 @@ export class InstitutionService {
     }
 
     getByUserUser(id: number): Observable<EntityResponseType> {
-        console.log(id);
-        console.log(`${this.resourceUrl}/user/${id}`);
         return this.http.get<IInstitution>(`${this.resourceUrl}/user/${id}`, { observe: 'response' });
     }
 }

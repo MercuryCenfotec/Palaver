@@ -1,37 +1,56 @@
 <div class="row justify-content-center">
-    <div class="col-8">
-        <div *ngIf="aptitudeTest">
-            <h2><span>Aptitude Test</span> {{aptitudeTest.id}}</h2>
+    <div class="card col-8">
+        <div class="card-header">
+            <h3 class="col-12 col-md-12 col-sm-12">{{aptitudeTest.name}}</h3>
             <hr>
-            <jhi-alert-error></jhi-alert-error>
-            <dl class="row-md jh-entity-details">
-                <dt><span>Name</span></dt>
-                <dd>
-                    <span>{{aptitudeTest.name}}</span>
-                </dd>
-                <dt><span>Created Date</span></dt>
-                <dd>
-                    <span>{{aptitudeTest.createdDate}}</span>
-                </dd>
-                <dt><span>Institution</span></dt>
-                <dd>
-                    <div *ngIf="aptitudeTest.institution">
-                        <a [routerLink]="['/institution', aptitudeTest.institution?.id, 'view']">{{aptitudeTest.institution?.id}}</a>
+        </div>
+        <div class="card-body">
+            <div class="card-block">
+                <div class="row">
+                    <h5 class="col-12 col-md-12 col-sm-12"><i class="ft-info"></i> Información</h5>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <ul class="no-list-style">
+                            <li class="mb-2">
+                                <span class="text-bold-500 primary"><a><i class="ft-calendar font-small-3"></i> Fecha de creación:</a></span>
+                                <span
+                                    class="display-block overflow-hidden">{{aptitudeTest.createdDate | date:'longDate'}}</span>
+                            </li>
+                        </ul>
                     </div>
-                </dd>
-            </dl>
+                </div>
+                <div id="questionCardSection" class="row">
+                    <h5 class="col-12 col-md-12 col-sm-12"><i class="ft-clipboard"></i> Preguntas</h5>
+                    <hr>
+                    <div class="card-block col-12">
+                        <div id="question{{i}}" class="card bg-blue-grey bg-lighten-5" *ngFor="let question of aptitudeTest.questions; let i = index">
+                            <div class="card-header">
+                                <span class="text-bold-500 primary">¿{{question.question}}?</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-block">
+                                    <div class="card-block">
+                                            <span *ngFor="let answer of question.answers" class="display-block"><i
+                                                class="ft-minus"></i>{{answer.answer}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <button type="submit"
+                            (click)="previousState()"
+                            class="btn btn-raised btn-warning mr-1">
+                        <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Volver</span>
+                    </button>
 
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
-            </button>
-
-            <button type="button"
-                    [routerLink]="['/aptitude-test', aptitudeTest.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
-            </button>
+                    <button type="button"
+                            [routerLink]="['/aptitude-test', aptitudeTest.id, 'edit']"
+                            class="btn btn-raised btn-primary">
+                        <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Editar</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
