@@ -1,119 +1,81 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-            <h2 id="jhi-institution-heading">Create a Institution</h2>
-            <div>
-                <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!institution.id">
-                    <label for="id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id"
-                           [(ngModel)]="institution.id" readonly />
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_name">Name</label>
-                    <input type="text" class="form-control" name="name" id="field_name"
-                           [(ngModel)]="institution.name" required/>
-                    <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
-                        <small class="form-text text-danger"
-                               [hidden]="!editForm.controls.name?.errors?.required">
-                            This field is required.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_description">Description</label>
-                    <input type="text" class="form-control" name="description" id="field_description"
-                           [(ngModel)]="institution.description" required/>
-                    <div [hidden]="!(editForm.controls.description?.dirty && editForm.controls.description?.invalid)">
-                        <small class="form-text text-danger"
-                               [hidden]="!editForm.controls.description?.errors?.required">
-                            This field is required.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_logo">Logo</label>
-                    <input type="text" class="form-control" name="logo" id="field_logo"
-                           [(ngModel)]="institution.logo" required/>
-                    <div [hidden]="!(editForm.controls.logo?.dirty && editForm.controls.logo?.invalid)">
-                        <small class="form-text text-danger"
-                               [hidden]="!editForm.controls.logo?.errors?.required">
-                            This field is required.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_telephone">Telephone</label>
-                    <input type="text" class="form-control" name="telephone" id="field_telephone"
-                           [(ngModel)]="institution.telephone" required/>
-                    <div [hidden]="!(editForm.controls.telephone?.dirty && editForm.controls.telephone?.invalid)">
-                        <small class="form-text text-danger"
-                               [hidden]="!editForm.controls.telephone?.errors?.required">
-                            This field is required.
-                        </small>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_user">User</label>
-                    <select class="form-control" id="field_user" name="user" [(ngModel)]="institution.user">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="userAppOption.id === institution.user?.id ? institution.user : userAppOption" *ngFor="let userAppOption of users; trackBy: trackUserAppById">{{userAppOption.id}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_membership">Membership</label>
-                    <select class="form-control" id="field_membership" name="membership" [(ngModel)]="institution.membership" >
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="membershipOption.id === institution.membership?.id ? institution.membership : membershipOption" *ngFor="let membershipOption of memberships; trackBy: trackMembershipById">{{membershipOption.id}}</option>
-                    </select>
-                </div>
-            </div>
-            <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
-                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
-                </button>
-                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-
 <div class="card">
     <div class="card-header">
-        <h2 class="card-title" id="jhi-institution-heading">Registro de instituciones</h2>
+        <h2 class="card-title" id="jhi-institution-heading">Instituciones</h2>
     </div>
     <div class="card-body">
         <div class="px-3">
-            <form class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <form class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate
+                  (ngSubmit)="save()" #editForm="ngForm">
                 <div class="row justify-content-md-center">
                     <div class="col-md-6">
                         <div class="form-body">
+                            <h4 class="form-section"><i class="ft-user"></i>Registro</h4>
+                            <jhi-alert-error></jhi-alert-error>
                             <div class="form-group" [hidden]="!institution.id">
                                 <label for="id">ID</label>
                                 <input type="text" class="form-control" id="id" name="id"
-                                       [(ngModel)]="institution.id" readonly />
+                                       [(ngModel)]="institution.id" readonly/>
                             </div>
                             <div class="form-group">
-                                <label for="field_name">Name</label>
+                                <label for="field_name">Nombre de la institución</label>
                                 <input type="text" class="form-control" name="name" id="field_name"
-                                       [(ngModel)]="institution.name" required/>
-                                <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
-                                    <small class="form-text text-danger"
-                                           [hidden]="!editForm.controls.name?.errors?.required">
-                                        This field is required.
-                                    </small>
-                                </div>
+                                       [(ngModel)]="institution.name" required #floatName="ngModel"/>
+                                <small class="form-text text-muted danger" *ngIf="!floatName.valid && (floatName.dirty ||
+                                 floatName.touched)">¡Nombre requerido!
+                                </small>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_description">Descripción</label>
+                                <textarea type="text" class="form-control" name="description" id="field_description"
+                                          [(ngModel)]="institution.description" required #floatDescription="ngModel"
+                                          [ngModelOptions]="{updateOn: 'blur'}"></textarea>
+                                <small class="form-text text-muted danger" *ngIf="!floatDescription.valid &&
+                                (floatDescription.dirty || floatDescription.touched)">¡Descripción requerida!
+                                </small>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_logo">Logo</label>
+                                <input type="text" class="form-control" name="logo" id="field_logo"
+                                       [(ngModel)]="institution.logo" required #floatLogo="ngModel"/>
+                                <small class="form-text text-muted danger" *ngIf="!floatLogo.valid && (floatLogo.dirty ||
+                                 floatLogo.touched)">¡Logo requerido!
+                                </small>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_telephone">Teléfono</label>
+                                <input type="text" class="form-control" name="telephone" id="field_telephone"
+                                       [(ngModel)]="institution.telephone" required #floatTelephone="ngModel"/>
+                                <small class="form-text text-muted danger" *ngIf="!floatTelephone.valid && (floatTelephone.dirty ||
+                                 floatTelephone.touched)">¡Telefono requerido!
+                                </small>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_membership">Membresía</label>
+                                <select class="form-control" id="field_membership" name="membership"
+                                        [(ngModel)]="institution.membership">
+                                    <option [ngValue]="null"></option>
+                                    <option
+                                        [ngValue]="membershipOption.id === institution.membership?.id ? institution.membership : membershipOption"
+                                        *ngFor="let membershipOption of memberships; trackBy: trackMembershipById">{{membershipOption.id}}</option>
+                                </select>
                             </div>
                         </div>
+                        <div class="form-actions">
+                            <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
+                                    (click)="previousState()">
+                                <i class="ft-x"></i> Cancelar
+                            </button>
+                            <button class="btn btn-raised btn-primary" type="submit" id="save-entity"
+                                    [disabled]="editForm.form.invalid || isSaving">
+                                <i class="ft ft-file-text"></i> Registrar
+                            </button>
+
+                        </div>
                     </div>
-                </div>
-                <div class="form-actions center">
 
                 </div>
             </form>
         </div>
     </div>
 </div>
+

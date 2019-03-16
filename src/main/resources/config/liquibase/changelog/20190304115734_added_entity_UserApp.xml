@@ -38,10 +38,6 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="jhi_password" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
             <column name="rol" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
@@ -50,6 +46,11 @@
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/user_apps.csv"
+                  separator=";"
+                  tableName="user_app"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

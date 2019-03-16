@@ -33,8 +33,8 @@ export const userAppRoute: Routes = [
         path: '',
         component: UserAppComponent,
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'UserApps'
+            authorities: ['ROLE_ADMIN'],
+            pageTitle: 'Usuarios'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -46,7 +46,7 @@ export const userAppRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'UserApps'
+            pageTitle: 'Información de Usuario'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -70,7 +70,7 @@ export const userAppRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'UserApps'
+            pageTitle: 'Editar Usuario'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -84,8 +84,8 @@ export const userAppPopupRoute: Routes = [
             userApp: UserAppResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'UserApps'
+            authorities: ['ROLE_ADMIN'],
+            pageTitle: 'Eliminacion de usuario'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

@@ -1,68 +1,65 @@
-<div>
-    <h2 id="page-heading">
-        <span>User Apps</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-user-app" [routerLink]="['/user-app/new']">
-            <fa-icon [icon]="'plus'"></fa-icon>
-            <span >
-            Create new User App
-            </span>
-        </button>
-    </h2>
-    <jhi-alert></jhi-alert>
-    <br/>
-    <div class="table-responsive" *ngIf="userApps">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-            <th><span>ID</span></th>
-            <th><span>Name</span></th>
-            <th><span>Identification Number</span></th>
-            <th><span>Mail</span></th>
-            <th><span>Address</span></th>
-            <th><span>Password</span></th>
-            <th><span>Rol</span></th>
-            <th><span>User</span></th>
-            <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let userApp of userApps ;trackBy: trackId">
-                <td><a [routerLink]="['/user-app', userApp.id, 'view' ]">{{userApp.id}}</a></td>
-                <td>{{userApp.name}}</td>
-                <td>{{userApp.identificationNumber}}</td>
-                <td>{{userApp.mail}}</td>
-                <td>{{userApp.address}}</td>
-                <td>{{userApp.password}}</td>
-                <td>{{userApp.rol}}</td>
-                <td>
-                    {{userApp.user?.id}}
-                </td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['/user-app', userApp.id, 'view' ]"
-                                class="btn btn-info btn-sm">
-                            <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/user-app', userApp.id, 'edit']"
-                                class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', 'user-app', { outlets: { popup: userApp.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline">Delete</span>
-                        </button>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Usuarios
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="card-block">
+                    <jhi-alert></jhi-alert>
+                    <div class="table-responsive" *ngIf="userApps">
+                        <table class="table table-responsive-md text-center">
+                            <thead>
+                            <tr>
+                                <th><span></span></th>
+                                <th><span>Nombre usuario</span></th>
+                                <th><span>Nombre</span></th>
+                                <th><span>Identificación</span></th>
+                                <th><span>Correo electronico</span></th>
+                                <th><span>Rol</span></th>
+                                <th><span>Activo</span></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let userApp of userApps ;trackBy: trackId">
+                                <td>
+                                    <div class="custom-control custom-checkbox m-0">
+                                        <input type="checkbox" class="custom-control-input" id="{{userApp.id}}">
+                                        <label class="custom-control-label" for="{{userApp.id}}"></label>
+                                    </div>
+                                </td>
+                                <td>{{userApp.user?.login}}</td>
+                                <td>{{userApp.name}}</td>
+                                <td>{{userApp.identificationNumber}}</td>
+                                <td>{{userApp.mail}}</td>
+                                <td><p *ngIf="userApp.rol === 'institution'">Institución</p>
+                                    <p *ngIf="userApp.rol === 'participant'">Participante</p></td>
+                                <td><p *ngIf="userApp.user.activated === true">Sí</p>
+                                    <p *ngIf="userApp.user.activated ===false">No</p></td>
+                                <td>
+                                    <a class="info p-0" data-original-title="" title=""
+                                       [routerLink]="['/user-app', userApp.id, 'view' ]">
+                                        <i class="ft-user font-medium-3 mr-2"></i>
+                                    </a>
+                                    <a class="success p-0" data-original-title="" title=""
+                                       [routerLink]="['/user-app', userApp.id, 'edit']">
+                                        <i class="ft-edit-2 font-medium-3 mr-2"></i>
+                                    </a>
+                                    <a class="danger p-0" data-original-title="" title=""
+                                       [routerLink]="['/', 'user-app', { outlets: { popup: userApp.id + '/delete'} }]"
+                                       replaceUrl="true"
+                                       queryParamsHandling="merge">
+                                        <i class="ft-x font-medium-3 mr-2"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

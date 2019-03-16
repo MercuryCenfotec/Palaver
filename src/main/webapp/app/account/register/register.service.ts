@@ -8,7 +8,15 @@ import { SERVER_API_URL } from 'app/app.constants';
 export class Register {
     constructor(private http: HttpClient) {}
 
+    saveRetrieve(account: any): Observable<any> {
+        return this.http.post(SERVER_API_URL + 'api/register_retrieve', account);
+    }
+
     save(account: any): Observable<any> {
         return this.http.post(SERVER_API_URL + 'api/register', account);
+    }
+
+    saveUserApp(userApp: any): Observable<any> {
+        return this.http.post(SERVER_API_URL + 'api/register_user_app', userApp);
     }
 }

@@ -8,6 +8,7 @@ import { ITestQuestion } from 'app/shared/model/test-question.model';
 import { TestQuestionService } from './test-question.service';
 import { IAptitudeTest } from 'app/shared/model/aptitude-test.model';
 import { AptitudeTestService } from 'app/entities/aptitude-test';
+import { TestAnswerOptionService } from 'app/entities/test-answer-option';
 
 @Component({
     selector: 'jhi-test-question-update',
@@ -23,13 +24,17 @@ export class TestQuestionUpdateComponent implements OnInit {
         protected jhiAlertService: JhiAlertService,
         protected testQuestionService: TestQuestionService,
         protected aptitudeTestService: AptitudeTestService,
-        protected activatedRoute: ActivatedRoute
+        protected activatedRoute: ActivatedRoute,
+        protected testAnswerService: TestAnswerOptionService
     ) {}
 
     ngOnInit() {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ testQuestion }) => {
             this.testQuestion = testQuestion;
+            this.testAnswerService.findAllByTestQuestion(testQuestion.id).subscribe(data => {
+                this.testQuestion.answers = data.body;
+            });
         });
         this.aptitudeTestService
             .query()
@@ -46,11 +51,7 @@ export class TestQuestionUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        if (this.testQuestion.id !== undefined) {
-            this.subscribeToSaveResponse(this.testQuestionService.update(this.testQuestion));
-        } else {
-            this.subscribeToSaveResponse(this.testQuestionService.create(this.testQuestion));
-        }
+        this.subscribeToSaveResponse(this.testQuestionService.update(this.testQuestion));
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<ITestQuestion>>) {

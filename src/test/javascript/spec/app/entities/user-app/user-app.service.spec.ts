@@ -21,7 +21,7 @@ describe('Service Tests', () => {
             service = injector.get(UserAppService);
             httpMock = injector.get(HttpTestingController);
 
-            elemDefault = new UserApp(0, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA');
+            elemDefault = new UserApp(0, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA');
         });
 
         describe('Service methods', async () => {
@@ -59,7 +59,6 @@ describe('Service Tests', () => {
                         identificationNumber: 'BBBBBB',
                         mail: 'BBBBBB',
                         address: 'BBBBBB',
-                        password: 'BBBBBB',
                         rol: 'BBBBBB'
                     },
                     elemDefault
@@ -81,7 +80,6 @@ describe('Service Tests', () => {
                         identificationNumber: 'BBBBBB',
                         mail: 'BBBBBB',
                         address: 'BBBBBB',
-                        password: 'BBBBBB',
                         rol: 'BBBBBB'
                     },
                     elemDefault

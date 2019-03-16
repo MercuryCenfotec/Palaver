@@ -1,72 +1,69 @@
-<div>
-    <h2 id="page-heading">
-        <span>Participants</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-participant" [routerLink]="['/participant/new']">
-            <fa-icon [icon]="'plus'"></fa-icon>
-            <span >
-            Create new Participant
-            </span>
-        </button>
-    </h2>
-    <jhi-alert></jhi-alert>
-    <br/>
-    <div class="table-responsive" *ngIf="participants">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-            <th><span>ID</span></th>
-            <th><span>Birthdate</span></th>
-            <th><span>Gender</span></th>
-            <th><span>Civil Status</span></th>
-            <th><span>Picture</span></th>
-            <th><span>User</span></th>
-            <th><span>Category</span></th>
-            <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let participant of participants ;trackBy: trackId">
-                <td><a [routerLink]="['/participant', participant.id, 'view' ]">{{participant.id}}</a></td>
-                <td>{{participant.birthdate | date:'mediumDate'}}</td>
-                <td>{{participant.gender}}</td>
-                <td>{{participant.civilStatus}}</td>
-                <td>{{participant.picture}}</td>
-                <td>
-                    <div *ngIf="participant.user">
-                        <a [routerLink]="['../user-app', participant.user?.id, 'view' ]" >{{participant.user?.id}}</a>
+<section _ngcontent-c6="" id="extended">
+    <div _ngcontent-c6="" class="row">
+        <div _ngcontent-c6="" class="col-sm-12">
+            <div _ngcontent-c6="" class="card">
+                <div _ngcontent-c6="" class="card-header">
+                    <h4 _ngcontent-c6="" class="card-title">
+                        Participantes
+                        <button [routerLink]="['/participant/new']" class="btn btn-raised btn-primary white float-right jh-create-entity create-participant" id="jh-create-entity">
+                            <fa-icon [icon]="'plus'"></fa-icon>
+                            <span>Crear nuevo participante</span>
+                        </button>
+                    </h4>
+                    <jhi-alert></jhi-alert>
+                    <br/>
+                </div>
+                <div _ngcontent-c6="" class="card-body">
+                    <div _ngcontent-c6="" class="card-block" *ngIf="participants">
+                        <table _ngcontent-c6="" class="table table-responsive-md text-center">
+                            <thead _ngcontent-c6="">
+                            <tr _ngcontent-c6="">
+                                <th><span>ID</span></th>
+                                <th><span>Fecha de nacimiento</span></th>
+                                <th><span>Género</span></th>
+                                <th><span>Estado civil</span></th>
+                                <th><span>Imagen</span></th>
+                                <th><span>Usuario</span></th>
+                                <th><span>Acciones</span></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody _ngcontent-c6="">
+
+                            <tr *ngFor="let participant of participants ;trackBy: trackId">
+                                <td><a [routerLink]="['/participant', participant.id, 'view' ]">{{participant.id}}</a></td>
+                                <td>{{participant.birthdate | date:'mediumDate'}}</td>
+                                <td>{{participant.gender}}</td>
+                                <td>{{participant.civilStatus}}</td>
+                                <td>{{participant.picture}}</td>
+                                <td>
+                                    <div *ngIf="participant.user">
+                                        <a [routerLink]="['../user-app', participant.user?.id, 'view' ]">{{participant.user?.name}}</a>
+                                    </div>
+                                </td>
+                                <!--<td>-->
+                                    <!--<span *ngFor="let category of participant.categories; let last = last">-->
+                                        <!--<a class="form-control-static" [routerLink]="['../category', category?.id, 'view' ]">{{category.id}}</a>-->
+                                        <!--{{last ? '' : ', '}}-->
+                                    <!--</span>-->
+                                <!--</td>-->
+                                <td _ngcontent-c6="">
+                                    <a [routerLink]="['/participant', participant.id, 'view' ]" _ngcontent-c6="" class="info p-0" data-original-title="" title="">
+                                        <i _ngcontent-c6="" class="ft-user font-medium-3 mr-2"></i>
+                                    </a>
+                                    <a [routerLink]="['/participant', participant.id, 'edit']" _ngcontent-c6="" class="success p-0" data-original-title="" title="">
+                                        <i _ngcontent-c6="" class="ft-edit-2 font-medium-3 mr-2"></i>
+                                    </a>
+                                    <a [routerLink]="['/', 'participant', { outlets: { popup: participant.id + '/delete'} }]" _ngcontent-c6="" class="danger p-0" data-original-title="" title="">
+                                        <i _ngcontent-c6="" class="ft-x font-medium-3 mr-2"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
-                </td>
-                <td>
-                    <span *ngFor="let category of participant.categories; let last = last">
-                            <a class="form-control-static" [routerLink]="['../category', category?.id, 'view' ]">{{category.id}}</a>{{last ? '' : ', '}}
-                        </span>
-                </td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['/participant', participant.id, 'view' ]"
-                                class="btn btn-info btn-sm">
-                            <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/participant', participant.id, 'edit']"
-                                class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', 'participant', { outlets: { popup: participant.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</section>

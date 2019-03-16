@@ -44,6 +44,9 @@ public class FocusGroup implements Serializable {
     @Column(name = "code")
     private String code;
 
+    @Column(name = "passing_grade")
+    private Integer passingGrade;
+
     @ManyToOne
     @JsonIgnoreProperties("focusGroups")
     private Incentive incentive;
@@ -136,6 +139,19 @@ public class FocusGroup implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Integer getPassingGrade() {
+        return passingGrade;
+    }
+
+    public FocusGroup passingGrade(Integer passingGrade) {
+        this.passingGrade = passingGrade;
+        return this;
+    }
+
+    public void setPassingGrade(Integer passingGrade) {
+        this.passingGrade = passingGrade;
     }
 
     public Incentive getIncentive() {
@@ -244,6 +260,7 @@ public class FocusGroup implements Serializable {
             ", beginDate='" + getBeginDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
             ", code='" + getCode() + "'" +
+            ", passingGrade=" + getPassingGrade() +
             "}";
     }
 }

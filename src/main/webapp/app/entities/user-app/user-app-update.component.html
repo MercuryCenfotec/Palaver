@@ -1,91 +1,119 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-            <h2 id="jhi-user-app-heading">Create or edit a User App</h2>
-            <div>
-                <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!userApp.id">
-                    <label for="id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id"
-                        [(ngModel)]="userApp.id" readonly />
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_name">Name</label>
-                    <input type="text" class="form-control" name="name" id="field_name"
-                        [(ngModel)]="userApp.name" required/>
-                    <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.name?.errors?.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_identificationNumber">Identification Number</label>
-                    <input type="text" class="form-control" name="identificationNumber" id="field_identificationNumber"
-                        [(ngModel)]="userApp.identificationNumber" required/>
-                    <div [hidden]="!(editForm.controls.identificationNumber?.dirty && editForm.controls.identificationNumber?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.identificationNumber?.errors?.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_mail">Mail</label>
-                    <input type="text" class="form-control" name="mail" id="field_mail"
-                        [(ngModel)]="userApp.mail" required/>
-                    <div [hidden]="!(editForm.controls.mail?.dirty && editForm.controls.mail?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.mail?.errors?.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_address">Address</label>
-                    <input type="text" class="form-control" name="address" id="field_address"
-                        [(ngModel)]="userApp.address" />
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_password">Password</label>
-                    <input type="text" class="form-control" name="password" id="field_password"
-                        [(ngModel)]="userApp.password" required/>
-                    <div [hidden]="!(editForm.controls.password?.dirty && editForm.controls.password?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.password?.errors?.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_rol">Rol</label>
-                    <input type="text" class="form-control" name="rol" id="field_rol"
-                        [(ngModel)]="userApp.rol" required/>
-                    <div [hidden]="!(editForm.controls.rol?.dirty && editForm.controls.rol?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.rol?.errors?.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
+<div class="row match-height">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="px-3">
+                    <form class="form" name="form" role="form" (ngSubmit)="save()" #updateForm="ngForm"
+                          *ngIf="!success">
+                        <div class="row justify-content-md-center">
+                            <div class="col-md-6">
+                                <div class="form-body">
+                                    <h4 class="form-section"><i class="ft-user"></i> Editar informacion</h4>
+                                    <jhi-alert-error></jhi-alert-error>
+                                    <div class="form-group" hidden>
+                                        <label for="id">Id</label>
+                                        <input type="text" class="form-control" id="id" name="id"
+                                               [(ngModel)]="userApp.id" readonly/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="login"><i class="ft-edit-3"></i> Nombre de usuario</label>
+                                        <input type="text" class="form-control" [(ngModel)]="user.login"
+                                               id="login" name="login" #login="ngModel" placeholder="Nombre de usuario"
+                                               required minlength="1" maxlength="50">
+                                        <div *ngIf="login.dirty && login.invalid">
+                                            <small class="form-text text-danger" *ngIf="login.errors.required">
+                                                Este campo es requerido.
+                                            </small>
+                                            <small class="form-text text-danger" *ngIf="login.errors.minlength"
+                                            >
+                                                Su nombre de usuario debe tener al menos 1 caracter de largo.
+                                            </small>
+                                            <small class="form-text text-danger" *ngIf="login.errors.maxlength"
+                                            >
+                                                Su nombre de usuario no debe tener mas de 50 caracteres de largo.
+                                            </small>
+                                        </div>
+                                    </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_user">User</label>
-                    <select class="form-control" id="field_user" name="user" [(ngModel)]="userApp.user" >
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="userOption.id === userApp.user?.id ? userApp.user : userOption" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.id}}</option>
-                    </select>
+                                    <div class="form-group">
+                                        <label for="name"><i class="ft-user"></i> Nombre</label>
+                                        <input type="text" class="form-control" [(ngModel)]="userApp.name" id="name"
+                                               name="name" placeholder="Nombre" #name="ngModel"
+                                               required>
+                                        <div *ngIf="name.dirty && name.invalid">
+                                            <small class="form-text text-danger" *ngIf="name.errors.required">
+                                                Este campo es requerido.
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="identification"><i class="ft-hash"></i> Número de
+                                            identificación</label>
+                                        <input type="text" class="form-control"
+                                               [(ngModel)]="userApp.identificationNumber" id="identification"
+                                               name="identification" #identification="ngModel"
+                                               placeholder="Número de identificación"
+                                               required minlength="1" maxlength="200">
+                                        <div *ngIf="identification.dirty && identification.invalid">
+                                            <small class="form-text text-danger" *ngIf="identification.errors.required">
+                                                Este campo es requerido.
+                                            </small>
+                                            <small class="form-text text-danger" *ngIf="identification.errors.minlength"
+                                            >
+                                                Su número de identificación debe tener al menos 1 caracter de largo.
+                                            </small>
+                                            <small class="form-text text-danger" *ngIf="identification.errors.maxlength"
+                                            >
+                                                Su número de identificación no debe tener mas de 50 caracteres de largo.
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="email"><i class="ft-at-sign"></i> Correo electronico</label>
+                                        <input type="email" class="form-control" id="email" name="email"
+                                               #email="ngModel" placeholder="ejemplo@correo.com"
+                                               [(ngModel)]="userApp.mail" [(ngModel)]="user.email"
+                                               minlength=5 maxlength=254 email required>
+                                        <div *ngIf="email.dirty && email.invalid">
+                                            <small class="form-text text-danger" *ngIf="email.errors.required"
+                                            >
+                                                Este campo es requerido.
+                                            </small>
+                                            <small class="form-text text-danger" *ngIf="email.errors.minlength"
+                                            >
+                                                Su contraseña debe tener al menos 4 caracteres de largo.
+                                            </small>
+                                            <small class="form-text text-danger" *ngIf="email.errors.maxlength"
+                                            >
+                                                Su contraseña no debe tener mas de 50 caracteres de largo.
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="address"><i class="ft-globe"></i> Dirección</label>
+                                        <input type="text" class="form-control" [(ngModel)]="userApp.address"
+                                               id="address" name="address" #address="ngModel" placeholder="Dirección">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions center">
+                            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="previousState()">
+                                <i class="ft-x"></i> Atras
+                            </button>
+                            <button type="submit" [disabled]="updateForm.form.invalid || isSaving "
+                                    class="btn btn-raised btn-primary">
+                                <i class="ft-check"></i> Confirmar
+                            </button>
+                        </div>
+                    </form>
+
                 </div>
             </div>
-            <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
-                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
-                </button>
-                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>

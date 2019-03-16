@@ -98,6 +98,19 @@ public class UserAppResource {
     }
 
     /**
+     * GET  /user-apps/user_id/{id} : get the "id" userApp.
+     *
+     * @param id the id of the userApp to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the userApp, or with status 404 (Not Found)
+     */
+    @GetMapping("/user-apps/user_id/{id}")
+    public ResponseEntity<UserApp> getUserAppByUserId(@PathVariable Long id) {
+        log.debug("REST request to get UserApp by User id : {}", id);
+        Optional<UserApp> tempUserApp = userAppRepository.findByUser_Id(id);
+        return ResponseUtil.wrapOrNotFound(tempUserApp);
+    }
+
+    /**
      * DELETE  /user-apps/:id : delete the "id" userApp.
      *
      * @param id the id of the userApp to delete

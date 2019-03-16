@@ -1,6 +1,6 @@
 import './vendor.ts';
 
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
@@ -20,6 +20,10 @@ import { PalaverEntityModule } from './entities/entity.module';
 import * as moment from 'moment';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ErrorComponent } from './layouts';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es-CR';
+
+registerLocaleData(localeEs);
 
 @NgModule({
     imports: [
@@ -59,7 +63,8 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
             provide: HTTP_INTERCEPTORS,
             useClass: NotificationInterceptor,
             multi: true
-        }
+        },
+        { provide: LOCALE_ID, useValue: 'es-CR' }
     ],
     bootstrap: [JhiMainComponent]
 })

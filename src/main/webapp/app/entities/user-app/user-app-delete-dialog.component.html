@@ -1,19 +1,19 @@
 <form name="deleteForm" (ngSubmit)="confirmDelete(userApp.id)">
     <div class="modal-header">
-        <h4 class="modal-title">Confirm delete operation</h4>
+        <h4 class="modal-title">Confirmar acción</h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 (click)="clear()">&times;</button>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
-        <p id="jhi-delete-userApp-heading">Are you sure you want to delete this User App?</p>
+        <p id="jhi-delete-userApp-heading">¿Estás seguro de que quieres eliminar este usuario?</p>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
-            <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+        <button type="button" class="btn btn-raised btn-warning mr-1" data-dismiss="modal" (click)="clear()">
+            <i class="ft-x"></i> Cancelar
         </button>
-        <button id="jhi-confirm-delete-userApp" type="submit" class="btn btn-danger">
-            <fa-icon [icon]="'times'"></fa-icon>&nbsp;<span>Delete</span>
+        <button id="jhi-confirm-delete-userApp" type="submit" class="btn btn-raised btn-danger mr-1">
+            <i class="ft-alert-triangle"></i> Eliminar
         </button>
     </div>
 </form>

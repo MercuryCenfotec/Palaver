@@ -27,13 +27,6 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "password",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
             "fieldName": "rol",
             "fieldType": "String",
             "fieldValidateRules": [

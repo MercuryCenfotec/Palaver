@@ -76,6 +76,10 @@ public class UserService {
             });
     }
 
+    public Optional<User> getByEmail(String mail) {
+        return userRepository.findOneByEmailIgnoreCase(mail);
+    }
+
     public Optional<User> requestPasswordReset(String mail) {
         return userRepository.findOneByEmailIgnoreCase(mail)
             .filter(User::getActivated)
@@ -185,6 +189,27 @@ public class UserService {
                 this.clearUserCaches(user);
                 log.debug("Changed Information for User: {}", user);
             });
+    }
+
+    /**
+     * Update role for the current user.
+     *  @param role role of the user
+     * @param userDTO user
+     */
+    public User updateUserRole(String role, UserDTO userDTO) {
+        Set<Authority> authorities = new HashSet<>();
+        User user = null;
+        if(userRepository.findById(userDTO.getId()).isPresent()){
+            user = userRepository.findById(userDTO.getId()).get();
+            authorities = user.getAuthorities();
+            if(role.equals("institution")){
+                authorityRepository.findById(AuthoritiesConstants.INSTITUTION).ifPresent(authorities::add);
+            }else if(role.equals("participant")){
+                authorityRepository.findById(AuthoritiesConstants.PARTICIPANT).ifPresent(authorities::add);
+            }
+            user.setAuthorities(authorities);
+        }
+        return userRepository.save(user);
     }
 
     /**

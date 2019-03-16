@@ -6,7 +6,6 @@ export interface IUserApp {
     identificationNumber?: string;
     mail?: string;
     address?: string;
-    password?: string;
     rol?: string;
     user?: IUser;
 }
@@ -18,7 +17,6 @@ export class UserApp implements IUserApp {
         public identificationNumber?: string,
         public mail?: string,
         public address?: string,
-        public password?: string,
         public rol?: string,
         public user?: IUser
     ) {}

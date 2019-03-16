@@ -11,6 +11,7 @@ import { FocusGroupDetailComponent } from './focus-group-detail.component';
 import { FocusGroupUpdateComponent } from './focus-group-update.component';
 import { FocusGroupDeletePopupComponent } from './focus-group-delete-dialog.component';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
+import { FocusGroupFormComponent } from 'app/entities/focus-group/focus-group-form.component';
 
 @Injectable({ providedIn: 'root' })
 export class FocusGroupResolve implements Resolve<IFocusGroup> {
@@ -33,7 +34,7 @@ export const focusGroupRoute: Routes = [
         path: '',
         component: FocusGroupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_INSTITUTION'],
             pageTitle: 'FocusGroups'
         },
         canActivate: [UserRouteAccessService]
@@ -45,19 +46,19 @@ export const focusGroupRoute: Routes = [
             focusGroup: FocusGroupResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_INSTITUTION'],
             pageTitle: 'FocusGroups'
         },
         canActivate: [UserRouteAccessService]
     },
     {
         path: 'new',
-        component: FocusGroupUpdateComponent,
+        component: FocusGroupFormComponent,
         resolve: {
             focusGroup: FocusGroupResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_INSTITUTION'],
             pageTitle: 'FocusGroups'
         },
         canActivate: [UserRouteAccessService]
@@ -69,7 +70,7 @@ export const focusGroupRoute: Routes = [
             focusGroup: FocusGroupResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_INSTITUTION'],
             pageTitle: 'FocusGroups'
         },
         canActivate: [UserRouteAccessService]
@@ -84,7 +85,7 @@ export const focusGroupPopupRoute: Routes = [
             focusGroup: FocusGroupResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_INSTITUTION'],
             pageTitle: 'FocusGroups'
         },
         canActivate: [UserRouteAccessService],

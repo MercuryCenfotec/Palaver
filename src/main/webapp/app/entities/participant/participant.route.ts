@@ -11,6 +11,7 @@ import { ParticipantDetailComponent } from './participant-detail.component';
 import { ParticipantUpdateComponent } from './participant-update.component';
 import { ParticipantDeletePopupComponent } from './participant-delete-dialog.component';
 import { IParticipant } from 'app/shared/model/participant.model';
+import { ParticipantCreateComponent } from 'app/entities/participant/participant-create.component';
 
 @Injectable({ providedIn: 'root' })
 export class ParticipantResolve implements Resolve<IParticipant> {
@@ -52,7 +53,7 @@ export const participantRoute: Routes = [
     },
     {
         path: 'new',
-        component: ParticipantUpdateComponent,
+        component: ParticipantCreateComponent,
         resolve: {
             participant: ParticipantResolve
         },

@@ -37,10 +37,6 @@ public class UserApp implements Serializable {
     private String address;
 
     @NotNull
-    @Column(name = "jhi_password", nullable = false)
-    private String password;
-
-    @NotNull
     @Column(name = "rol", nullable = false)
     private String rol;
 
@@ -109,19 +105,6 @@ public class UserApp implements Serializable {
         this.address = address;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public UserApp password(String password) {
-        this.password = password;
-        return this;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getRol() {
         return rol;
     }
@@ -177,7 +160,6 @@ public class UserApp implements Serializable {
             ", identificationNumber='" + getIdentificationNumber() + "'" +
             ", mail='" + getMail() + "'" +
             ", address='" + getAddress() + "'" +
-            ", password='" + getPassword() + "'" +
             ", rol='" + getRol() + "'" +
             "}";
     }

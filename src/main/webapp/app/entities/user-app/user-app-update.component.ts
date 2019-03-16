@@ -15,6 +15,7 @@ import { IUser, UserService } from 'app/core';
 export class UserAppUpdateComponent implements OnInit {
     userApp: IUserApp;
     isSaving: boolean;
+    user: IUser;
 
     users: IUser[];
 
@@ -29,6 +30,9 @@ export class UserAppUpdateComponent implements OnInit {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ userApp }) => {
             this.userApp = userApp;
+            this.userService.getByLogin(userApp.user.login).subscribe(user => {
+                this.user = user;
+            });
         });
         this.userService
             .query()
@@ -45,11 +49,12 @@ export class UserAppUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        if (this.userApp.id !== undefined) {
-            this.subscribeToSaveResponse(this.userAppService.update(this.userApp));
-        } else {
-            this.subscribeToSaveResponse(this.userAppService.create(this.userApp));
-        }
+        this.userService.update(this.user).subscribe(
+            data => {
+                this.subscribeToSaveResponse(this.userAppService.update(this.userApp));
+            },
+            (res: HttpErrorResponse) => this.onSaveError()
+        );
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IUserApp>>) {

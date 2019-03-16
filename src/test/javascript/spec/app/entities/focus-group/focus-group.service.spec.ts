@@ -25,7 +25,7 @@ describe('Service Tests', () => {
             httpMock = injector.get(HttpTestingController);
             currentDate = moment();
 
-            elemDefault = new FocusGroup(0, 'AAAAAAA', 'AAAAAAA', currentDate, currentDate, 'AAAAAAA');
+            elemDefault = new FocusGroup(0, 'AAAAAAA', 'AAAAAAA', currentDate, currentDate, 'AAAAAAA', 0);
         });
 
         describe('Service methods', async () => {
@@ -77,7 +77,8 @@ describe('Service Tests', () => {
                         description: 'BBBBBB',
                         beginDate: currentDate.format(DATE_FORMAT),
                         endDate: currentDate.format(DATE_FORMAT),
-                        code: 'BBBBBB'
+                        code: 'BBBBBB',
+                        passingGrade: 1
                     },
                     elemDefault
                 );
@@ -104,7 +105,8 @@ describe('Service Tests', () => {
                         description: 'BBBBBB',
                         beginDate: currentDate.format(DATE_FORMAT),
                         endDate: currentDate.format(DATE_FORMAT),
-                        code: 'BBBBBB'
+                        code: 'BBBBBB',
+                        passingGrade: 1
                     },
                     elemDefault
                 );

@@ -1,51 +1,51 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <div *ngIf="userApp">
-            <h2><span>User App</span> {{userApp.id}}</h2>
-            <hr>
-            <jhi-alert-error></jhi-alert-error>
-            <dl class="row-md jh-entity-details">
-                <dt><span>Name</span></dt>
-                <dd>
-                    <span>{{userApp.name}}</span>
-                </dd>
-                <dt><span>Identification Number</span></dt>
-                <dd>
-                    <span>{{userApp.identificationNumber}}</span>
-                </dd>
-                <dt><span>Mail</span></dt>
-                <dd>
-                    <span>{{userApp.mail}}</span>
-                </dd>
-                <dt><span>Address</span></dt>
-                <dd>
-                    <span>{{userApp.address}}</span>
-                </dd>
-                <dt><span>Password</span></dt>
-                <dd>
-                    <span>{{userApp.password}}</span>
-                </dd>
-                <dt><span>Rol</span></dt>
-                <dd>
-                    <span>{{userApp.rol}}</span>
-                </dd>
-                <dt><span>User</span></dt>
-                <dd>
-                    {{userApp.user?.id}}
-                </dd>
-            </dl>
-
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
-            </button>
-
-            <button type="button"
-                    [routerLink]="['/user-app', userApp.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
-            </button>
+<div class="row match-height">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="px-3">
+                    <div class="row justify-content-md-center">
+                        <div class="col-md-6">
+                            <div *ngIf="userApp">
+                                <h4 class="text-bold-500 primary"><i class="ft-user"></i> Informción de Usuario</h4>
+                                <hr>
+                                <div class="card-block">
+                                    <div class="mb-3">
+                                        <span class="text-bold-500 primary"><i class="ft-edit-3"></i> Nombre de Usuario</span>
+                                        <span class="display-block overflow-hidden">{{userApp.user?.login}}</span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <span class="text-bold-500 primary"><i class="ft-user"></i> Nombre</span>
+                                        <span class="display-block overflow-hidden">{{userApp.name}}</span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <span class="text-bold-500 primary"><i class="ft-hash"></i> Numero de identificacion</span>
+                                        <span
+                                            class="display-block overflow-hidden">{{userApp.identificationNumber}}</span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <span class="text-bold-500 primary"><i class="ft-at-sign"></i> Correo electronico</span>
+                                        <span class="display-block overflow-hidden">{{userApp.mail}}</span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <span class="text-bold-500 primary"><i class="ft-globe"></i> Dirección</span>
+                                        <span class="display-block overflow-hidden">{{userApp.address}}</span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <span class="text-bold-500 primary">Tipo de usuario</span>
+                                        <span class="display-block overflow-hidden">{{userApp.rol}}</span>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-raised btn-info mr-1"
+                                        (click)="previousState()">
+                                    <i class="ft-chevron-left"></i> Atras
+                                </button>
+                                <button type="button" [routerLink]="['/user-app', userApp.id, 'edit']"
+                                        class="btn btn-raised btn-success">
+                                    <i class="ft-edit"></i> Editar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
