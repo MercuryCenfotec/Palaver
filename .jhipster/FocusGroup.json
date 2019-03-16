@@ -68,6 +68,13 @@
             "otherEntityName": "participant",
             "otherEntityField": "id",
             "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "aptitudeTest",
+            "otherEntityName": "aptitudeTest",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "focusGroup"
         }
     ],
     "changelogDate": "20190304115742",

@@ -67,6 +67,10 @@ public class FocusGroup implements Serializable {
                inverseJoinColumns = @JoinColumn(name = "participant_id", referencedColumnName = "id"))
     private Set<Participant> participants = new HashSet<>();
 
+    @ManyToOne
+    @JsonIgnoreProperties("focusGroups")
+    private AptitudeTest aptitudeTest;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -228,6 +232,19 @@ public class FocusGroup implements Serializable {
 
     public void setParticipants(Set<Participant> participants) {
         this.participants = participants;
+    }
+
+    public AptitudeTest getAptitudeTest() {
+        return aptitudeTest;
+    }
+
+    public FocusGroup aptitudeTest(AptitudeTest aptitudeTest) {
+        this.aptitudeTest = aptitudeTest;
+        return this;
+    }
+
+    public void setAptitudeTest(AptitudeTest aptitudeTest) {
+        this.aptitudeTest = aptitudeTest;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
