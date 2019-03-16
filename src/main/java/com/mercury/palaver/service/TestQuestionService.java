@@ -33,4 +33,12 @@ public class TestQuestionService {
         }
         return questions;
     }
+
+    public TestQuestion save(TestQuestion question) {
+        testQuestionRepo.save(question);
+        for (TestAnswerOption answer : question.getAnswers()) {
+            testAnswerOptionRepo.save(answer);
+        }
+        return question;
+    }
 }

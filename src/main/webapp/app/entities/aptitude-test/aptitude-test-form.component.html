@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()">
-            <h2 id="jhi-aptitude-test-heading">Create Aptitude Test</h2>
+            <h2 id="jhi-aptitude-test-heading">Prueba de aptitud</h2>
             <div>
                 <h4 class="form-section"><i class="ft-info"></i>Información</h4>
                 <div class="form-group">
@@ -13,7 +13,7 @@
                     </small>
                 </div>
                 <div id="addQuestionSection">
-                    <h4 class="form-section"><i class="ft-clipboard"></i>Formulario de preguntas</h4>
+                    <h4 class="form-section"><i class="ft-info"></i>Agregar preguntas</h4>
                     <div class="row">
                         <div id="testForm" class="col-md-6 col-sm-6 col-lg-6">
                             <div class="form-group">
@@ -22,9 +22,6 @@
                                        type="text" class="form-control" name="question"
                                        id="field_question"
                                        [(ngModel)]="newQuestion.question"/>
-                                <!--<small class="form-text text-muted danger" *ngIf="!floatQuestion.valid && (floatName.dirty || floatName.touched)">-->
-                                <!--¡Pregunta requerida!-->
-                                <!--</small>-->
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="field_answer">Respuesta</label>
@@ -33,9 +30,6 @@
                                        type="text" class="form-control" name="answer"
                                        id="field_answer"
                                        [(ngModel)]="newAnswer.answer"/>
-                                <!--<small class="form-text text-muted danger" *ngIf="!floatQuestion.valid && (floatName.dirty || floatName.touched)">-->
-                                <!--¡Pregunta requerida!-->
-                                <!--</small>-->
                             </div>
                             <div>
                                 <button [attr.disabled]="!newAnswer.answer ? '' : null" type="button"
@@ -74,7 +68,7 @@
                     <h4 class="form-section"><i class="ft-clipboard"></i>Preguntas</h4>
                     <div id="question{{i}}" class="card bg-blue-grey bg-lighten-5" *ngFor="let question of aptitudeTest.questions; let i = index">
                         <div class="card-header">
-                            <span class="text-bold-500 primary">{{question.question}}</span>
+                            <span class="text-bold-500 primary">¿{{question.question}}?</span>
                         </div>
                         <div class="card-body">
                             <div class="card-block">

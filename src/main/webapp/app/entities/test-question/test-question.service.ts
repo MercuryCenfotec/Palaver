@@ -20,6 +20,7 @@ export class TestQuestionService {
     }
 
     update(testQuestion: ITestQuestion): Observable<EntityResponseType> {
+        console.log(testQuestion);
         return this.http.put<ITestQuestion>(this.resourceUrl, testQuestion, { observe: 'response' });
     }
 

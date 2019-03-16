@@ -51,7 +51,7 @@ public class TestQuestionResource {
         if (testQuestion.getId() != null) {
             throw new BadRequestAlertException("A new testQuestion cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        TestQuestion result = testQuestionRepository.save(testQuestion);
+        TestQuestion result = testQuestionService.save(testQuestion);
         return ResponseEntity.created(new URI("/api/test-questions/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +72,7 @@ public class TestQuestionResource {
         if (testQuestion.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        TestQuestion result = testQuestionRepository.save(testQuestion);
+        TestQuestion result = testQuestionService.save(testQuestion);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, testQuestion.getId().toString()))
             .body(result);

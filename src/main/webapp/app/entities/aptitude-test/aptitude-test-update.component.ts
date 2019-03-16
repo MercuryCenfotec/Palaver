@@ -8,6 +8,9 @@ import { IAptitudeTest } from 'app/shared/model/aptitude-test.model';
 import { AptitudeTestService } from './aptitude-test.service';
 import { IInstitution } from 'app/shared/model/institution.model';
 import { InstitutionService } from 'app/entities/institution';
+import { TestQuestionService } from 'app/entities/test-question';
+import { ITestQuestion } from 'app/shared/model/test-question.model';
+import { ITestAnswerOption } from 'app/shared/model/test-answer-option.model';
 
 @Component({
     selector: 'jhi-aptitude-test-update',
@@ -16,21 +19,39 @@ import { InstitutionService } from 'app/entities/institution';
 export class AptitudeTestUpdateComponent implements OnInit {
     aptitudeTest: IAptitudeTest;
     isSaving: boolean;
-
+    newQuestion: ITestQuestion;
+    newAnswer: ITestAnswerOption;
     institutions: IInstitution[];
 
     constructor(
         protected jhiAlertService: JhiAlertService,
         protected aptitudeTestService: AptitudeTestService,
         protected institutionService: InstitutionService,
-        protected activatedRoute: ActivatedRoute
+        protected activatedRoute: ActivatedRoute,
+        protected questionsService: TestQuestionService
     ) {}
 
     ngOnInit() {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ aptitudeTest }) => {
             this.aptitudeTest = aptitudeTest;
+            this.questionsService.findAllByAptituteTest(this.aptitudeTest.id).subscribe(data => {
+                this.aptitudeTest.questions = data.body;
+                console.log(this.aptitudeTest);
+            });
         });
+        this.newQuestion = new class implements ITestQuestion {
+            answers: ITestAnswerOption[] = [];
+            aptitudeTest: IAptitudeTest;
+            id: number;
+            question: string;
+        }();
+        this.newAnswer = new class implements ITestAnswerOption {
+            answer: string;
+            desired: boolean;
+            id: number;
+            testQuestion: ITestQuestion;
+        }();
         this.institutionService
             .query()
             .pipe(
@@ -72,5 +93,34 @@ export class AptitudeTestUpdateComponent implements OnInit {
 
     trackInstitutionById(index: number, item: IInstitution) {
         return item.id;
+    }
+
+    addAnswerToQuestion() {
+        const answer: ITestAnswerOption = new class implements ITestAnswerOption {
+            answer: string;
+            desired: boolean;
+            id: number;
+            testQuestion: ITestQuestion;
+        }();
+        answer.answer = this.newAnswer.answer;
+        console.log(answer);
+        answer.desired = false;
+        this.newQuestion.answers.push(answer);
+        this.newAnswer.answer = '';
+    }
+
+    addQuestionToTest() {
+        const question: ITestQuestion = new class implements ITestQuestion {
+            answers: ITestAnswerOption[] = [];
+            aptitudeTest: IAptitudeTest;
+            id: number;
+            question: string;
+        }();
+        question.question = this.newQuestion.question;
+        question.answers = this.newQuestion.answers;
+        this.aptitudeTest.questions.push(question);
+        this.newQuestion.question = '';
+        this.newQuestion.answers = [];
+        console.log(this.aptitudeTest);
     }
 }

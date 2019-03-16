@@ -22,7 +22,7 @@
         "@ng-bootstrap/ng-bootstrap": "4.0.1",
         "@ngx-translate/core": "11.0.1",
         "@ngx-translate/http-loader": "4.0.0",
-        "aws-sdk": "^2.421.0",
+        "aws-sdk": "^2.422.0",
         "bootstrap": "^4.2.1",
         "cloudinary-core": "^2.6.2",
         "core-js": "2.6.3",
