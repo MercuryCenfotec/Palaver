@@ -7,9 +7,11 @@ import {JhiEventManager, JhiAlertService} from 'ng-jhipster';
 import {IFocusGroup} from 'app/shared/model/focus-group.model';
 import {AccountService, IUser, UserService} from 'app/core';
 import {FocusGroupService} from './focus-group.service';
-import {UserAppService} from "app/entities/user-app";
-import {ParticipantService} from "app/entities/participant";
-import {IParticipant, Participant} from "app/shared/model/participant.model";
+import {UserAppService} from 'app/entities/user-app';
+import {ParticipantService} from 'app/entities/participant';
+import {IParticipant, Participant} from 'app/shared/model/participant.model';
+import {ITestResult, TestResult} from 'app/shared/model/test-result.model';
+import {TestResultService} from 'app/entities/test-result';
 
 @Component({
     selector: 'jhi-participate',
@@ -17,8 +19,10 @@ import {IParticipant, Participant} from "app/shared/model/participant.model";
 })
 export class ParticipateComponent implements OnInit, OnDestroy {
     focusGroups: IFocusGroup[];
+    testResults: ITestResult[];
     focusGroup: IFocusGroup;
     participant: IParticipant;
+    testResult = new TestResult('', this.focusGroup, this.participant);
     currentAccount: any;
     eventSubscriber: Subscription;
     asd2: number;
@@ -30,7 +34,8 @@ export class ParticipateComponent implements OnInit, OnDestroy {
         protected accountService: AccountService,
         protected userService: UserService,
         protected userAppService: UserAppService,
-        protected participantService: ParticipantService
+        protected participantService: ParticipantService,
+        protected testResultsService: TestResultService
     ) {
     }
 
@@ -44,6 +49,22 @@ export class ParticipateComponent implements OnInit, OnDestroy {
             .subscribe(
                 (res: IFocusGroup[]) => {
                     this.focusGroups = res;
+                    this.loadAllTests();
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
+    }
+
+    loadAllTests() {
+        this.testResultsService
+            .query()
+            .pipe(
+                filter((res: HttpResponse<ITestResult[]>) => res.ok),
+                map((res: HttpResponse<ITestResult[]>) => res.body)
+            )
+            .subscribe(
+                (res: ITestResult[]) => {
+                    this.testResults = res;
                     this.testX();
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
@@ -77,16 +98,18 @@ export class ParticipateComponent implements OnInit, OnDestroy {
     participate(asd) {
         this.focusGroupService.find(asd).subscribe(data3 => {
             this.focusGroup = data3.body;
-            this.focusGroup.participants.push(this.participant);
-            this.focusGroupService.update(this.focusGroup).subscribe(dataX => {
-                this.loadAll();
+            this.testResult.participant = this.participant;
+            this.testResult.focusGroup = this.focusGroup;
+            this.testResult.grade = '100';
+            this.testResultsService.create(this.testResult).subscribe(data => {
+                this.loadAllTests();
             });
         });
 
     }
 
     testX() {
-        this.currentAccount = this.userService.getUserWithAuthorities().forEach((erg) => {
+        this.currentAccount = this.userService.getUserWithAuthorities().forEach(erg => {
                 this.asd2 = erg.id;
                 this.userAppService.findByUserId(erg.id).subscribe(data => {
                     const bla2 = data.id;
@@ -101,12 +124,10 @@ export class ParticipateComponent implements OnInit, OnDestroy {
     }
 
     amI() {
-        const list = this.focusGroups;
+        const list = this.testResults;
         for (let i = 0; i < list.length; i++) {
-            for (let j = 0; j < list[i].participants.length; j++) {
-                if (this.participant.id === list[i].participants[j].id) {
-                    document.getElementById("btn-" + list[i].id).hidden = true;
-                }
+            if (this.participant.id === list[i].participant.id) {
+                document.getElementById('btn-' + list[i].focusGroup.id).hidden = true;
             }
         }
     }
