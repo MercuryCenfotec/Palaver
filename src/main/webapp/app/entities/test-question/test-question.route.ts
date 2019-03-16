@@ -57,7 +57,7 @@ export const testQuestionRoute: Routes = [
             testQuestion: TestQuestionResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_INSTITUTION'],
             pageTitle: 'TestQuestions'
         },
         canActivate: [UserRouteAccessService]
