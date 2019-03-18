@@ -1,6 +1,9 @@
 package com.mercury.palaver.web.rest;
+
 import com.mercury.palaver.domain.Participant;
 import com.mercury.palaver.repository.ParticipantRepository;
+import com.mercury.palaver.repository.UserAppRepository;
+import com.mercury.palaver.service.UserService;
 import com.mercury.palaver.web.rest.errors.BadRequestAlertException;
 import com.mercury.palaver.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -95,19 +98,6 @@ public class ParticipantResource {
     public ResponseEntity<Participant> getParticipant(@PathVariable Long id) {
         log.debug("REST request to get Participant : {}", id);
         Optional<Participant> participant = participantRepository.findOneWithEagerRelationships(id);
-        return ResponseUtil.wrapOrNotFound(participant);
-    }
-
-    /**
-     * GET  /participants/:id : get the "id" participant.
-     *
-     * @param idUser the id of the participant's associated user to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the participant, or with status 404 (Not Found)
-     */
-    @GetMapping("/participants/by_user_id/{idUser}")
-    public ResponseEntity<Participant> getParticipantByUserId(@PathVariable Long idUser) {
-        log.debug("REST request to get Participant by user: {}", idUser);
-        Optional<Participant> participant = participantRepository.findByUserId(idUser);
         return ResponseUtil.wrapOrNotFound(participant);
     }
 

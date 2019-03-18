@@ -26,6 +26,6 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
 
     @Query("select participant from Participant participant left join fetch participant.categories where participant.id =:id")
     Optional<Participant> findOneWithEagerRelationships(@Param("id") Long id);
-    
+
     Optional<Participant> findByUser_Id(Long id);
 }

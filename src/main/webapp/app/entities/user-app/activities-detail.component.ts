@@ -60,8 +60,8 @@ export class ActivitiesDetailComponent implements OnInit {
     ngOnInit() {
         this.userService.getUserWithAuthorities().subscribe(user => {
             this.userAppService.findByUserId(user.id).subscribe(userApp => {
-                this.participantService.findByUserId(userApp.id).subscribe(participant => {
-                    this.meetingService.findAllByParticipantId(participant.body.id).subscribe(meetings => {
+                this.participantService.findByUser(userApp.id).subscribe(participant => {
+                    this.meetingService.findAllByParticipantId(participant.id).subscribe(meetings => {
                         this.events = meetings.body.map((meeting: IMeeting) => this.setCalendarEvent(meeting));
                     });
                 });

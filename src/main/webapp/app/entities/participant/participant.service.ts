@@ -76,10 +76,4 @@ export class ParticipantService {
         }
         return res;
     }
-
-    findByUserId(idUser: number): Observable<EntityResponseType> {
-        return this.http
-            .get<IParticipant>(`${this.resourceUrl}/by_user_id/${idUser}`, { observe: 'response' })
-            .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
-    }
 }

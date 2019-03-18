@@ -93,8 +93,7 @@ public class MeetingResource {
     @GetMapping("/meetings/by_participant/{idParticipant}")
     public List<Meeting> getMeetingByParticipant(@PathVariable Long idParticipant) {
         log.debug("REST request to get Meeting by user id: {}", idParticipant);
-//        return meetingRepository.findAllByFocusGroup_Participants_Id(idParticipant);
-        return meetingRepository.findAll();
+        return meetingRepository.findAllByFocusGroup_Participants_Id(idParticipant);
     }
 
     /**
