@@ -16,6 +16,7 @@ export class MeetingComponent implements OnInit, OnDestroy {
     meetings: IMeeting[];
     currentAccount: any;
     eventSubscriber: Subscription;
+    searchText;
 
     constructor(
         protected meetingService: MeetingService,

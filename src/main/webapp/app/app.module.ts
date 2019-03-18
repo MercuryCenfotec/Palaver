@@ -21,6 +21,7 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es-CR';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 registerLocaleData(localeEs);
 
@@ -38,6 +39,8 @@ registerLocaleData(localeEs);
         PalaverCoreModule,
         PalaverHomeModule,
         PalaverAccountModule,
+        Ng2SearchPipeModule,
+        // jhipster-needle-angular-add-module JHipster will add new module here
         PalaverEntityModule,
         PalaverAppRoutingModule
         // jhipster-needle-angular-add-module JHipster will add new module here

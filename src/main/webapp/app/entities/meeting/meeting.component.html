@@ -1,70 +1,77 @@
-<div>
-    <h2 id="page-heading">
-        <span>Meetings</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-meeting" [routerLink]="['/meeting/new']">
-            <fa-icon [icon]="'plus'"></fa-icon>
-            <span >
-            Create new Meeting
-            </span>
-        </button>
-    </h2>
-    <jhi-alert></jhi-alert>
-    <br/>
-    <div class="table-responsive" *ngIf="meetings">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-            <th><span>ID</span></th>
-            <th><span>Date</span></th>
-            <th><span>Time</span></th>
-            <th><span>Name</span></th>
-            <th><span>Description</span></th>
-            <th><span>Call URL</span></th>
-            <th><span>Call Code</span></th>
-            <th><span>Focus Group</span></th>
-            <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let meeting of meetings ;trackBy: trackId">
-                <td><a [routerLink]="['/meeting', meeting.id, 'view' ]">{{meeting.id}}</a></td>
-                <td>{{meeting.date | date:'mediumDate'}}</td>
-                <td>{{meeting.time | date:'medium'}}</td>
-                <td>{{meeting.name}}</td>
-                <td>{{meeting.description}}</td>
-                <td>{{meeting.callURL}}</td>
-                <td>{{meeting.callCode}}</td>
-                <td>
-                    <div *ngIf="meeting.focusGroup">
-                        <a [routerLink]="['../focus-group', meeting.focusGroup?.id, 'view' ]" >{{meeting.focusGroup?.id}}</a>
+<section _ngcontent-c6="" id="extended">
+    <div _ngcontent-c6="" class="row">
+        <div _ngcontent-c6="" class="col-sm-12">
+            <div _ngcontent-c6="" class="card">
+                <div _ngcontent-c6="" class="card-header">
+                    <h4 _ngcontent-c6="" class="card-title">
+                        Reuniones
+                        <button [routerLink]="['/meeting/new']" class="btn btn-raised btn-primary white float-right jh-create-entity create-participant" id="jh-create-entity">
+                            <fa-icon [icon]="'plus'"></fa-icon>
+                            <span>Crear nueva reunión</span>
+                        </button>
+                    </h4>
+                    <jhi-alert></jhi-alert>
+                    <br/>
+                </div>
+                <div _ngcontent-c6="" class="card-body">
+                    <div _ngcontent-c6="" class="card-block" *ngIf="meetings">
+
+                        <div _ngcontent-c6="" class="input-group">
+                            <div _ngcontent-c6="" class="input-group-prepend">
+                                <i _ngcontent-c16="" class="input-group-text ft-search info" id="basic-addon1"></i>
+
+                            </div>
+                            <input type="text" class="form-control" placeholder="Buscar por nombre o grupo de enfoque..." [(ngModel)]="searchText"/>
+                        </div>
+
+                        <table _ngcontent-c6="" class="table table-responsive-md text-center">
+                            <thead _ngcontent-c6="">
+                            <tr _ngcontent-c6="">
+                                <th><span>ID</span></th>
+                                <th><span>Nombre</span></th>
+                                <th><span>Descripción</span></th>
+                                <!--<th><span>Call URL</span></th>-->
+                                <!--<th><span>Call Code</span></th>-->
+                                <th><span>Fecha</span></th>
+                                <th><span>Hora</span></th>
+                                <th><span>Grupo de enfoque</span></th>
+                                <th><span>Acciones</span></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody _ngcontent-c6="">
+
+                                <tr *ngFor="let meeting of meetings | filter:searchText; trackBy: trackId">
+                                    <td><a [routerLink]="['/meeting', meeting.id, 'view' ]">{{meeting.id}}</a></td>
+                                    <td>{{meeting.name}}</td>
+                                    <td>{{meeting.description}}</td>
+                                    <!--<td>{{meeting.callURL}}</td>-->
+                                    <!--<td>{{meeting.callCode}}</td>-->
+                                    <td>{{meeting.date | date:'mediumDate'}}</td>
+                                    <td>{{meeting.time | date:'medium'}}</td>
+                                    <td>
+                                        <div *ngIf="meeting.focusGroup">
+                                            <a [routerLink]="['../focus-group', meeting.focusGroup?.id, 'view' ]" >{{meeting.focusGroup?.name}}</a>
+                                        </div>
+                                    </td>
+                                    <td _ngcontent-c6="">
+                                        <a [routerLink]="['/meeting', meeting.id, 'view' ]" _ngcontent-c6="" class="info p-0" data-original-title="" title="">
+                                            <i _ngcontent-c6="" class="ft-user font-medium-3 mr-2"></i>
+                                        </a>
+                                        <a [routerLink]="['/meeting', meeting.id, 'edit']" _ngcontent-c6="" class="success p-0" data-original-title="" title="">
+                                            <i _ngcontent-c6="" class="ft-edit-2 font-medium-3 mr-2"></i>
+                                        </a>
+                                        <a [routerLink]="['/', 'meeting', { outlets: { popup: meeting.id + '/delete'} }]" _ngcontent-c6="" class="danger p-0" data-original-title="" title="">
+                                            <i _ngcontent-c6="" class="ft-x font-medium-3 mr-2"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                </td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['/meeting', meeting.id, 'view' ]"
-                                class="btn btn-info btn-sm">
-                            <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/meeting', meeting.id, 'edit']"
-                                class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', 'meeting', { outlets: { popup: meeting.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</section>
+
