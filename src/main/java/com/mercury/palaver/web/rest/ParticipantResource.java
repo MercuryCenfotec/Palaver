@@ -99,6 +99,19 @@ public class ParticipantResource {
     }
 
     /**
+     * GET  /participants/:id : get the "id" participant.
+     *
+     * @param idUser the id of the participant's associated user to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the participant, or with status 404 (Not Found)
+     */
+    @GetMapping("/participants/by_user_id/{idUser}")
+    public ResponseEntity<Participant> getParticipantByUserId(@PathVariable Long idUser) {
+        log.debug("REST request to get Participant by user: {}", idUser);
+        Optional<Participant> participant = participantRepository.findByUserId(idUser);
+        return ResponseUtil.wrapOrNotFound(participant);
+    }
+
+    /**
      * DELETE  /participants/:id : delete the "id" participant.
      *
      * @param id the id of the participant to delete

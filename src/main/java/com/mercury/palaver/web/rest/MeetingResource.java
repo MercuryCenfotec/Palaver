@@ -85,6 +85,19 @@ public class MeetingResource {
     }
 
     /**
+     * GET  /meetings/by_participant/:idParticipant : get the "id" meeting.
+     *
+     * @param idParticipant the id of the participant to retrieve its meetings
+     * @return the ResponseEntity with status 200 (OK) and with body the meeting, or with status 404 (Not Found)
+     */
+    @GetMapping("/meetings/by_participant/{idParticipant}")
+    public List<Meeting> getMeetingByParticipant(@PathVariable Long idParticipant) {
+        log.debug("REST request to get Meeting by user id: {}", idParticipant);
+//        return meetingRepository.findAllByFocusGroup_Participants_Id(idParticipant);
+        return meetingRepository.findAll();
+    }
+
+    /**
      * GET  /meetings/:id : get the "id" meeting.
      *
      * @param id the id of the meeting to retrieve
