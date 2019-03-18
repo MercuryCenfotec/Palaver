@@ -68,7 +68,7 @@ export class TestResultComponent implements OnInit, OnDestroy {
     }
 
     acceptParticipant(event: ITestResult) {
-        let participants: IParticipant[] = [];
+        const participants: IParticipant[] = [];
         event.focusGroup.participants = participants;
         event.focusGroup.participants.push(event.participant);
         event.focusGroup.beginDate = moment(event.focusGroup.beginDate, 'YYYY-MM-DD');

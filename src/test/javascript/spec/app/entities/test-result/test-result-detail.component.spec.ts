@@ -11,7 +11,7 @@ describe('Component Tests', () => {
     describe('TestResult Management Detail Component', () => {
         let comp: TestResultDetailComponent;
         let fixture: ComponentFixture<TestResultDetailComponent>;
-        const route = ({ data: of({ testResult: new TestResult(123) }) } as any) as ActivatedRoute;
+        const route = ({ data: of({ testResult: new TestResult('123') }) } as any) as ActivatedRoute;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
