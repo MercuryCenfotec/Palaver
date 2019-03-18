@@ -22,6 +22,7 @@ import * as moment from 'moment';
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ErrorComponent } from './layouts';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es-CR';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 registerLocaleData(localeEs);
 
@@ -38,6 +39,7 @@ registerLocaleData(localeEs);
         PalaverCoreModule,
         PalaverHomeModule,
         PalaverAccountModule,
+        Ng2SearchPipeModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
         PalaverEntityModule,
         PalaverAppRoutingModule

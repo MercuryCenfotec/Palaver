@@ -1,53 +1,54 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <div *ngIf="meeting">
-            <h2><span>Meeting</span> {{meeting.id}}</h2>
-            <hr>
-            <jhi-alert-error></jhi-alert-error>
-            <dl class="row-md jh-entity-details">
-                <dt><span>Date</span></dt>
-                <dd>
-                    <span>{{meeting.date}}</span>
-                </dd>
-                <dt><span>Time</span></dt>
-                <dd>
-                    <span>{{meeting.time}}</span>
-                </dd>
-                <dt><span>Name</span></dt>
-                <dd>
-                    <span>{{meeting.name}}</span>
-                </dd>
-                <dt><span>Description</span></dt>
-                <dd>
-                    <span>{{meeting.description}}</span>
-                </dd>
-                <dt><span>Call URL</span></dt>
-                <dd>
-                    <span>{{meeting.callURL}}</span>
-                </dd>
-                <dt><span>Call Code</span></dt>
-                <dd>
-                    <span>{{meeting.callCode}}</span>
-                </dd>
-                <dt><span>Focus Group</span></dt>
-                <dd>
-                    <div *ngIf="meeting.focusGroup">
-                        <a [routerLink]="['/focus-group', meeting.focusGroup?.id, 'view']">{{meeting.focusGroup?.id}}</a>
+<div class="row match-height">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="px-3">
+                    <div class="row justify-content-md-center">
+                        <div class="col-md-6">
+                            <div *ngIf="meeting">
+                                <h4 class="text-bold-500 primary"><i class="ft-info"></i> Información de la reunión</h4>
+                                <hr>
+                                <div class="card-block">
+                                    <div class="mb-3">
+                                        <span class="text-bold-500 primary"><i class="ft-calendar"></i> Fecha</span>
+                                        <span class="display-block overflow-hidden">{{meeting.date | date}}</span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <span class="text-bold-500 primary"><i class="ft-clock"></i> Hora</span>
+                                        <span class="display-block overflow-hidden">{{meeting.time.format('LT')}}</span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <span class="text-bold-500 primary"><i class="ft-hash"></i> Nombre</span>
+                                        <span
+                                            class="display-block overflow-hidden">{{meeting.name}}</span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <span class="text-bold-500 primary"><i class="ft-align-center"></i> Descripción</span>
+                                        <span class="display-block overflow-hidden">{{meeting.description}}</span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <span class="text-bold-500 primary"><i class="ft-external-link"></i> Grupo de enfoque</span>
+                                        <div *ngIf="meeting.focusGroup">
+                                            <a class="black" [routerLink]="['/focus-group', meeting.focusGroup?.id, 'view']">{{meeting.focusGroup?.name}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit"
+                                        (click)="previousState()"
+                                        class="btn btn-raised btn-info">
+                                    <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Atras</span>
+                                </button>
+
+                                <button type="button"
+                                        [routerLink]="['/meeting', meeting.id, 'edit']"
+                                        class="btn btn-raised btn-primary">
+                                    <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Editar</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                </dd>
-            </dl>
-
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
-            </button>
-
-            <button type="button"
-                    [routerLink]="['/meeting', meeting.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
-            </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
