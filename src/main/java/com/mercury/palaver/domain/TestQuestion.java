@@ -32,7 +32,7 @@ public class TestQuestion implements Serializable {
     private String question;
 
     @ManyToOne
-    @JsonIgnoreProperties("testQuestions")
+    @JsonIgnoreProperties("questions")
     private AptitudeTest aptitudeTest;
 
     @OneToMany(mappedBy = "testQuestion")

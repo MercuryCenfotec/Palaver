@@ -1,5 +1,6 @@
 package com.mercury.palaver.web.rest;
 import com.mercury.palaver.domain.TestAnswerOption;
+import com.mercury.palaver.domain.TestQuestion;
 import com.mercury.palaver.repository.TestAnswerOptionRepository;
 import com.mercury.palaver.web.rest.errors.BadRequestAlertException;
 import com.mercury.palaver.web.rest.util.HeaderUtil;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -109,4 +111,13 @@ public class TestAnswerOptionResource {
         testAnswerOptionRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    @GetMapping("/test-answer-options/test-question/{id}")
+    public HashSet<TestAnswerOption> getTestAnswerByTestQuestion(@PathVariable Long id) {
+        log.debug("REST request to get all TestAnswerOptions");
+        TestQuestion question = new TestQuestion();
+        question.setId(id);
+        return testAnswerOptionRepository.findAllByTestQuestion(question);
+    }
+
 }

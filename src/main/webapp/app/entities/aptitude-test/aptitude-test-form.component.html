@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()">
-            <h2 id="jhi-aptitude-test-heading">Editar prueba de aptitud</h2>
+            <h2 id="jhi-aptitude-test-heading">Prueba de aptitud</h2>
             <div>
                 <h4 class="form-section"><i class="ft-info"></i>Información</h4>
                 <div class="form-group">
@@ -68,14 +68,7 @@
                     <h4 class="form-section"><i class="ft-clipboard"></i>Preguntas</h4>
                     <div id="question{{i}}" class="card bg-blue-grey bg-lighten-5" *ngFor="let question of aptitudeTest.questions; let i = index">
                         <div class="card-header">
-                            <div class="row">
-                                <div class="col-sm-11 col-md-11 col-11">
-                                    <span class="text-bold-500 primary">¿{{question.question}}?</span>
-                                </div>
-                                <div class="col-sm-1 col-md-1 col-1">
-                                    <a [routerLink]="['/test-question', question.id, 'edit' ]"><i class="ft-edit-2 font-medium-3"></i></a>
-                                </div>
-                            </div>
+                            <span class="text-bold-500 primary">¿{{question.question}}?</span>
                         </div>
                         <div class="card-body">
                             <div class="card-block">
@@ -88,7 +81,7 @@
                     </div>
                 </div>
                 <div>
-                    <button type="button" id="cancel-edit" class="btn btn-raised btn-warning mr-1"
+                    <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
                             (click)="previousState()">
                         <i class="ft-x"></i><span> Cancelar</span>
                     </button>

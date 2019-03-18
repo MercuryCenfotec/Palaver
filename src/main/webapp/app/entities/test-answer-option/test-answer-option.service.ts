@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
 import { ITestAnswerOption } from 'app/shared/model/test-answer-option.model';
+import { ITestQuestion } from 'app/shared/model/test-question.model';
 
 type EntityResponseType = HttpResponse<ITestAnswerOption>;
 type EntityArrayResponseType = HttpResponse<ITestAnswerOption[]>;
@@ -30,6 +31,10 @@ export class TestAnswerOptionService {
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
         return this.http.get<ITestAnswerOption[]>(this.resourceUrl, { params: options, observe: 'response' });
+    }
+
+    findAllByTestQuestion(id: number): Observable<EntityArrayResponseType> {
+        return this.http.get<ITestQuestion[]>(`${this.resourceUrl}/test-question/${id}`, { observe: 'response' });
     }
 
     delete(id: number): Observable<HttpResponse<any>> {

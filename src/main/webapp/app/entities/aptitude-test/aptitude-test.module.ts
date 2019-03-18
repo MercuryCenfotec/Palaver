@@ -11,6 +11,7 @@ import {
     aptitudeTestRoute,
     aptitudeTestPopupRoute
 } from './';
+import { AptitudeTestFormComponent } from 'app/entities/aptitude-test/aptitude-test-form.component';
 
 const ENTITY_STATES = [...aptitudeTestRoute, ...aptitudeTestPopupRoute];
 
@@ -21,7 +22,8 @@ const ENTITY_STATES = [...aptitudeTestRoute, ...aptitudeTestPopupRoute];
         AptitudeTestDetailComponent,
         AptitudeTestUpdateComponent,
         AptitudeTestDeleteDialogComponent,
-        AptitudeTestDeletePopupComponent
+        AptitudeTestDeletePopupComponent,
+        AptitudeTestFormComponent
     ],
     entryComponents: [
         AptitudeTestComponent,

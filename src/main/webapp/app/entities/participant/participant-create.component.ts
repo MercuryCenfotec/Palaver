@@ -13,7 +13,7 @@ import { ICategory } from 'app/shared/model/category.model';
 import { CategoryService } from 'app/entities/category';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { FocusGroupService } from 'app/entities/focus-group';
-import * as AWS from 'aws-sdk';
+//import * as AWS from 'aws-sdk';
 import { IUser, UserService } from 'app/core';
 
 @Component({
@@ -151,6 +151,7 @@ export class ParticipantCreateComponent implements OnInit {
     }
 
     fileEvent(fileInput: any) {
+        /*
         const file = fileInput.target.files[0];
 
         console.log(file);
@@ -171,6 +172,6 @@ export class ParticipantCreateComponent implements OnInit {
             if (err) {
                 console.log(err, 'there was an error uploading your file');
             }
-        });
+        });*/
     }
 }

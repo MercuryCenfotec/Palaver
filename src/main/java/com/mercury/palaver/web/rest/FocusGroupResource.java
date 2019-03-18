@@ -9,11 +9,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
+import javax.persistence.metamodel.Metamodel;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -110,4 +117,20 @@ public class FocusGroupResource {
         focusGroupRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    @PostMapping("/focus-groups/merge")
+    public void mergeFocusGroup(@Valid @RequestBody FocusGroup focusGroup) {
+
+        EntityManagerFactory emf;
+        EntityManager entityManager;
+        EntityTransaction transaction;
+
+        emf = Persistence.createEntityManagerFactory("jbd-pu");
+        entityManager = emf.createEntityManager();
+        transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        entityManager.merge(focusGroup);
+    }
+
 }
