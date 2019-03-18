@@ -7,9 +7,9 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { ITestResult } from 'app/shared/model/test-result.model';
 import { AccountService } from 'app/core';
 import { TestResultService } from './test-result.service';
-import {FocusGroupService} from "app/entities/focus-group";
-import {IParticipant} from "app/shared/model/participant.model";
-import moment = require("moment");
+import { FocusGroupService } from 'app/entities/focus-group';
+import { IParticipant } from 'app/shared/model/participant.model';
+import moment = require('moment');
 
 @Component({
     selector: 'jhi-test-result',
@@ -68,20 +68,20 @@ export class TestResultComponent implements OnInit, OnDestroy {
     }
 
     acceptParticipant(event: ITestResult) {
-        let participants: IParticipant[] = [];
+        const participants: IParticipant[] = [];
         event.focusGroup.participants = participants;
         event.focusGroup.participants.push(event.participant);
-        event.focusGroup.beginDate = moment(event.focusGroup.beginDate,'YYYY-MM-DD');
-        event.focusGroup.endDate = moment(event.focusGroup.endDate,'YYYY-MM-DD');
-        this.focusGroupService.update(event.focusGroup).subscribe(data =>{
-            this.testResultService.delete(event.id).subscribe(data2 =>{
+        event.focusGroup.beginDate = moment(event.focusGroup.beginDate, 'YYYY-MM-DD');
+        event.focusGroup.endDate = moment(event.focusGroup.endDate, 'YYYY-MM-DD');
+        this.focusGroupService.update(event.focusGroup).subscribe(data => {
+            this.testResultService.delete(event.id).subscribe(data2 => {
                 this.loadAll();
             });
         });
     }
 
     rejectParticipant(event: ITestResult) {
-        this.testResultService.delete(event.id).subscribe(data =>{
+        this.testResultService.delete(event.id).subscribe(data => {
             this.loadAll();
         });
     }

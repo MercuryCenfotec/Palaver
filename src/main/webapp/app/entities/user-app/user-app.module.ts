@@ -11,6 +11,7 @@ import {
     userAppRoute,
     userAppPopupRoute
 } from './';
+import { ActivitiesDetailComponent } from './activities-detail.component';
 
 const ENTITY_STATES = [...userAppRoute, ...userAppPopupRoute];
 
@@ -21,9 +22,16 @@ const ENTITY_STATES = [...userAppRoute, ...userAppPopupRoute];
         UserAppDetailComponent,
         UserAppUpdateComponent,
         UserAppDeleteDialogComponent,
-        UserAppDeletePopupComponent
+        UserAppDeletePopupComponent,
+        ActivitiesDetailComponent
     ],
-    entryComponents: [UserAppComponent, UserAppUpdateComponent, UserAppDeleteDialogComponent, UserAppDeletePopupComponent],
+    entryComponents: [
+        UserAppComponent,
+        UserAppUpdateComponent,
+        UserAppDeleteDialogComponent,
+        UserAppDeletePopupComponent,
+        ActivitiesDetailComponent
+    ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PalaverUserAppModule {}

@@ -74,4 +74,10 @@ export class MeetingService {
         }
         return res;
     }
+
+    findAllByParticipantId(idParticipant: number): Observable<EntityArrayResponseType> {
+        return this.http
+            .get<IMeeting[]>(`${this.resourceUrl}/by_participant/${idParticipant}`, { observe: 'response' })
+            .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+    }
 }

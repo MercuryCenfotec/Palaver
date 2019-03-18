@@ -1,6 +1,9 @@
 package com.mercury.palaver.web.rest;
+
 import com.mercury.palaver.domain.Participant;
 import com.mercury.palaver.repository.ParticipantRepository;
+import com.mercury.palaver.repository.UserAppRepository;
+import com.mercury.palaver.service.UserService;
 import com.mercury.palaver.web.rest.errors.BadRequestAlertException;
 import com.mercury.palaver.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;

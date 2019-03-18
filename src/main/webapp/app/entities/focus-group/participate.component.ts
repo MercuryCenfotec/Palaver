@@ -1,19 +1,19 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
-import {Subscription} from 'rxjs';
-import {filter, map} from 'rxjs/operators';
-import {JhiEventManager, JhiAlertService} from 'ng-jhipster';
-import {IFocusGroup} from 'app/shared/model/focus-group.model';
-import {AccountService, UserService} from 'app/core';
-import {FocusGroupService} from './focus-group.service';
-import {UserAppService} from 'app/entities/user-app';
-import {ParticipantService} from 'app/entities/participant';
-import {IParticipant} from 'app/shared/model/participant.model';
-import {ITestResult, TestResult} from 'app/shared/model/test-result.model';
-import {TestResultService} from 'app/entities/test-result';
-import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {TestQuestionService} from 'app/entities/test-question';
-import {ITestQuestion} from 'app/shared/model/test-question.model';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
+import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { IFocusGroup } from 'app/shared/model/focus-group.model';
+import { AccountService, UserService } from 'app/core';
+import { FocusGroupService } from './focus-group.service';
+import { UserAppService } from 'app/entities/user-app';
+import { ParticipantService } from 'app/entities/participant';
+import { IParticipant } from 'app/shared/model/participant.model';
+import { ITestResult, TestResult } from 'app/shared/model/test-result.model';
+import { TestResultService } from 'app/entities/test-result';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TestQuestionService } from 'app/entities/test-question';
+import { ITestQuestion } from 'app/shared/model/test-question.model';
 
 @Component({
     selector: 'jhi-participate',
@@ -41,8 +41,7 @@ export class ParticipateComponent implements OnInit, OnDestroy {
         protected testResultsService: TestResultService,
         protected testQuestionsService: TestQuestionService,
         protected modalService: NgbModal
-    ) {
-    }
+    ) {}
 
     loadAllFocusGroups() {
         this.focusGroupService
@@ -115,11 +114,11 @@ export class ParticipateComponent implements OnInit, OnDestroy {
                 });
             }
         });
-
     }
 
     findQuestionsByAptitudeTests() {
-        this.testQuestionsService.findAllByAptituteTest(this.focusGroup.aptitudeTest.id)
+        this.testQuestionsService
+            .findAllByAptituteTest(this.focusGroup.aptitudeTest.id)
             .pipe(
                 filter((res: HttpResponse<ITestQuestion[]>) => res.ok),
                 map((res: HttpResponse<ITestQuestion[]>) => res.body)
@@ -134,17 +133,16 @@ export class ParticipateComponent implements OnInit, OnDestroy {
 
     findActualParticipant() {
         this.currentAccount = this.userService.getUserWithAuthorities().forEach(jhiUser => {
-                this.actualUserId = jhiUser.id;
-                this.userAppService.findByUserId(jhiUser.id).subscribe(userApp => {
-                    const participant = userApp.id;
-                    this.participantService.findByUser(participant).subscribe(foundParticipant => {
-                        this.actualUserId = foundParticipant.id;
-                        this.participant = foundParticipant;
-                        this.findActualUserInOnHoldQueue();
-                    });
+            this.actualUserId = jhiUser.id;
+            this.userAppService.findByUserId(jhiUser.id).subscribe(userApp => {
+                const participant = userApp.id;
+                this.participantService.findByUser(participant).subscribe(foundParticipant => {
+                    this.actualUserId = foundParticipant.id;
+                    this.participant = foundParticipant;
+                    this.findActualUserInOnHoldQueue();
                 });
-            }
-        );
+            });
+        });
     }
 
     findActualUserInOnHoldQueue() {
@@ -157,11 +155,14 @@ export class ParticipateComponent implements OnInit, OnDestroy {
     }
 
     openModal(content) {
-        this.modalService.open(content).result.then(result => {
-            console.log(`Closed with: ${result}`);
-        }, reason => {
-            console.log(`Dismissed ${this.getDismissReason(reason)}`);
-        });
+        this.modalService.open(content).result.then(
+            result => {
+                console.log(`Closed with: ${result}`);
+            },
+            reason => {
+                console.log(`Dismissed ${this.getDismissReason(reason)}`);
+            }
+        );
     }
 
     private getDismissReason(reason: any): string {
@@ -198,5 +199,4 @@ export class ParticipateComponent implements OnInit, OnDestroy {
         grade = grade / this.testQuestions.length;
         return grade;
     }
-
 }
