@@ -13,6 +13,7 @@ import {
     ParticipateComponent
 } from './';
 import { FocusGroupFormComponent } from 'app/entities/focus-group/focus-group-form.component';
+import { FocusGroupManagementComponent } from 'app/entities/focus-group/focus-group-management.component';
 
 const ENTITY_STATES = [...focusGroupRoute, ...focusGroupPopupRoute];
 
@@ -25,14 +26,16 @@ const ENTITY_STATES = [...focusGroupRoute, ...focusGroupPopupRoute];
         FocusGroupDeleteDialogComponent,
         FocusGroupDeletePopupComponent,
         FocusGroupFormComponent,
-        ParticipateComponent
+        ParticipateComponent,
+        FocusGroupManagementComponent
     ],
     entryComponents: [
         FocusGroupComponent,
         FocusGroupUpdateComponent,
         FocusGroupDeleteDialogComponent,
         FocusGroupDeletePopupComponent,
-        ParticipateComponent
+        ParticipateComponent,
+        FocusGroupManagementComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

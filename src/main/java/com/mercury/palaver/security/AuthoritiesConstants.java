@@ -15,6 +15,8 @@ public final class AuthoritiesConstants {
 
     public static final String PARTICIPANT = "ROLE_PARTICIPANT";
 
+    public static final String GROUP = "ROLE_GROUP";
+
     private AuthoritiesConstants() {
     }
 }

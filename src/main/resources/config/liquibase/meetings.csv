@@ -1,0 +1,3 @@
+id;jhi_date;jhi_time;name;description;call_url;call_code;focus_group_id
+1;'2019-03-18';'2019-03-18 10:00:18';'Reunion de prueba 01';'descripcion de reunion de prueba 01';'';null;1
+2;'2019-03-19';'2019-03-19 10:18:39';'Reunion de prueba 02';'descripcion de reunion de prueba 02';'';null;2
