@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
     <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
             <div class="row justify-content-md-center"></div>
             <h2 id="jhi-focus-group-heading">Creación de grupos de enfoque</h2>
             <div>
@@ -62,48 +62,41 @@
                         </small>
                     </div>
                 </div>
-
-                <div class="form-group" [hidden]="true">
-                    <label class="form-control-label" for="field_code">Code</label>
-                    <input type="text" class="form-control" name="code" id="field_code"
-                           [(ngModel)]="focusGroup.code"/>
+                <h4 class="form-section"><i class="ft-clipboard"></i>Prueba de aptitud</h4>
+                <div class="col-xl-12 col-lg-12 col-md-12">
+                    <fieldset class="form-group">
+                        <label for="customSelect">Pruebas de aptitud</label>
+                        <select [(ngModel)]="focusGroup.aptitudeTest" class="custom-select d-block w-100"
+                                id="customSelect" name="aptitudeTest">
+                            <option *ngFor="let aptitudeTest of aptitudeTests"
+                                    [ngValue]="aptitudeTest">{{aptitudeTest.name}}</option>
+                        </select>
+                    </fieldset>
                 </div>
-
-                <div class="form-group" [hidden]="true">
-                    <label class="form-control-label" for="field_incentive">Incentive</label>
-                    <select class="form-control" id="field_incentive" name="incentive"
-                            [(ngModel)]="focusGroup.incentive">
-                        <option [ngValue]="null"></option>
-                        <option
-                            [ngValue]="incentiveOption.id === focusGroup.incentive?.id ? focusGroup.incentive : incentiveOption"
-                            *ngFor="let incentiveOption of incentives; trackBy: trackIncentiveById">{{incentiveOption.id}}</option>
-                    </select>
-                </div>
-                <div class="form-group" [hidden]="true">
-                    <label class="form-control-label" for="field_institution">Institution</label>
-                    <select class="form-control" id="field_institution" name="institution"
-                            [(ngModel)]="focusGroup.institution">
-                        <option [ngValue]="null"></option>
-                        <option
-                            [ngValue]="institutionOption.id === focusGroup.institution?.id ? focusGroup.institution : institutionOption"
-                            *ngFor="let institutionOption of institutions; trackBy: trackInstitutionById">{{institutionOption.id}}</option>
-                    </select>
-                </div>
-                <div class="form-group" [hidden]="true">
-                    <label for="field_category">Category</label>
-                    <select class="form-control" id="field_category" multiple name="category"
-                            [(ngModel)]="focusGroup.categories">
-                        <option [ngValue]="getSelected(focusGroup.categories, categoryOption)"
-                                *ngFor="let categoryOption of categories; trackBy: trackCategoryById">{{categoryOption.id}}</option>
-                    </select>
-                </div>
-                <div class="form-group" [hidden]="true">
-                    <label for="field_participant">Participant</label>
-                    <select class="form-control" id="field_participant" multiple name="participant"
-                            [(ngModel)]="focusGroup.participants">
-                        <option [ngValue]="getSelected(focusGroup.participants, participantOption)"
-                                *ngFor="let participantOption of participants; trackBy: trackParticipantById">{{participantOption.id}}</option>
-                    </select>
+                <div *ngIf="focusGroup.aptitudeTest" id="questionCardSection" class="row">
+                    <h5 class="col-12 col-md-12 col-sm-12"><i class="ft-clipboard"></i> Preguntas</h5>
+                    <hr>
+                    <div class="card-block col-12">
+                        <div id="question{{questionInd}}" class="card bg-blue-grey bg-lighten-5"
+                             *ngFor="let question of focusGroup.aptitudeTest.questions; let questionInd = index">
+                            <div class="card-header">
+                                <span class="text-bold-500 primary">¿{{question.question}}?</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-block">
+                                    <div *ngFor="let answer of question.answers;"
+                                         class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="answer{{answer.id}}"
+                                               name="desiredAnswerRadio{{question.id}}" class="custom-control-input"
+                                               (change)="desiredAnswer(question, answer)">
+                                        <label class="custom-control-label" for="answer{{answer.id}}"><span
+                                            class="display-block"><i
+                                            class="ft-minus"></i> {{answer.answer}}</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div>
@@ -111,7 +104,8 @@
                         (click)="previousState()">
                     <i class="ft-x"></i>&nbsp;<span> Cancelar</span>
                 </button>
-                <button type="submit" id="save-entity" class="btn btn-raised btn-primary">
+                <button type="submit" id="save-entity" class="btn btn-raised btn-primary"
+                        [disabled]="!validateAnswers()">
                     <i class="ft-save"></i>&nbsp;<span> Registrar</span>
                 </button>
             </div>

@@ -5,8 +5,9 @@ import { filter, map } from 'rxjs/operators';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { IAptitudeTest } from 'app/shared/model/aptitude-test.model';
-import { AccountService } from 'app/core';
+import { AccountService, UserService } from 'app/core';
 import { AptitudeTestService } from './aptitude-test.service';
+import { InstitutionService } from 'app/entities/institution';
 
 @Component({
     selector: 'jhi-aptitude-test',
@@ -21,8 +22,20 @@ export class AptitudeTestComponent implements OnInit, OnDestroy {
         protected aptitudeTestService: AptitudeTestService,
         protected jhiAlertService: JhiAlertService,
         protected eventManager: JhiEventManager,
-        protected accountService: AccountService
+        protected accountService: AccountService,
+        protected userService: UserService,
+        protected institutionService: InstitutionService
     ) {}
+
+    loadByInstitution() {
+        this.userService.getUserWithAuthorities().subscribe(user => {
+            this.institutionService.getByUserUser(user.id).subscribe(institution => {
+                this.aptitudeTestService.findAllByInstitution(institution.body.id).subscribe(aptitudeTests => {
+                    this.aptitudeTests = aptitudeTests.body;
+                });
+            });
+        });
+    }
 
     loadAll() {
         this.aptitudeTestService
@@ -40,7 +53,7 @@ export class AptitudeTestComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.loadAll();
+        this.loadByInstitution();
         this.accountService.identity().then(account => {
             this.currentAccount = account;
         });
