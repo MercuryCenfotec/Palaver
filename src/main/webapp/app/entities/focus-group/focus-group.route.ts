@@ -109,7 +109,7 @@ export const focusGroupRoute: Routes = [
             focusGroup: FocusGroupResolve
         },
         data: {
-            authorities: ['ROLE_GROUP'],
+            authorities: ['ROLE_GROUP', 'ROLE_ADMIN'],
             pageTitle: 'Administracion de grupo de enfoque'
         },
         canActivate: [UserRouteAccessService]

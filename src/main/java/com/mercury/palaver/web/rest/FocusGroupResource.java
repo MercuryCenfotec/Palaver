@@ -1,12 +1,14 @@
 package com.mercury.palaver.web.rest;
 import com.mercury.palaver.domain.FocusGroup;
 import com.mercury.palaver.repository.FocusGroupRepository;
+import com.mercury.palaver.security.AuthoritiesConstants;
 import com.mercury.palaver.web.rest.errors.BadRequestAlertException;
 import com.mercury.palaver.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.*;
@@ -102,18 +104,6 @@ public class FocusGroupResource {
     public ResponseEntity<FocusGroup> getFocusGroup(@PathVariable Long id) {
         log.debug("REST request to get FocusGroup : {}", id);
         Optional<FocusGroup> focusGroup = focusGroupRepository.findOneWithEagerRelationships(id);
-        return ResponseUtil.wrapOrNotFound(focusGroup);
-    }
-    /**
-     * GET  /focus-groups/find_by_code/:code : get the "code" focusGroup.
-     *
-     * @param code the code attribute of the focusGroup to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the focusGroup, or with status 404 (Not Found)
-     */
-    @GetMapping("/focus-groups/find_by_code/{code}")
-    public ResponseEntity<FocusGroup> getFocusGroupByCode(@PathVariable String code) {
-        log.debug("REST request to get FocusGroup by code: {}", code);
-        Optional<FocusGroup> focusGroup = focusGroupRepository.findByCode(code);
         return ResponseUtil.wrapOrNotFound(focusGroup);
     }
 

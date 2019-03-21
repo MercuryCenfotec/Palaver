@@ -15,6 +15,7 @@ type EntityArrayResponseType = HttpResponse<IFocusGroup[]>;
 @Injectable({ providedIn: 'root' })
 export class FocusGroupService {
     public resourceUrl = SERVER_API_URL + 'api/focus-groups';
+    public resourceUrlPublic = SERVER_API_URL + 'api-public/focus-groups';
 
     constructor(protected http: HttpClient) {}
 
@@ -76,9 +77,9 @@ export class FocusGroupService {
         return res;
     }
 
-    getByCode(code: string): Observable<EntityResponseType> {
+    findByCode(code: string): Observable<EntityResponseType> {
         return this.http
-            .get<IFocusGroup>(`${this.resourceUrl}/find_by_code/${code}`, { observe: 'response' })
+            .get<IFocusGroup>(`${this.resourceUrlPublic}/find_by_code/${code}`, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 }

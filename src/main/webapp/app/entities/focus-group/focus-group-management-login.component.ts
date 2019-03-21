@@ -31,9 +31,11 @@ export class FocusGroupManagementLoginComponent implements OnInit {
     ngOnInit(): void {}
 
     login() {
-        this.password = this.code;
-        this.username = this.code;
-        this.focusGroupService.getByCode(this.code).subscribe(data => {
+        this.focusGroupService.findByCode(this.code).subscribe(data => {
+            this.password = this.code;
+            this.username = this.code;
+            console.log(this.username);
+            console.log(this.password);
             this.loginService
                 .login({
                     username: this.username,
@@ -45,7 +47,7 @@ export class FocusGroupManagementLoginComponent implements OnInit {
                     if (this.router.url === '/register' || /^\/activate\//.test(this.router.url) || /^\/reset\//.test(this.router.url)) {
                         this.router.navigate(['/focus-group/management']);
                     }
-
+                    this.router.navigate(['/focus-group/management']);
                     this.eventManager.broadcast({
                         name: 'authenticationSuccess',
                         content: 'Sending Authentication Success'
