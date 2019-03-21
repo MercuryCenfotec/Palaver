@@ -12,6 +12,7 @@ import {
     userAppPopupRoute
 } from './';
 import { ActivitiesDetailComponent } from './activities-detail.component';
+import { FilterPipe } from 'app/entities/user-app/filter.pipe';
 
 const ENTITY_STATES = [...userAppRoute, ...userAppPopupRoute];
 
@@ -23,7 +24,8 @@ const ENTITY_STATES = [...userAppRoute, ...userAppPopupRoute];
         UserAppUpdateComponent,
         UserAppDeleteDialogComponent,
         UserAppDeletePopupComponent,
-        ActivitiesDetailComponent
+        ActivitiesDetailComponent,
+        FilterPipe
     ],
     entryComponents: [
         UserAppComponent,

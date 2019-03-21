@@ -13,6 +13,7 @@ import {
     ParticipateComponent
 } from './';
 import { FocusGroupFormComponent } from 'app/entities/focus-group/focus-group-form.component';
+import { FilterPipe } from 'app/entities/focus-group/filter.pipe';
 
 const ENTITY_STATES = [...focusGroupRoute, ...focusGroupPopupRoute];
 
@@ -25,7 +26,8 @@ const ENTITY_STATES = [...focusGroupRoute, ...focusGroupPopupRoute];
         FocusGroupDeleteDialogComponent,
         FocusGroupDeletePopupComponent,
         FocusGroupFormComponent,
-        ParticipateComponent
+        ParticipateComponent,
+        FilterPipe
     ],
     entryComponents: [
         FocusGroupComponent,

@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header">
-        <h2 class="card-title" id="jhi-meeting-heading">Modificar una reunión</h2>
+        <h2 class="card-title" id="jhi-meeting-heading">Crear una nueva reunión</h2>
     </div>
     <div class="card-body">
         <div class="px-3">
@@ -9,7 +9,7 @@
                 <div class="row justify-content-md-center">
                     <div class="col-md-6">
                         <div class="form-body">
-                            <h4 class="form-section"><i class="ft-user"></i>Modificado</h4>
+                            <h4 class="form-section"><i class="ft-user"></i>Registro</h4>
                             <jhi-alert-error></jhi-alert-error>
                             <div class="form-group" [hidden]="!meeting.id">
                                 <label for="id">ID</label>
@@ -38,7 +38,7 @@
                                 <label class="form-control-label" for="field_time">Tiempo</label>
                                 <div class="d-flex">
                                     <input id="field_time" type="datetime-local" class="form-control" name="time" [(ngModel)]="time" placeholder="YYYY-MM-DD HH:mm"
-                                       required/>
+                                           required/>
                                 </div>
                                 <div [hidden]="!(editForm.controls.time?.dirty && editForm.controls.time?.invalid)">
                                     <small class="form-text text-danger"
@@ -69,7 +69,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="field_focusGroup">Focus Group</label>
-                                <select class="form-control" id="field_focusGroup" name="focusGroup" [(ngModel)]="meeting.focusGroup" >
+                                <select class="form-control" id="field_focusGroup" name="focusGroup" [(ngModel)]="meeting.focusGroup" required>
                                     <option [ngValue]="null"></option>
                                     <option [ngValue]="focusGroupOption.id === meeting.focusGroup?.id ? meeting.focusGroup : focusGroupOption" *ngFor="let focusGroupOption of focusgroups; trackBy: trackFocusGroupById">{{focusGroupOption.name}}</option>
                                 </select>
@@ -82,7 +82,7 @@
                             </button>
                             <button class="btn btn-raised btn-primary" type="submit" id="save-entity"
                                     [disabled]="editForm.form.invalid || isSaving">
-                                <i class="ft ft-file-text"></i> Guardar
+                                <i class="ft ft-file-text"></i> Registrar
                             </button>
 
                         </div>
