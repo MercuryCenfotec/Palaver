@@ -13,6 +13,7 @@ import { FocusGroupDeletePopupComponent } from './focus-group-delete-dialog.comp
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { FocusGroupFormComponent } from 'app/entities/focus-group/focus-group-form.component';
 import { ParticipateComponent } from 'app/entities/focus-group/participate.component';
+import { FocusGroupManagementLoginComponent } from 'app/entities/focus-group/focus-group-management-login.component';
 import { FocusGroupManagementComponent } from 'app/entities/focus-group/focus-group-management.component';
 
 @Injectable({ providedIn: 'root' })
@@ -90,14 +91,26 @@ export const focusGroupRoute: Routes = [
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'participate',
+        path: 'code_activation',
+        component: FocusGroupManagementLoginComponent,
+        resolve: {
+            focusGroup: FocusGroupResolve
+        },
+        data: {
+            authorities: [],
+            pageTitle: 'Codigo de administracion'
+        },
+        canActivate: [UserRouteAccessService]
+    },
+    {
+        path: 'management',
         component: FocusGroupManagementComponent,
         resolve: {
             focusGroup: FocusGroupResolve
         },
         data: {
-            authorities: ['ROLE_INSTITUTION', 'ROLE_GROUP'],
-            pageTitle: 'FocusGroups'
+            authorities: ['ROLE_GROUP'],
+            pageTitle: 'Administracion de grupo de enfoque'
         },
         canActivate: [UserRouteAccessService]
     }

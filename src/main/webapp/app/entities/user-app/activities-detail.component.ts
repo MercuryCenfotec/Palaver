@@ -34,7 +34,7 @@ export class ActivitiesDetailComponent implements OnInit {
     view = 'month';
 
     viewDate: Date = new Date();
-    activeDayIsOpen = true;
+    activeDayIsOpen = false;
 
     actions: CalendarEventAction[] = [
         {
