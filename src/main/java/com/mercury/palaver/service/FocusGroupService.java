@@ -5,10 +5,13 @@ import com.mercury.palaver.domain.TestAnswerOption;
 import com.mercury.palaver.domain.TestQuestion;
 import com.mercury.palaver.repository.FocusGroupRepository;
 import com.mercury.palaver.repository.TestAnswerOptionRepository;
-import com.mercury.palaver.service.util.MD5;
 import com.mercury.palaver.service.util.DateUtil;
+import com.mercury.palaver.service.util.MD5;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -33,5 +36,17 @@ public class FocusGroupService {
             }
         }
         return group;
+    }
+
+    public boolean isCancelable(Long groupId) {
+        Optional<FocusGroup> opt = focusGroupRepo.findById(groupId);
+        if (opt.isPresent()) {
+            FocusGroup group = opt.get();
+            if (!group.getParticipants().isEmpty()) return false;
+            if (group.getBeginDate().isBefore(LocalDate.now())) return false;
+            if (group.getEndDate().isBefore(LocalDate.now())) return false;
+            return true;
+        }
+        return false;
     }
 }
