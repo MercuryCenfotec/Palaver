@@ -53,6 +53,11 @@
         </createTable>
 
         <addPrimaryKey columnNames="participant_id, category_id" tableName="participant_category"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/participants.csv"
+                  separator=";"
+                  tableName="participant"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

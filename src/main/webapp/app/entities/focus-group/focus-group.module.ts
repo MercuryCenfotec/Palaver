@@ -27,7 +27,13 @@ const ENTITY_STATES = [...focusGroupRoute, ...focusGroupPopupRoute];
         FocusGroupFormComponent,
         ParticipateComponent
     ],
-    entryComponents: [FocusGroupComponent, FocusGroupUpdateComponent, FocusGroupDeleteDialogComponent, FocusGroupDeletePopupComponent, ParticipateComponent],
+    entryComponents: [
+        FocusGroupComponent,
+        FocusGroupUpdateComponent,
+        FocusGroupDeleteDialogComponent,
+        FocusGroupDeletePopupComponent,
+        ParticipateComponent
+    ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PalaverFocusGroupModule {}

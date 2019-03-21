@@ -48,15 +48,6 @@
                 </ng-template>
             </div>
             <div class="card-block">
-                <span class="text-bold-500 primary display-block">Prueba de aptitud:</span>
-                <span *ngIf="focusGroup.aptitudeTest; else noFocusGroup">{{focusGroup.aptitudeTest.name}}   <i
-                    class="ft-search font-medium-2 cursor-pointer"
-                    [routerLink]="['/aptitude-test', focusGroup.aptitudeTest.id, 'view' ]"></i></span>
-                <ng-template #noFocusGroup>
-                    <span>No se seleccionó una prueba de aptitud.</span>
-                </ng-template>
-            </div>
-            <div class="card-block">
                 <button type="submit"
                         (click)="previousState()"
                         class="btn btn-raised btn-warning mr-1">

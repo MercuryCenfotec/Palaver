@@ -7,8 +7,8 @@ import { map } from 'rxjs/operators';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
-import {IParticipant, Participant} from 'app/shared/model/participant.model';
-import {IUserApp} from "app/shared/model/user-app.model";
+import { IParticipant, Participant } from 'app/shared/model/participant.model';
+import { IUserApp } from 'app/shared/model/user-app.model';
 
 type EntityResponseType = HttpResponse<IParticipant>;
 type EntityArrayResponseType = HttpResponse<IParticipant[]>;
@@ -50,7 +50,7 @@ export class ParticipantService {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
-    findByUser(id:number):Observable<IParticipant> {
+    findByUser(id: number): Observable<IParticipant> {
         return this.http.get<IParticipant>(`${this.resourceUrl}/user/${id}`);
     }
 

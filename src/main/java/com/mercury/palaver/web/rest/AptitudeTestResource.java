@@ -113,4 +113,10 @@ public class AptitudeTestResource {
         aptitudeTestRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    @GetMapping("/aptitude-tests/institution/{institutionId}")
+    public List<AptitudeTest> getAllAptitudeTestsByInstitution(@PathVariable Long institutionId) {
+        log.debug("REST request to get all AptitudeTests");
+        return aptitudeTestService.findAllByInstitution(institutionId);
+    }
 }
