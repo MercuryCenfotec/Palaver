@@ -17,6 +17,7 @@ export class AptitudeTestComponent implements OnInit, OnDestroy {
     aptitudeTests: IAptitudeTest[];
     currentAccount: any;
     eventSubscriber: Subscription;
+    searchText;
 
     constructor(
         protected aptitudeTestService: AptitudeTestService,
