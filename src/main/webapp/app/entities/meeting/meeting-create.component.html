@@ -69,7 +69,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="field_focusGroup">Focus Group</label>
-                                <select class="form-control" id="field_focusGroup" name="focusGroup" [(ngModel)]="meeting.focusGroup" >
+                                <select class="form-control" id="field_focusGroup" name="focusGroup" [(ngModel)]="meeting.focusGroup" required>
                                     <option [ngValue]="null"></option>
                                     <option [ngValue]="focusGroupOption.id === meeting.focusGroup?.id ? meeting.focusGroup : focusGroupOption" *ngFor="let focusGroupOption of focusgroups; trackBy: trackFocusGroupById">{{focusGroupOption.name}}</option>
                                 </select>
