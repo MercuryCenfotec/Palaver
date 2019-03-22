@@ -54,6 +54,10 @@ export class ParticipantService {
         return this.http.get<IParticipant>(`${this.resourceUrl}/user/${id}`);
     }
 
+    findByFocusGroup(groupId: number): Observable<EntityArrayResponseType> {
+        return this.http.get<IParticipant[]>(`${this.resourceUrl}/focus-group/${groupId}`, { observe: 'response' });
+    }
+
     protected convertDateFromClient(participant: IParticipant): IParticipant {
         const copy: IParticipant = Object.assign({}, participant, {
             birthdate: participant.birthdate != null && participant.birthdate.isValid() ? participant.birthdate.format(DATE_FORMAT) : null

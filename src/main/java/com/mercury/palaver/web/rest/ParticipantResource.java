@@ -1,5 +1,6 @@
 package com.mercury.palaver.web.rest;
 
+import com.mercury.palaver.domain.FocusGroup;
 import com.mercury.palaver.domain.Participant;
 import com.mercury.palaver.repository.ParticipantRepository;
 import com.mercury.palaver.repository.UserAppRepository;
@@ -119,5 +120,12 @@ public class ParticipantResource {
         log.debug("REST request to get Participant : {}", id);
         Optional<Participant> participant = participantRepository.findByUser_Id(id);
         return ResponseUtil.wrapOrNotFound(participant);
+    }
+
+    @GetMapping("/participants/focus-group/{groupId}")
+    public List<Participant> getParticipantsByFocusGroup(@PathVariable Long groupId) {
+        FocusGroup group = new FocusGroup();
+        group.setId(groupId);
+        return participantRepository.findAllByFocusGroups(group);
     }
 }
