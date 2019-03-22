@@ -28,4 +28,6 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
     Optional<Participant> findOneWithEagerRelationships(@Param("id") Long id);
 
     Optional<Participant> findByUser_Id(Long id);
+
+    List<Participant> findAllByFocusGroups_id(Long id);
 }

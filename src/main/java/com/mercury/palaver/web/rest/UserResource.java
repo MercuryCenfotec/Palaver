@@ -73,6 +73,29 @@ public class UserResource {
     }
 
     /**
+     * POST  /users  : Creates a new user linked to a groupCode.
+     * <p>
+     * The user needs to be activated on creation.
+     *
+     * @param userDTO the user to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new user, or with status 400 (Bad Request) if the login or email is already in use
+     * @throws URISyntaxException       if the Location URI syntax is incorrect
+     * @throws BadRequestAlertException 400 (Bad Request) if the login or email is already in use
+     */
+    @PostMapping("/users/save-group-code")
+    public ResponseEntity<User> createUserGroup(@Valid @RequestBody UserDTO userDTO) throws URISyntaxException {
+        log.debug("REST request to save User linked to a group with code: {}", userDTO);
+        if (userRepository.findOneByLogin(userDTO.getLogin().toLowerCase()).isPresent()) {
+            throw new LoginAlreadyUsedException();
+        }
+        User newUser = userService.createUser(userDTO);
+
+        return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
+            .headers(HeaderUtil.createAlert("A user is created with identifier " + newUser.getLogin(), newUser.getLogin()))
+            .body(newUser);
+    }
+
+    /**
      * POST  /users  : Creates a new user.
      * <p>
      * Creates a new user if the login and email are not already used, and sends an

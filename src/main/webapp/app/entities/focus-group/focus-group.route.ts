@@ -91,7 +91,7 @@ export const focusGroupRoute: Routes = [
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'code_activation',
+        path: 'code-activation',
         component: FocusGroupManagementLoginComponent,
         resolve: {
             focusGroup: FocusGroupResolve
@@ -109,7 +109,7 @@ export const focusGroupRoute: Routes = [
             focusGroup: FocusGroupResolve
         },
         data: {
-            authorities: ['ROLE_GROUP', 'ROLE_ADMIN'],
+            authorities: ['ROLE_GROUP'],
             pageTitle: 'Administracion de grupo de enfoque'
         },
         canActivate: [UserRouteAccessService]

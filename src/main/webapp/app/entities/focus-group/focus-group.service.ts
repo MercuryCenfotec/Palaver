@@ -79,7 +79,7 @@ export class FocusGroupService {
 
     findByCode(code: string): Observable<EntityResponseType> {
         return this.http
-            .get<IFocusGroup>(`${this.resourceUrlPublic}/find_by_code/${code}`, { observe: 'response' })
+            .get<IFocusGroup>(`${this.resourceUrlPublic}/find-by-code/${code}`, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 }

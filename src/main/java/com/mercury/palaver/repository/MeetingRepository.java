@@ -15,4 +15,6 @@ import java.util.Optional;
 @Repository
 public interface MeetingRepository extends JpaRepository<Meeting, Long> {
     List<Meeting> findAllByFocusGroup_Participants_Id(Long idParticipant);
+
+    List<Meeting> findAllByFocusGroup_Id(Long idGroup);
 }

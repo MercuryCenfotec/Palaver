@@ -85,15 +85,27 @@ public class MeetingResource {
     }
 
     /**
-     * GET  /meetings/by_participant/:idParticipant : get the "id" meeting.
+     * GET  /meetings/by-participant/:idParticipant : get the "id" meeting.
      *
      * @param idParticipant the id of the participant to retrieve its meetings
      * @return the ResponseEntity with status 200 (OK) and with body the meeting, or with status 404 (Not Found)
      */
-    @GetMapping("/meetings/by_participant/{idParticipant}")
+    @GetMapping("/meetings/by-participant/{idParticipant}")
     public List<Meeting> getMeetingByParticipant(@PathVariable Long idParticipant) {
         log.debug("REST request to get Meeting by user id: {}", idParticipant);
         return meetingRepository.findAllByFocusGroup_Participants_Id(idParticipant);
+    }
+
+    /**
+     * GET  /meetings/by-group/:idGroup : get the group "id" meeting.
+     *
+     * @param idGroup the id of the group to retrieve its meetings
+     * @return the ResponseEntity with status 200 (OK) and with body the meeting, or with status 404 (Not Found)
+     */
+    @GetMapping("/meetings/by-group/{idGroup}")
+    public List<Meeting> getMeetingByGroup(@PathVariable Long idGroup) {
+        log.debug("REST request to get Meeting by group id: {}", idGroup);
+        return meetingRepository.findAllByFocusGroup_Id(idGroup);
     }
 
     /**

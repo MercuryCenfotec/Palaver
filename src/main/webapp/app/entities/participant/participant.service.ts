@@ -76,4 +76,8 @@ export class ParticipantService {
         }
         return res;
     }
+
+    findByGroupId(id: number): Observable<IParticipant[]> {
+        return this.http.get<IParticipant[]>(`${this.resourceUrl}/by-group/${id}`);
+    }
 }

@@ -42,7 +42,7 @@ public class PublicResource {
      * @param code the code attribute of the focusGroup to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the focusGroup, or with status 404 (Not Found)
      */
-    @GetMapping("/focus-groups/find_by_code/{code}")
+    @GetMapping("/focus-groups/find-by-code/{code}")
     public ResponseEntity<FocusGroup> getFocusGroupByCode(@PathVariable String code) {
         log.debug("REST request to get FocusGroup by code: {}", code);
         Optional<FocusGroup> focusGroup = focusGroupRepository.findByCode(code);

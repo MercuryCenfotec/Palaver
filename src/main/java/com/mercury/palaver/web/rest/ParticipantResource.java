@@ -102,6 +102,18 @@ public class ParticipantResource {
     }
 
     /**
+     * GET  /participants/by-group/:id : get the "id" of the group for participant.
+     *
+     * @param id the id of participant associated group
+     * @return the ResponseEntity with status 200 (OK) and with body the participant, or with status 404 (Not Found)
+     */
+    @GetMapping("/participants/by-group/{id}")
+    public List<Participant> getParticipantByGroup(@PathVariable Long id) {
+        log.debug("REST request to get Participant by group: {}", id);
+        return participantRepository.findAllByFocusGroups_id(id);
+    }
+
+    /**
      * DELETE  /participants/:id : delete the "id" participant.
      *
      * @param id the id of the participant to delete

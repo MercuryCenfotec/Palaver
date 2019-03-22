@@ -32,10 +32,6 @@ export class FocusGroupManagementLoginComponent implements OnInit {
 
     login() {
         this.focusGroupService.findByCode(this.code).subscribe(data => {
-            this.password = this.code;
-            this.username = this.code;
-            console.log(this.username);
-            console.log(this.password);
             this.loginService
                 .login({
                     username: this.username,
