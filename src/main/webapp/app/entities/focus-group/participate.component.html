@@ -61,11 +61,11 @@
                         <div *ngFor="let testQuestion of testQuestions">
                             <h4 class="form-section"><i class="ft-feather"></i>{{testQuestion.question}}</h4>
                             <div class="form-group">
-                                <div class="custom-control custom-radio"
+                                <div class="custom-control custom-radio custom-control-inline"
                                      *ngFor="let testAnswerOption of testQuestion.answers">
-                                    <input type="radio" id="{{testAnswerOption.id}}" name="{{testQuestion.id}}">
-                                    <label class="form-control-label"
-                                           for="{{testAnswerOption.id}}">{{testAnswerOption.answer}}</label><br>
+                                    <input type="radio" id="answer{{testAnswerOption.id}}" name="{{testQuestion.id}}" class="custom-control-input">
+                                    <label class="custom-control-label"
+                                           for="answer{{testAnswerOption.id}}"><span><i class="ft-minus"></i>{{testAnswerOption.answer}}</span></label><br>
                                 </div>
                             </div>
                         </div>

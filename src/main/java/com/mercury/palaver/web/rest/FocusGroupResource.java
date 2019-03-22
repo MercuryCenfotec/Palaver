@@ -2,6 +2,7 @@ package com.mercury.palaver.web.rest;
 import com.mercury.palaver.domain.FocusGroup;
 import com.mercury.palaver.repository.FocusGroupRepository;
 import com.mercury.palaver.security.AuthoritiesConstants;
+import com.mercury.palaver.service.FocusGroupService;
 import com.mercury.palaver.web.rest.errors.BadRequestAlertException;
 import com.mercury.palaver.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -37,9 +38,11 @@ public class FocusGroupResource {
     private static final String ENTITY_NAME = "focusGroup";
 
     private final FocusGroupRepository focusGroupRepository;
+    private final FocusGroupService focusGroupService;
 
-    public FocusGroupResource(FocusGroupRepository focusGroupRepository) {
+    public FocusGroupResource(FocusGroupRepository focusGroupRepository, FocusGroupService focusGroupService) {
         this.focusGroupRepository = focusGroupRepository;
+        this.focusGroupService = focusGroupService;
     }
 
     /**
@@ -55,7 +58,7 @@ public class FocusGroupResource {
         if (focusGroup.getId() != null) {
             throw new BadRequestAlertException("A new focusGroup cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        FocusGroup result = focusGroupRepository.save(focusGroup);
+        FocusGroup result = focusGroupService.save(focusGroup);
         return ResponseEntity.created(new URI("/api/focus-groups/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
