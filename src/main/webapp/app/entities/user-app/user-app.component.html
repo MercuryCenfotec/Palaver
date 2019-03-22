@@ -3,6 +3,12 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Usuarios
+                    <button id="jh-create-entity" class="btn btn-raised btn-primary float-right" [routerLink]="['/user-app/sub-admin/new']">
+                        <i class="ft-plus"></i>
+                        <span >
+            Registrar nuevo usuario
+            </span>
+                    </button>
                 </h4>
             </div>
             <div class="card-body">
@@ -35,7 +41,8 @@
                                 <td>{{userApp.identificationNumber}}</td>
                                 <td>{{userApp.mail}}</td>
                                 <td><p *ngIf="userApp.rol === 'institution'">Institución</p>
-                                    <p *ngIf="userApp.rol === 'participant'">Participante</p></td>
+                                    <p *ngIf="userApp.rol === 'participant'">Participante</p>
+                                    <p *ngIf="userApp.rol === 'subadmin'">Sub-administrador</p></td>
                                 <td><p *ngIf="userApp.user.activated === true">Sí</p>
                                     <p *ngIf="userApp.user.activated ===false">No</p></td>
                                 <td>

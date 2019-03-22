@@ -9,9 +9,11 @@ import {
     UserAppDeletePopupComponent,
     UserAppDeleteDialogComponent,
     userAppRoute,
-    userAppPopupRoute
+    userAppPopupRoute,
+    PasswordStrengthBarComponent
 } from './';
 import { ActivitiesDetailComponent } from './activities-detail.component';
+import {SubadminFormComponent} from 'app/entities/user-app/subadmin-form.component';
 
 const ENTITY_STATES = [...userAppRoute, ...userAppPopupRoute];
 
@@ -23,14 +25,17 @@ const ENTITY_STATES = [...userAppRoute, ...userAppPopupRoute];
         UserAppUpdateComponent,
         UserAppDeleteDialogComponent,
         UserAppDeletePopupComponent,
-        ActivitiesDetailComponent
+        ActivitiesDetailComponent,
+        PasswordStrengthBarComponent,
+        SubadminFormComponent
     ],
     entryComponents: [
         UserAppComponent,
         UserAppUpdateComponent,
         UserAppDeleteDialogComponent,
         UserAppDeletePopupComponent,
-        ActivitiesDetailComponent
+        ActivitiesDetailComponent,
+        SubadminFormComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
