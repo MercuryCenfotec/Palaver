@@ -89,6 +89,51 @@
                         <span>No se seleccionó una prueba de aptitud.</span>
                     </ng-template>
                 </div>
+                <hr>
+                <div class="row">
+                    <h5 class="col-12 col-md-12 col-sm-12"><i class="ft-users"></i> Participantes</h5>
+                    <div class="input-group my-3">
+                        <div class="input-group-prepend">
+                            <i class="input-group-text ft-search info" id="basic-addon1"></i>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Buscar por nombre..."
+                               [(ngModel)]="searchText"/>
+                    </div>
+                    <div *ngIf="focusGroup.participants.length > 0; else noParticipants" class="col-12">
+                        <div *ngFor="let participant of focusGroup.participants | participantFilter:searchText;"
+                             class="col-sm-12 col-12 col-md-8 col-lg-6 col-xl-6">
+                            <div class="card shadow-lg">
+                                <div class="card-header text-center">
+                                    <img src="{{participant.picture}}" alt="Imagen de usuario"
+                                         width="150" height="150" class="rounded-circle gradient-mint">
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-block text-center">
+                                        <h4 class="card-title">{{participant.user.user.firstName}} {{participant.user.user.lastName}}</h4>
+                                        <p class="category text-gray font-small-4">{{participant.user.mail}}</p>
+                                        <a class="btn btn-lg gradient-pomegranate font-small-2 white p-2 mr-2 btn-hoverable">Expulsar participante</a>
+                                        <a class="btn btn-lg btn-outline-grey font-small-2 p-2">Enviar mensaje</a>
+                                        <!--<hr class="grey">-->
+                                        <!--<div class="row grey">-->
+                                            <!--<div class="col-4">-->
+                                                <!--<a><i class="ft-star mr-1"></i> <span>4.9</span></a>-->
+                                            <!--</div>-->
+                                            <!--<div class="col-4">-->
+                                                <!--<a><i class="ft-globe mr-1"></i> <span>USA</span></a>-->
+                                            <!--</div>-->
+                                            <!--<div class="col-4">-->
+                                                <!--<a><i class="ft-book mr-1"></i> <span>21</span></a>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-template #noParticipants>
+                        <span class="display-block overflow-hidden">Aún no hay participantes aceptados.</span>
+                    </ng-template>
+                </div>
                 <div class="card-block">
                     <button type="submit"
                             (click)="previousState()"

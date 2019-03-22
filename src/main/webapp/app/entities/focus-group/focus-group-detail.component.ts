@@ -12,6 +12,7 @@ import { FocusGroupService } from 'app/entities/focus-group/focus-group.service'
 })
 export class FocusGroupDetailComponent implements OnInit {
     focusGroup: IFocusGroup;
+    searchText;
 
     isCancelable: boolean;
     constructor(
@@ -25,7 +26,10 @@ export class FocusGroupDetailComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ focusGroup }) => {
             this.focusGroup = focusGroup;
         });
-        this.participantService.findByFocusGroup(this.focusGroup.id).subscribe(participants => {});
+        this.participantService.findByFocusGroup(this.focusGroup.id).subscribe(participants => {
+            console.log(participants.body);
+            this.focusGroup.participants = participants.body;
+        });
         this.validateCancelable();
     }
 

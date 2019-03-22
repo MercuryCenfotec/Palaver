@@ -1,12 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'focusGroupFilter'
+    name: 'participantFilter'
 })
-export class FocusGroupFilterPipe implements PipeTransform {
+export class ParticipantFilterPipe implements PipeTransform {
     transform(items: any[], searchText: string): any[] {
         if (!items) {
-            return [];
+            return [-1];
         }
 
         if (!searchText) {
@@ -15,7 +15,9 @@ export class FocusGroupFilterPipe implements PipeTransform {
 
         searchText = searchText.toString().toLowerCase();
         return items.filter(it => {
-            if (it.name.toLowerCase().includes(searchText)) {
+            if (it.user.user.firstName.toLowerCase().includes(searchText)) {
+                return it;
+            } else if (it.user.user.lastName.toLowerCase().includes(searchText)) {
                 return it;
             } else {
                 return false;
