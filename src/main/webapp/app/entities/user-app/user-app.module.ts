@@ -14,6 +14,7 @@ import {
 } from './';
 import { ActivitiesDetailComponent } from './activities-detail.component';
 import {SubadminFormComponent} from 'app/entities/user-app/subadmin-form.component';
+import { FilterPipe } from 'app/entities/user-app/filter.pipe';
 
 const ENTITY_STATES = [...userAppRoute, ...userAppPopupRoute];
 
@@ -27,7 +28,8 @@ const ENTITY_STATES = [...userAppRoute, ...userAppPopupRoute];
         UserAppDeletePopupComponent,
         ActivitiesDetailComponent,
         PasswordStrengthBarComponent,
-        SubadminFormComponent
+        SubadminFormComponent,
+        FilterPipe
     ],
     entryComponents: [
         UserAppComponent,
