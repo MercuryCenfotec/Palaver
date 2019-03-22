@@ -16,6 +16,7 @@ export class UserAppComponent implements OnInit, OnDestroy {
     userApps: IUserApp[];
     currentAccount: any;
     eventSubscriber: Subscription;
+    searchText;
 
     constructor(
         protected userAppService: UserAppService,

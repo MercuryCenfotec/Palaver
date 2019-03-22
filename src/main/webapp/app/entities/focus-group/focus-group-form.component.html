@@ -68,6 +68,7 @@
                         <label for="customSelect">Pruebas de aptitud</label>
                         <select [(ngModel)]="focusGroup.aptitudeTest" class="custom-select d-block w-100"
                                 id="customSelect" name="aptitudeTest">
+                            <option [ngValue]="null" >No utilizar prueba de aptitud.</option>
                             <option *ngFor="let aptitudeTest of aptitudeTests"
                                     [ngValue]="aptitudeTest">{{aptitudeTest.name}}</option>
                         </select>
@@ -105,7 +106,7 @@
                     <i class="ft-x"></i>&nbsp;<span> Cancelar</span>
                 </button>
                 <button type="submit" id="save-entity" class="btn btn-raised btn-primary"
-                        [disabled]="!validateAnswers()">
+                        [disabled]="editForm.form.invalid || isSaving || !validateAnswers()">
                     <i class="ft-save"></i>&nbsp;<span> Registrar</span>
                 </button>
             </div>

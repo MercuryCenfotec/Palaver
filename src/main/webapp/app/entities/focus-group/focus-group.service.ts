@@ -75,4 +75,8 @@ export class FocusGroupService {
         }
         return res;
     }
+
+    isCancelable(groupId: number): Observable<HttpResponse<boolean>> {
+        return this.http.get<boolean>(`${this.resourceUrl}/cancelable/${groupId}`, { observe: 'response' });
+    }
 }
