@@ -85,6 +85,7 @@ export class InstitutionFormComponent implements OnInit {
     save() {
         this.isSaving = true;
         this.institution.user = this.userApp;
+        this.institution.logo = 'logo';
         this.subscribeToSaveResponse(this.institutionService.create(this.institution));
     }
 

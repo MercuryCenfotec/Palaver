@@ -33,14 +33,14 @@
                                 (floatDescription.dirty || floatDescription.touched)">¡Descripción requerida!
                                 </small>
                             </div>
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 <label class="form-control-label" for="field_logo">Logo</label>
                                 <input type="text" class="form-control" name="logo" id="field_logo"
                                        [(ngModel)]="institution.logo" required #floatLogo="ngModel"/>
                                 <small class="form-text text-muted danger" *ngIf="!floatLogo.valid && (floatLogo.dirty ||
                                  floatLogo.touched)">¡Logo requerido!
                                 </small>
-                            </div>
+                            </div>-->
                             <div class="form-group">
                                 <label class="form-control-label" for="field_telephone">Teléfono</label>
                                 <input type="text" class="form-control" name="telephone" id="field_telephone"
@@ -49,7 +49,7 @@
                                  floatTelephone.touched)">¡Telefono requerido!
                                 </small>
                             </div>
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 <label class="form-control-label" for="field_membership">Membresía</label>
                                 <select class="form-control" id="field_membership" name="membership"
                                         [(ngModel)]="institution.membership">
@@ -58,7 +58,7 @@
                                         [ngValue]="membershipOption.id === institution.membership?.id ? institution.membership : membershipOption"
                                         *ngFor="let membershipOption of memberships; trackBy: trackMembershipById">{{membershipOption.id}}</option>
                                 </select>
-                            </div>
+                            </div>-->
                         </div>
                         <div class="form-actions">
                             <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
