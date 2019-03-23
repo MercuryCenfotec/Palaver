@@ -25,7 +25,7 @@ public class MeetingResource {
 
     private final Logger log = LoggerFactory.getLogger(MeetingResource.class);
 
-    private static final String ENTITY_NAME = "meeting";
+    private static final String ENTITY_NAME = "reunión";
 
     private final MeetingRepository meetingRepository;
 
@@ -44,7 +44,7 @@ public class MeetingResource {
     public ResponseEntity<Meeting> createMeeting(@Valid @RequestBody Meeting meeting) throws URISyntaxException {
         log.debug("REST request to save Meeting : {}", meeting);
         if (meeting.getId() != null) {
-            throw new BadRequestAlertException("A new meeting cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("Una nueva reunión no puede tener un id repetido", ENTITY_NAME, "idexists");
         }
         Meeting result = meetingRepository.save(meeting);
         return ResponseEntity.created(new URI("/api/meetings/" + result.getId()))
@@ -65,7 +65,7 @@ public class MeetingResource {
     public ResponseEntity<Meeting> updateMeeting(@Valid @RequestBody Meeting meeting) throws URISyntaxException {
         log.debug("REST request to update Meeting : {}", meeting);
         if (meeting.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+            throw new BadRequestAlertException("Id inválido", ENTITY_NAME, "idnull");
         }
         Meeting result = meetingRepository.save(meeting);
         return ResponseEntity.ok()

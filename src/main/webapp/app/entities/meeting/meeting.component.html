@@ -27,7 +27,6 @@
                         <table _ngcontent-c6="" class="table table-responsive-md text-center">
                             <thead _ngcontent-c6="">
                             <tr _ngcontent-c6="">
-                                <th><span>ID</span></th>
                                 <th><span>Nombre</span></th>
                                 <th><span>Descripción</span></th>
                                 <!--<th><span>Call URL</span></th>-->
@@ -42,13 +41,12 @@
                             <tbody _ngcontent-c6="">
 
                                 <tr *ngFor="let meeting of meetings | filter:searchText; trackBy: trackId">
-                                    <td><a [routerLink]="['/meeting', meeting.id, 'view' ]">{{meeting.id}}</a></td>
                                     <td>{{meeting.name}}</td>
                                     <td>{{meeting.description}}</td>
                                     <!--<td>{{meeting.callURL}}</td>-->
                                     <!--<td>{{meeting.callCode}}</td>-->
                                     <td>{{meeting.date | date:'mediumDate'}}</td>
-                                    <td>{{meeting.time | date:'medium'}}</td>
+                                    <td>{{meeting.time.format('LT')}}</td>
                                     <td>
                                         <div *ngIf="meeting.focusGroup">
                                             <a [routerLink]="['../focus-group', meeting.focusGroup?.id, 'view' ]" >{{meeting.focusGroup?.name}}</a>
