@@ -34,7 +34,7 @@ export class MeetingCreateComponent implements OnInit {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ meeting }) => {
             this.meeting = meeting;
-            this.time = this.meeting.time != null ? this.meeting.time.format(DATE_TIME_FORMAT) : null;
+            this.time = this.meeting.time != null ? this.meeting.time.format('LT') : null;
         });
         this.focusGroupService
             .query()
@@ -51,7 +51,7 @@ export class MeetingCreateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        this.meeting.time = this.time != null ? moment(this.time, DATE_TIME_FORMAT) : null;
+        this.meeting.time = this.time != null ? moment(this.time, 'LT') : null;
         if (this.meeting.id !== undefined) {
             this.subscribeToSaveResponse(this.meetingService.update(this.meeting));
         } else {

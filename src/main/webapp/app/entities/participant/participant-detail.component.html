@@ -54,7 +54,7 @@
                                 </li>
                                 <li class="mb-2">
                                     <span class="text-bold-500 primary"><a><i class="ft ft-map-pin"></i> Fecha de nacimiento:</a></span>
-                                    <span class="display-block overflow-hidden">{{participant.birthdate}}</span>
+                                    <span class="display-block overflow-hidden">{{participant.birthdate | date}}</span>
                                 </li>
                             </ul>
                         </div>
@@ -64,20 +64,24 @@
                                     <span class="text-bold-500 primary"><a><i class="ft ft-message-square"></i> Estado civil:</a></span>
                                     <span class="display-block overflow-hidden">{{participant.civilStatus}}</span>
                                 </li>
-                                <li class="mb-2">
-                                    <span class="text-bold-500 primary"><a><i class="ft ft-user"></i> Género:</a></span>
-                                    <span class="display-block overflow-hidden">{{participant.gender}}</span>
-                                </li>
+                                <!--<li class="mb-2">-->
+                                    <!--<span class="text-bold-500 primary"><a><i class="ft ft-user"></i> Género:</a></span>-->
+                                    <!--<span class="display-block overflow-hidden">{{participant.gender}}</span>-->
+                                <!--</li>-->
                             </ul>
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <ul class="no-list-style">
+                                <!--<li class="mb-2">-->
+                                    <!--<span class="text-bold-500 primary"><a><i class="ft ft-smartphone"></i> Categorias:</a></span>-->
+                                    <!--<span class="display-block overflow-hidden" *ngFor="let category of participant.categories; let last = last">-->
+                                        <!--<a class="black" [routerLink]="['/category', category?.id, 'view' ]">{{category.name}}</a>-->
+                                        <!--{{last ? '' : ''}}-->
+                                    <!--</span>-->
+                                <!--</li>-->
                                 <li class="mb-2">
-                                    <span class="text-bold-500 primary"><a><i class="ft ft-smartphone"></i> Categorias:</a></span>
-                                    <span class="display-block overflow-hidden" *ngFor="let category of participant.categories; let last = last">
-                                        <a class="black" [routerLink]="['/category', category?.id, 'view' ]">{{category.name}}</a>
-                                        {{last ? '' : ''}}
-                                    </span>
+                                    <span class="text-bold-500 primary"><a><i class="ft ft-user"></i> Género:</a></span>
+                                    <span class="display-block overflow-hidden">{{participant.gender}}</span>
                                 </li>
                             </ul>
                         </div>

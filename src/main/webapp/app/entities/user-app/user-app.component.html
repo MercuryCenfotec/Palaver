@@ -6,7 +6,7 @@
                     <button id="jh-create-entity" class="btn btn-raised btn-primary float-right" [routerLink]="['/user-app/sub-admin/new']">
                         <i class="ft-plus"></i>
                         <span >
-            Registrar nuevo usuario
+            Registrar nuevo sub-administrador
             </span>
                     </button>
                 </h4>
@@ -27,7 +27,7 @@
                         <table class="table table-responsive-md text-center">
                             <thead>
                             <tr>
-                                <th><span></span></th>
+                                <!--<th><span></span></th>-->
                                 <th><span>Nombre usuario</span></th>
                                 <th><span>Nombre</span></th>
                                 <th><span>Identificación</span></th>
@@ -39,12 +39,12 @@
                             </thead>
                             <tbody>
                             <tr *ngFor="let userApp of userApps | filter:searchText; trackBy: trackId">
-                                <td>
+                                <!--<td>
                                     <div class="custom-control custom-checkbox m-0">
                                         <input type="checkbox" class="custom-control-input" id="{{userApp.id}}">
                                         <label class="custom-control-label" for="{{userApp.id}}"></label>
                                     </div>
-                                </td>
+                                </td>-->
                                 <td>{{userApp.user?.login}}</td>
                                 <td>{{userApp.name}}</td>
                                 <td>{{userApp.identificationNumber}}</td>

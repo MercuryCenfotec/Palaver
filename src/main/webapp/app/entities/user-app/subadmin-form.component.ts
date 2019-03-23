@@ -82,5 +82,7 @@ export class SubadminFormComponent implements OnInit, AfterViewInit {
         this.userApp.rol = rol;
     }
 
-    previousState() {}
+    previousState() {
+        window.history.back();
+    }
 }

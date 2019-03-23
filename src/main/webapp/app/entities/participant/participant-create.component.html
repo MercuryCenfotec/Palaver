@@ -32,7 +32,7 @@
                                             [hidden]="!(editForm.controls.birthdate?.dirty && editForm.controls.birthdate?.invalid)">
                                             <small class="form-text text-danger"
                                                    [hidden]="!editForm.controls.birthdate?.errors?.required">
-                                                This field is required.
+                                                Este campo es requerido.
                                             </small>
                                         </div>
                                     </div>
@@ -43,15 +43,15 @@
                                         <label _ngcontent-c5="" for="field_gender">Género</label>
                                         <select _ngcontent-c16="" class="form-control" [(ngModel)]="participant.gender"
                                                 id="field_gender" name="gender" required>
-                                            <option value="MALE">MALE</option>
-                                            <option value="FEMALE">FEMALE</option>
-                                            <option value="UNDEFINED">UNDEFINED</option>
+                                            <option value="MALE">Hombre</option>
+                                            <option value="FEMALE">Mujer</option>
+                                            <option value="UNDEFINED">Otro</option>
                                         </select>
                                         <div
                                             [hidden]="!(editForm.controls.gender?.dirty && editForm.controls.gender?.invalid)">
                                             <small class="form-text text-danger"
                                                    [hidden]="!editForm.controls.gender?.errors?.required">
-                                                This field is required.
+                                                Este campo es requerido.
                                             </small>
                                         </div>
                                     </div>
@@ -67,17 +67,17 @@
                                         <select _ngcontent-c16="" class="form-control"
                                                 [(ngModel)]="participant.civilStatus" id="field_civilStatus"
                                                 name="civilStatus" required>
-                                            <option value="MARRIED">MARRIED</option>
-                                            <option value="WIDOWED">WIDOWED</option>
-                                            <option value="SEPARATED">SEPARATED</option>
-                                            <option value="DIVORCED">DIVORCED</option>
-                                            <option value="SINGLE">SINGLE</option>
+                                            <option value="MARRIED">Casado/a</option>
+                                            <option value="WIDOWED">Viudo/a</option>
+                                            <option value="SEPARATED">Separado/a</option>
+                                            <option value="DIVORCED">Divorciado/a</option>
+                                            <option value="SINGLE">Soltero/a</option>
                                         </select>
                                         <div
                                             [hidden]="!(editForm.controls.civilStatus?.dirty && editForm.controls.civilStatus?.invalid)">
                                             <small class="form-text text-danger"
                                                    [hidden]="!editForm.controls.civilStatus?.errors?.required">
-                                                This field is required.
+                                                Este campo es requerido.
                                             </small>
                                         </div>
                                     </div>
@@ -85,34 +85,34 @@
 
                             </div>
 
-                            <div _ngcontent-c5="" class="form-group">
-                                <!--<label _ngcontent-c16=""></label>-->
-                                <!--<input _ngcontent-c16="" class="form-control-file" name="picture" id="field_picture"-->
-                                        <!--type="file">-->
+                            <!--<div _ngcontent-c5="" class="form-group">-->
+                                <!--&lt;!&ndash;<label _ngcontent-c16=""></label>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<input _ngcontent-c16="" class="form-control-file" name="picture" id="field_picture"&ndash;&gt;-->
+                                        <!--&lt;!&ndash;type="file">&ndash;&gt;-->
 
-                                <label for="imageUpload">Seleccionar imagen</label>
-                                <input class="form-control-file" type="file" [(ngModel)]="participant.picture" (change)="fileEvent($event)" name="imageUpload" id="imageUpload"/>
-                            </div>
+                                <!--<label for="imageUpload">Seleccionar imagen</label>-->
+                                <!--<input class="form-control-file" type="file" [(ngModel)]="participant.picture" (change)="fileEvent($event)" name="imageUpload" id="imageUpload"/>-->
+                            <!--</div>-->
 
-                            <h4 _ngcontent-c5="" class="form-section">
-                                <i _ngcontent-c5="" class="ft-mail"></i>
-                                Categorías de interés
-                            </h4>
+                            <!--<h4 _ngcontent-c5="" class="form-section">-->
+                                <!--<i _ngcontent-c5="" class="ft-mail"></i>-->
+                                <!--Categorías de interés-->
+                            <!--</h4>-->
 
-                            <div class="form-group">
-                                <label for="field_category">Categorías</label>
-                                <select class="form-control" id="field_category" multiple name="category"
-                                        [(ngModel)]="participant.categories">
-                                    <option [ngValue]="getSelected(participant.categories, categoryOption)"
-                                            *ngFor="let categoryOption of categories; trackBy: trackCategoryById">{{categoryOption.name}}</option>
-                                </select>
-                            </div>
+                            <!--<div class="form-group">-->
+                                <!--<label for="field_category">Categorías</label>-->
+                                <!--<select class="form-control" id="field_category" multiple name="category"-->
+                                        <!--[(ngModel)]="participant.categories">-->
+                                    <!--<option [ngValue]="getSelected(participant.categories, categoryOption)"-->
+                                            <!--*ngFor="let categoryOption of categories; trackBy: trackCategoryById">{{categoryOption.name}}</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
 
                         </div>
                         <div _ngcontent-c5="" class="form-actions right">
                             <button _ngcontent-c5="" class="btn btn-raised btn-warning mr-1" type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
                                 <i _ngcontent-c5="" class="ft-x"></i>
-                                <fa-icon [icon]="'ban'"></fa-icon>&nbsp;Cancel
+                                <fa-icon></fa-icon>Cancel
                             </button>
                             <button _ngcontent-c5="" class="btn btn-raised btn-primary" type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving">
                                 <i _ngcontent-c5="" class="fa fa-check-square-o"></i>

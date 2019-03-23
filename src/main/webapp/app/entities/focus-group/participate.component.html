@@ -11,7 +11,7 @@
                         <table class="table table-responsive-md text-center">
                             <thead>
                             <tr>
-                                <th><span></span></th>
+                                <!--<th><span></span></th>-->
                                 <th><span>Nombre</span></th>
                                 <th><span>Descripción</span></th>
                                 <th><span>Fecha de inicio</span></th>
@@ -22,12 +22,12 @@
                             </thead>
                             <tbody>
                             <tr *ngFor="let focusGroup of focusGroups ;trackBy: trackId">
-                                <td>
+                                <!--<td>
                                     <div class="custom-control custom-checkbox m-0">
                                         <input type="checkbox" class="custom-control-input" id="{{focusGroup.id}}">
                                         <label class="custom-control-label" for="{{focusGroup.id}}"></label>
                                     </div>
-                                </td>
+                                </td>-->
                                 <td>{{focusGroup.name}}</td>
                                 <td>{{focusGroup.description}}</td>
                                 <td>{{focusGroup.beginDate | date:'mediumDate'}}</td>
@@ -59,7 +59,7 @@
                       #editForm>
                     <div class="form-body">
                         <div *ngFor="let testQuestion of testQuestions">
-                            <h4 class="form-section"><i class="ft-feather"></i>{{testQuestion.question}}</h4>
+                            <h4 class="form-section"><i class="ft-feather"></i>¿{{testQuestion.question}}?</h4>
                             <div class="form-group">
                                 <div class="custom-control custom-radio custom-control-inline"
                                      *ngFor="let testAnswerOption of testQuestion.answers">

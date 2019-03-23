@@ -35,9 +35,9 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="form-control-label" for="field_time">Tiempo</label>
+                                <label class="form-control-label" for="field_time">Hora</label>
                                 <div class="d-flex">
-                                    <input id="field_time" type="datetime-local" class="form-control" name="time" [(ngModel)]="time" placeholder="YYYY-MM-DD HH:mm"
+                                    <input id="field_time" type="time" class="form-control" name="time" [(ngModel)]="time" placeholder="HH:mm"
                                        required/>
                                 </div>
                                 <div [hidden]="!(editForm.controls.time?.dirty && editForm.controls.time?.invalid)">
@@ -46,7 +46,7 @@
                                         Este campo es requerido.
                                     </small>
                                     <small class="form-text text-danger"
-                                           [hidden]="!editForm.controls.time?.errors?.ZonedDateTimelocal">
+                                           [hidden]="!editForm.controls.time?.errors?.LocalTime">
                                         Este campo debería ser de tiempo.
                                     </small>
                                 </div>
