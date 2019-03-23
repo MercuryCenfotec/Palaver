@@ -175,8 +175,6 @@ public class UserResource {
                 .map(UserDTO::new));
     }
 
-    @GetMapping("/user/")
-
     /**
      * DELETE /users/:login : delete the "login" User.
      *

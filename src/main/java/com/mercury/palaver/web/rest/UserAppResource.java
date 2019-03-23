@@ -127,7 +127,7 @@ public class UserAppResource {
     }
 
     @GetMapping("/user-apps/specified/{userId}")
-    public ResponseEntity<Boolean> isCancelable(@PathVariable Long userId) {
+    public ResponseEntity<Boolean> isSpecified(@PathVariable Long userId) {
         return ResponseEntity.ok().body(userAppService.specificationCompleted(userId));
     }
 
