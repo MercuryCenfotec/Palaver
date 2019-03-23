@@ -99,8 +99,8 @@
                         <input type="text" class="form-control" placeholder="Buscar por nombre..."
                                [(ngModel)]="searchText"/>
                     </div>
-                    <div *ngIf="focusGroup.participants.length > 0; else noParticipants" class="col-12">
-                        <div *ngFor="let participant of focusGroup.participants | participantFilter:searchText;"
+                    <div *ngIf="(focusGroup.participants | participantFilter:searchText) as items; else noParticipants" class="col-12">
+                        <div *ngFor="let participant of items"
                              class="col-sm-12 col-12 col-md-8 col-lg-6 col-xl-6">
                             <div class="card shadow-lg">
                                 <div class="card-header text-center">
@@ -129,9 +129,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div *ngIf="items.length === 0" class="card-block">
+                            <span class="display-block overflow-hidden">No se encontraron resultados.</span>
+                        </div>
                     </div>
                     <ng-template #noParticipants>
-                        <span class="display-block overflow-hidden">Aún no hay participantes aceptados.</span>
+                        <div class="card-block">
+                            <span class="display-block overflow-hidden">Aún no hay participantes aceptados.</span>
+                        </div>
                     </ng-template>
                 </div>
                 <div class="card-block">

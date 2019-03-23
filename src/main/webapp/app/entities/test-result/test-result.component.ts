@@ -19,6 +19,8 @@ export class TestResultComponent implements OnInit, OnDestroy {
     testResults: ITestResult[];
     currentAccount: any;
     eventSubscriber: Subscription;
+    gradeInput;
+    nameInput;
 
     constructor(
         protected testResultService: TestResultService,
