@@ -30,8 +30,8 @@
                         <table class="table table-responsive-md text-center">
                             <thead>
                             <tr>
-                                <th><span>ID</span></th>
-                                <th><span></span></th>
+                                <!--<th><span>ID</span></th>
+                                <th><span></span></th>-->
                                 <th><span>Grupo de enfoque</span></th>
                                 <th><span>Calificación esperada</span></th>
                                 <th><span>Participante</span></th>
@@ -41,14 +41,14 @@
                             </thead>
                             <tbody>
                             <tr *ngFor="let testResult of testResults | testParticipantFilter:nameInput | testResultFilter:gradeInput; trackBy: trackId">
-                                <td><a [routerLink]="['/test-result', testResult.id, 'view' ]">{{testResult.id}}</a>
+                                <!--<td><a [routerLink]="['/test-result', testResult.id, 'view' ]">{{testResult.id}}</a>
                                 </td>
                                 <td>
                                     <div class="custom-control custom-checkbox m-0">
                                         <input type="checkbox" class="custom-control-input" id="{{testResult.id}}">
                                         <label class="custom-control-label" for="{{testResult.id}}"></label>
                                     </div>
-                                </td>
+                                </td>-->
                                 <td>
                                     <div *ngIf="testResult.focusGroup">
                                         <a [routerLink]="['../focus-group', testResult.focusGroup?.id, 'view' ]">{{testResult.focusGroup?.name}}</a>
