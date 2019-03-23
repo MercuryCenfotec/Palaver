@@ -1,6 +1,7 @@
 package com.mercury.palaver.web.rest;
 import com.mercury.palaver.domain.UserApp;
 import com.mercury.palaver.repository.UserAppRepository;
+import com.mercury.palaver.service.UserAppService;
 import com.mercury.palaver.web.rest.errors.BadRequestAlertException;
 import com.mercury.palaver.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -28,9 +29,11 @@ public class UserAppResource {
     private static final String ENTITY_NAME = "userApp";
 
     private final UserAppRepository userAppRepository;
+    private final UserAppService userAppService;
 
-    public UserAppResource(UserAppRepository userAppRepository) {
+    public UserAppResource(UserAppRepository userAppRepository, UserAppService userAppService) {
         this.userAppRepository = userAppRepository;
+        this.userAppService = userAppService;
     }
 
     /**
@@ -121,6 +124,11 @@ public class UserAppResource {
         log.debug("REST request to delete UserApp : {}", id);
         userAppRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/user-apps/specified/{userId}")
+    public ResponseEntity<Boolean> isSpecified(@PathVariable Long userId) {
+        return ResponseEntity.ok().body(userAppService.specificationCompleted(userId));
     }
 
 }

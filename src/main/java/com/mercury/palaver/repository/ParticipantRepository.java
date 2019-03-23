@@ -1,6 +1,8 @@
 package com.mercury.palaver.repository;
 
+import com.mercury.palaver.domain.FocusGroup;
 import com.mercury.palaver.domain.Participant;
+import com.mercury.palaver.domain.UserApp;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
@@ -30,4 +32,7 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
     Optional<Participant> findByUser_Id(Long id);
 
     List<Participant> findAllByFocusGroups_id(Long id);
+    List<Participant> findAllByFocusGroups(FocusGroup group);
+
+    Optional<Participant> findByUser(UserApp user);
 }

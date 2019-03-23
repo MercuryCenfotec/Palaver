@@ -51,6 +51,7 @@ export class FocusGroupFormComponent implements OnInit {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ focusGroup }) => {
             this.focusGroup = focusGroup;
+            this.focusGroup.aptitudeTest = null;
         });
         this.userService.getUserWithAuthorities().subscribe(user => {
             this.institutionService.getByUserUser(user.id).subscribe(institution => {
@@ -154,19 +155,21 @@ export class FocusGroupFormComponent implements OnInit {
     }
 
     validateAnswers(): boolean {
-        let ind: number;
-        for (const question of this.focusGroup.aptitudeTest.questions) {
-            ind = 0;
-            console.log(question.answers);
-            for (const answer of question.answers) {
-                if (!answer.desired) {
-                    ind++;
-                    console.log(ind);
-                    console.log(answer);
+        if (this.focusGroup.aptitudeTest) {
+            let ind: number;
+            for (const question of this.focusGroup.aptitudeTest.questions) {
+                ind = 0;
+                console.log(question.answers);
+                for (const answer of question.answers) {
+                    if (!answer.desired) {
+                        ind++;
+                        console.log(ind);
+                        console.log(answer);
+                    }
                 }
-            }
-            if (ind === question.answers.length) {
-                return false;
+                if (ind === question.answers.length) {
+                    return false;
+                }
             }
         }
         return true;

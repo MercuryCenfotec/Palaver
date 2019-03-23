@@ -1,4 +1,5 @@
 package com.mercury.palaver.web.rest;
+
 import com.mercury.palaver.domain.FocusGroup;
 import com.mercury.palaver.repository.FocusGroupRepository;
 import com.mercury.palaver.security.AuthoritiesConstants;
@@ -12,18 +13,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaDelete;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.CriteriaUpdate;
-import javax.persistence.metamodel.Metamodel;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+import java.util.Observable;
 import java.util.Optional;
 
 /**
@@ -136,6 +135,11 @@ public class FocusGroupResource {
         transaction.begin();
 
         entityManager.merge(focusGroup);
+    }
+
+    @GetMapping("/focus-groups/cancelable/{groupId}")
+    public ResponseEntity<Boolean> isCancelable(@PathVariable Long groupId) {
+        return ResponseEntity.ok().body(focusGroupService.isCancelable(groupId));
     }
 
 }

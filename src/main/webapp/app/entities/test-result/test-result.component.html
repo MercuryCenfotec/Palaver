@@ -6,13 +6,32 @@
             </div>
             <div class="card-body">
                 <div class="card-block">
-                    <jhi-alert></jhi-alert>
+                    <div class="row">
+                        <div class="col-sm-12 col-3 col-md-3 col-lg-3 col-xl-3">
+                            <div class="input-group my-3">
+                                <div class="input-group-prepend">
+                                    <i class="input-group-text ft-search info"></i>
+                                </div>
+                                <input type="text" jhiNumericOnly  class="form-control" maxlength="5" placeholder="Buscar por nota..."
+                                       [(ngModel)]="gradeInput"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-9 col-md-9 col-lg-9 col-xl-9">
+                            <div class="input-group my-3">
+                                <div class="input-group-prepend">
+                                    <i class="input-group-text ft-search info"></i>
+                                </div>
+                                <input type="text"  class="form-control"  placeholder="Buscar por nombre..."
+                                       [(ngModel)]="nameInput"/>
+                            </div>
+                        </div>
+                    </div>
                     <div class="table-responsive" *ngIf="testResults">
                         <table class="table table-responsive-md text-center">
                             <thead>
                             <tr>
-                                <th><span>ID</span></th>
-                                <th><span></span></th>
+                                <!--<th><span>ID</span></th>
+                                <th><span></span></th>-->
                                 <th><span>Grupo de enfoque</span></th>
                                 <th><span>Calificación esperada</span></th>
                                 <th><span>Participante</span></th>
@@ -21,15 +40,15 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr *ngFor="let testResult of testResults ;trackBy: trackId">
-                                <td><a [routerLink]="['/test-result', testResult.id, 'view' ]">{{testResult.id}}</a>
+                            <tr *ngFor="let testResult of testResults | testParticipantFilter:nameInput | testResultFilter:gradeInput; trackBy: trackId">
+                                <!--<td><a [routerLink]="['/test-result', testResult.id, 'view' ]">{{testResult.id}}</a>
                                 </td>
                                 <td>
                                     <div class="custom-control custom-checkbox m-0">
                                         <input type="checkbox" class="custom-control-input" id="{{testResult.id}}">
                                         <label class="custom-control-label" for="{{testResult.id}}"></label>
                                     </div>
-                                </td>
+                                </td>-->
                                 <td>
                                     <div *ngIf="testResult.focusGroup">
                                         <a [routerLink]="['../focus-group', testResult.focusGroup?.id, 'view' ]">{{testResult.focusGroup?.name}}</a>

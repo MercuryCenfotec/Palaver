@@ -120,6 +120,9 @@ public class UserService {
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         Set<Authority> authorities = new HashSet<>();
         authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
+        if(userDTO.getAuthorities() != null){
+            authorityRepository.findById(AuthoritiesConstants.SUBADMIN).ifPresent(authorities::add);
+        }
         newUser.setAuthorities(authorities);
         userRepository.save(newUser);
         this.clearUserCaches(newUser);
@@ -206,6 +209,8 @@ public class UserService {
                 authorityRepository.findById(AuthoritiesConstants.INSTITUTION).ifPresent(authorities::add);
             }else if(role.equals("participant")){
                 authorityRepository.findById(AuthoritiesConstants.PARTICIPANT).ifPresent(authorities::add);
+            }else if(role.equals("subadmin")) {
+                authorityRepository.findById(AuthoritiesConstants.SUBADMIN).ifPresent(authorities::add);
             }
             user.setAuthorities(authorities);
         }

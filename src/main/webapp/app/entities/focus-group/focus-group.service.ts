@@ -82,4 +82,8 @@ export class FocusGroupService {
             .get<IFocusGroup>(`${this.resourceUrlPublic}/find-by-code/${code}`, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
+
+    isCancelable(groupId: number): Observable<HttpResponse<boolean>> {
+        return this.http.get<boolean>(`${this.resourceUrl}/cancelable/${groupId}`, { observe: 'response' });
+    }
 }

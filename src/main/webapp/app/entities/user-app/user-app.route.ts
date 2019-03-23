@@ -12,6 +12,7 @@ import { UserAppUpdateComponent } from './user-app-update.component';
 import { UserAppDeletePopupComponent } from './user-app-delete-dialog.component';
 import { IUserApp } from 'app/shared/model/user-app.model';
 import { ActivitiesDetailComponent } from 'app/entities/user-app/activities-detail.component';
+import { SubadminFormComponent } from 'app/entities/user-app/subadmin-form.component';
 
 @Injectable({ providedIn: 'root' })
 export class UserAppResolve implements Resolve<IUserApp> {
@@ -84,6 +85,18 @@ export const userAppRoute: Routes = [
         data: {
             authorities: ['ROLE_ADMIN', 'ROLE_PARTICIPANT'],
             pageTitle: 'Calendario de Actividades'
+        },
+        canActivate: [UserRouteAccessService]
+    },
+    {
+        path: 'sub-admin/new',
+        component: SubadminFormComponent,
+        resolve: {
+            userApp: UserAppResolve
+        },
+        data: {
+            authorities: ['ROLE_ADMIN'],
+            pageTitle: 'Subadmin'
         },
         canActivate: [UserRouteAccessService]
     }

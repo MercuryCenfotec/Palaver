@@ -14,18 +14,27 @@
             </div>
             <div class="card-body">
                 <div class="card-block">
-                    <jhi-alert></jhi-alert>
+                    <!--<jhi-alert></jhi-alert>-->
                     <div class="table-responsive" *ngIf="aptitudeTests; else noAptitudeTests">
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <i class="input-group-text ft-search info" id="basic-addon1"></i>
+                            </div>
+                            <input type="text" class="form-control"
+                                   placeholder="Buscar por nombre..." [(ngModel)]="searchText"/>
+                        </div>
+
                         <table class="table table-responsive-md text-center">
                             <thead>
                             <tr>
                                 <th><span></span></th>
                                 <th><span>Nombre</span></th>
-                                <th><span >Acciones</span></th>
+                                <th><span>Acciones</span></th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr *ngFor="let aptitudeTest of aptitudeTests ;trackBy: trackId">
+                            <tr *ngFor="let aptitudeTest of aptitudeTests | filter:searchText; trackBy: trackId">
                                 <td>
                                     <div class="custom-control custom-checkbox m-0">
                                         <input type="checkbox" class="custom-control-input" id="{{aptitudeTest.id}}">

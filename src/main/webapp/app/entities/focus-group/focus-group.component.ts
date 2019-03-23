@@ -16,6 +16,7 @@ export class FocusGroupComponent implements OnInit, OnDestroy {
     focusGroups: IFocusGroup[];
     currentAccount: any;
     eventSubscriber: Subscription;
+    searchText;
 
     constructor(
         protected focusGroupService: FocusGroupService,

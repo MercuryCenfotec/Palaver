@@ -111,7 +111,12 @@ export class ParticipantCreateComponent implements OnInit {
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IParticipant>>) {
-        result.subscribe((res: HttpResponse<IParticipant>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+        result.subscribe(
+            (res: HttpResponse<IParticipant>) => {
+                this.userService.updateUserRole('participant', this.user).subscribe(data => this.onSaveSuccess());
+            },
+            (res: HttpErrorResponse) => this.onSaveError()
+        );
     }
 
     protected onSaveSuccess() {

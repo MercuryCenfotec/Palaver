@@ -3,16 +3,31 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Usuarios
+                    <button id="jh-create-entity" class="btn btn-raised btn-primary float-right" [routerLink]="['/user-app/sub-admin/new']">
+                        <i class="ft-plus"></i>
+                        <span >
+            Registrar nuevo sub-administrador
+            </span>
+                    </button>
                 </h4>
             </div>
             <div class="card-body">
                 <div class="card-block">
                     <jhi-alert></jhi-alert>
                     <div class="table-responsive" *ngIf="userApps">
+
+                        <div _ngcontent-c6="" class="input-group">
+                            <div _ngcontent-c6="" class="input-group-prepend">
+                                <i _ngcontent-c16="" class="input-group-text ft-search info" id="basic-addon1"></i>
+
+                            </div>
+                            <input type="text" class="form-control" placeholder="Buscar por nombre, identificación o correo..." [(ngModel)]="searchText"/>
+                        </div>
+
                         <table class="table table-responsive-md text-center">
                             <thead>
                             <tr>
-                                <th><span></span></th>
+                                <!--<th><span></span></th>-->
                                 <th><span>Nombre usuario</span></th>
                                 <th><span>Nombre</span></th>
                                 <th><span>Identificación</span></th>
@@ -23,19 +38,20 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr *ngFor="let userApp of userApps ;trackBy: trackId">
-                                <td>
+                            <tr *ngFor="let userApp of userApps | filter:searchText; trackBy: trackId">
+                                <!--<td>
                                     <div class="custom-control custom-checkbox m-0">
                                         <input type="checkbox" class="custom-control-input" id="{{userApp.id}}">
                                         <label class="custom-control-label" for="{{userApp.id}}"></label>
                                     </div>
-                                </td>
+                                </td>-->
                                 <td>{{userApp.user?.login}}</td>
                                 <td>{{userApp.name}}</td>
                                 <td>{{userApp.identificationNumber}}</td>
                                 <td>{{userApp.mail}}</td>
                                 <td><p *ngIf="userApp.rol === 'institution'">Institución</p>
-                                    <p *ngIf="userApp.rol === 'participant'">Participante</p></td>
+                                    <p *ngIf="userApp.rol === 'participant'">Participante</p>
+                                    <p *ngIf="userApp.rol === 'subadmin'">Sub-administrador</p></td>
                                 <td><p *ngIf="userApp.user.activated === true">Sí</p>
                                     <p *ngIf="userApp.user.activated ===false">No</p></td>
                                 <td>

@@ -117,7 +117,20 @@ export class AptitudeTestFormComponent implements OnInit {
         question.answers = this.newQuestion.answers;
         this.aptitudeTest.questions.push(question);
         this.newQuestion.question = '';
+        this.newAnswer.answer = '';
         this.newQuestion.answers = [];
         console.log(this.aptitudeTest);
+    }
+
+    removeQuestionFromTest(deletedQuestion: ITestQuestion) {
+        this.aptitudeTest.questions.splice(this.aptitudeTest.questions.indexOf(deletedQuestion), 1);
+    }
+
+    removeAnswerFromPreview(deletedAnswer: ITestAnswerOption) {
+        this.newQuestion.answers.splice(this.newQuestion.answers.indexOf(deletedAnswer), 1);
+    }
+
+    validateQuestions(): boolean {
+        return this.aptitudeTest.questions.length !== 0;
     }
 }

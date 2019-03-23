@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
     <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
             <h2 id="jhi-aptitude-test-heading">Prueba de aptitud</h2>
             <div>
                 <h4 class="form-section"><i class="ft-info"></i>Información</h4>
@@ -18,7 +18,7 @@
                         <div id="testForm" class="col-md-6 col-sm-6 col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label" for="field_name">Pregunta</label>
-                                <input [attr.disabled]="newQuestion.answers.length ? '' : null" #floatQuestion="ngModel"
+                                <input [attr.disabled]="newQuestion.answers.length ? '' : null"
                                        type="text" class="form-control" name="question"
                                        id="field_question"
                                        [(ngModel)]="newQuestion.question"/>
@@ -26,7 +26,6 @@
                             <div class="form-group">
                                 <label class="form-control-label" for="field_answer">Respuesta</label>
                                 <input [attr.disabled]="!newQuestion.question ? '' : null" id="answerInput"
-                                       #floatQuestion="ngModel"
                                        type="text" class="form-control" name="answer"
                                        id="field_answer"
                                        [(ngModel)]="newAnswer.answer"/>
@@ -48,8 +47,10 @@
                                     </div>
                                     <div id="previewAnswers" class="card-body">
                                         <div class="card-block">
-                                            <span *ngFor="let answer of newQuestion.answers" class="display-block"><i
-                                                class="ft-minus"></i>{{answer.answer}}</span>
+                                            <span *ngFor="let answer of newQuestion.answers" class="display-block">
+                                                <i (click)="removeAnswerFromPreview(answer)"
+                                                   class="cursor-pointer warning ft-x font-medium-3 mr-2"></i>
+                                                <i class="ft-minus"></i>{{answer.answer}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -66,15 +67,24 @@
                 </div>
                 <div id="questionCardSection" class="">
                     <h4 class="form-section"><i class="ft-clipboard"></i>Preguntas</h4>
-                    <div id="question{{i}}" class="card bg-blue-grey bg-lighten-5" *ngFor="let question of aptitudeTest.questions; let i = index">
+                    <div id="question{{i}}" class="card bg-blue-grey bg-lighten-5"
+                         *ngFor="let question of aptitudeTest.questions; let i = index">
                         <div class="card-header">
-                            <span class="text-bold-500 primary">¿{{question.question}}?</span>
+                            <div class="row">
+                                <div class="col-11 col-sm-11 col-md-11 col-lg-11">
+                                    <span class="text-bold-500 primary">¿{{question.question}}?</span>
+                                </div>
+                                <div class="col-1 col-sm-1 col-md-1 col-lg-1 text-right">
+                                    <i (click)="removeQuestionFromTest(question)"
+                                       class="cursor-pointer warning ft-x font-medium-3 mr-2"></i>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="card-block">
                                 <div class="card-block">
-                                            <span *ngFor="let answer of question.answers" class="display-block"><i
-                                                class="ft-minus"></i>{{answer.answer}}</span>
+                                            <span *ngFor="let answer of question.answers" class="display-block">
+                                                <i class="ft-minus"></i>{{answer.answer}}</span>
                                 </div>
                             </div>
                         </div>
@@ -85,8 +95,9 @@
                             (click)="previousState()">
                         <i class="ft-x"></i><span> Cancelar</span>
                     </button>
-                    <button type="submit" id="save-entity" class="btn btn-raised btn-primary">
-                        <i class="ft-save"></i><span> Registrar</span>
+                    <button type="submit" id="save-entity" class="btn btn-raised btn-primary"
+                            [disabled]="!validateQuestions()">
+                        <i class="ft-save"></i>&nbsp;<span> Registrar</span>
                     </button>
                 </div>
             </div>

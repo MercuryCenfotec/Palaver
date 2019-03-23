@@ -4,6 +4,7 @@ import com.mercury.palaver.PalaverApp;
 
 import com.mercury.palaver.domain.UserApp;
 import com.mercury.palaver.repository.UserAppRepository;
+import com.mercury.palaver.service.UserAppService;
 import com.mercury.palaver.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -58,6 +59,8 @@ public class UserAppResourceIntTest {
     @Autowired
     private UserAppRepository userAppRepository;
 
+    private UserAppService userAppService;
+
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
@@ -80,7 +83,7 @@ public class UserAppResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final UserAppResource userAppResource = new UserAppResource(userAppRepository);
+        final UserAppResource userAppResource = new UserAppResource(userAppRepository, userAppService);
         this.restUserAppMockMvc = MockMvcBuilders.standaloneSetup(userAppResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
