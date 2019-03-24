@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import * as moment from 'moment';
 import { JhiAlertService } from 'ng-jhipster';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { FocusGroupService } from './focus-group.service';
@@ -16,6 +15,10 @@ import { CategoryService } from 'app/entities/category';
 import { IParticipant } from 'app/shared/model/participant.model';
 import { ParticipantService } from 'app/entities/participant';
 import { UserService } from 'app/core';
+import { IAptitudeTest } from 'app/shared/model/aptitude-test.model';
+import { AptitudeTestService } from 'app/entities/aptitude-test';
+import { ITestAnswerOption } from 'app/shared/model/test-answer-option.model';
+import { ITestQuestion } from 'app/shared/model/test-question.model';
 
 @Component({
     selector: 'jhi-focus-group-form',
@@ -24,13 +27,10 @@ import { UserService } from 'app/core';
 export class FocusGroupFormComponent implements OnInit {
     focusGroup: IFocusGroup;
     isSaving: boolean;
-
     incentives: IIncentive[];
-
     institutions: IInstitution[];
-
     categories: ICategory[];
-
+    aptitudeTests: IAptitudeTest[];
     participants: IParticipant[];
     beginDateDp: any;
     endDateDp: any;
@@ -43,13 +43,22 @@ export class FocusGroupFormComponent implements OnInit {
         protected categoryService: CategoryService,
         protected participantService: ParticipantService,
         protected activatedRoute: ActivatedRoute,
-        protected userService: UserService
+        protected userService: UserService,
+        protected aptitudeTestService: AptitudeTestService
     ) {}
 
     ngOnInit() {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ focusGroup }) => {
             this.focusGroup = focusGroup;
+            this.focusGroup.aptitudeTest = null;
+        });
+        this.userService.getUserWithAuthorities().subscribe(user => {
+            this.institutionService.getByUserUser(user.id).subscribe(institution => {
+                this.aptitudeTestService.findAllByInstitution(institution.body.id).subscribe(aptitudeTests => {
+                    this.aptitudeTests = aptitudeTests.body;
+                });
+            });
         });
         this.incentiveService
             .query()
@@ -93,7 +102,6 @@ export class FocusGroupFormComponent implements OnInit {
                 this.subscribeToSaveResponse(this.focusGroupService.create(this.focusGroup));
             });
         });
-        console.log(this.focusGroup);
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IFocusGroup>>) {
@@ -138,5 +146,32 @@ export class FocusGroupFormComponent implements OnInit {
             }
         }
         return option;
+    }
+
+    desiredAnswer(question: ITestQuestion, desiredAnswer: ITestAnswerOption) {
+        question.answers.forEach(function(answer: ITestAnswerOption) {
+            answer.desired = answer.id === desiredAnswer.id;
+        });
+    }
+
+    validateAnswers(): boolean {
+        if (this.focusGroup.aptitudeTest) {
+            let ind: number;
+            for (const question of this.focusGroup.aptitudeTest.questions) {
+                ind = 0;
+                console.log(question.answers);
+                for (const answer of question.answers) {
+                    if (!answer.desired) {
+                        ind++;
+                        console.log(ind);
+                        console.log(answer);
+                    }
+                }
+                if (ind === question.answers.length) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

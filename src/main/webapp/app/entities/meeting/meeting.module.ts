@@ -2,8 +2,11 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { PalaverSharedModule } from 'app/shared';
+import { FilterPipe } from './filter.pipe';
+
 import {
     MeetingComponent,
+    MeetingCreateComponent,
     MeetingDetailComponent,
     MeetingUpdateComponent,
     MeetingDeletePopupComponent,
@@ -18,10 +21,12 @@ const ENTITY_STATES = [...meetingRoute, ...meetingPopupRoute];
     imports: [PalaverSharedModule, RouterModule.forChild(ENTITY_STATES)],
     declarations: [
         MeetingComponent,
+        MeetingCreateComponent,
         MeetingDetailComponent,
         MeetingUpdateComponent,
         MeetingDeleteDialogComponent,
-        MeetingDeletePopupComponent
+        MeetingDeletePopupComponent,
+        FilterPipe
     ],
     entryComponents: [MeetingComponent, MeetingUpdateComponent, MeetingDeleteDialogComponent, MeetingDeletePopupComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

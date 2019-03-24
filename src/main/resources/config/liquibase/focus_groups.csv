@@ -1,0 +1,4 @@
+id;name;description;begin_date;end_date;code;passing_grade;incentive_id;institution_id;aptitude_test_id
+1;grupo de prueba 01;descripcion grupo de prueba 01;2019-03-18;2019-03-31;codigoPrueba01;80;null;1;null
+2;grupo de prueba 02;descripcion grupo de prueba 02;2019-03-19;2019-04-05;codigoPrueba02;70;null;1;null
+

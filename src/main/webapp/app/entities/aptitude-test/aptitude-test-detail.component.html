@@ -22,7 +22,8 @@
                     <h5 class="col-12 col-md-12 col-sm-12"><i class="ft-clipboard"></i> Preguntas</h5>
                     <hr>
                     <div class="card-block col-12">
-                        <div id="question{{i}}" class="card bg-blue-grey bg-lighten-5" *ngFor="let question of aptitudeTest.questions; let i = index">
+                        <div id="question{{i}}" class="card bg-blue-grey bg-lighten-5"
+                             *ngFor="let question of aptitudeTest.questions; let i = index">
                             <div class="card-header">
                                 <span class="text-bold-500 primary">¿{{question.question}}?</span>
                             </div>

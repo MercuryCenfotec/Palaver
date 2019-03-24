@@ -18,11 +18,10 @@
                         <table _ngcontent-c6="" class="table table-responsive-md text-center">
                             <thead _ngcontent-c6="">
                             <tr _ngcontent-c6="">
-                                <th><span>ID</span></th>
                                 <th><span>Fecha de nacimiento</span></th>
                                 <th><span>Género</span></th>
                                 <th><span>Estado civil</span></th>
-                                <th><span>Imagen</span></th>
+                                <!--<th><span>Imagen</span></th>-->
                                 <th><span>Usuario</span></th>
                                 <th><span>Acciones</span></th>
                                 <th></th>
@@ -31,11 +30,10 @@
                             <tbody _ngcontent-c6="">
 
                             <tr *ngFor="let participant of participants ;trackBy: trackId">
-                                <td><a [routerLink]="['/participant', participant.id, 'view' ]">{{participant.id}}</a></td>
                                 <td>{{participant.birthdate | date:'mediumDate'}}</td>
                                 <td>{{participant.gender}}</td>
                                 <td>{{participant.civilStatus}}</td>
-                                <td>{{participant.picture}}</td>
+                                <!--<td>{{participant.picture}}</td>-->
                                 <td>
                                     <div *ngIf="participant.user">
                                         <a [routerLink]="['../user-app', participant.user?.id, 'view' ]">{{participant.user?.name}}</a>

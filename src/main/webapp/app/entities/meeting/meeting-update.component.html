@@ -1,90 +1,97 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-            <h2 id="jhi-meeting-heading">Create or edit a Meeting</h2>
-            <div>
-                <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!meeting.id">
-                    <label for="id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id"
-                        [(ngModel)]="meeting.id" readonly />
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_date">Date</label>
-                    <div class="input-group">
-                        <input id="field_date" type="text" class="form-control" name="date" ngbDatepicker  #dateDp="ngbDatepicker" [(ngModel)]="meeting.date"
-                        required/>
-                        <span class="input-group-append">
-                            <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
-                        </span>
-                    </div>
-                    <div [hidden]="!(editForm.controls.date?.dirty && editForm.controls.date?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.date?.errors?.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_time">Time</label>
-                    <div class="d-flex">
-                        <input id="field_time" type="datetime-local" class="form-control" name="time" [(ngModel)]="time" placeholder="YYYY-MM-DD HH:mm"
-                        required/>
-                    </div>
-                    <div [hidden]="!(editForm.controls.time?.dirty && editForm.controls.time?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.time?.errors?.required">
-                        This field is required.
-                        </small>
-                        <small class="form-text text-danger"
-                            [hidden]="!editForm.controls.time?.errors?.ZonedDateTimelocal">
-                            This field should be a date and time.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_name">Name</label>
-                    <input type="text" class="form-control" name="name" id="field_name"
-                        [(ngModel)]="meeting.name" required/>
-                    <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.name?.errors?.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_description">Description</label>
-                    <input type="text" class="form-control" name="description" id="field_description"
-                        [(ngModel)]="meeting.description" />
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_callURL">Call URL</label>
-                    <input type="text" class="form-control" name="callURL" id="field_callURL"
-                        [(ngModel)]="meeting.callURL" />
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_callCode">Call Code</label>
-                    <input type="text" class="form-control" name="callCode" id="field_callCode"
-                        [(ngModel)]="meeting.callCode" />
-                </div>
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title" id="jhi-meeting-heading">Modificar una reunión</h2>
+    </div>
+    <div class="card-body">
+        <div class="px-3">
+            <form class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate
+                  (ngSubmit)="save()" #editForm="ngForm">
+                <div class="row justify-content-md-center">
+                    <div class="col-md-6">
+                        <div class="form-body">
+                            <h4 class="form-section"><i class="ft-user"></i>Modificado</h4>
+                            <jhi-alert-error></jhi-alert-error>
+                            <div class="form-group" [hidden]="!meeting.id">
+                                <label for="id">ID</label>
+                                <input type="text" class="form-control" id="id" name="id"
+                                       [(ngModel)]="meeting.id" readonly/>
+                            </div>
+                            <div class="form-group">
+                                <label for="field_date">Fecha</label>
+                                <div class="input-group">
+                                    <input id="field_date" type="text" class="form-control" name="date" ngbDatepicker  #dateDp="ngbDatepicker" [(ngModel)]="meeting.date"
+                                           required/>
+                                    <span class="input-group-append">
+                                            <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()">
+                                                <fa-icon [icon]="'calendar-alt'"></fa-icon>
+                                            </button>
+                                    </span>
+                                </div>
+                                <div [hidden]="!(editForm.controls.date?.dirty && editForm.controls.date?.invalid)">
+                                    <small class="form-text text-danger"
+                                           [hidden]="!editForm.controls.date?.errors?.required">
+                                        Este campo es requerido.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_time">Hora</label>
+                                <div class="d-flex">
+                                    <input id="field_time" type="time" class="form-control" name="time" [(ngModel)]="time" placeholder="HH:mm"
+                                       required/>
+                                </div>
+                                <div [hidden]="!(editForm.controls.time?.dirty && editForm.controls.time?.invalid)">
+                                    <small class="form-text text-danger"
+                                           [hidden]="!editForm.controls.time?.errors?.required">
+                                        Este campo es requerido.
+                                    </small>
+                                    <small class="form-text text-danger"
+                                           [hidden]="!editForm.controls.time?.errors?.LocalTime">
+                                        Este campo debería ser de tiempo.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_name">Nombre</label>
+                                <input type="text" class="form-control" name="name" id="field_name"
+                                       [(ngModel)]="meeting.name" required/>
+                                <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+                                    <small class="form-text text-danger"
+                                           [hidden]="!editForm.controls.name?.errors?.required">
+                                        Este campo es requerido.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_description">Descripción</label>
+                                <input type="text" class="form-control" name="description" id="field_description"
+                                       [(ngModel)]="meeting.description" />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_focusGroup">Focus Group</label>
+                                <select class="form-control" id="field_focusGroup" name="focusGroup" [(ngModel)]="meeting.focusGroup" >
+                                    <option [ngValue]="null"></option>
+                                    <option [ngValue]="focusGroupOption.id === meeting.focusGroup?.id ? meeting.focusGroup : focusGroupOption" *ngFor="let focusGroupOption of focusgroups; trackBy: trackFocusGroupById">{{focusGroupOption.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
+                                    (click)="previousState()">
+                                <i class="ft-x"></i> Cancelar
+                            </button>
+                            <button class="btn btn-raised btn-primary" type="submit" id="save-entity"
+                                    [disabled]="editForm.form.invalid || isSaving">
+                                <i class="ft ft-file-text"></i> Guardar
+                            </button>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_focusGroup">Focus Group</label>
-                    <select class="form-control" id="field_focusGroup" name="focusGroup" [(ngModel)]="meeting.focusGroup" >
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="focusGroupOption.id === meeting.focusGroup?.id ? meeting.focusGroup : focusGroupOption" *ngFor="let focusGroupOption of focusgroups; trackBy: trackFocusGroupById">{{focusGroupOption.id}}</option>
-                    </select>
+                        </div>
+                    </div>
+
                 </div>
-            </div>
-            <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
-                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
-                </button>
-                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
-                </button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
+
+

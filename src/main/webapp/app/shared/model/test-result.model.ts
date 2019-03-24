@@ -9,5 +9,6 @@ export interface ITestResult {
 }
 
 export class TestResult implements ITestResult {
-    constructor(public id?: number, public grade?: string, public focusGroup?: IFocusGroup, public participant?: IParticipant) {}
+    public id?: number;
+    constructor(public grade?: string, public focusGroup?: IFocusGroup, public participant?: IParticipant) {}
 }

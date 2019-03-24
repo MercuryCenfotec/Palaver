@@ -1,0 +1,95 @@
+<div class="container">
+    <div class="row" matchHeight="card">
+        <div class="col-xl-3 col-lg-6 col-12">
+            <div class="card bg-primary">
+                <div class="card-body">
+                    <div class="px-3 py-3">
+                        <div class="media">
+                            <div class="media-body white text-left">
+                                <h3 *ngIf="participants!==undefined">{{participants.length}}</h3>
+                                <h3 *ngIf="participants===undefined">0</h3>
+                                <span>Participantes</span>
+                            </div>
+                            <div class="media-right align-self-center">
+                                <i class="ft-user white font-large-3 float-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-12">
+            <div class="card bg-success">
+                <div class="card-body">
+                    <div class="px-3 py-3">
+                        <div class="media">
+                            <div class="media-body white text-left">
+                                <h3 *ngIf="meetings!==undefined">{{meetings.length}}</h3>
+                                <h3 *ngIf="meetings===undefined">0</h3>
+                                <span>Reuniones</span>
+                            </div>
+                            <div class="media-right align-self-center">
+                                <i class="ft-users white font-large-3 float-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" matchHeight="card">
+        <div class="col-xl-4 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Participantes</h4>
+                </div>
+                <div class="card-body">
+                    <div class="card-block">
+                        <div class="media mb-3" *ngFor="let participant of participants">
+                            <img
+                                class="media-object d-flex mr-3 align-self-center bg-primary height-50 rounded-circle">
+                            <div class="media-body">
+                                <h4 class="font-medium-1 mt-2 mb-0">{{participant.user.name}}</h4>
+                            </div>
+                            <a class="d-flex ml-3 btn btn-raised btn-round gradient-blackberry py-2 width-150 justify-content-center white">Mensaje</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-8 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Reuniones</h4>
+                </div>
+                <div class="card-body">
+                    <div class="card-block">
+                        <table class="table table-responsive-md text-center">
+                            <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let meeting of meetings">
+                                <td>{{meeting.name}}</td>
+                                <td>{{meeting.date.toDate().toLocaleDateString()}}</td>
+                                <td>{{meeting.time.toDate().toLocaleTimeString()}}</td>
+                                <td>
+                                    <a class="info p-0" data-original-title="" title="" href="{{meeting.callCode}}">
+                                        <i class="ft-video font-medium-3 mr-2"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

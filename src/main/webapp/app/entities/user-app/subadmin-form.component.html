@@ -1,0 +1,205 @@
+<div class="row match-height">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title" id="basic-layout-form-center">Sub-administrador</h4>
+
+                <div class="alert alert-success" *ngIf="success">
+                    <strong>Su registro ha sido exitoso!</strong> Por favor revise su correo para verificar su cuenta.
+                </div>
+
+                <div class="alert alert-danger" *ngIf="error">
+                    <strong>Registro fallido!</strong> Por favor intente de nuevo.
+                </div>
+
+                <div class="alert alert-danger" *ngIf="errorUserExists">
+                    <strong>El nombre de usuario ya se encuentra registrado!</strong> Por favor utilice otro.
+                </div>
+
+                <div class="alert alert-danger" *ngIf="errorEmailExists">
+                    <strong>El correo electronico ya se encuentra en uso!</strong> Por favor utilice otro.
+                </div>
+
+                <div class="alert alert-danger" *ngIf="doNotMatch">
+                    La contraseña y la confirmacion no concuerdan!
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="px-3">
+                    <form class="form" name="form" role="form" (ngSubmit)="register()" #registerForm="ngForm"
+                          *ngIf="!success">
+                        <div class="row justify-content-md-center">
+                            <div class="col-md-6">
+                                <div class="form-body">
+                                    <h4 class="form-section"><i class="ft-user"></i>Registro</h4>
+                                    <jhi-alert-error></jhi-alert-error>
+                                    <div class="form-group">
+                                        <label for="login"><i class="ft-edit-3"></i> Nombre de usuario</label>
+                                        <input type="text" class="form-control" [(ngModel)]="registerAccount.login"
+                                               id="login" name="login" #login="ngModel" placeholder="Nombre de usuario"
+                                               required minlength="1" maxlength="50">
+                                        <div *ngIf="login.dirty && login.invalid">
+                                            <small class="form-text text-danger" *ngIf="login.errors.required">
+                                                Este campo es requerido.
+                                            </small>
+                                            <small class="form-text text-danger" *ngIf="login.errors.minlength"
+                                            >
+                                                Su nombre de usuario debe tener al menos 1 caracter de largo.
+                                            </small>
+                                            <small class="form-text text-danger" *ngIf="login.errors.maxlength"
+                                            >
+                                                Su nombre de usuario no debe tener mas de 50 caracteres de largo.
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="name"><i class="ft-user"></i> Nombre</label>
+                                        <input type="text" class="form-control" [(ngModel)]="userApp.name" id="name"
+                                               name="name" placeholder="Nombre" #name="ngModel"
+                                               required>
+                                        <div *ngIf="name.dirty && name.invalid">
+                                            <small class="form-text text-danger" *ngIf="name.errors.required">
+                                                Este campo es requerido.
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="identification"><i class="ft-hash"></i> Número de
+                                            identificación</label>
+                                        <input type="text" class="form-control"
+                                               [(ngModel)]="userApp.identificationNumber" id="identification"
+                                               name="identification" #identification="ngModel" placeholder="Número de identificación"
+                                               required minlength="1" maxlength="200">
+                                        <div *ngIf="identification.dirty && identification.invalid">
+                                            <small class="form-text text-danger" *ngIf="identification.errors.required">
+                                                Este campo es requerido.
+                                            </small>
+                                            <small class="form-text text-danger" *ngIf="identification.errors.minlength"
+                                            >
+                                                Su número de identificación debe tener al menos 1 caracter de largo.
+                                            </small>
+                                            <small class="form-text text-danger" *ngIf="identification.errors.maxlength"
+                                            >
+                                                Su número de identificación no debe tener mas de 50 caracteres de largo.
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="email"><i class="ft-at-sign"></i> Correo electronico</label>
+                                        <input type="email" class="form-control" id="email" name="email"
+                                               #email="ngModel" placeholder="ejemplo@correo.com"
+                                               [(ngModel)]="userApp.mail" [(ngModel)]="registerAccount.email"
+                                               minlength=5 maxlength=254 email required>
+                                        <div *ngIf="email.dirty && email.invalid">
+                                            <small class="form-text text-danger" *ngIf="email.errors.required"
+                                            >
+                                                Este campo es requerido.
+                                            </small>
+                                            <small class="form-text text-danger" *ngIf="email.errors.invalid"
+                                            >
+                                                Este correo es invalido.
+                                            </small>
+                                            <small class="form-text text-danger" *ngIf="email.errors.minlength"
+                                            >
+                                                Su correo debe tener al menos 5 caracteres de largo.
+                                            </small>
+                                            <small class="form-text text-danger" *ngIf="email.errors.maxlength"
+                                            >
+                                                Su correo no debe tener mas de 100 caracteres de largo.
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="address"><i class="ft-globe"></i> Dirección</label>
+                                        <input type="text" class="form-control" [(ngModel)]="userApp.address"
+                                               id="address" name="address" #login="ngModel" placeholder="Dirección">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="password"><i class="ft-lock"></i> Contraseña</label>
+                                        <input type="password" class="form-control" id="password" name="password"
+                                               #password="ngModel" placeholder="Contraseña"
+                                               [(ngModel)]="registerAccount.password" minlength=4 maxlength=50 required>
+                                        <div *ngIf="password.dirty && password.invalid">
+                                            <small class="form-text text-danger" *ngIf="password.errors.required"
+                                            >
+                                                Este campo es requerido.
+                                            </small>
+                                            <small class="form-text text-danger" *ngIf="password.errors.minlength"
+                                            >
+                                                Su contraseña debe tener al menos 4 caracteres de largo.
+                                            </small>
+                                            <small class="form-text text-danger" *ngIf="password.errors.maxlength"
+                                            >
+                                                Su contraseña no debe tener mas de 50 caracteres de largo.
+                                            </small>
+                                        </div>
+                                        <p></p>
+                                        <label>Fortaleza:</label>
+
+                                        <jhi-password-strength-bar
+                                            [passwordToCheck]="registerAccount.password"></jhi-password-strength-bar>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="confirmPassword"><i class="ft-lock"></i> Confirmar
+                                            contraseña</label>
+                                        <input type="password" class="form-control" id="confirmPassword"
+                                               name="confirmPassword" #confirmPasswordInput="ngModel"
+                                               placeholder="Confirmar contraseña"
+                                               [(ngModel)]="confirmPassword" minlength=4 maxlength=50 required>
+                                        <div *ngIf="confirmPasswordInput.dirty && confirmPasswordInput.invalid">
+                                            <small class="form-text text-danger"
+                                                   *ngIf="confirmPasswordInput.errors.required"
+                                            >
+                                                Este campo es requerido.
+                                            </small>
+                                            <small class="form-text text-danger"
+                                                   *ngIf="confirmPasswordInput.errors.minlength"
+                                            >
+                                                Su contraseña de confirmación debe tener al menos 4 caracteres de largo.
+                                            </small>
+                                            <small class="form-text text-danger"
+                                                   *ngIf="confirmPasswordInput.errors.maxlength"
+                                            >
+                                                Su contraseña de confirmación no debe tener mas de 50 caracteres de
+                                                largo.
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Que tipo de usuario desea ser?</label>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="customRadioInline1" value="subadmin"
+                                                   name="customRadioInline1" class="custom-control-input"
+                                                   (change)="setRole('subadmin')">
+                                            <label class="custom-control-label"
+                                                   for="customRadioInline1">Sub-admin</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions center">
+                            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="previousState()">
+                                <i class="ft-x"></i> Atras
+                            </button>
+                            <button type="submit"
+                                    [disabled]="registerForm.form.invalid ||userApp.rol === ''"
+                                    class="btn btn-raised btn-primary">
+                                <i class="ft-check"></i> Confirmar
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

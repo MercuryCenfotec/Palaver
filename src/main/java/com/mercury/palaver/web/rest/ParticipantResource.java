@@ -1,6 +1,10 @@
 package com.mercury.palaver.web.rest;
+
+import com.mercury.palaver.domain.FocusGroup;
 import com.mercury.palaver.domain.Participant;
 import com.mercury.palaver.repository.ParticipantRepository;
+import com.mercury.palaver.repository.UserAppRepository;
+import com.mercury.palaver.service.UserService;
 import com.mercury.palaver.web.rest.errors.BadRequestAlertException;
 import com.mercury.palaver.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -99,6 +103,18 @@ public class ParticipantResource {
     }
 
     /**
+     * GET  /participants/by-group/:id : get the "id" of the group for participant.
+     *
+     * @param id the id of participant associated group
+     * @return the ResponseEntity with status 200 (OK) and with body the participant, or with status 404 (Not Found)
+     */
+    @GetMapping("/participants/by-group/{id}")
+    public List<Participant> getParticipantByGroup(@PathVariable Long id) {
+        log.debug("REST request to get Participant by group: {}", id);
+        return participantRepository.findAllByFocusGroups_id(id);
+    }
+
+    /**
      * DELETE  /participants/:id : delete the "id" participant.
      *
      * @param id the id of the participant to delete
@@ -109,5 +125,19 @@ public class ParticipantResource {
         log.debug("REST request to delete Participant : {}", id);
         participantRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/participants/user/{id}")
+    public ResponseEntity<Participant> getParticipantByUser(@PathVariable Long id) {
+        log.debug("REST request to get Participant : {}", id);
+        Optional<Participant> participant = participantRepository.findByUser_Id(id);
+        return ResponseUtil.wrapOrNotFound(participant);
+    }
+
+    @GetMapping("/participants/focus-group/{groupId}")
+    public List<Participant> getParticipantsByFocusGroup(@PathVariable Long groupId) {
+        FocusGroup group = new FocusGroup();
+        group.setId(groupId);
+        return participantRepository.findAllByFocusGroups(group);
     }
 }

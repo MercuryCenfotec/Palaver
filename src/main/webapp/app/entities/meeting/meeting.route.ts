@@ -11,6 +11,7 @@ import { MeetingDetailComponent } from './meeting-detail.component';
 import { MeetingUpdateComponent } from './meeting-update.component';
 import { MeetingDeletePopupComponent } from './meeting-delete-dialog.component';
 import { IMeeting } from 'app/shared/model/meeting.model';
+import { MeetingCreateComponent } from 'app/entities/meeting/meeting-create.component';
 
 @Injectable({ providedIn: 'root' })
 export class MeetingResolve implements Resolve<IMeeting> {
@@ -52,7 +53,7 @@ export const meetingRoute: Routes = [
     },
     {
         path: 'new',
-        component: MeetingUpdateComponent,
+        component: MeetingCreateComponent,
         resolve: {
             meeting: MeetingResolve
         },

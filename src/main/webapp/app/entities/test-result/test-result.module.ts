@@ -11,6 +11,9 @@ import {
     testResultRoute,
     testResultPopupRoute
 } from './';
+import { TestResultFilterPipe } from 'app/entities/test-result/filter.pipe';
+import { TestParticipantFilterPipe } from 'app/entities/test-result/test-participant-filter.pipe';
+import { NumberOnlyDirective } from 'app/shared/util/number-directive';
 
 const ENTITY_STATES = [...testResultRoute, ...testResultPopupRoute];
 
@@ -21,7 +24,10 @@ const ENTITY_STATES = [...testResultRoute, ...testResultPopupRoute];
         TestResultDetailComponent,
         TestResultUpdateComponent,
         TestResultDeleteDialogComponent,
-        TestResultDeletePopupComponent
+        TestResultDeletePopupComponent,
+        TestResultFilterPipe,
+        TestParticipantFilterPipe,
+        NumberOnlyDirective
     ],
     entryComponents: [TestResultComponent, TestResultUpdateComponent, TestResultDeleteDialogComponent, TestResultDeletePopupComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

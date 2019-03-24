@@ -9,8 +9,12 @@ import {
     UserAppDeletePopupComponent,
     UserAppDeleteDialogComponent,
     userAppRoute,
-    userAppPopupRoute
+    userAppPopupRoute,
+    PasswordStrengthBarComponent
 } from './';
+import { ActivitiesDetailComponent } from './activities-detail.component';
+import { SubadminFormComponent } from 'app/entities/user-app/subadmin-form.component';
+import { FilterPipe } from 'app/entities/user-app/filter.pipe';
 
 const ENTITY_STATES = [...userAppRoute, ...userAppPopupRoute];
 
@@ -21,9 +25,20 @@ const ENTITY_STATES = [...userAppRoute, ...userAppPopupRoute];
         UserAppDetailComponent,
         UserAppUpdateComponent,
         UserAppDeleteDialogComponent,
-        UserAppDeletePopupComponent
+        UserAppDeletePopupComponent,
+        ActivitiesDetailComponent,
+        PasswordStrengthBarComponent,
+        SubadminFormComponent,
+        FilterPipe
     ],
-    entryComponents: [UserAppComponent, UserAppUpdateComponent, UserAppDeleteDialogComponent, UserAppDeletePopupComponent],
+    entryComponents: [
+        UserAppComponent,
+        UserAppUpdateComponent,
+        UserAppDeleteDialogComponent,
+        UserAppDeletePopupComponent,
+        ActivitiesDetailComponent,
+        SubadminFormComponent
+    ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PalaverUserAppModule {}

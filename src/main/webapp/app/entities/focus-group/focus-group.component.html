@@ -3,9 +3,10 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Grupo de enfoque
-                    <button id="jh-create-entity" class="btn btn-raised btn-primary float-right" [routerLink]="['/focus-group/new']">
+                    <button id="jh-create-entity" class="btn btn-raised btn-primary float-right"
+                            [routerLink]="['/focus-group/new']">
                         <i class="ft-plus"></i>
-                        <span >
+                        <span>
             Registrar nuevo grupo de enfoque
             </span>
                     </button>
@@ -13,8 +14,17 @@
             </div>
             <div class="card-body">
                 <div class="card-block">
-                    <jhi-alert></jhi-alert>
+                    <!--<jhi-alert></jhi-alert>-->
                     <div class="table-responsive" *ngIf="focusGroups">
+
+                        <div _ngcontent-c6="" class="input-group">
+                            <div _ngcontent-c6="" class="input-group-prepend">
+                                <i _ngcontent-c16="" class="input-group-text ft-search info" id="basic-addon1"></i>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Buscar por nombre..."
+                                   [(ngModel)]="searchText"/>
+                        </div>
+
                         <table class="table table-responsive-md text-center">
                             <thead>
                             <tr>
@@ -28,7 +38,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr *ngFor="let focusGroup of focusGroups ;trackBy: trackId">
+                            <tr *ngFor="let focusGroup of focusGroups | focusGroupFilter:searchText;">
                                 <td>
                                     <div class="custom-control custom-checkbox m-0">
                                         <input type="checkbox" class="custom-control-input" id="{{focusGroup.id}}">
@@ -41,17 +51,19 @@
                                 <td>{{focusGroup.endDate | date:'mediumDate'}}</td>
                                 <td>{{focusGroup.code}}</td>
                                 <td>
-                                    <a class="info p-0" data-original-title="" title="" [routerLink]="['/focus-group', focusGroup.id, 'view' ]">
+                                    <a class="info p-0" data-original-title="" title=""
+                                       [routerLink]="['/focus-group', focusGroup.id, 'view' ]">
                                         <i class="ft-eye font-medium-3 mr-2"></i>
                                     </a>
-                                    <a class="success p-0" data-original-title="" title="" [routerLink]="['/focus-group', focusGroup.id, 'edit']">
+                                    <a class="success p-0" data-original-title="" title=""
+                                       [routerLink]="['/focus-group', focusGroup.id, 'edit']">
                                         <i class="ft-edit-2 font-medium-3 mr-2"></i>
                                     </a>
-                                    <a class="danger p-0" data-original-title="" title="" [routerLink]="['/', 'focus-group', { outlets: { popup: focusGroup.id + '/delete'} }]"
-                                       replaceUrl="true"
-                                       queryParamsHandling="merge">
-                                        <i class="ft-x font-medium-3 mr-2"></i>
-                                    </a>
+                                    <!--<a class="danger p-0" data-original-title="" title="" [routerLink]="['/', 'focus-group', { outlets: { popup: focusGroup.id + '/delete'} }]"-->
+                                    <!--replaceUrl="true"-->
+                                    <!--queryParamsHandling="merge">-->
+                                    <!--<i class="ft-x font-medium-3 mr-2"></i>-->
+                                    <!--</a>-->
                                 </td>
                             </tr>
                             </tbody>
