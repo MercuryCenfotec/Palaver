@@ -24,6 +24,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { UserHomeComponent } from './user-home/user-home.component';
 import { PalaverUserHomeModule } from 'app/user-home/user-home.module';
+import { DashboardInstitutionComponent } from './dashboard-institution/dashboard-institution.component';
+import { PalaverDashboardInstitutionModule } from 'app/dashboard-institution/dashboard-institution.module';
 
 registerLocaleData(localeEs);
 
@@ -42,6 +44,7 @@ registerLocaleData(localeEs);
         PalaverHomeModule,
         PalaverUserHomeModule,
         PalaverAccountModule,
+        PalaverDashboardInstitutionModule,
         Ng2SearchPipeModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
         PalaverEntityModule,
