@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { IZoomMeeting } from 'app/shared/model/zoom-meeting.model';
 
 const httpOptions = {
