@@ -17,7 +17,7 @@
                             <div _ngcontent-c25="" class="col align-self-center">
                                 <h4 _ngcontent-c25="" class="card-title mt-3">{{focusGroup.name}}</h4>
                                 <p _ngcontent-c25="" class="card-text">{{focusGroup.description}}</p>
-                                <a _ngcontent-c22="" href="/user" class="btn btn-raised mr-1 shadow-z-2 gradient-amber-amber">Participar</a>
+                                <a _ngcontent-c22="" id="btn-{{focusGroup.id}}" class="btn btn-raised mr-1 shadow-z-2 gradient-amber-amber" (click)="askParticipation(focusGroup.id,modalToDisplay)">Participar</a>
                             </div>
                         </div>
                     </div>
@@ -26,3 +26,41 @@
         </form>
     </div>
 </div>
+
+<ng-template #modalToDisplay let-c="close" let-d="dismiss">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title" id="jhi-institution-heading">{{focusGroup.aptitudeTest.name}}</h2>
+        </div>
+        <div class="card-body">
+            <div class="px-3">
+                <form class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate
+                      #editForm>
+                    <div class="form-body">
+                        <div *ngFor="let testQuestion of testQuestions">
+                            <h4 class="form-section"><i class="ft-feather"></i>¿{{testQuestion.question}}?</h4>
+                            <div class="form-group">
+                                <div class="custom-control custom-radio custom-control-inline"
+                                     *ngFor="let testAnswerOption of testQuestion.answers">
+                                    <input type="radio" id="answer{{testAnswerOption.id}}" name="{{testQuestion.id}}" class="custom-control-input">
+                                    <label class="custom-control-label"
+                                           for="answer{{testAnswerOption.id}}"><span><i class="ft-minus"></i>{{testAnswerOption.answer}}</span></label><br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
+                                (click)="d('Force cancel')">
+                            <i class="ft-x"></i> Cancelar
+                        </button>
+                        <button class="btn btn-raised btn-primary" type="submit" id="save-entity"
+                                (click)="sendAptitudeTestAnswers(editForm); d('Force cancel')">
+                            <i class="ft ft-file-text"></i> Finalizar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</ng-template>
