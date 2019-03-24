@@ -3,6 +3,8 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { LoginModalService, AccountService, Account } from 'app/core';
+import { ZoomApiService } from 'app/shared/util/zoom-api.service';
+import { ZoomMeeting } from 'app/shared/model/zoom-meeting.model';
 
 @Component({
     selector: 'jhi-home',
@@ -16,7 +18,8 @@ export class HomeComponent implements OnInit {
     constructor(
         private accountService: AccountService,
         private loginModalService: LoginModalService,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        private zoomApiService: ZoomApiService
     ) {}
 
     ngOnInit() {
@@ -40,5 +43,28 @@ export class HomeComponent implements OnInit {
 
     login() {
         this.modalRef = this.loginModalService.open();
+    }
+
+    test() {
+        let date = new Date();
+        const meeting = new ZoomMeeting(
+            null,
+            'prueba01',
+            null,
+            date,
+            null,
+            null,
+            'cododoimf',
+            'meeting de prueba',
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        );
+        console.log(this.zoomApiService.create(meeting));
     }
 }
