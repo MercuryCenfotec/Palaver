@@ -68,39 +68,45 @@ export class NavbarComponent implements OnInit {
     }
 
     findActualUser() {
-        this.currentAccount = this.userService.getUserWithAuthorities().forEach(jhiUser => {
-            let permissions: string[] = [];
-            for (let i = 0; i < jhiUser.authorities.length; i++) {
-                switch (jhiUser.authorities[i]) {
-                    case 'ROLE_ADMIN':
-                        permissions = ['userAppPermissions', 'participantPermissions', 'institutionPermissions',
-                            'incentivePermissions', 'aptitudeTestsPermissions', 'testResultPermissions', 'testQuestionPermissions',
-                            'testAnswerPermissions', 'focusGroupPermissions', 'meetingPermissions', 'membershipPermissions',
-                            'paymentMethodPermissions', 'systemVariablePermissions', 'categoryPermissions', 'balancePermissions',
-                            'paymentPermissions'];
-                        break;
-                    case 'ROLE_PARTICIPANT':
-                        permissions = ['paymentMethodPermissions', 'balancePermissions', 'paymentPermissions'];
-                        break;
-                    case 'ROLE_INSTITUTION':
-                        permissions = ['incentivePermissions', 'aptitudeTestsPermissions', 'testResultPermissions', 'testQuestionPermissions',
-                            'testAnswerPermissions', 'focusGroupPermissions', 'meetingPermissions', 'membershipPermissions',
-                            'paymentMethodPermissions', 'categoryPermissions', 'balancePermissions', 'paymentPermissions'];
-                        break;
-                    case 'ROLE_SUBADMIN':
-                        permissions = ['userAppPermissions', 'participantPermissions', 'institutionPermissions',
-                            'incentivePermissions', 'aptitudeTestsPermissions', 'testResultPermissions', 'testQuestionPermissions',
-                            'testAnswerPermissions', 'focusGroupPermissions', 'meetingPermissions', 'membershipPermissions',
-                            'paymentMethodPermissions', 'systemVariablePermissions', 'categoryPermissions', 'balancePermissions',
-                            'paymentPermissions'];
-                        break;
-                    default:
-                        break;
+        this.currentAccount = this.userService.getUserWithAuthorities().subscribe(jhiUser => {
+            this.userService.query().subscribe(tmpUser => {
+                for (let k = 0; k < tmpUser.body.length; k++) {
+                    if (tmpUser.body[k].id === jhiUser.id) {
+                        let permissions: string[] = [];
+                        for (let i = 0; i < tmpUser.body[k].authorities.length; i++) {
+                            switch (tmpUser.body[k].authorities[i]) {
+                                case 'ROLE_ADMIN':
+                                    permissions = ['userAppPermissions', 'participantPermissions', 'institutionPermissions',
+                                        'incentivePermissions', 'aptitudeTestsPermissions', 'testResultPermissions', 'testQuestionPermissions',
+                                        'testAnswerPermissions', 'focusGroupPermissions', 'meetingPermissions', 'membershipPermissions',
+                                        'paymentMethodPermissions', 'systemVariablePermissions', 'categoryPermissions', 'balancePermissions',
+                                        'paymentPermissions'];
+                                    break;
+                                case 'ROLE_PARTICIPANT':
+                                    permissions = ['paymentMethodPermissions', 'balancePermissions', 'paymentPermissions'];
+                                    break;
+                                case 'ROLE_INSTITUTION':
+                                    permissions = ['incentivePermissions', 'aptitudeTestsPermissions', 'testResultPermissions', 'testQuestionPermissions',
+                                        'testAnswerPermissions', 'focusGroupPermissions', 'meetingPermissions', 'membershipPermissions',
+                                        'paymentMethodPermissions', 'categoryPermissions', 'balancePermissions', 'paymentPermissions'];
+                                    break;
+                                case 'ROLE_SUBADMIN':
+                                    permissions = ['userAppPermissions', 'participantPermissions', 'institutionPermissions',
+                                        'incentivePermissions', 'aptitudeTestsPermissions', 'testResultPermissions', 'testQuestionPermissions',
+                                        'testAnswerPermissions', 'focusGroupPermissions', 'meetingPermissions', 'membershipPermissions',
+                                        'paymentMethodPermissions', 'systemVariablePermissions', 'categoryPermissions', 'balancePermissions',
+                                        'paymentPermissions'];
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        for (let j = 0; j < permissions.length; j++) {
+                            document.getElementById(permissions[j]).hidden = false;
+                        }
+                    }
                 }
-            }
-            for (let j = 0; j < permissions.length; j++) {
-                document.getElementById(permissions[j]).hidden = false;
-            }
+            });
         });
     }
 }
