@@ -22,6 +22,8 @@ import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es-CR';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { UserHomeComponent } from './user-home/user-home.component';
+import { PalaverUserHomeModule } from 'app/user-home/user-home.module';
 
 registerLocaleData(localeEs);
 
@@ -38,6 +40,7 @@ registerLocaleData(localeEs);
         PalaverSharedModule.forRoot(),
         PalaverCoreModule,
         PalaverHomeModule,
+        PalaverUserHomeModule,
         PalaverAccountModule,
         Ng2SearchPipeModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
