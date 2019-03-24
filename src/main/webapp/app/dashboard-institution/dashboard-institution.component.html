@@ -1,0 +1,189 @@
+<!--Statistics cards Starts-->
+<div class="row" *ngIf="institution">
+    <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <div class="card gradient-blackberry">
+            <div class="card-body">
+                <div class="card-block pt-2 pb-0">
+                    <div class="media">
+                        <div class="media-body white text-left">
+                            <h3 class="font-large-1 mb-0">{{institution.name}}</h3>
+                            <span>Nombre</span>
+                        </div>
+                        <div class="media-right white text-right">
+                            <i class="icon-pie-chart font-large-1"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="height-75 mb-2">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <div class="card gradient-ibiza-sunset">
+            <div class="card-body">
+                <div class="card-block pt-2 pb-0">
+                    <div class="media">
+                        <div class="media-body white text-left">
+                            <h3 class="font-large-1 mb-0">{{institution.description}}</h3>
+                            <span>Descripción</span>
+                        </div>
+                        <div class="media-right white text-right">
+                            <i class="icon-bulb font-large-1"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="height-75 mb-2">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <div class="card gradient-green-tea">
+            <div class="card-body">
+                <div class="card-block pt-2 pb-0">
+                    <div class="media">
+                        <div class="media-body white text-left" *ngIf="institution.aptitudeTests">
+                            <h3 class="font-large-1 mb-0">{{institution.aptitudeTests.length}}</h3>
+                            <span>Pruebas de aptitud</span>
+                        </div>
+                        <div class="media-body white text-left" *ngIf="!institution.aptitudeTests">
+                            <h3 class="font-large-1 mb-0">No tiene</h3>
+                            <span>Pruebas de aptitud</span>
+                        </div>
+                        <div class="media-right white text-right">
+                            <i class="icon-graph font-large-1"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="height-75 mb-2">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <div class="card gradient-pomegranate">
+            <div class="card-body">
+                <div class="card-block pt-2 pb-0">
+                    <div class="media">
+                        <div class="media-body white text-left">
+                            <h3 class="font-large-1 mb-0">???</h3>
+                            <span>Grupos de enfoque</span>
+                        </div>
+                        <div class="media-right white text-right">
+                            <i class="icon-wallet font-large-1"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="height-75 mb-2">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Statistics cards Ends-->
+
+<div class="row" matchHeight ="card">
+    <div class="col-xl-4 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0">Participantes</h4>
+            </div>
+            <div class="card-body">
+                <div class="card-block">
+                    <div class="media mb-1">
+                        <a>
+                        </a>
+                        <div class="media-body">
+                            <h4 class="font-medium-1 mt-1 mb-0">Jessica Rice</h4>
+                            <p class="text-muted font-small-3">UX Designer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8 col-lg-12 col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Grupos de enfoque</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-responsive-sm text-center">
+                    <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Status</th>
+                        <th>Amount</th>
+                        <th>Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Ferrero Rocher</td>
+                        <td>1</td>
+                        <td>
+                            <a class="btn btn-raised btn-round btn-primary">Active</a>
+                        </td>
+                        <td>$19.94</td>
+                        <td>
+                            <a class="danger" data-original-title="" title="">
+                                <i class="ft-x"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Headphones</td>
+                        <td>2</td>
+                        <td>
+                            <a class="btn btn-raised btn-round btn-danger">Disabled</a>
+                        </td>
+                        <td>$99.00</td>
+                        <td>
+                            <a class="danger" data-original-title="" title="">
+                                <i class="ft-x"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Camera</td>
+                        <td>1</td>
+                        <td>
+                            <a class="btn btn-raised btn-round btn-info">Paused</a>
+                        </td>
+                        <td>$299.00</td>
+                        <td>
+                            <a class="danger" data-original-title="" title="">
+                                <i class="ft-x"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Beer</td>
+                        <td>2</td>
+                        <td>
+                            <a class="btn btn-raised btn-round btn-success">Active</a>
+                        </td>
+                        <td>$24.51</td>
+                        <td>
+                            <a class="danger" data-original-title="" title="">
+                                <i class="ft-x"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
