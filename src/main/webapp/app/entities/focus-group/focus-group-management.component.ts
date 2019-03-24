@@ -13,6 +13,7 @@ import { ParticipantService } from 'app/entities/participant';
 export class FocusGroupManagementComponent implements OnInit {
     private participants: Participant[];
     private meetings: IMeeting[];
+    searchText;
 
     constructor(
         protected userService: UserService,
