@@ -56,7 +56,7 @@
                     <div class="card-block text-center">
                         <h4 class="card-title">{{participant.user.user.firstName}} {{participant.user.user.lastName}}</h4>
                         <p class="category text-gray font-small-4">{{participant.user.mail}}</p>
-                        <a class="btn btn-lg gradient-pomegranate font-small-2 white p-2 mr-2 btn-hoverable">Expulsar participante</a>
+                        <a class="btn btn-lg gradient-pomegranate font-small-2 white p-2 mr-2 btn-hoverable" (click)="expulsion(participant,modalToDisplay)">Expulsar participante</a>
                         <a class="btn btn-lg btn-outline-grey font-small-2 p-2">Enviar mensaje</a>
                         <!--<hr class="grey">-->
                         <!--<div class="row grey">-->
@@ -139,3 +139,34 @@
     </div>
 
 </div>
+
+
+<ng-template #modalToDisplay let-c="close" let-d="dismiss">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title" id="jhi-institution-heading">Expulsión de participante</h2>
+        </div>
+        <div class="card-body">
+            <div class="px-3">
+                <form class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate>
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="form-control-label" for="field_motive">¿Por qué quieres expulsar a este participante?</label>
+                            <textarea type="text" class="form-control" name="motive" id="field_motive" required #inputDc></textarea>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
+                                (click)="d('Force cancel')">
+                            <i class="ft-x"></i> Cancelar
+                        </button>
+                        <button class="btn btn-raised btn-primary" type="submit" id="save-entity"
+                                (click)="sendExpulsionMotive(inputDc); d('Force cancel')">
+                            <i class="ft ft-file-text"></i> Enviar expulsión
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</ng-template>
