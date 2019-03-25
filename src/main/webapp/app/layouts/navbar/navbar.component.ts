@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 
-import { VERSION } from 'app/app.constants';
-import { AccountService, LoginModalService, LoginService, UserService } from 'app/core';
-import { ProfileService } from 'app/layouts/profiles/profile.service';
-import { IUserApp, UserApp } from 'app/shared/model/user-app.model';
+import {VERSION} from 'app/app.constants';
+import {AccountService, LoginModalService, LoginService, UserService} from 'app/core';
+import {ProfileService} from 'app/layouts/profiles/profile.service';
+import {IUserApp, UserApp} from 'app/shared/model/user-app.model';
 
 @Component({
     selector: 'jhi-navbar',
@@ -77,6 +77,7 @@ export class NavbarComponent implements OnInit {
                             switch (tmpUser.body[k].authorities[i]) {
                                 case 'ROLE_ADMIN':
                                     permissions = [
+                                        'calendarPermissions',
                                         'userAppPermissions',
                                         'participantPermissions',
                                         'institutionPermissions',
@@ -96,7 +97,7 @@ export class NavbarComponent implements OnInit {
                                     ];
                                     break;
                                 case 'ROLE_PARTICIPANT':
-                                    permissions = ['paymentMethodPermissions', 'balancePermissions', 'paymentPermissions'];
+                                    permissions = ['calendarPermissions', 'paymentMethodPermissions', 'balancePermissions', 'paymentPermissions'];
                                     break;
                                 case 'ROLE_INSTITUTION':
                                     permissions = [
