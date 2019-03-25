@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-faded">
     <div class="container-fluid">
         <!--Esto le da un margen a la izquiera para que no lo tape el menu lateral-->
-        <div class="navbar-header">
+        <div class="">
             <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
                 <span class="logo-img"></span>
             </a>
@@ -20,141 +20,129 @@
 
                     <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active"
                         [routerLinkActiveOptions]="{exact: true}">
-                        <a id="entityMenu" class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);">
+                        <a id="entityMenu" class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" (click)="findActualUser()">
                             <span>
                                 <fa-icon icon="th-list"></fa-icon>
                                 <span>
-                                    Entities
+                                    Menú
                                 </span>
                             </span>
                         </a>
 
                         <!--Entity list-->
                         <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entityMenu">
-                            <li>
+                            <li id="userAppPermissions" hidden>
                                 <a class="dropdown-item" routerLink="user-app" routerLinkActive="active"
                                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                                     <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                                    <span>User App</span>
+                                    <span>Usuario</span>
                                 </a>
                             </li>
-                            <li>
+                            <li id="participantPermissions" hidden>
                                 <a class="dropdown-item" routerLink="participant" routerLinkActive="active"
                                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                                     <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                                    <span>Participant</span>
+                                    <span>Participante</span>
                                 </a>
                             </li>
-                            <li>
+                            <li id="institutionPermissions" hidden>
                                 <a class="dropdown-item" routerLink="institution" routerLinkActive="active"
                                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                                     <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                                    <span>Institution</span>
+                                    <span>Institución</span>
                                 </a>
                             </li>
-                            <li>
+                            <li id="incentivePermissions" hidden>
                                 <a class="dropdown-item" routerLink="incentive" routerLinkActive="active"
                                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                                     <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                                    <span>Incentive</span>
+                                    <span>Incentivo</span>
                                 </a>
                             </li>
-                            <li>
+                            <li id="aptitudeTestsPermissions" hidden>
                                 <a class="dropdown-item" routerLink="aptitude-test" routerLinkActive="active"
                                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                                     <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                                    <span>Aptitude Test</span>
+                                    <span>Prueba de aptitud (PA)</span>
                                 </a>
                             </li>
-                            <li>
+                            <li id="testResultPermissions" hidden>
                                 <a class="dropdown-item" routerLink="test-result" routerLinkActive="active"
                                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                                     <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                                    <span>Test Result</span>
+                                    <span>Resultados de PA</span>
                                 </a>
                             </li>
-                            <li>
+                            <li id="testQuestionPermissions" hidden>
                                 <a class="dropdown-item" routerLink="test-question" routerLinkActive="active"
                                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                                     <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                                    <span>Test Question</span>
+                                    <span>Preguntas de PA</span>
                                 </a>
                             </li>
-                            <li>
+                            <li id="testAnswerPermissions" hidden>
                                 <a class="dropdown-item" routerLink="test-answer-option" routerLinkActive="active"
                                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                                     <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                                    <span>Test Answer Option</span>
+                                    <span>Respuestas de PA</span>
                                 </a>
                             </li>
-                            <li>
+                            <li id="focusGroupPermissions" hidden>
                                 <a class="dropdown-item" routerLink="focus-group" routerLinkActive="active"
                                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                                     <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                                    <span>Focus Group</span>
+                                    <span>Grupo de enfoque</span>
                                 </a>
                             </li>
-                            <li>
+                            <li id="meetingPermissions" hidden>
                                 <a class="dropdown-item" routerLink="meeting" routerLinkActive="active"
                                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                                     <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                                    <span>Meeting</span>
+                                    <span>Reunión</span>
                                 </a>
                             </li>
-                            <li>
+                            <li id="membershipPermissions" hidden>
                                 <a class="dropdown-item" routerLink="membership" routerLinkActive="active"
                                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                                     <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                                    <span>Membership</span>
+                                    <span>Membresía</span>
                                 </a>
                             </li>
-                            <li>
+                            <li id="paymentMethodPermissions" hidden>
                                 <a class="dropdown-item" routerLink="payment-method" routerLinkActive="active"
                                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                                     <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                                    <span>Payment Method</span>
+                                    <span>Métodos de pago</span>
                                 </a>
                             </li>
-                            <li>
+                            <li id="systemVariablePermissions" hidden>
                                 <a class="dropdown-item" routerLink="system-variable" routerLinkActive="active"
                                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                                     <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                                    <span>System Variable</span>
+                                    <span>Variables del sistema</span>
                                 </a>
                             </li>
-                            <li>
+                            <li id="categoryPermissions" hidden>
                                 <a class="dropdown-item" routerLink="category" routerLinkActive="active"
                                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                                     <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                                    <span>Category</span>
+                                    <span>Categoría</span>
                                 </a>
                             </li>
-                            <li>
+                            <li id="balancePermissions" hidden>
                                 <a class="dropdown-item" routerLink="balance-account" routerLinkActive="active"
                                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                                     <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                                    <span>Balance Account</span>
+                                    <span>Mi balance</span>
                                 </a>
                             </li>
-                            <li>
+                            <li id="paymentPermissions" hidden>
                                 <a class="dropdown-item" routerLink="payment" routerLinkActive="active"
                                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                                     <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                                    <span>Payment</span>
+                                    <span>Pagos</span>
                                 </a>
                             </li>
-                            <li>
-                        <a class="dropdown-item" routerLink="aptitude-test" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span>Aptitude Test</span>
-                        </a>
-                    </li>
-                            <li>
-                        <a class="dropdown-item" routerLink="test-question" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span>Test Question</span>
-                        </a>
-                    </li>
                             <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
                         </ul>
                     </li>
@@ -164,7 +152,7 @@
                         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);">
                             <i class="ft-user font-medium-3 blue-grey darken-4"></i>
                             <!--Agregar class="d-none" para quitar el texto-->
-                            <span class="">User Settings</span>
+                            <span class="">Configuraciones</span>
                         </a>
 
                         <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
@@ -190,14 +178,14 @@
                             <li *ngSwitchCase="false">
                                 <a class="dropdown-item" (click)="login()" id="login">
                                     <fa-icon icon="sign-in-alt" fixedWidth="true"></fa-icon>
-                                    <span>Sign in</span>
+                                    <span>Iniciar sesión</span>
                                 </a>
                             </li>
                             <li *ngSwitchCase="false">
                                 <a class="dropdown-item" routerLink="register" routerLinkActive="active"
                                    (click)="collapseNavbar()">
                                     <fa-icon icon="user-plus" fixedWidth="true"></fa-icon>
-                                    <span>Register</span>
+                                    <span>Registrarse</span>
                                 </a>
                             </li>
                         </ul>

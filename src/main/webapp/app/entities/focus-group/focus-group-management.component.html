@@ -37,6 +37,52 @@
             </div>
         </div>
     </div>
+    <div class="input-group my-3">
+        <div class="input-group-prepend">
+            <i class="input-group-text ft-search info" id="basic-addon1"></i>
+        </div>
+        <input type="text" class="form-control" placeholder="Buscar por nombre..."
+               [(ngModel)]="searchText"/>
+    </div>
+    <div *ngIf="(participants | participantFilter:searchText) as items; else noParticipants" class="col-12">
+        <div *ngFor="let participant of items"
+             class="col-sm-12 col-12 col-md-8 col-lg-6 col-xl-6">
+            <div class="card shadow-lg">
+                <div class="card-header text-center">
+                    <img src="{{participant.picture}}" alt="Imagen de usuario"
+                         width="150" height="150" class="rounded-circle gradient-mint">
+                </div>
+                <div class="card-body">
+                    <div class="card-block text-center">
+                        <h4 class="card-title">{{participant.user.user.firstName}} {{participant.user.user.lastName}}</h4>
+                        <p class="category text-gray font-small-4">{{participant.user.mail}}</p>
+                        <a class="btn btn-lg gradient-pomegranate font-small-2 white p-2 mr-2 btn-hoverable" (click)="expulsion(participant,modalToDisplay)">Expulsar participante</a>
+                        <a class="btn btn-lg btn-outline-grey font-small-2 p-2">Enviar mensaje</a>
+                        <!--<hr class="grey">-->
+                        <!--<div class="row grey">-->
+                        <!--<div class="col-4">-->
+                        <!--<a><i class="ft-star mr-1"></i> <span>4.9</span></a>-->
+                        <!--</div>-->
+                        <!--<div class="col-4">-->
+                        <!--<a><i class="ft-globe mr-1"></i> <span>USA</span></a>-->
+                        <!--</div>-->
+                        <!--<div class="col-4">-->
+                        <!--<a><i class="ft-book mr-1"></i> <span>21</span></a>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="items.length === 0" class="card-block">
+            <span class="display-block overflow-hidden">No se encontraron resultados.</span>
+        </div>
+    </div>
+    <ng-template #noParticipants>
+        <div class="card-block">
+            <span class="display-block overflow-hidden">Aún no hay participantes aceptados.</span>
+        </div>
+    </ng-template>
     <div class="row" matchHeight="card">
         <div class="col-xl-4 col-lg-12">
             <div class="card">
@@ -93,3 +139,34 @@
     </div>
 
 </div>
+
+
+<ng-template #modalToDisplay let-c="close" let-d="dismiss">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title" id="jhi-institution-heading">Expulsión de participante</h2>
+        </div>
+        <div class="card-body">
+            <div class="px-3">
+                <form class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate>
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="form-control-label" for="field_motive">¿Por qué quieres expulsar a este participante?</label>
+                            <textarea type="text" class="form-control" name="motive" id="field_motive" required #inputDc></textarea>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
+                                (click)="d('Force cancel')">
+                            <i class="ft-x"></i> Cancelar
+                        </button>
+                        <button class="btn btn-raised btn-primary" type="submit" id="save-entity"
+                                (click)="sendExpulsionMotive(inputDc); d('Force cancel')">
+                            <i class="ft ft-file-text"></i> Enviar expulsión
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</ng-template>
