@@ -59,7 +59,7 @@ export const userAppRoute: Routes = [
             userApp: UserAppResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'UserApps'
         },
         canActivate: [UserRouteAccessService]
