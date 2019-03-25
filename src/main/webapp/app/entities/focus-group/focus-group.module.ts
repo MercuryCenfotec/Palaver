@@ -17,7 +17,10 @@ import { FocusGroupManagementLoginComponent } from 'app/entities/focus-group/foc
 import { FocusGroupManagementComponent } from 'app/entities/focus-group/focus-group-management.component';
 import { FocusGroupFilterPipe } from 'app/entities/focus-group/filter.pipe';
 import { ParticipantFilterPipe } from 'app/entities/participant/filter.pipe';
-import { FocusGroupTestDialogComponent } from 'app/entities/focus-group/focus-group-test-dialog.component';
+import {
+    FocusGroupTestDialogComponent,
+    FocusGroupTestDialogPopupComponent
+} from 'app/entities/focus-group/focus-group-test-dialog.component';
 
 const ENTITY_STATES = [...focusGroupRoute, ...focusGroupPopupRoute];
 
@@ -35,13 +38,16 @@ const ENTITY_STATES = [...focusGroupRoute, ...focusGroupPopupRoute];
         FocusGroupManagementComponent,
         FocusGroupFilterPipe,
         ParticipantFilterPipe,
-        FocusGroupTestDialogComponent
+        FocusGroupTestDialogComponent,
+        FocusGroupTestDialogPopupComponent
     ],
     entryComponents: [
         FocusGroupComponent,
         FocusGroupUpdateComponent,
         FocusGroupDeleteDialogComponent,
         FocusGroupDeletePopupComponent,
+        FocusGroupTestDialogComponent,
+        FocusGroupTestDialogPopupComponent,
         ParticipateComponent,
         FocusGroupManagementLoginComponent,
         FocusGroupManagementComponent

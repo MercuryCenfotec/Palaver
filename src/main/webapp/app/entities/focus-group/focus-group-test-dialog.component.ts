@@ -43,7 +43,7 @@ export class FocusGroupTestDialogComponent {
     selector: 'jhi-focus-group-delete-popup',
     template: ''
 })
-export class FocusGroupDeletePopupComponent implements OnInit, OnDestroy {
+export class FocusGroupTestDialogPopupComponent implements OnInit, OnDestroy {
     protected ngbModalRef: NgbModalRef;
 
     constructor(protected activatedRoute: ActivatedRoute, protected router: Router, protected modalService: NgbModal) {}
