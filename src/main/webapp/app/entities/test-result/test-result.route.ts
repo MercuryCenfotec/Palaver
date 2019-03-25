@@ -33,7 +33,7 @@ export const testResultRoute: Routes = [
         path: '',
         component: TestResultComponent,
         data: {
-            authorities: ['ROLE_INSTITUTION', 'ROLE_ADMIN'],
+            authorities: ['ROLE_GROUP', 'ROLE_ADMIN'],
             pageTitle: 'TestResults'
         },
         canActivate: [UserRouteAccessService]
