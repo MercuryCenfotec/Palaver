@@ -9,21 +9,23 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { filter, map } from 'rxjs/operators';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { ClipboardService } from 'ngx-clipboard';
+import * as moment from 'moment';
 
 @Component({
     selector: 'jhi-focus-group-management',
     templateUrl: './focus-group-management.component.html'
 })
 export class FocusGroupManagementComponent implements OnInit {
-    private participants: Participant[];
-    private meetings: IMeeting[];
-    private participant: IParticipant;
-    private focusGroup: IFocusGroup;
-    private focusGroups: IFocusGroup[];
+    meeting: IMeeting;
+    participants: Participant[];
+    participant: IParticipant;
+    focusGroup: IFocusGroup;
     searchText;
 
     constructor(
         protected userService: UserService,
+        private _clipboardService: ClipboardService,
         protected focusGroupService: FocusGroupService,
         protected meetingsService: MeetingService,
         protected participantService: ParticipantService,
@@ -31,26 +33,21 @@ export class FocusGroupManagementComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.loadAllFocusGroups();
         this.userService.getUserWithAuthorities().subscribe(user => {
-            this.focusGroupService.findByCode(user.email).subscribe(data => {
-                console.log(data);
+            this.focusGroupService.findByCode(user.login).subscribe(data => {
                 this.focusGroup = data.body;
-                this.participantService.findByGroupId(data.body.id).subscribe(participants => {
-                    this.participants = participants.map((participant: IParticipant) => this.mapParticipants(participant));
+                this.participantService.findByFocusGroup(data.body.id).subscribe(participants => {
+                    this.focusGroup.participants = participants.body;
                 });
-
                 this.meetingsService.findByGroupId(data.body.id).subscribe(meetings => {
-                    this.meetings = meetings.body;
+                    this.meeting = meetings.body.length ? meetings.body[0] : null;
                 });
             });
         });
     }
 
-    private mapParticipants(p: IParticipant) {
-        let newParticipant = new Participant(p.id, p.birthdate, p.gender, p.civilStatus, p.picture, p.user, p.categories, p.focusGroups);
-
-        return newParticipant;
+    copy() {
+        this._clipboardService.copyFromContent(this.meeting.callCode);
     }
 
     expulsion(participant, modalToDisplay) {
@@ -79,25 +76,7 @@ export class FocusGroupManagementComponent implements OnInit {
         }
     }
 
-    loadAllFocusGroups() {
-        this.focusGroupService
-            .query()
-            .pipe(
-                filter((res: HttpResponse<IFocusGroup[]>) => res.ok),
-                map((res: HttpResponse<IFocusGroup[]>) => res.body)
-            )
-            .subscribe((res: IFocusGroup[]) => {
-                this.focusGroups = res;
-            });
-    }
-
     sendExpulsionMotive(input) {
-        for (let i = 0; i < this.focusGroups.length; i++) {
-            if (this.focusGroup.id === this.focusGroups[i].id) {
-                this.focusGroup = this.focusGroups[i];
-            }
-        }
-
         for (let i = 0; i < this.focusGroup.participants.length; i++) {
             if (this.focusGroup.participants[i].id === this.participant.id) {
                 this.focusGroup.participants.splice(i, 1);
@@ -108,5 +87,14 @@ export class FocusGroupManagementComponent implements OnInit {
             this.ngOnInit();
             this.ngOnInit();
         });
+    }
+
+    checkDate() {
+        return (
+            this.meeting.date.toDate().getDate() ===
+            moment()
+                .toDate()
+                .getDate()
+        );
     }
 }

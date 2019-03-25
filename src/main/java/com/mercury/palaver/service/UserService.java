@@ -321,4 +321,20 @@ public class UserService {
         Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE)).evict(user.getLogin());
         Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE)).evict(user.getEmail());
     }
+
+    public void registerGroupManagementUser(String groupCode) {
+        User newUser = new User();
+        newUser.setLogin(groupCode);
+        // new user gets initially a generated password
+        newUser.setPassword(passwordEncoder.encode(groupCode));
+        newUser.setFirstName(groupCode);
+        newUser.setLastName(groupCode);
+        newUser.setActivated(true);
+        Set<Authority> authorities = new HashSet<>();
+        authorityRepository.findById(AuthoritiesConstants.GROUP).ifPresent(authorities::add);
+        newUser.setAuthorities(authorities);
+        userRepository.save(newUser);
+        log.debug("Created Information for User: {}", newUser);
+    }
+
 }

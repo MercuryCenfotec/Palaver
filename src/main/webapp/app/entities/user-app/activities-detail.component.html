@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="col text-center align-self-center">
-                        <h6 class="text-uppercase mb-0">{{ viewDate | calendarDate:(view + 'ViewTitle'):locale }}</h6>
+                        <h6 class="text-uppercase mb-0">{{ viewDate | date:'longDate' }}</h6>
                     </div>
                     <div class="col text-right">
                         <div class="btn-group d-none d-sm-none d-md-none d-lg-block">
@@ -45,17 +45,17 @@
                 <div [ngSwitch]="view">
                     <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events"
                                              [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen"
-                                             (dayClicked)="dayClicked($event.day)"
-                                             (eventClicked)="handleEvent('Clicked', $event.event)"
-                                             (eventTimesChanged)="eventTimesChanged($event)">
+                                             (dayClicked)="dayClicked($event.day)">
+                                             <!--(eventClicked)="handleEvent('Clicked', $event.event)"-->
+                                             <!--(eventTimesChanged)="eventTimesChanged($event)">-->
                     </mwl-calendar-month-view>
-                    <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events"
-                                            [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
-                                            (eventTimesChanged)="eventTimesChanged($event)">
+                    <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events">
+                                            <!--[refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"-->
+                                            <!--(eventTimesChanged)="eventTimesChanged($event)">-->
                     </mwl-calendar-week-view>
-                    <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events"
-                                           [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
-                                           (eventTimesChanged)="eventTimesChanged($event)">
+                    <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events">
+                                           <!--[refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"-->
+                                           <!--(eventTimesChanged)="eventTimesChanged($event)">-->
                     </mwl-calendar-day-view>
                 </div>
             </div>

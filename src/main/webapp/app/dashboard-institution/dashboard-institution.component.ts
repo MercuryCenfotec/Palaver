@@ -32,19 +32,16 @@ export class DashboardInstitutionComponent implements OnInit {
     ) {}
 
     loadAll() {
-        this.focusGroupService
-            .query()
-            .pipe(
-                filter((res: HttpResponse<IFocusGroup[]>) => res.ok),
-                map((res: HttpResponse<IFocusGroup[]>) => res.body)
-            )
-            .subscribe(
-                (res: IFocusGroup[]) => {
-                    this.focusGroups = res;
-                    this.loadParticipants(this);
-                },
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
+        this.userService.getUserWithAuthorities().subscribe(user => {
+            this.institutionService.getByUserUser(user.id).subscribe(institution => {
+                this.focusGroupService.findAllByInstitution(institution.body.id).subscribe(groups => {
+                    this.focusGroups = groups.body;
+                });
+                this.aptitudeTestService.findAllByInstitution(institution.body.id).subscribe(tests => {
+                    this.aptitudeTests = tests.body;
+                });
+            });
+        });
     }
 
     loadParticipants(pThis) {
@@ -62,7 +59,7 @@ export class DashboardInstitutionComponent implements OnInit {
 
         if (pThis.participants.length > 0) {
             pThis.participants.forEach(function(resp) {
-                if (resp.id == value.id) {
+                if (resp.id === value.id) {
                     found = true;
                 }
             });
