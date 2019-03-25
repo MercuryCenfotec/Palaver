@@ -1,48 +1,10 @@
 <div class="container">
-    <!--<div class="row" matchHeight="card">-->
-    <!--<div class="col-xl-3 col-lg-6 col-12">-->
-    <!--<div class="card bg-primary">-->
-    <!--<div class="card-body">-->
-    <!--<div class="px-3 py-3">-->
-    <!--<div class="media">-->
-    <!--<div class="media-body white text-left">-->
-    <!--<h3 *ngIf="participants!==undefined">{{participants.length}}</h3>-->
-    <!--<h3 *ngIf="participants===undefined">0</h3>-->
-    <!--<span>Participantes</span>-->
-    <!--</div>-->
-    <!--<div class="media-right align-self-center">-->
-    <!--<i class="ft-user white font-large-3 float-right"></i>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div class="col-xl-3 col-lg-6 col-12">-->
-    <!--<div class="card bg-success">-->
-    <!--<div class="card-body">-->
-    <!--<div class="px-3 py-3">-->
-    <!--<div class="media">-->
-    <!--<div class="media-body white text-left">-->
-    <!--<h3 *ngIf="meetings!==undefined">{{meetings.length}}</h3>-->
-    <!--<h3 *ngIf="meetings===undefined">0</h3>-->
-    <!--<span>Reuniones</span>-->
-    <!--</div>-->
-    <!--<div class="media-right align-self-center">-->
-    <!--<i class="ft-users white font-large-3 float-right"></i>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
     <section id="reunionSection" class="mt-3">
         <div>
             <h4 class="text-bold-500">Reunión</h4>
             <hr>
         </div>
-        <div *ngIf="meeting; else noMeeting" class="card">
+        <div *ngIf="meeting; else noMeeting" class="card col-12">
             <div class="card-header">
                 <h3>{{meeting.name}}</h3>
                 <h5 class="col-12 col-md-12 col-sm-12">Información</h5>
@@ -83,13 +45,15 @@
             </div>
         </div>
         <ng-template #noMeeting>
-            <button id="jh-create-entity" class="btn btn-raised btn-primary float-left"
-                    [routerLink]="['/meeting/new']">
-                <i class="ft-plus"></i>
-                <span>
+            <div class="card-block">
+                <button id="jh-create-entity" class="btn btn-raised btn-primary float-left"
+                        [routerLink]="['/meeting/new']">
+                    <i class="ft-plus"></i>
+                    <span>
                     Planificar reunión
                 </span>
-            </button>
+                </button>
+            </div>
         </ng-template>
     </section>
     <section id="participantsSection">
@@ -97,11 +61,22 @@
             <h4 class="text-bold-500">Participantes</h4>
             <hr>
         </div>
-        <div class="input-group my-4">
-            <div class="input-group-prepend">
-                <i class="input-group-text ft-search info" id="basic-addon1"></i>
-                <input type="text" class="form-control" placeholder="Buscar por nombre..."
-                       [(ngModel)]="searchText"/>
+        <div class="row my-4 justify-content-between">
+            <div class="input-group col-6">
+                <div class="input-group-prepend">
+                    <i class="input-group-text ft-search info" id="basic-addon1"></i>
+                    <input type="text" class="form-control" placeholder="Buscar por nombre..."
+                           [(ngModel)]="searchText"/>
+                </div>
+            </div>
+            <div class="col-4">
+                <button class="btn btn-raised btn-primary float-right"
+                        [routerLink]="['../../test-result/']">
+                    <i class="ft-eye"></i>
+                    <span>
+                            Lista de aplicantes
+                        </span>
+                </button>
             </div>
         </div>
         <div *ngIf="(participants | participantFilter:searchText) as items; else noParticipants" class="col-12">

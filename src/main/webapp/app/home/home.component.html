@@ -60,28 +60,28 @@
             <br>que jamás vas a olvidar</p>
         <div class="card-deck mt-5">
             <div class="card mb-3">
-                <img class="card-img-top img-fluid" src="img/photo-1.png" alt="Card image cap">
+                <img class="card-img-top img-fluid" src="https://pbs.twimg.com/profile_images/1085558223023812608/94gTo4CG.jpg" alt="Card image cap">
                 <div class="card-body text-center">
                     <h5 class="card-title">ERNESTO DESANTI</h5>
                     <p class="card-text">Coordinador</p>
                 </div>
             </div>
             <div class="card mb-3">
-                <img class="card-img-top img-fluid" src="img/photo-2.png" alt="Card image cap">
+                <img class="card-img-top img-fluid" src="https://lh3.googleusercontent.com/zt5k-sq5jyfy4ShSC2q0C4A7sEjPxFXRN7uzInQoazHTQ_Tg5oJoznHvyEZaPoJ4P7bHVQ=s85" alt="Card image cap">
                 <div class="card-body text-center">
                     <h5 class="card-title">LEONARDO MORA</h5>
                     <p class="card-text">Desarrollo</p>
                 </div>
             </div>
             <div class="card mb-3">
-                <img class="card-img-top img-fluid" src="img/photo-3.png" alt="Card image cap">
+                <img class="card-img-top img-fluid" src="https://i.etsystatic.com/iusa/e98305/60031114/iusa_400x400.60031114_9obe.jpg?version=0" alt="Card image cap">
                 <div class="card-body text-center">
                     <h5 class="card-title">CARLOS MADRIGAL</h5>
                     <p class="card-text">Soporte</p>
                 </div>
             </div>
             <div class="card mb-3">
-                <img class="card-img-top img-fluid" src="img/photo-4.png" alt="Card image cap">
+                <img class="card-img-top img-fluid" src="https://plotn08.org/wp-content/uploads/2014/06/Smite-And-Ignite-400x400.jpg" alt="Card image cap">
                 <div class="card-body text-center">
                     <h5 class="card-title">ÁNGEL MARÍN</h5>
                     <p class="card-text">Calidad</p>
@@ -95,15 +95,15 @@
 <!-- Contact Us Area -->
 <section class="gray-bg py-10 text-center" id="contect">
     <div class="container text-center">
-        <h3 class="text-center black mb-4 headline">Ingresa con un código de grupo</h3>
-        <p class="text-center mt-4">Por favor ingresa el código que se te proporcionó para ingresar.</p>
-        <div class="row mt-5 p-sm">
+        <h3 class="text-center black mb-4 headline">Moderar grupo de enfoque</h3>
+        <p class="text-center mt-4">Si posees un código, haz click al botón para ingresarlo.</p>
+        <div class="row p-sm">
             <div class="col-lg-6" style="margin: 0 auto;">
                 <form>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="codigoGrupo" name="codigo" placeholder="Código del grupo" required>
-                    </div>
-                    <a id="btnIngresarGrupo" class="primary-btn banner-btn mt-4" style=" color: #000;">Ingresar al grupo</a>
+                    <!--<div class="form-group">-->
+                        <!--<input type="text" class="form-control" id="codigoGrupo" name="codigo" placeholder="Código del grupo" required>-->
+                    <!--</div>-->
+                    <a [routerLink]="['/focus-group/code-activation']" id="btnIngresarGrupo" class="primary-btn banner-btn mt-4" style=" color: #000;">Ingresar código</a>
                 </form>
             </div>
         </div>

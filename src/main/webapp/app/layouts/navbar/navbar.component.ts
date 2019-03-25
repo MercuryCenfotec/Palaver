@@ -102,11 +102,7 @@ export class NavbarComponent implements OnInit {
                                     permissions = [
                                         'incentivePermissions',
                                         'aptitudeTestsPermissions',
-                                        'testResultPermissions',
-                                        'testQuestionPermissions',
-                                        'testAnswerPermissions',
                                         'focusGroupPermissions',
-                                        'meetingPermissions',
                                         'membershipPermissions',
                                         'paymentMethodPermissions',
                                         'categoryPermissions',
@@ -140,6 +136,38 @@ export class NavbarComponent implements OnInit {
                         }
                         for (let j = 0; j < permissions.length; j++) {
                             document.getElementById(permissions[j]).hidden = false;
+                        }
+                    }
+                }
+            });
+        });
+    }
+
+    logoRedirection() {
+        this.currentAccount = this.userService.getUserWithAuthorities().subscribe(jhiUser => {
+            this.userService.query().subscribe(tmpUser => {
+                for (let k = 0; k < tmpUser.body.length; k++) {
+                    if (tmpUser.body[k].id === jhiUser.id) {
+                        for (let i = 0; i < tmpUser.body[k].authorities.length; i++) {
+                            switch (tmpUser.body[k].authorities[i]) {
+                                case 'ROLE_ADMIN':
+                                    this.router.navigate(['']);
+                                    break;
+                                case 'ROLE_PARTICIPANT':
+                                    this.router.navigate(['participant-home']);
+                                    break;
+                                case 'ROLE_INSTITUTION':
+                                    this.router.navigate(['dashboard-institution']);
+                                    break;
+                                case 'ROLE_SUBADMIN':
+                                    this.router.navigate(['']);
+                                    break;
+                                case 'ROLE_GROUP':
+                                    this.router.navigate(['focus-group/management']);
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                     }
                 }

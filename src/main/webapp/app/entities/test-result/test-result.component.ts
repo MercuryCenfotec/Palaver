@@ -5,7 +5,7 @@ import { filter, map } from 'rxjs/operators';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { ITestResult } from 'app/shared/model/test-result.model';
-import { AccountService } from 'app/core';
+import { AccountService, UserService } from 'app/core';
 import { TestResultService } from './test-result.service';
 import { FocusGroupService } from 'app/entities/focus-group';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
@@ -27,22 +27,18 @@ export class TestResultComponent implements OnInit, OnDestroy {
         protected jhiAlertService: JhiAlertService,
         protected eventManager: JhiEventManager,
         protected accountService: AccountService,
+        protected userService: UserService,
         protected focusGroupService: FocusGroupService
     ) {}
 
     loadAll() {
-        this.testResultService
-            .query()
-            .pipe(
-                filter((res: HttpResponse<ITestResult[]>) => res.ok),
-                map((res: HttpResponse<ITestResult[]>) => res.body)
-            )
-            .subscribe(
-                (res: ITestResult[]) => {
-                    this.testResults = res;
-                },
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
+        this.userService.getUserWithAuthorities().subscribe(user => {
+            this.focusGroupService.findByCode(user.login).subscribe(group => {
+                this.testResultService.findAllByFocusGroup(group.body.id).subscribe(results => {
+                    this.testResults = results.body;
+                });
+            });
+        });
     }
 
     ngOnInit() {
