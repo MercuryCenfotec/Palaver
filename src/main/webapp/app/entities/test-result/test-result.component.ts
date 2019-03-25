@@ -8,8 +8,7 @@ import { ITestResult } from 'app/shared/model/test-result.model';
 import { AccountService } from 'app/core';
 import { TestResultService } from './test-result.service';
 import { FocusGroupService } from 'app/entities/focus-group';
-import { IParticipant } from 'app/shared/model/participant.model';
-import moment = require('moment');
+import { IFocusGroup } from 'app/shared/model/focus-group.model';
 
 @Component({
     selector: 'jhi-test-result',
@@ -17,6 +16,7 @@ import moment = require('moment');
 })
 export class TestResultComponent implements OnInit, OnDestroy {
     testResults: ITestResult[];
+    focusGroups: IFocusGroup[];
     currentAccount: any;
     eventSubscriber: Subscription;
     gradeInput;
@@ -47,6 +47,7 @@ export class TestResultComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.loadAll();
+        this.loadAllFocusGroups();
         this.accountService.identity().then(account => {
             this.currentAccount = account;
         });
@@ -69,12 +70,29 @@ export class TestResultComponent implements OnInit, OnDestroy {
         this.jhiAlertService.error(errorMessage, null, null);
     }
 
+    loadAllFocusGroups() {
+        this.focusGroupService
+            .query()
+            .pipe(
+                filter((res: HttpResponse<IFocusGroup[]>) => res.ok),
+                map((res: HttpResponse<IFocusGroup[]>) => res.body)
+            )
+            .subscribe(
+                (res: IFocusGroup[]) => {
+                    this.focusGroups = res;
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
+    }
+
     acceptParticipant(event: ITestResult) {
-        const participants: IParticipant[] = [];
-        event.focusGroup.participants = participants;
+        console.log(this.focusGroups);
+        for (let i = 0; i < this.focusGroups.length; i++) {
+            if (event.focusGroup.id === this.focusGroups[i].id) {
+                event.focusGroup = this.focusGroups[i];
+            }
+        }
         event.focusGroup.participants.push(event.participant);
-        event.focusGroup.beginDate = moment(event.focusGroup.beginDate, 'YYYY-MM-DD');
-        event.focusGroup.endDate = moment(event.focusGroup.endDate, 'YYYY-MM-DD');
         this.focusGroupService.update(event.focusGroup).subscribe(data => {
             this.testResultService.delete(event.id).subscribe(data2 => {
                 this.loadAll();
