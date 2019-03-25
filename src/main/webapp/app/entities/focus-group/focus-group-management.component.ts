@@ -10,7 +10,7 @@ import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { filter, map } from 'rxjs/operators';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ClipboardService } from 'ngx-clipboard';
-import * as moment from 'moment';
+import moment = require('moment');
 
 @Component({
     selector: 'jhi-focus-group-management',
