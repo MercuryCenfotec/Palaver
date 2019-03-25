@@ -40,6 +40,10 @@ export class FocusGroupService {
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
+    findAllByInstitution(institutionId: number): Observable<EntityArrayResponseType> {
+        return this.http.get<IFocusGroup[]>(`${this.resourceUrl}/institution/${institutionId}`, { observe: 'response' });
+    }
+
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
         return this.http

@@ -5,8 +5,9 @@ import { filter, map } from 'rxjs/operators';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
-import { AccountService } from 'app/core';
+import { AccountService, UserService } from 'app/core';
 import { FocusGroupService } from './focus-group.service';
+import { InstitutionService } from 'app/entities/institution';
 
 @Component({
     selector: 'jhi-focus-group',
@@ -22,22 +23,20 @@ export class FocusGroupComponent implements OnInit, OnDestroy {
         protected focusGroupService: FocusGroupService,
         protected jhiAlertService: JhiAlertService,
         protected eventManager: JhiEventManager,
-        protected accountService: AccountService
+        protected accountService: AccountService,
+        protected userService: UserService,
+        protected institutionService: InstitutionService
     ) {}
 
     loadAll() {
-        this.focusGroupService
-            .query()
-            .pipe(
-                filter((res: HttpResponse<IFocusGroup[]>) => res.ok),
-                map((res: HttpResponse<IFocusGroup[]>) => res.body)
-            )
-            .subscribe(
-                (res: IFocusGroup[]) => {
-                    this.focusGroups = res;
-                },
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
+        this.userService.getUserWithAuthorities().subscribe(user => {
+            this.institutionService.getByUserUser(user.id).subscribe(institution => {
+                console.log(institution.body);
+                this.focusGroupService.findAllByInstitution(institution.body.id).subscribe(aptitudeTests => {
+                    this.focusGroups = aptitudeTests.body;
+                });
+            });
+        });
     }
 
     ngOnInit() {

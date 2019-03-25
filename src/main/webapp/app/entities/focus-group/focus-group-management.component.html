@@ -1,95 +1,218 @@
 <div class="container">
-    <div class="row" matchHeight="card">
-        <div class="col-xl-3 col-lg-6 col-12">
-            <div class="card bg-primary">
-                <div class="card-body">
-                    <div class="px-3 py-3">
-                        <div class="media">
-                            <div class="media-body white text-left">
-                                <h3 *ngIf="participants!==undefined">{{participants.length}}</h3>
-                                <h3 *ngIf="participants===undefined">0</h3>
-                                <span>Participantes</span>
+    <!--<div class="row" matchHeight="card">-->
+    <!--<div class="col-xl-3 col-lg-6 col-12">-->
+    <!--<div class="card bg-primary">-->
+    <!--<div class="card-body">-->
+    <!--<div class="px-3 py-3">-->
+    <!--<div class="media">-->
+    <!--<div class="media-body white text-left">-->
+    <!--<h3 *ngIf="participants!==undefined">{{participants.length}}</h3>-->
+    <!--<h3 *ngIf="participants===undefined">0</h3>-->
+    <!--<span>Participantes</span>-->
+    <!--</div>-->
+    <!--<div class="media-right align-self-center">-->
+    <!--<i class="ft-user white font-large-3 float-right"></i>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="col-xl-3 col-lg-6 col-12">-->
+    <!--<div class="card bg-success">-->
+    <!--<div class="card-body">-->
+    <!--<div class="px-3 py-3">-->
+    <!--<div class="media">-->
+    <!--<div class="media-body white text-left">-->
+    <!--<h3 *ngIf="meetings!==undefined">{{meetings.length}}</h3>-->
+    <!--<h3 *ngIf="meetings===undefined">0</h3>-->
+    <!--<span>Reuniones</span>-->
+    <!--</div>-->
+    <!--<div class="media-right align-self-center">-->
+    <!--<i class="ft-users white font-large-3 float-right"></i>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <section id="reunionSection" class="mt-3">
+        <div>
+            <h4 class="text-bold-500">Reunión</h4>
+            <hr>
+        </div>
+        <div *ngIf="meeting; else noMeeting" class="card">
+            <div class="card-header">
+                <h3>{{meeting.name}}</h3>
+                <h5 class="col-12 col-md-12 col-sm-12">Información</h5>
+            </div>
+            <div class="card-body">
+                <div class="card-block">
+                    <div class="mb-3">
+                        <span class="text-bold-500 primary">Descripción:</span>
+                        <span class="display-block overflow-hidden">{{meeting.description}}</span>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <ul class="no-list-style">
+                                <li class="mb-2">
+                                    <span class="text-bold-500 primary"><a><i class="ft-calendar font-small-3"></i> Fecha:</a></span>
+                                    <span
+                                        class="display-block overflow-hidden">{{meeting.date | date:'longDate'}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <ul class="no-list-style">
+                                <li class="mb-2">
+                                    <span class="text-bold-500 primary"><a><i
+                                        class="ft-clock font-small-3"></i> Hora:</a></span>
+                                    <span
+                                        class="display-block overflow-hidden">{{meeting.time.toDate().toLocaleTimeString()}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <a *ngIf="checkDate()" href="{{meeting.callURL}}"><i class="ft-video"></i> Iniciar llamada.</a>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </div>
+        <ng-template #noMeeting>
+            <button id="jh-create-entity" class="btn btn-raised btn-primary float-left"
+                    [routerLink]="['/meeting/new']">
+                <i class="ft-plus"></i>
+                <span>
+                    Planificar reunión
+                </span>
+            </button>
+        </ng-template>
+    </section>
+    <section id="participantsSection">
+        <div class="mt-5">
+            <h4 class="text-bold-500">Participantes</h4>
+            <hr>
+        </div>
+        <div class="input-group my-4">
+            <div class="input-group-prepend">
+                <i class="input-group-text ft-search info" id="basic-addon1"></i>
+                <input type="text" class="form-control" placeholder="Buscar por nombre..."
+                       [(ngModel)]="searchText"/>
+            </div>
+        </div>
+        <div *ngIf="(participants | participantFilter:searchText) as items; else noParticipants" class="col-12">
+            <div *ngFor="let participant of items"
+                 class="col-sm-12 col-12 col-md-8 col-lg-6 col-xl-6">
+                <div class="card shadow-lg">
+                    <div class="card-header text-center">
+                        <img src="{{participant.picture}}" alt="Imagen de usuario"
+                             width="150" height="150" class="rounded-circle gradient-mint">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-block text-center">
+                            <h4 class="card-title">{{participant.user.user.firstName}} {{participant.user.user.lastName}}</h4>
+                            <p class="category text-gray font-small-4">{{participant.user.mail}}</p>
+                            <a class="btn btn-lg gradient-pomegranate font-small-2 white p-2 mr-2 btn-hoverable"
+                               (click)="expulsion(participant,modalToDisplay)">Expulsar participante</a>
+                            <a class="btn btn-lg btn-outline-grey font-small-2 p-2">Enviar mensaje</a>
+                            <!--<hr class="grey">-->
+                            <!--<div class="row grey">-->
+                            <!--<div class="col-4">-->
+                            <!--<a><i class="ft-star mr-1"></i> <span>4.9</span></a>-->
+                            <!--</div>-->
+                            <!--<div class="col-4">-->
+                            <!--<a><i class="ft-globe mr-1"></i> <span>USA</span></a>-->
+                            <!--</div>-->
+                            <!--<div class="col-4">-->
+                            <!--<a><i class="ft-book mr-1"></i> <span>21</span></a>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                        </div>
+                    </div>
+                </div>
+                <input type="text" class="form-control" placeholder="Buscar por nombre..."
+                       [(ngModel)]="searchText"/>
+            </div>
+            <div *ngIf="focusGroup.participants; else noParticipants">
+                <div *ngIf="(focusGroup.participants | participantFilter:searchText) as items" class="col-12 mb-3">
+                    <div *ngFor="let participant of items"
+                         class="col-sm-12 col-12 col-md-8 col-lg-6 col-xl-6">
+                        <div class="card shadow-lg">
+                            <div class="card-header text-center">
+                                <img src="{{participant.picture}}" alt="Imagen de usuario"
+                                     width="150" height="150" class="rounded-circle gradient-mint">
                             </div>
-                            <div class="media-right align-self-center">
-                                <i class="ft-user white font-large-3 float-right"></i>
+                            <div class="card-body">
+                                <div class="card-block text-center">
+                                    <h4 class="card-title">{{participant.user.user.firstName}} {{participant.user.user.lastName}}</h4>
+                                    <p class="category text-gray font-small-4">{{participant.user.mail}}</p>
+                                    <a class="btn btn-lg gradient-pomegranate font-small-2 white p-2 mr-2 btn-hoverable"
+                                       (click)="expulsion(participant, modalToDisplay)">Expulsar
+                                        participante</a>
+                                    <!--<a class="btn btn-lg btn-outline-grey font-small-2 p-2">Enviar mensaje</a>-->
+                                    <!--<hr class="grey">-->
+                                    <!--<div class="row grey">-->
+                                    <!--<div class="col-4">-->
+                                    <!--<a><i class="ft-star mr-1"></i> <span>4.9</span></a>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-4">-->
+                                    <!--<a><i class="ft-globe mr-1"></i> <span>USA</span></a>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-4">-->
+                                    <!--<a><i class="ft-book mr-1"></i> <span>21</span></a>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-lg-6 col-12">
-            <div class="card bg-success">
-                <div class="card-body">
-                    <div class="px-3 py-3">
-                        <div class="media">
-                            <div class="media-body white text-left">
-                                <h3 *ngIf="meetings!==undefined">{{meetings.length}}</h3>
-                                <h3 *ngIf="meetings===undefined">0</h3>
-                                <span>Reuniones</span>
-                            </div>
-                            <div class="media-right align-self-center">
-                                <i class="ft-users white font-large-3 float-right"></i>
-                            </div>
-                        </div>
-                    </div>
+                <div *ngIf="items.length === 0" class="card-block">
+                    <span class="display-block overflow-hidden">No se encontraron resultados.</span>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row" matchHeight="card">
-        <div class="col-xl-4 col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title mb-0">Participantes</h4>
-                </div>
-                <div class="card-body">
-                    <div class="card-block">
-                        <div class="media mb-3" *ngFor="let participant of participants">
-                            <img
-                                class="media-object d-flex mr-3 align-self-center bg-primary height-50 rounded-circle">
-                            <div class="media-body">
-                                <h4 class="font-medium-1 mt-2 mb-0">{{participant.user.name}}</h4>
-                            </div>
-                            <a class="d-flex ml-3 btn btn-raised btn-round gradient-blackberry py-2 width-150 justify-content-center white">Mensaje</a>
-                        </div>
-                    </div>
-                </div>
+        <ng-template #noParticipants>
+            <div class="card-block">
+                <span class="display-block overflow-hidden">Aún no hay participantes aceptados.</span>
             </div>
-        </div>
-        <div class="col-xl-8 col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title mb-0">Reuniones</h4>
-                </div>
-                <div class="card-body">
-                    <div class="card-block">
-                        <table class="table table-responsive-md text-center">
-                            <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Fecha</th>
-                                <th>Hora</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr *ngFor="let meeting of meetings">
-                                <td>{{meeting.name}}</td>
-                                <td>{{meeting.date.toDate().toLocaleDateString()}}</td>
-                                <td>{{meeting.time.toDate().toLocaleTimeString()}}</td>
-                                <td>
-                                    <a class="info p-0" data-original-title="" title="" href="{{meeting.callCode}}">
-                                        <i class="ft-video font-medium-3 mr-2"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+        </ng-template>
+    </section>
 </div>
+
+
+<ng-template #modalToDisplay let-c="close" let-d="dismiss">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title" id="jhi-institution-heading">Expulsión de participante</h2>
+        </div>
+        <div class="card-body">
+            <div class="px-3">
+                <form class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate>
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="form-control-label" for="field_motive">¿Por qué quieres expulsar a este
+                                participante?</label>
+                            <textarea type="text" class="form-control" name="motive" id="field_motive" required
+                                      #inputDc></textarea>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
+                                (click)="d('Force cancel')">
+                            <i class="ft-x"></i> Cancelar
+                        </button>
+                        <button class="btn btn-raised btn-primary" type="submit" id="save-entity"
+                                (click)="sendExpulsionMotive(inputDc); d('Force cancel')">
+                            <i class="ft ft-file-text"></i> Enviar expulsión
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</ng-template>

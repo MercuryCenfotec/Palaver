@@ -1,7 +1,9 @@
 package com.mercury.palaver.web.rest;
 
 import com.mercury.palaver.domain.FocusGroup;
+import com.mercury.palaver.domain.Meeting;
 import com.mercury.palaver.repository.FocusGroupRepository;
+import com.mercury.palaver.service.ZoomApiService;
 import com.mercury.palaver.web.rest.errors.BadRequestAlertException;
 import com.mercury.palaver.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -17,6 +19,8 @@ import javax.persistence.Persistence;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,9 +34,11 @@ public class PublicResource {
     private final Logger log = LoggerFactory.getLogger(PublicResource.class);
 
     private final FocusGroupRepository focusGroupRepository;
+    private final ZoomApiService zoomApiService;
 
-    public PublicResource(FocusGroupRepository focusGroupRepository) {
+    public PublicResource(FocusGroupRepository focusGroupRepository, ZoomApiService zoomApiService) {
         this.focusGroupRepository = focusGroupRepository;
+        this.zoomApiService = zoomApiService;
     }
 
 
@@ -48,5 +54,6 @@ public class PublicResource {
         Optional<FocusGroup> focusGroup = focusGroupRepository.findByCode(code);
         return ResponseUtil.wrapOrNotFound(focusGroup);
     }
+
 
 }

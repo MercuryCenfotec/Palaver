@@ -2,6 +2,7 @@ package com.mercury.palaver.repository;
 
 import com.mercury.palaver.domain.AptitudeTest;
 import com.mercury.palaver.domain.FocusGroup;
+import com.mercury.palaver.domain.Institution;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
@@ -30,4 +31,6 @@ public interface FocusGroupRepository extends JpaRepository<FocusGroup, Long> {
 
     Optional<FocusGroup> findByCode(String code);
     Optional<FocusGroup> findByAptitudeTest(AptitudeTest test);
+
+    List<FocusGroup> findAllByInstitution(Institution institution);
 }

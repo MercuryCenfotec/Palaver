@@ -1,6 +1,7 @@
 package com.mercury.palaver.web.rest;
 import com.mercury.palaver.domain.Meeting;
 import com.mercury.palaver.repository.MeetingRepository;
+import com.mercury.palaver.service.ZoomApiService;
 import com.mercury.palaver.web.rest.errors.BadRequestAlertException;
 import com.mercury.palaver.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -29,8 +30,11 @@ public class MeetingResource {
 
     private final MeetingRepository meetingRepository;
 
-    public MeetingResource(MeetingRepository meetingRepository) {
+    private final ZoomApiService zoomApiService;
+
+    public MeetingResource(MeetingRepository meetingRepository,ZoomApiService zoomApiService) {
         this.meetingRepository = meetingRepository;
+        this.zoomApiService = zoomApiService;
     }
 
     /**
@@ -46,6 +50,7 @@ public class MeetingResource {
         if (meeting.getId() != null) {
             throw new BadRequestAlertException("Una nueva reunión no puede tener un id repetido", ENTITY_NAME, "idexists");
         }
+        meeting = zoomApiService.createMeeting(meeting);
         Meeting result = meetingRepository.save(meeting);
         return ResponseEntity.created(new URI("/api/meetings/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))

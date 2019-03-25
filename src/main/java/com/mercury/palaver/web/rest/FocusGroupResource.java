@@ -1,6 +1,7 @@
 package com.mercury.palaver.web.rest;
 
 import com.mercury.palaver.domain.FocusGroup;
+import com.mercury.palaver.domain.Institution;
 import com.mercury.palaver.repository.FocusGroupRepository;
 import com.mercury.palaver.security.AuthoritiesConstants;
 import com.mercury.palaver.service.FocusGroupService;
@@ -140,6 +141,14 @@ public class FocusGroupResource {
     @GetMapping("/focus-groups/cancelable/{groupId}")
     public ResponseEntity<Boolean> isCancelable(@PathVariable Long groupId) {
         return ResponseEntity.ok().body(focusGroupService.isCancelable(groupId));
+    }
+
+    @GetMapping("/focus-groups/institution/{institutionId}")
+    public List<FocusGroup> getAllAptitudeTestsByInstitution(@PathVariable Long institutionId) {
+        log.debug("REST request to get all AptitudeTests");
+        Institution institution = new Institution();
+        institution.setId(institutionId);
+        return focusGroupRepository.findAllByInstitution(institution);
     }
 
 }
