@@ -32,7 +32,6 @@
                             <tr>
                                 <!--<th><span>ID</span></th>
                                 <th><span></span></th>-->
-                                <th><span>Grupo de enfoque</span></th>
                                 <th><span>Calificación esperada</span></th>
                                 <th><span>Participante</span></th>
                                 <th><span>Calificación</span></th>
@@ -49,11 +48,6 @@
                                         <label class="custom-control-label" for="{{testResult.id}}"></label>
                                     </div>
                                 </td>-->
-                                <td>
-                                    <div *ngIf="testResult.focusGroup">
-                                        <a [routerLink]="['../focus-group', testResult.focusGroup?.id, 'view' ]">{{testResult.focusGroup?.name}}</a>
-                                    </div>
-                                </td>
                                 <td>
                                     <div *ngIf="testResult.focusGroup">
                                         <a [routerLink]="['../focus-group', testResult.focusGroup?.id, 'view' ]">{{testResult.focusGroup?.passingGrade}}</a>
