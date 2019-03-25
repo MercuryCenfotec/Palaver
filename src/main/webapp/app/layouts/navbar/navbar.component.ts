@@ -162,6 +162,9 @@ export class NavbarComponent implements OnInit {
                                 case 'ROLE_SUBADMIN':
                                     this.router.navigate(['']);
                                     break;
+                                case 'ROLE_GROUP':
+                                    this.router.navigate(['focus-group/management']);
+                                    break;
                                 default:
                                     break;
                             }
