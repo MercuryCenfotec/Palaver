@@ -8,6 +8,7 @@ import { IMeeting } from 'app/shared/model/meeting.model';
 import { ParticipantService } from 'app/entities/participant';
 import { UserService } from 'app/core';
 import { UserAppService } from 'app/entities/user-app/user-app.service';
+import { Router } from '@angular/router';
 
 const colors: any = {
     red: {
@@ -38,7 +39,7 @@ export class ActivitiesDetailComponent implements OnInit {
 
     actions: CalendarEventAction[] = [
         {
-            label: '<i class="ft ft-search"></i>',
+            label: '<i class="ft ft-video"></i>',
             onClick: ({ event }: { event: CalendarEvent }): void => {
                 this.goToGroup(event);
             }
@@ -54,7 +55,8 @@ export class ActivitiesDetailComponent implements OnInit {
         private meetingService: MeetingService,
         private participantService: ParticipantService,
         private userService: UserService,
-        private userAppService: UserAppService
+        private userAppService: UserAppService,
+        private router: Router
     ) {}
 
     ngOnInit() {
@@ -80,7 +82,9 @@ export class ActivitiesDetailComponent implements OnInit {
         }
     }
 
-    private goToGroup(event: CalendarEvent) {}
+    private goToGroup(event: CalendarEvent) {
+        this.router.navigate([event.id]);
+    }
 
     setCalendarEvent(meeting: IMeeting): any {
         const calendarEvent: CalendarEvent = new class implements CalendarEvent {
@@ -91,7 +95,7 @@ export class ActivitiesDetailComponent implements OnInit {
         const end = meeting.time.toDate();
         end.setHours(end.getHours() + 2);
 
-        calendarEvent.id = meeting.id;
+        calendarEvent.id = meeting.callCode;
         calendarEvent.actions = this.actions;
         calendarEvent.start = meeting.time.toDate();
         calendarEvent.end = end;
