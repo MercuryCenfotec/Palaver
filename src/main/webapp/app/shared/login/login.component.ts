@@ -70,8 +70,16 @@ export class JhiLoginModalComponent implements AfterViewInit {
                                         this.router.navigate(['/participant/new']);
                                         break;
                                 }
+                            } else {
+                                switch (userApp.rol) {
+                                    case 'institution':
+                                        this.router.navigate(['/dashboard-institution']);
+                                        break;
+                                    case 'participant':
+                                        this.router.navigate(['/participant-home']);
+                                        break;
+                                }
                             }
-                            // *** Aqui se redirecciona a los dashboards.
                         });
                     });
                 });
