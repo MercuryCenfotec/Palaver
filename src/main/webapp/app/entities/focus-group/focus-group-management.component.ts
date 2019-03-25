@@ -100,7 +100,13 @@ export class FocusGroupManagementComponent implements OnInit {
                 this.focusGroup = this.focusGroups[i];
             }
         }
-        this.focusGroup.participants.splice(this.focusGroup.participants.indexOf(this.participant), 1);
+
+        for(let i = 0; i < this.focusGroup.participants.length; i++){
+            if ( this.focusGroup.participants[i].id === this.participant.id) {
+                this.focusGroup.participants.splice(i, 1);
+            }
+        }
+
         this.focusGroupService.update(this.focusGroup).subscribe(data => {
             this.ngOnInit();
             this.ngOnInit();
