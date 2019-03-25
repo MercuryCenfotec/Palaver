@@ -4,6 +4,7 @@ import com.mercury.palaver.PalaverApp;
 
 import com.mercury.palaver.domain.Meeting;
 import com.mercury.palaver.repository.MeetingRepository;
+import com.mercury.palaver.service.ZoomApiService;
 import com.mercury.palaver.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -67,6 +68,8 @@ public class MeetingResourceIntTest {
     @Autowired
     private MeetingRepository meetingRepository;
 
+    private ZoomApiService zoomApiService;
+
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
@@ -89,7 +92,7 @@ public class MeetingResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final MeetingResource meetingResource = new MeetingResource(meetingRepository);
+        final MeetingResource meetingResource = new MeetingResource(meetingRepository,zoomApiService);
         this.restMeetingMockMvc = MockMvcBuilders.standaloneSetup(meetingResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
