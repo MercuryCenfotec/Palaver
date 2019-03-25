@@ -95,15 +95,15 @@
 <!-- Contact Us Area -->
 <section class="gray-bg py-10 text-center" id="contect">
     <div class="container text-center">
-        <h3 class="text-center black mb-4 headline">Ingresa con un código de grupo</h3>
-        <p class="text-center mt-4">Por favor ingresa el código que se te proporcionó para ingresar.</p>
-        <div class="row mt-5 p-sm">
+        <h3 class="text-center black mb-4 headline">Moderar grupo de enfoque</h3>
+        <p class="text-center mt-4">Si posees un código, haz click al botón para ingresarlo.</p>
+        <div class="row p-sm">
             <div class="col-lg-6" style="margin: 0 auto;">
                 <form>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="codigoGrupo" name="codigo" placeholder="Código del grupo" required>
-                    </div>
-                    <a id="btnIngresarGrupo" class="primary-btn banner-btn mt-4" style=" color: #000;">Ingresar al grupo</a>
+                    <!--<div class="form-group">-->
+                        <!--<input type="text" class="form-control" id="codigoGrupo" name="codigo" placeholder="Código del grupo" required>-->
+                    <!--</div>-->
+                    <a [routerLink]="['/focus-group/code-activation']" id="btnIngresarGrupo" class="primary-btn banner-btn mt-4" style=" color: #000;">Ingresar código</a>
                 </form>
             </div>
         </div>
