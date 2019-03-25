@@ -5,6 +5,6 @@ export const DASHBOARD_INSTITUTION_ROUTE: Route = {
     path: 'dashboard-institution',
     component: DashboardInstitutionComponent,
     data: {
-        authorities: ['ROLE_USER']
+        authorities: ['ROLE_INSTITUTION']
     }
 };

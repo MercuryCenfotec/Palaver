@@ -5,8 +5,11 @@ import { filter, map } from 'rxjs/operators';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { IMeeting } from 'app/shared/model/meeting.model';
-import { AccountService } from 'app/core';
+import { AccountService, UserService } from 'app/core';
 import { MeetingService } from './meeting.service';
+import { InstitutionService } from 'app/entities/institution';
+import { FocusGroupService } from 'app/entities/focus-group';
+import { IInstitution } from 'app/shared/model/institution.model';
 
 @Component({
     selector: 'jhi-meeting',
@@ -22,22 +25,20 @@ export class MeetingComponent implements OnInit, OnDestroy {
         protected meetingService: MeetingService,
         protected jhiAlertService: JhiAlertService,
         protected eventManager: JhiEventManager,
-        protected accountService: AccountService
+        protected accountService: AccountService,
+        protected userService: UserService,
+        protected institutionService: InstitutionService,
+        protected focusGroupService: FocusGroupService
     ) {}
 
     loadAll() {
-        this.meetingService
-            .query()
-            .pipe(
-                filter((res: HttpResponse<IMeeting[]>) => res.ok),
-                map((res: HttpResponse<IMeeting[]>) => res.body)
-            )
-            .subscribe(
-                (res: IMeeting[]) => {
-                    this.meetings = res;
-                },
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
+        this.userService.getUserWithAuthorities().subscribe(user => {
+            this.institutionService.getByUserUser(user.id).subscribe(institution => {
+                this.meetingService.findByGroupId(institution.body.id).subscribe(meetings => {
+                    this.meetings = meetings.body;
+                });
+            });
+        });
     }
 
     ngOnInit() {
