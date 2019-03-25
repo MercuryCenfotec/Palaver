@@ -10,18 +10,17 @@ import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { filter, map } from 'rxjs/operators';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ClipboardService } from 'ngx-clipboard';
-import moment = require('moment');
+import * as moment from 'moment';
 
 @Component({
     selector: 'jhi-focus-group-management',
     templateUrl: './focus-group-management.component.html'
 })
 export class FocusGroupManagementComponent implements OnInit {
-    private meeting: IMeeting;
-    private participants: Participant[];
-    private meetings: IMeeting[];
-    private participant: IParticipant;
-    private focusGroup: IFocusGroup;
+    meeting: IMeeting;
+    participants: Participant[];
+    participant: IParticipant;
+    focusGroup: IFocusGroup;
     searchText;
 
     constructor(
