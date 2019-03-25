@@ -83,7 +83,7 @@ export class ActivitiesDetailComponent implements OnInit {
     }
 
     private goToGroup(event: CalendarEvent) {
-        this.router.navigate([event.id]);
+        this.router.navigate([event.meta]);
     }
 
     setCalendarEvent(meeting: IMeeting): any {
@@ -95,12 +95,13 @@ export class ActivitiesDetailComponent implements OnInit {
         const end = meeting.time.toDate();
         end.setHours(end.getHours() + 2);
 
-        calendarEvent.id = meeting.callCode;
+        calendarEvent.id = meeting.id;
         calendarEvent.actions = this.actions;
         calendarEvent.start = meeting.time.toDate();
         calendarEvent.end = end;
         calendarEvent.title = meeting.name;
         calendarEvent.color = colors.blue;
+        calendarEvent.meta = meeting.callCode;
 
         return calendarEvent;
     }
