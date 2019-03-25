@@ -45,6 +45,13 @@
                                     <span>Participante</span>
                                 </a>
                             </li>
+                            <li id="calendarPermissions" hidden>
+                                <a class="dropdown-item" routerLink="user-app/activities" routerLinkActive="active"
+                                   [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                                    <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                                    <span>Mis actividades</span>
+                                </a>
+                            </li>
                             <li id="institutionPermissions" hidden>
                                 <a class="dropdown-item" routerLink="institution" routerLinkActive="active"
                                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
