@@ -2,11 +2,11 @@
     <div class="card col-8">
         <div class="card-header">
             <div class="row">
-                <div class="col-sm-12 col-12 col-md-12 col-lg-7">
+                <div class="col-sm-12 col-12 col-md-12 col-lg-8">
                     <h3>{{focusGroup.name}}</h3>
                     <h5 class="col-12 col-md-12 col-sm-12">Información del grupo</h5>
                 </div>
-                <div class="col-sm-12 col-12 col-md-12 col-lg-5">
+                <div class="col-sm-12 col-12 col-md-12 col-lg-4">
                     <div id="codeCard" class="card bg-primary cursor-pointer" (click)="copy()">
                         <div class="card-body col-12">
                             <div class="px-3 py-3">
@@ -17,7 +17,7 @@
                                     <div class="media-body white text-right">
                                         <span
                                             class="text-bold-500 display-block overflow-hidden">Código del grupo</span>
-                                        <span class="display-block overflow-hidden">{{focusGroup.code}}</span>
+                                        <span class="display-block overflow-hidden">Haga click para copiar.</span>
                                     </div>
                                 </div>
                             </div>
@@ -112,7 +112,7 @@
                                         <h4 class="card-title">{{participant.user.user.firstName}} {{participant.user.user.lastName}}</h4>
                                         <p class="category text-gray font-small-4">{{participant.user.mail}}</p>
                                         <a class="btn btn-lg gradient-pomegranate font-small-2 white p-2 mr-2 btn-hoverable">Expulsar participante</a>
-                                        <a class="btn btn-lg btn-outline-grey font-small-2 p-2">Enviar mensaje</a>
+                                        <!--<a class="btn btn-lg btn-outline-grey font-small-2 p-2">Enviar mensaje</a>-->
                                         <!--<hr class="grey">-->
                                         <!--<div class="row grey">-->
                                             <!--<div class="col-4">-->

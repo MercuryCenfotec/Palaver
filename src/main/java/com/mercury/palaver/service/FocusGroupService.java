@@ -19,14 +19,18 @@ public class FocusGroupService {
 
     private final TestAnswerOptionRepository testAnswerOptionRepo;
     private final FocusGroupRepository focusGroupRepo;
+    private final UserService userService;
 
-    public FocusGroupService(TestAnswerOptionRepository testAnswerOptionRepo, FocusGroupRepository focusGroupRepo) {
+    public FocusGroupService(TestAnswerOptionRepository testAnswerOptionRepo, FocusGroupRepository focusGroupRepo, UserService userService) {
         this.testAnswerOptionRepo = testAnswerOptionRepo;
         this.focusGroupRepo = focusGroupRepo;
+        this.userService = userService;
     }
 
     public FocusGroup save(FocusGroup group) {
-        group.setCode(MD5.getMd5(group.getName() + DateUtil.getDate()));
+        String code = MD5.getMd5(group.getName() + DateUtil.getDate());
+        userService.registerGroupManagementUser(code);
+        group.setCode(code);
         group = focusGroupRepo.save(group);
         if (group.getAptitudeTest() != null) {
             for (TestQuestion question : group.getAptitudeTest().getQuestions()) {

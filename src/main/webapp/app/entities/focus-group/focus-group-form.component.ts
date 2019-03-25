@@ -159,12 +159,9 @@ export class FocusGroupFormComponent implements OnInit {
             let ind: number;
             for (const question of this.focusGroup.aptitudeTest.questions) {
                 ind = 0;
-                console.log(question.answers);
                 for (const answer of question.answers) {
                     if (!answer.desired) {
                         ind++;
-                        console.log(ind);
-                        console.log(answer);
                     }
                 }
                 if (ind === question.answers.length) {

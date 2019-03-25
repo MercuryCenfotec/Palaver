@@ -86,7 +86,7 @@ export const focusGroupRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_USER', 'ROLE_PARTICIPANT'],
-            pageTitle: 'FocusGroups'
+            pageTitle: 'Grupos de enfoque'
         },
         canActivate: [UserRouteAccessService]
     },

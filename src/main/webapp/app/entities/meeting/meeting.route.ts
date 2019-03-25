@@ -52,13 +52,13 @@ export const meetingRoute: Routes = [
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'new',
+        path: ':new',
         component: MeetingCreateComponent,
         resolve: {
             meeting: MeetingResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_GROUP'],
             pageTitle: 'Meetings'
         },
         canActivate: [UserRouteAccessService]

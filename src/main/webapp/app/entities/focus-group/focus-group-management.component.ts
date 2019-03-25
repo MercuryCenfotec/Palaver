@@ -5,18 +5,21 @@ import { UserService } from 'app/core';
 import { FocusGroupService } from 'app/entities/focus-group/focus-group.service';
 import { MeetingService } from 'app/entities/meeting';
 import { ParticipantService } from 'app/entities/participant';
+import { ClipboardService } from 'ngx-clipboard';
+import { IFocusGroup } from 'app/shared/model/focus-group.model';
 
 @Component({
     selector: 'jhi-focus-group-management',
     templateUrl: './focus-group-management.component.html'
 })
 export class FocusGroupManagementComponent implements OnInit {
-    private participants: Participant[];
-    private meetings: IMeeting[];
+    private meeting: IMeeting;
+    focusGroup: IFocusGroup;
     searchText;
 
     constructor(
         protected userService: UserService,
+        private _clipboardService: ClipboardService,
         protected focusGroupService: FocusGroupService,
         protected meetingsService: MeetingService,
         protected participantService: ParticipantService
@@ -24,22 +27,17 @@ export class FocusGroupManagementComponent implements OnInit {
 
     ngOnInit() {
         this.userService.getUserWithAuthorities().subscribe(user => {
-            this.focusGroupService.findByCode(user.email).subscribe(data => {
-                console.log(data);
-                this.participantService.findByGroupId(data.body.id).subscribe(participants => {
-                    this.participants = participants.map((participant: IParticipant) => this.mapParticipants(participant));
-                });
-
+            this.focusGroupService.findByCode(user.login).subscribe(data => {
+                this.focusGroup = data.body;
+                console.log(data.body);
                 this.meetingsService.findByGroupId(data.body.id).subscribe(meetings => {
-                    this.meetings = meetings.body;
+                    this.meeting = meetings.body.length ? meetings.body[0] : null;
                 });
             });
         });
     }
 
-    private mapParticipants(p: IParticipant) {
-        let newParticipant = new Participant(p.id, p.birthdate, p.gender, p.civilStatus, p.picture, p.user, p.categories, p.focusGroups);
-
-        return newParticipant;
+    copy() {
+        this._clipboardService.copyFromContent(this.meeting.callCode);
     }
 }

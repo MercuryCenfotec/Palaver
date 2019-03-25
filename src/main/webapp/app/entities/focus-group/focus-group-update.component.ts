@@ -47,6 +47,7 @@ export class FocusGroupUpdateComponent implements OnInit {
     ngOnInit() {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ focusGroup }) => {
+            console.log(focusGroup);
             this.focusGroup = focusGroup;
         });
         this.incentiveService

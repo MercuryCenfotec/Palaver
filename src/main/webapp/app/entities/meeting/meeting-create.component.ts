@@ -10,6 +10,7 @@ import { IMeeting } from 'app/shared/model/meeting.model';
 import { MeetingService } from './meeting.service';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { FocusGroupService } from 'app/entities/focus-group';
+import { UserService } from 'app/core';
 
 @Component({
     selector: 'jhi-meeting-create',
@@ -18,8 +19,6 @@ import { FocusGroupService } from 'app/entities/focus-group';
 export class MeetingCreateComponent implements OnInit {
     meeting: IMeeting;
     isSaving: boolean;
-
-    focusgroups: IFocusGroup[];
     dateDp: any;
     time: string;
 
@@ -27,22 +26,27 @@ export class MeetingCreateComponent implements OnInit {
         protected jhiAlertService: JhiAlertService,
         protected meetingService: MeetingService,
         protected focusGroupService: FocusGroupService,
-        protected activatedRoute: ActivatedRoute
+        protected activatedRoute: ActivatedRoute,
+        protected userService: UserService
     ) {}
 
     ngOnInit() {
+        this.meeting = new class implements IMeeting {
+            callCode: string;
+            callURL: string;
+            date: moment.Moment;
+            description: string;
+            focusGroup: IFocusGroup;
+            id: number;
+            name: string;
+            time: moment.Moment;
+        }();
         this.isSaving = false;
-        this.activatedRoute.data.subscribe(({ meeting }) => {
-            this.meeting = meeting;
-            this.time = this.meeting.time != null ? this.meeting.time.format('LT') : null;
+        this.userService.getUserWithAuthorities().subscribe(user => {
+            this.focusGroupService.findByCode(user.login).subscribe(group => {
+                this.meeting.focusGroup = group.body;
+            });
         });
-        this.focusGroupService
-            .query()
-            .pipe(
-                filter((mayBeOk: HttpResponse<IFocusGroup[]>) => mayBeOk.ok),
-                map((response: HttpResponse<IFocusGroup[]>) => response.body)
-            )
-            .subscribe((res: IFocusGroup[]) => (this.focusgroups = res), (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     previousState() {
@@ -74,9 +78,5 @@ export class MeetingCreateComponent implements OnInit {
 
     protected onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
-    }
-
-    trackFocusGroupById(index: number, item: IFocusGroup) {
-        return item.id;
     }
 }
