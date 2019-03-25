@@ -70,20 +70,24 @@
                     <h5 class="col-12 col-md-12 col-sm-12"><i class="ft-clipboard"></i> Prueba de aptitud</h5>
                     <hr>
                     <div *ngIf="focusGroup.aptitudeTest; else noAptitudeTest" class="card-block col-12">
-                        <div id="question{{i}}" class="card bg-blue-grey bg-lighten-5"
-                             *ngFor="let question of focusGroup.aptitudeTest.questions; let i = index">
-                            <div class="card-header">
-                                <span class="text-bold-500 primary">¿{{question.question}}?</span>
-                            </div>
-                            <div class="card-body">
-                                <div class="card-block">
-                                    <div class="card-block">
-                                            <span *ngFor="let answer of question.answers" class="display-block"><i
-                                                class="ft-minus"></i>{{answer.answer}}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <a class="info p-0" data-original-title="" title=""
+                           [routerLink]="['/aptitude-test', focusGroup.aptitudeTest.id, 'view' ]">
+                            {{focusGroup.aptitudeTest.name}}
+                        </a>
+                        <!--<div id="question{{i}}" class="card bg-blue-grey bg-lighten-5"-->
+                             <!--*ngFor="let question of focusGroup.aptitudeTest.questions; let i = index">-->
+                            <!--<div class="card-header">-->
+                                <!--<span class="text-bold-500 primary">¿{{question.question}}?</span>-->
+                            <!--</div>-->
+                            <!--<div class="card-body">-->
+                                <!--<div class="card-block">-->
+                                    <!--<div class="card-block">-->
+                                            <!--<span *ngFor="let answer of question.answers" class="display-block"><i-->
+                                                <!--class="ft-minus"></i>{{answer.answer}}</span>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
                     </div>
                     <ng-template #noAptitudeTest>
                         <span>No se seleccionó una prueba de aptitud.</span>

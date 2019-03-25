@@ -10,6 +10,7 @@ import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { filter, map } from 'rxjs/operators';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ClipboardService } from 'ngx-clipboard';
+import moment = require('moment');
 
 @Component({
     selector: 'jhi-focus-group-management',
@@ -21,7 +22,6 @@ export class FocusGroupManagementComponent implements OnInit {
     private meetings: IMeeting[];
     private participant: IParticipant;
     private focusGroup: IFocusGroup;
-    private focusGroups: IFocusGroup[];
     searchText;
 
     constructor(
@@ -34,11 +34,12 @@ export class FocusGroupManagementComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.loadAllFocusGroups();
         this.userService.getUserWithAuthorities().subscribe(user => {
             this.focusGroupService.findByCode(user.login).subscribe(data => {
                 this.focusGroup = data.body;
-                console.log(data.body);
+                this.participantService.findByFocusGroup(data.body.id).subscribe(participants => {
+                    this.focusGroup.participants = participants.body;
+                });
                 this.meetingsService.findByGroupId(data.body.id).subscribe(meetings => {
                     this.meeting = meetings.body.length ? meetings.body[0] : null;
                 });
@@ -76,25 +77,7 @@ export class FocusGroupManagementComponent implements OnInit {
         }
     }
 
-    loadAllFocusGroups() {
-        this.focusGroupService
-            .query()
-            .pipe(
-                filter((res: HttpResponse<IFocusGroup[]>) => res.ok),
-                map((res: HttpResponse<IFocusGroup[]>) => res.body)
-            )
-            .subscribe((res: IFocusGroup[]) => {
-                this.focusGroups = res;
-            });
-    }
-
     sendExpulsionMotive(input) {
-        for (let i = 0; i < this.focusGroups.length; i++) {
-            if (this.focusGroup.id === this.focusGroups[i].id) {
-                this.focusGroup = this.focusGroups[i];
-            }
-        }
-
         for (let i = 0; i < this.focusGroup.participants.length; i++) {
             if (this.focusGroup.participants[i].id === this.participant.id) {
                 this.focusGroup.participants.splice(i, 1);
@@ -105,5 +88,14 @@ export class FocusGroupManagementComponent implements OnInit {
             this.ngOnInit();
             this.ngOnInit();
         });
+    }
+
+    checkDate() {
+        return (
+            this.meeting.date.toDate().getDate() ===
+            moment()
+                .toDate()
+                .getDate()
+        );
     }
 }
