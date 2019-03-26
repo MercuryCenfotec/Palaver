@@ -83,7 +83,7 @@ export const userAppRoute: Routes = [
             userApp: UserAppResolve
         },
         data: {
-            authorities: ['ROLE_ADMIN', 'ROLE_PARTICIPANT'],
+            authorities: ['ROLE_ADMIN', 'ROLE_PARTICIPANT', 'ROLE_USER'],
             pageTitle: 'Calendario de Actividades'
         },
         canActivate: [UserRouteAccessService]
