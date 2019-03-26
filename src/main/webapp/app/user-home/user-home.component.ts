@@ -30,6 +30,7 @@ export class UserHomeComponent implements OnInit {
     currentAccount: any;
     eventSubscriber: Subscription;
     actualUserId: number;
+    searchText;
 
     constructor(
         protected focusGroupService: FocusGroupService,
