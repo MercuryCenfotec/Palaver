@@ -1,11 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
-import {VERSION} from 'app/app.constants';
-import {AccountService, LoginModalService, LoginService, UserService} from 'app/core';
-import {ProfileService} from 'app/layouts/profiles/profile.service';
-import {IUserApp, UserApp} from 'app/shared/model/user-app.model';
+import { VERSION } from 'app/app.constants';
+import { AccountService, LoginModalService, LoginService, UserService } from 'app/core';
+import { ProfileService } from 'app/layouts/profiles/profile.service';
+import { IUserApp, UserApp } from 'app/shared/model/user-app.model';
+import { IParticipant } from 'app/shared/model/participant.model';
+import { ParticipantService } from 'app/entities/participant';
+import { UserAppService } from 'app/entities/user-app';
 
 @Component({
     selector: 'jhi-navbar',
@@ -21,12 +24,15 @@ export class NavbarComponent implements OnInit {
     version: string;
     user: IUserApp;
     currentAccount: any;
+    participant: IParticipant;
 
     constructor(
         private loginService: LoginService,
         private accountService: AccountService,
         private loginModalService: LoginModalService,
         private profileService: ProfileService,
+        private participantService: ParticipantService,
+        protected userAppService: UserAppService,
         private router: Router,
         private userService: UserService
     ) {
@@ -35,6 +41,14 @@ export class NavbarComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.currentAccount = this.userService.getUserWithAuthorities().forEach(jhiUser => {
+            this.userAppService.findByUserId(jhiUser.id).subscribe(userApp => {
+                this.participantService.findByUser(userApp.id).subscribe(foundParticipant => {
+                    this.participant = foundParticipant;
+                });
+            });
+        });
+
         this.profileService.getProfileInfo().then(profileInfo => {
             this.inProduction = profileInfo.inProduction;
             this.swaggerEnabled = profileInfo.swaggerEnabled;
@@ -78,6 +92,7 @@ export class NavbarComponent implements OnInit {
                                 case 'ROLE_ADMIN':
                                     permissions = [
                                         'calendarPermissions',
+                                        'participantProfilePermissions',
                                         'userAppPermissions',
                                         'participantPermissions',
                                         'institutionPermissions',
@@ -97,7 +112,13 @@ export class NavbarComponent implements OnInit {
                                     ];
                                     break;
                                 case 'ROLE_PARTICIPANT':
-                                    permissions = ['calendarPermissions', 'paymentMethodPermissions', 'balancePermissions', 'paymentPermissions'];
+                                    permissions = [
+                                        'calendarPermissions',
+                                        'participantProfilePermissions',
+                                        'paymentMethodPermissions',
+                                        'balancePermissions',
+                                        'paymentPermissions'
+                                    ];
                                     break;
                                 case 'ROLE_INSTITUTION':
                                     permissions = [

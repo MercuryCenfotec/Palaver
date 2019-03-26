@@ -44,10 +44,15 @@
                             <div class="form-group">
                                 <label class="form-control-label" for="field_telephone">Teléfono</label>
                                 <input type="text" class="form-control" name="telephone" id="field_telephone"
-                                       [(ngModel)]="institution.telephone" required #floatTelephone="ngModel"/>
-                                <small class="form-text text-muted danger" *ngIf="!floatTelephone.valid && (floatTelephone.dirty ||
-                                 floatTelephone.touched)">¡Telefono requerido!
-                                </small>
+                                       [(ngModel)]="institution.telephone" required #floatTelephone="ngModel" minlength="7"/>
+                                <div class="form-text text-muted danger" *ngIf="floatTelephone.dirty && floatTelephone.invalid">
+                                    <small class="form-text text-muted danger" *ngIf="floatTelephone.errors.required">
+                                        ¡Telefono requerido!
+                                    </small>
+                                    <small class="form-text text-danger" *ngIf="floatTelephone.errors.minlength">
+                                        Tu teléfono debe tener al menos 7 caracteres de largo.
+                                    </small>
+                                </div>
                             </div>
                             <!--<div class="form-group">
                                 <label class="form-control-label" for="field_membership">Membresía</label>

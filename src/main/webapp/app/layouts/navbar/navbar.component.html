@@ -45,6 +45,13 @@
                                     <span>Participante</span>
                                 </a>
                             </li>
+                            <li id="participantProfilePermissions" hidden *ngIf="participant">
+                                <a class="dropdown-item" [routerLink]="['/participant', participant.id, 'view' ]" routerLinkActive="active"
+                                   [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                                    <fa-icon icon="user" fixedWidth="true"></fa-icon>
+                                    <span>Mi perfil</span>
+                                </a>
+                            </li>
                             <li id="calendarPermissions" hidden>
                                 <a class="dropdown-item" routerLink="user-app/activities" routerLinkActive="active"
                                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
