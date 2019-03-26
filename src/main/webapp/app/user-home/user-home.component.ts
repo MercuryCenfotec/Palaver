@@ -3,17 +3,17 @@ import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { FocusGroupService } from 'app/entities/focus-group';
 import { filter, map } from 'rxjs/operators';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import {JhiAlertService, JhiEventManager} from 'ng-jhipster';
-import {ITestResult, TestResult} from 'app/shared/model/test-result.model';
-import {ITestQuestion} from 'app/shared/model/test-question.model';
-import {IParticipant} from 'app/shared/model/participant.model';
-import {Subscription} from 'rxjs';
-import {AccountService, UserService} from 'app/core';
-import {UserAppService} from 'app/entities/user-app';
-import {ParticipantService} from 'app/entities/participant';
-import {TestResultService} from 'app/entities/test-result';
-import {TestQuestionService} from 'app/entities/test-question';
-import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
+import { ITestResult, TestResult } from 'app/shared/model/test-result.model';
+import { ITestQuestion } from 'app/shared/model/test-question.model';
+import { IParticipant } from 'app/shared/model/participant.model';
+import { Subscription } from 'rxjs';
+import { AccountService, UserService } from 'app/core';
+import { UserAppService } from 'app/entities/user-app';
+import { ParticipantService } from 'app/entities/participant';
+import { TestResultService } from 'app/entities/test-result';
+import { TestQuestionService } from 'app/entities/test-question';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'jhi-user-home',
@@ -30,6 +30,7 @@ export class UserHomeComponent implements OnInit {
     currentAccount: any;
     eventSubscriber: Subscription;
     actualUserId: number;
+    searchText;
 
     constructor(
         protected focusGroupService: FocusGroupService,
