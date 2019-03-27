@@ -37,7 +37,7 @@ export const focusGroupRoute: Routes = [
         path: '',
         component: FocusGroupComponent,
         data: {
-            authorities: ['ROLE_INSTITUTION', 'ROLE_USER'],
+            authorities: ['ROLE_INSTITUTION'],
             pageTitle: 'FocusGroups'
         },
         canActivate: [UserRouteAccessService]
@@ -49,7 +49,7 @@ export const focusGroupRoute: Routes = [
             focusGroup: FocusGroupResolve
         },
         data: {
-            authorities: ['ROLE_INSTITUTION', 'ROLE_USER'],
+            authorities: ['ROLE_INSTITUTION'],
             pageTitle: 'FocusGroups'
         },
         canActivate: [UserRouteAccessService]
@@ -61,7 +61,7 @@ export const focusGroupRoute: Routes = [
             focusGroup: FocusGroupResolve
         },
         data: {
-            authorities: ['ROLE_INSTITUTION', 'ROLE_USER'],
+            authorities: ['ROLE_INSTITUTION'],
             pageTitle: 'FocusGroups'
         },
         canActivate: [UserRouteAccessService]
@@ -73,7 +73,7 @@ export const focusGroupRoute: Routes = [
             focusGroup: FocusGroupResolve
         },
         data: {
-            authorities: ['ROLE_INSTITUTION', 'ROLE_USER'],
+            authorities: ['ROLE_INSTITUTION'],
             pageTitle: 'FocusGroups'
         },
         canActivate: [UserRouteAccessService]
@@ -124,7 +124,7 @@ export const focusGroupPopupRoute: Routes = [
             focusGroup: FocusGroupResolve
         },
         data: {
-            authorities: ['ROLE_INSTITUTION', 'ROLE_USER'],
+            authorities: ['ROLE_INSTITUTION'],
             pageTitle: 'FocusGroups'
         },
         canActivate: [UserRouteAccessService],

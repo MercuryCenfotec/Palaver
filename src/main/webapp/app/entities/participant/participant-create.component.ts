@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -28,6 +28,7 @@ export class ParticipantCreateComponent implements OnInit {
     user: IUser;
     userApp: IUserApp;
     users: IUserApp[];
+    success: boolean;
 
     categories: ICategory[];
 
@@ -39,6 +40,7 @@ export class ParticipantCreateComponent implements OnInit {
         private loginService: LoginService,
         protected participantService: ParticipantService,
         protected userAppService: UserAppService,
+        protected router: Router,
         protected categoryService: CategoryService,
         protected focusGroupService: FocusGroupService,
         protected activatedRoute: ActivatedRoute,
@@ -47,6 +49,7 @@ export class ParticipantCreateComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        this.success = false;
         // Deshabilitar fechas futuras
         const currentDate = new Date();
         this.config.maxDate = { year: currentDate.getFullYear() - 5, month: currentDate.getMonth() + 1, day: currentDate.getDate() };
@@ -129,7 +132,9 @@ export class ParticipantCreateComponent implements OnInit {
 
     protected onSaveSuccess() {
         this.isSaving = false;
-        window.location.href = 'participant-home';
+        this.success = true;
+        this.loginService.logout();
+        // this.router.navigate(['/participant-home']);
     }
 
     protected onSaveError() {

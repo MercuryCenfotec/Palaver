@@ -3,8 +3,6 @@ import { UserService } from 'app/core';
 import { InstitutionService } from 'app/entities/institution';
 import { IInstitution } from 'app/shared/model/institution.model';
 import { FocusGroupService } from 'app/entities/focus-group';
-import { filter, map } from 'rxjs/operators';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { JhiAlertService } from 'ng-jhipster';
 import { IParticipant } from 'app/shared/model/participant.model';

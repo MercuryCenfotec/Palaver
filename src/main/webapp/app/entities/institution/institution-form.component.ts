@@ -23,6 +23,7 @@ export class InstitutionFormComponent implements OnInit {
     userApp: IUserApp;
     users: IUserApp[];
     memberships: IMembership[];
+    success: boolean;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
@@ -36,6 +37,7 @@ export class InstitutionFormComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        this.success = false;
         this.userService.getUserWithAuthorities().subscribe(data => {
             this.user = data;
             this.userAppService.findByUserId(this.user.id).subscribe(userAppData => {
@@ -104,8 +106,8 @@ export class InstitutionFormComponent implements OnInit {
 
     protected onSaveSuccess() {
         this.isSaving = false;
-        this.router.navigate(['/dashboard-institution']);
-        // this.previousState();
+        this.loginService.logout();
+        this.success = true;
     }
 
     protected onSaveError() {
@@ -114,13 +116,5 @@ export class InstitutionFormComponent implements OnInit {
 
     protected onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
-    }
-
-    trackUserAppById(index: number, item: IUserApp) {
-        return item.id;
-    }
-
-    trackMembershipById(index: number, item: IMembership) {
-        return item.id;
     }
 }

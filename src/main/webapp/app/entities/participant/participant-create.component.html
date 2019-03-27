@@ -3,10 +3,13 @@
         <div _ngcontent-c5="" class="card">
             <div _ngcontent-c5="" class="card-header">
                 <h4 _ngcontent-c5="" class="card-title" id="basic-layout-colored-form-control">Crear un participante</h4>
+                <div class="alert alert-success" *ngIf="success">
+                    <strong>¡Su registro ha sido exitoso!</strong> Por favor inicie sesión nuevamente.
+                </div>
             </div>
             <div _ngcontent-c5="" class="card-body">
                 <div _ngcontent-c5="" class="px-3">
-                    <form _ngcontent-c5="" class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+                    <form _ngcontent-c5="" class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm" *ngIf="!success">
                         <div _ngcontent-c5="" class="form-body">
                             <h4 _ngcontent-c5="" class="form-section">
                                 <i _ngcontent-c5="" class="ft-info"></i>
