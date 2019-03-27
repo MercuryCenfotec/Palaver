@@ -90,15 +90,28 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
-                            (click)="previousState()">
-                        <i class="ft-x"></i><span> Cancelar</span>
-                    </button>
-                    <button type="submit" id="save-entity" class="btn btn-raised btn-primary"
-                            [disabled]="!validateQuestions()">
-                        <i class="ft-save"></i>&nbsp;<span> Registrar</span>
-                    </button>
+                <h4 class="form-section"></h4>
+                <div class="row">
+                    <div class="col-auto">
+                        <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
+                                (click)="previousState()">
+                            <i class="ft-x"></i><span> Cancelar</span>
+                        </button>
+                    </div>
+                    <div  placement="top" ngbTooltip="Para desbloquear este botón, por favor asegurese de introducir un nombre y al menos una pregunta." *ngIf="editForm.form.invalid || isSaving || !validateQuestions(); else validRegisterBtn" class="col-auto">
+                        <button type="submit" id="save-entity-invalid" class="btn btn-raised btn-primary"
+                                [disabled]="editForm.form.invalid || isSaving || !validateQuestions()">
+                            <i class="ft-save"></i>&nbsp;<span> Registrar</span>
+                        </button>
+                    </div>
+                    <ng-template #validRegisterBtn>
+                        <div class="col-auto">
+                            <button type="submit" id="save-entity-valid" class="btn btn-raised btn-primary"
+                                    [disabled]="editForm.form.invalid || isSaving || !validateQuestions()">
+                                <i class="ft-save"></i>&nbsp;<span> Registrar</span>
+                            </button>
+                        </div>
+                    </ng-template>
                 </div>
             </div>
         </form>

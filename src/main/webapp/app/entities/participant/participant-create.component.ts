@@ -47,7 +47,7 @@ export class ParticipantCreateComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        //Deshabilitar fechas futuras
+        // Deshabilitar fechas futuras
         const currentDate = new Date();
         this.config.maxDate = { year: currentDate.getFullYear() - 5, month: currentDate.getMonth() + 1, day: currentDate.getDate() };
         this.config.outsideDays = 'hidden';

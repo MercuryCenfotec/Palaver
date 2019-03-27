@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -19,6 +19,7 @@ import { IAptitudeTest } from 'app/shared/model/aptitude-test.model';
 import { AptitudeTestService } from 'app/entities/aptitude-test';
 import { ITestAnswerOption } from 'app/shared/model/test-answer-option.model';
 import { ITestQuestion } from 'app/shared/model/test-question.model';
+import { NgbDatepickerConfig, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'jhi-focus-group-form',
@@ -32,8 +33,8 @@ export class FocusGroupFormComponent implements OnInit {
     categories: ICategory[];
     aptitudeTests: IAptitudeTest[];
     participants: IParticipant[];
-    beginDateDp: any;
-    endDateDp: any;
+    endDateSelected: boolean;
+    testAvailable: boolean;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
@@ -44,18 +45,29 @@ export class FocusGroupFormComponent implements OnInit {
         protected participantService: ParticipantService,
         protected activatedRoute: ActivatedRoute,
         protected userService: UserService,
-        protected aptitudeTestService: AptitudeTestService
-    ) {}
+        protected aptitudeTestService: AptitudeTestService,
+        protected config: NgbDatepickerConfig
+    ) {
+        const current = new Date();
+        config.minDate = {
+            year: current.getFullYear(),
+            month: current.getMonth() + 1,
+            day: current.getDate()
+        };
+        config.maxDate = { year: 2099, month: 12, day: 31 };
+        config.outsideDays = 'hidden';
+    }
 
     ngOnInit() {
         this.isSaving = false;
+        this.endDateSelected = false;
         this.activatedRoute.data.subscribe(({ focusGroup }) => {
             this.focusGroup = focusGroup;
             this.focusGroup.aptitudeTest = null;
         });
         this.userService.getUserWithAuthorities().subscribe(user => {
             this.institutionService.getByUserUser(user.id).subscribe(institution => {
-                this.aptitudeTestService.findAllByInstitution(institution.body.id).subscribe(aptitudeTests => {
+                this.aptitudeTestService.findAllAvailableByInstitution(institution.body.id).subscribe(aptitudeTests => {
                     this.aptitudeTests = aptitudeTests.body;
                 });
             });
@@ -99,6 +111,9 @@ export class FocusGroupFormComponent implements OnInit {
         this.userService.getUserWithAuthorities().subscribe(data => {
             this.institutionService.getByUserUser(data.id).subscribe(innerData => {
                 this.focusGroup.institution = innerData.body;
+                if (!this.focusGroup.aptitudeTest) {
+                    this.focusGroup.passingGrade = 100;
+                }
                 this.subscribeToSaveResponse(this.focusGroupService.create(this.focusGroup));
             });
         });
@@ -119,33 +134,6 @@ export class FocusGroupFormComponent implements OnInit {
 
     protected onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
-    }
-
-    trackIncentiveById(index: number, item: IIncentive) {
-        return item.id;
-    }
-
-    trackInstitutionById(index: number, item: IInstitution) {
-        return item.id;
-    }
-
-    trackCategoryById(index: number, item: ICategory) {
-        return item.id;
-    }
-
-    trackParticipantById(index: number, item: IParticipant) {
-        return item.id;
-    }
-
-    getSelected(selectedVals: Array<any>, option: any) {
-        if (selectedVals) {
-            for (let i = 0; i < selectedVals.length; i++) {
-                if (option.id === selectedVals[i].id) {
-                    return selectedVals[i];
-                }
-            }
-        }
-        return option;
     }
 
     desiredAnswer(question: ITestQuestion, desiredAnswer: ITestAnswerOption) {
@@ -170,5 +158,19 @@ export class FocusGroupFormComponent implements OnInit {
             }
         }
         return true;
+    }
+
+    validEndDate(): boolean {
+        return this.focusGroup.endDate > this.focusGroup.beginDate;
+    }
+
+    validateTest() {
+        if (this.focusGroup.aptitudeTest !== null) {
+            this.focusGroupService.testIsAvailable(this.focusGroup.aptitudeTest.id).subscribe(group => {
+                return group.body;
+            });
+        } else {
+            this.focusGroup.passingGrade = null;
+        }
     }
 }
