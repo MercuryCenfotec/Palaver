@@ -3,10 +3,13 @@
         <div _ngcontent-c5="" class="card">
             <div _ngcontent-c5="" class="card-header">
                 <h4 _ngcontent-c5="" class="card-title" id="basic-layout-colored-form-control">Crear un participante</h4>
+                <div class="alert alert-success" *ngIf="success">
+                    <strong>¡Su registro ha sido exitoso!</strong> Por favor inicie sesión nuevamente.
+                </div>
             </div>
             <div _ngcontent-c5="" class="card-body">
                 <div _ngcontent-c5="" class="px-3">
-                    <form _ngcontent-c5="" class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+                    <form _ngcontent-c5="" class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm" *ngIf="!success">
                         <div _ngcontent-c5="" class="form-body">
                             <h4 _ngcontent-c5="" class="form-section">
                                 <i _ngcontent-c5="" class="ft-info"></i>
@@ -18,7 +21,7 @@
                                     <div _ngcontent-c5="" class="form-group">
                                         <label _ngcontent-c5="" for="field_birthdate">Fecha de nacimiento</label>
                                         <div class="input-group">
-                                            <input _ngcontent-c5="" class="form-control border-primary"
+                                            <input _ngcontent-c5="" class="form-control"
                                                    id="field_birthdate" name="birthdate" type="text" ngbDatepicker
                                                    #birthdateDp="ngbDatepicker" [(ngModel)]="participant.birthdate"
                                                    required>
@@ -28,11 +31,16 @@
                                                     <fa-icon [icon]="'calendar-alt'"></fa-icon></button>
                                             </span>
                                         </div>
-                                        <div
-                                            [hidden]="!(editForm.controls.birthdate?.dirty && editForm.controls.birthdate?.invalid)">
+                                        <div [hidden]="!(editForm.controls.birthdate?.dirty && editForm.controls.birthdate?.invalid)">
                                             <small class="form-text text-danger"
                                                    [hidden]="!editForm.controls.birthdate?.errors?.required">
                                                 Este campo es requerido.
+                                            </small>
+                                        </div>
+                                        <div [hidden]="!(editForm.controls.birthdate?.dirty && editForm.controls.birthdate?.invalid)">
+                                            <small class="form-text text-danger"
+                                                   [hidden]="!editForm.controls.birthdate?.errors?.max">
+                                                La fecha es inválida.
                                             </small>
                                         </div>
                                     </div>
@@ -116,7 +124,7 @@
                             </button>
                             <button _ngcontent-c5="" class="btn btn-raised btn-primary" type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving">
                                 <i _ngcontent-c5="" class="fa fa-check-square-o"></i>
-                                <fa-icon [icon]="'save'"></fa-icon>Registrar
+                                <fa-icon></fa-icon>Registrar
                             </button>
                         </div>
                     </form>

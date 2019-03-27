@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import { IUserApp } from 'app/shared/model/user-app.model';
 import { UserAppService } from 'app/entities/user-app';
 import { IMembership } from 'app/shared/model/membership.model';
 import { MembershipService } from 'app/entities/membership';
-import { IUser, UserService } from 'app/core';
+import { IUser, LoginService, UserService } from 'app/core';
 
 @Component({
     selector: 'jhi-institution-form',
@@ -23,10 +23,13 @@ export class InstitutionFormComponent implements OnInit {
     userApp: IUserApp;
     users: IUserApp[];
     memberships: IMembership[];
+    success: boolean;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
         protected institutionService: InstitutionService,
+        private loginService: LoginService,
+        protected router: Router,
         protected userAppService: UserAppService,
         protected membershipService: MembershipService,
         protected activatedRoute: ActivatedRoute,
@@ -34,6 +37,7 @@ export class InstitutionFormComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        this.success = false;
         this.userService.getUserWithAuthorities().subscribe(data => {
             this.user = data;
             this.userAppService.findByUserId(this.user.id).subscribe(userAppData => {
@@ -79,7 +83,9 @@ export class InstitutionFormComponent implements OnInit {
     }
 
     previousState() {
-        window.history.back();
+        // window.history.back();
+        window.location.href = '';
+        this.loginService.logout();
     }
 
     save() {
@@ -100,7 +106,8 @@ export class InstitutionFormComponent implements OnInit {
 
     protected onSaveSuccess() {
         this.isSaving = false;
-        this.previousState();
+        this.loginService.logout();
+        this.success = true;
     }
 
     protected onSaveError() {
@@ -109,13 +116,5 @@ export class InstitutionFormComponent implements OnInit {
 
     protected onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
-    }
-
-    trackUserAppById(index: number, item: IUserApp) {
-        return item.id;
-    }
-
-    trackMembershipById(index: number, item: IMembership) {
-        return item.id;
     }
 }

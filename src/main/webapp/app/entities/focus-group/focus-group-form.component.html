@@ -4,12 +4,7 @@
             <div class="row justify-content-md-center"></div>
             <h2 id="jhi-focus-group-heading">Creación de grupos de enfoque</h2>
             <div>
-                <h4 class="form-section"><i class="ft-users"></i>Información</h4>
-                <div class="form-group" [hidden]="true">
-                    <label for="id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id"
-                           [(ngModel)]="focusGroup.id" readonly/>
-                </div>
+                <h4 class="form-section"><i class="ft-info"></i>Información</h4>
                 <div class="form-group">
                     <label class="form-control-label" for="field_name">Nombre</label>
                     <input #floatName="ngModel" type="text" class="form-control" name="name" id="field_name"
@@ -20,9 +15,9 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_description">Descripción</label>
-                    <input #floatDescription="ngModel" type="text" class="form-control" name="description"
-                           id="field_description"
-                           [(ngModel)]="focusGroup.description" required/>
+                    <textarea #floatDescription="ngModel" type="text" class="form-control" name="description"
+                           id="field_description" [ngModelOptions]="{updateOn: 'blur'}"
+                        [(ngModel)]="focusGroup.description" required></textarea>
                     <small class="form-text text-muted danger" *ngIf="!floatDescription.valid && (floatDescription.dirty ||
                                  floatDescription.touched)">¡Descripción requerida!
                     </small>
@@ -49,7 +44,7 @@
                         <label class="form-control-label" for="field_endDate">Fecha de finalización estimada</label>
                         <div class="input-group">
                             <input #floatEndDate="ngModel" id="field_endDate" type="text" class="form-control"
-                                   name="endDate" ngbDatepicker
+                                   name="endDate" ngbDatepicker (change)="endDateSelected = true"
                                    #endDateDp="ngbDatepicker" [(ngModel)]="focusGroup.endDate"
                                    required [readonly]="true"/>
                             <span class="input-group-append">
@@ -60,6 +55,9 @@
                         <small class="form-text text-muted danger" *ngIf="!floatEndDate.valid && (floatEndDate.dirty ||
                                  floatEndDate.touched)">¡Fecha de finalización requerida!
                         </small>
+                        <small class="form-text text-muted danger" *ngIf="!validEndDate()">
+                            La fecha de finalización tiene que ser posterior a la fecha inicial.
+                        </small>
                     </div>
                 </div>
                 <h4 class="form-section"><i class="ft-clipboard"></i>Prueba de aptitud</h4>
@@ -67,12 +65,25 @@
                     <fieldset class="form-group">
                         <label for="customSelect">Pruebas de aptitud</label>
                         <select [(ngModel)]="focusGroup.aptitudeTest" class="custom-select d-block w-100"
-                                id="customSelect" name="aptitudeTest">
-                            <option [ngValue]="null" >No utilizar prueba de aptitud.</option>
+                                id="customSelect" name="aptitudeTest" (change)="validateTest()">
+                            <option [ngValue]="null">No utilizar prueba de aptitud.</option>
                             <option *ngFor="let aptitudeTest of aptitudeTests"
                                     [ngValue]="aptitudeTest">{{aptitudeTest.name}}</option>
                         </select>
                     </fieldset>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-4">
+                    <div *ngIf="focusGroup.aptitudeTest" class="form-group">
+                        <label class="form-control-label" for="field-grade">Nota mínima para participar</label>
+                        <input jhiNumericOnly #floatGrade="ngModel" type="text" class="form-control"
+                               name="passing_grade" id="field-grade" maxlength="3"
+                               [(ngModel)]="focusGroup.passingGrade" required/>
+                        <small class="display-inline-block form-text text-muted danger" *ngIf="!floatGrade.valid && (floatGrade.dirty ||
+                                 floatGrade.touched)">¡Nota obligatoria!
+                        </small>
+                        <small class="display-inline-block form-text text-muted danger" *ngIf="focusGroup.passingGrade>100">¡La nota tiene que ser menor o igual a 100!
+                        </small>
+                    </div>
                 </div>
                 <div *ngIf="focusGroup.aptitudeTest" id="questionCardSection" class="row">
                     <h5 class="col-12 col-md-12 col-sm-12"><i class="ft-clipboard"></i> Preguntas</h5>
@@ -100,15 +111,36 @@
                     </div>
                 </div>
             </div>
-            <div>
-                <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
-                        (click)="previousState()">
-                    <i class="ft-x"></i>&nbsp;<span> Cancelar</span>
-                </button>
-                <button type="submit" id="save-entity" class="btn btn-raised btn-primary"
-                        [disabled]="editForm.form.invalid || isSaving || !validateAnswers()">
-                    <i class="ft-save"></i>&nbsp;<span> Registrar</span>
-                </button>
+            <div class="row">
+                <div class="col-auto">
+                    <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
+                            (click)="previousState()">
+                        <i class="ft-x"></i>&nbsp;<span> Cancelar</span>
+                    </button>
+                </div>
+                <div
+                    *ngIf="editForm.form.invalid || isSaving || !validateAnswers() || !validEndDate(); else validEditBtn"
+                    [ngbPopover]="popoverText"
+                    triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido." class="col-auto">
+                    <button type="submit" id="save-entity-invalid" [disabled]="true"
+                            class="btn btn-raised btn-primary">
+                        <i class="ft-save"></i>&nbsp;<span> Guardar</span>
+                    </button>
+                </div>
+                <ng-template #popoverText>
+                    <small class="display-block">Por favor, asegúrese de que todos los campos estén completos.</small>
+                    <small>Si está usando una prueba de aptitud, necesita asignar una nota mínima y marcar la respuesta deseada de cada
+                        pregunta.
+                    </small>
+                </ng-template>
+                <ng-template #validEditBtn>
+                    <div class="col-auto">
+                        <button type="submit" id="save-entity-valid"
+                                class="btn btn-raised btn-primary">
+                            <i class="ft-save"></i>&nbsp;<span> Guardar</span>
+                        </button>
+                    </div>
+                </ng-template>
             </div>
         </form>
     </div>

@@ -62,7 +62,48 @@
                             <ul class="no-list-style">
                                 <li class="mb-2">
                                     <span class="text-bold-500 primary"><a><i class="ft ft-message-square"></i> Estado civil:</a></span>
-                                    <span class="display-block overflow-hidden">{{participant.civilStatus}}</span>
+                                    <div [ngSwitch]="participant.gender">
+                                        <div *ngSwitchCase="'MALE'">
+                                            <div [ngSwitch]="participant.civilStatus">
+                                                <span class="display-block overflow-hidden" *ngSwitchCase="'MARRIED'">Casado</span>
+                                                <span class="display-block overflow-hidden" *ngSwitchCase="'WIDOWED'">Viudo</span>
+                                                <span class="display-block overflow-hidden" *ngSwitchCase="'SEPARATED'">Separado</span>
+                                                <span class="display-block overflow-hidden" *ngSwitchCase="'DIVORCED'">Divorciado</span>
+                                                <span class="display-block overflow-hidden" *ngSwitchCase="'SINGLE'">Soltero</span>
+                                                <span class="display-block overflow-hidden" *ngSwitchDefault>Soltero</span>
+                                            </div>
+                                        </div>
+                                        <div *ngSwitchCase="'FEMALE'">
+                                            <div [ngSwitch]="participant.civilStatus">
+                                                <span class="display-block overflow-hidden" *ngSwitchCase="'MARRIED'">Casada</span>
+                                                <span class="display-block overflow-hidden" *ngSwitchCase="'WIDOWED'">Viuda</span>
+                                                <span class="display-block overflow-hidden" *ngSwitchCase="'SEPARATED'">Separada</span>
+                                                <span class="display-block overflow-hidden" *ngSwitchCase="'DIVORCED'">Divorciada</span>
+                                                <span class="display-block overflow-hidden" *ngSwitchCase="'SINGLE'">Soltera</span>
+                                                <span class="display-block overflow-hidden" *ngSwitchDefault>Soltera</span>
+                                            </div>
+                                        </div>
+                                        <div *ngSwitchCase="'UNDEFINED'">
+                                            <div [ngSwitch]="participant.civilStatus">
+                                                <span class="display-block overflow-hidden" *ngSwitchCase="'MARRIED'">Casado/a</span>
+                                                <span class="display-block overflow-hidden" *ngSwitchCase="'WIDOWED'">Viudo/a</span>
+                                                <span class="display-block overflow-hidden" *ngSwitchCase="'SEPARATED'">Separado/a</span>
+                                                <span class="display-block overflow-hidden" *ngSwitchCase="'DIVORCED'">Divorciado/a</span>
+                                                <span class="display-block overflow-hidden" *ngSwitchCase="'SINGLE'">Soltero/a</span>
+                                                <span class="display-block overflow-hidden" *ngSwitchDefault>Soltero/a</span>
+                                            </div>
+                                        </div>
+                                        <div *ngSwitchDefault>
+                                            <div [ngSwitch]="participant.civilStatus">
+                                                <span class="display-block overflow-hidden" *ngSwitchCase="'MARRIED'">Casado/a</span>
+                                                <span class="display-block overflow-hidden" *ngSwitchCase="'WIDOWED'">Viudo/a</span>
+                                                <span class="display-block overflow-hidden" *ngSwitchCase="'SEPARATED'">Separado/a</span>
+                                                <span class="display-block overflow-hidden" *ngSwitchCase="'DIVORCED'">Divorciado/a</span>
+                                                <span class="display-block overflow-hidden" *ngSwitchCase="'SINGLE'">Soltero/a</span>
+                                                <span class="display-block overflow-hidden" *ngSwitchDefault>Soltero/a</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </li>
                                 <!--<li class="mb-2">-->
                                     <!--<span class="text-bold-500 primary"><a><i class="ft ft-user"></i> Género:</a></span>-->
@@ -81,7 +122,13 @@
                                 <!--</li>-->
                                 <li class="mb-2">
                                     <span class="text-bold-500 primary"><a><i class="ft ft-user"></i> Género:</a></span>
-                                    <span class="display-block overflow-hidden">{{participant.gender}}</span>
+
+                                    <div [ngSwitch]="participant.gender">
+                                        <span class="display-block overflow-hidden" *ngSwitchCase="'MALE'">Hombre</span>
+                                        <span class="display-block overflow-hidden" *ngSwitchCase="'FEMALE'">Mujer</span>
+                                        <span class="display-block overflow-hidden" *ngSwitchCase="'UNDEFINED'">Otro</span>
+                                        <span class="display-block overflow-hidden" *ngSwitchDefault>Otro</span>
+                                    </div>
                                 </li>
                             </ul>
                         </div>

@@ -130,10 +130,15 @@ public class UserResource {
 
     @PutMapping("/users/add_authorization/{role}")
     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.USER + "\")")
-    public ResponseEntity setAuthority(@Valid @RequestBody UserDTO userDTO, @PathVariable String role) {
-        User updatedUser;
+    public ResponseEntity<UserDTO> setAuthority(@Valid @RequestBody UserDTO userDTO, @PathVariable String role) {
+        /*User updatedUser;
         updatedUser = userService.updateUserRole(role, userDTO);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);*/
+
+        Optional<UserDTO> updatedUser = userService.updateUserRole(role, userDTO);
+
+        return ResponseUtil.wrapOrNotFound(updatedUser,
+            HeaderUtil.createAlert("A user is updated with identifier " + userDTO.getLogin(), userDTO.getLogin()));
     }
 
     /**
@@ -193,9 +198,10 @@ public class UserResource {
     @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}")
     public ResponseEntity<UserDTO> getUser(@PathVariable String login) {
         log.debug("REST request to get User : {}", login);
-        return ResponseUtil.wrapOrNotFound(
+        ResponseEntity<UserDTO> response = ResponseUtil.wrapOrNotFound(
             userService.getUserWithAuthoritiesByLogin(login)
                 .map(UserDTO::new));
+        return response;
     }
 
     /**

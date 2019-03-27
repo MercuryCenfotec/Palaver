@@ -1,8 +1,15 @@
-<div class="row match-height">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title" id="basic-layout-form-center">Usuario</h4>
+<div _ngcontent-c24="" class="row text-left">
+    <div _ngcontent-c24="" class="col-md-12">
+        <div _ngcontent-c24="" class="card">
+            <div _ngcontent-c24="" class="card-header">
+                <h4 _ngcontent-c24="" class="card-title" id="horz-layout-colored-controls">Usuario</h4>
+                <p _ngcontent-c24="" class="mb-0">Bienvenido a <strong style="color: #F5B23E;">Palaver!</strong>
+                    Necesitamos que nos brindes cierta información para poder hacer tu experiencia la mejor.
+                    Ya seas una institución, con el deseo de crear y llevar a cabo grupos de enfoque, o un participante,
+                    que desea compartir su opinión, especifícalo al final del formulario.
+                </p>
+
+                <jhi-alert-error></jhi-alert-error>
 
                 <div class="alert alert-success" *ngIf="success">
                     <strong>Su registro ha sido exitoso!</strong> Por favor revise su correo para verificar su cuenta.
@@ -24,179 +31,213 @@
                     La contraseña y la confirmacion no concuerdan!
                 </div>
             </div>
-            <div class="card-body">
-                <div class="px-3">
-                    <form class="form" name="form" role="form" (ngSubmit)="register()" #registerForm="ngForm"
+            <div _ngcontent-c24="" class="card-body">
+                <div _ngcontent-c24="" class="px-3">
+                    <form class="form orm-horizontal ng-untouched ng-pristine ng-valid" name="form" role="form"
+                          (ngSubmit)="register()" #registerForm="ngForm"
                           *ngIf="!success">
-                        <div class="row justify-content-md-center">
-                            <div class="col-md-6">
-                                <div class="form-body">
-                                    <h4 class="form-section"><i class="ft-user"></i>Registro</h4>
-                                    <jhi-alert-error></jhi-alert-error>
-                                    <div class="form-group">
-                                        <label for="login"><i class="ft-edit-3"></i> Nombre de usuario</label>
-                                        <input type="text" class="form-control" [(ngModel)]="registerAccount.login"
-                                               id="login" name="login" #login="ngModel" placeholder="Nombre de usuario"
-                                               required minlength="1" maxlength="50">
-                                        <div *ngIf="login.dirty && login.invalid">
-                                            <small class="form-text text-danger" *ngIf="login.errors.required">
-                                                Este campo es requerido.
-                                            </small>
-                                            <small class="form-text text-danger" *ngIf="login.errors.minlength"
-                                            >
-                                                Su nombre de usuario debe tener al menos 1 caracter de largo.
-                                            </small>
-                                            <small class="form-text text-danger" *ngIf="login.errors.maxlength"
-                                            >
-                                                Su nombre de usuario no debe tener mas de 50 caracteres de largo.
-                                            </small>
+                        <div _ngcontent-c24="" class="form-body">
+                            <h4 _ngcontent-c24="" class="form-section">
+                                <i _ngcontent-c24="" class="ft-mail"></i>
+                                Registro
+                            </h4>
+                            <div _ngcontent-c24="" class="row">
+                                <div _ngcontent-c24="" class="col-md-6">
+                                    <div class="form-group row">
+                                        <label _ngcontent-c24="" class="col-md-3 label-control" for="login">Nombre
+                                            usuario: </label>
+                                        <div _ngcontent-c24="" class="col-md-9">
+                                            <input type="text" class="form-control" [(ngModel)]="registerAccount.login"
+                                                   id="login" name="login" #login="ngModel"
+                                                   required minlength="1" maxlength="50">
+                                            <div *ngIf="login.dirty && login.invalid">
+                                                <small class="form-text text-danger" *ngIf="login.errors.required">
+                                                    Este campo es requerido.
+                                                </small>
+                                                <small class="form-text text-danger" *ngIf="login.errors.minlength"
+                                                >
+                                                    Tu nombre de usuario debe tener al menos 1 caracter de largo.
+                                                </small>
+                                                <small class="form-text text-danger" *ngIf="login.errors.maxlength"
+                                                >
+                                                    Tu nombre de usuario no debe tener mas de 50 caracteres de largo.
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div _ngcontent-c24="" class="col-md-6">
+                                    <div class="form-group row">
+                                        <label _ngcontent-c24="" class="col-md-3 label-control"
+                                               for="name">Nombre: </label>
+                                        <div _ngcontent-c24="" class="col-md-9">
+                                            <input type="text" class="form-control" [(ngModel)]="userApp.name" id="name"
+                                                   name="name" #name="ngModel"
+                                                   minlength="8" required>
+                                            <div *ngIf="name.dirty && name.invalid">
+                                                <small class="form-text text-danger" *ngIf="name.errors.required">
+                                                    Este campo es requerido.
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div _ngcontent-c24="" class="row">
+                                <div _ngcontent-c24="" class="col-md-6">
+                                    <div _ngcontent-c24="" class="form-group row">
+                                        <label _ngcontent-c24="" class="col-md-3 label-control" for="identification">Identificación: </label>
+                                        <div _ngcontent-c24="" class="col-md-9">
+                                            <input type="text" class="form-control"
+                                                   [(ngModel)]="userApp.identificationNumber" id="identification"
+                                                   name="identification" #identification="ngModel"
+                                                   required minlength="9" maxlength="200">
+                                            <div *ngIf="identification.dirty && identification.invalid">
+                                                <small class="form-text text-danger"
+                                                       *ngIf="identification.errors.required">
+                                                    Este campo es requerido.
+                                                </small>
+                                                <small class="form-text text-danger"
+                                                       *ngIf="identification.errors.minlength">
+                                                    Su número de identificación debe tener al menos 9 caracteres de
+                                                    largo.
+                                                </small>
+                                                <small class="form-text text-danger"
+                                                       *ngIf="identification.errors.maxlength">
+                                                    Su número de identificación no debe tener más de 200 caracteres de
+                                                    largo.
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div _ngcontent-c24="" class="col-md-6">
+                                    <div _ngcontent-c24="" class="form-group row">
+                                        <label _ngcontent-c24="" class="col-md-3 label-control"
+                                               for="email">Correo: </label>
+                                        <div _ngcontent-c24="" class="col-md-9">
+                                            <input type="email" class="form-control" id="email" name="email"
+                                                   #email="ngModel" [(ngModel)]="userApp.mail"
+                                                   [(ngModel)]="registerAccount.email"
+                                                   minlength=5 maxlength=254 email required>
+                                            <div *ngIf="email.dirty && email.invalid">
+                                                <small class="form-text text-danger" *ngIf="email.errors.required">
+                                                    Este campo es requerido.
+                                                </small>
+                                                <small class="form-text text-danger" *ngIf="email.errors.invalid">
+                                                    Este correo es invalido.
+                                                </small>
+                                                <small class="form-text text-danger" *ngIf="email.errors.minlength">
+                                                    Su correo debe tener al menos 5 caracteres de largo.
+                                                </small>
+                                                <small class="form-text text-danger" *ngIf="email.errors.maxlength">
+                                                    Su correo no debe tener más de 100 caracteres de largo.
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4 _ngcontent-c24="" class="form-section"><i _ngcontent-c24="" class="ft-info"></i>
+                                Información &amp; Seguridad</h4>
+                            <div _ngcontent-c24="" class="row">
+                                <div _ngcontent-c24="" class="col-md-6">
+                                    <div _ngcontent-c24="" class="form-group row">
+                                        <label _ngcontent-c24="" class="col-md-3 label-control" for="password">Contraseña: </label>
+                                        <div _ngcontent-c24="" class="col-md-9">
+                                            <input type="password" class="form-control" id="password" name="password"
+                                                   #password="ngModel" placeholder="Contraseña"
+                                                   [(ngModel)]="registerAccount.password" minlength=4 maxlength=50
+                                                   required>
+                                            <div *ngIf="password.dirty && password.invalid">
+                                                <small class="form-text text-danger" *ngIf="password.errors.required">
+                                                    Este campo es requerido.
+                                                </small>
+                                                <small class="form-text text-danger" *ngIf="password.errors.minlength">
+                                                    Tu contraseña debe tener al menos 4 caracteres de largo.
+                                                </small>
+                                                <small class="form-text text-danger" *ngIf="password.errors.maxlength">
+                                                    Tu contraseña no debe tener más de 50 caracteres de largo.
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-3 label-control">Fortaleza: </label>
+                                        <div _ngcontent-c24="" class="col-md-9">
+                                            <jhi-password-strength-bar class="ml-0"
+                                                                       [passwordToCheck]="registerAccount.password"></jhi-password-strength-bar>
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="name"><i class="ft-user"></i> Nombre</label>
-                                        <input type="text" class="form-control" [(ngModel)]="userApp.name" id="name"
-                                               name="name" placeholder="Nombre" #name="ngModel"
-                                               required>
-                                        <div *ngIf="name.dirty && name.invalid">
-                                            <small class="form-text text-danger" *ngIf="name.errors.required">
-                                                Este campo es requerido.
-                                            </small>
+                                    <div _ngcontent-c24="" class="form-group row">
+                                        <label _ngcontent-c24="" class="col-md-3 label-control" for="confirmPassword">Confirmar
+                                            contraseña: </label>
+                                        <div _ngcontent-c24="" class="col-md-9">
+                                            <input type="password" class="form-control" id="confirmPassword"
+                                                   name="confirmPassword" #confirmPasswordInput="ngModel"
+                                                   [(ngModel)]="confirmPassword" minlength=4 maxlength=50 required>
+                                            <div *ngIf="confirmPasswordInput.dirty && confirmPasswordInput.invalid">
+                                                <small class="form-text text-danger"
+                                                       *ngIf="confirmPasswordInput.errors.required">
+                                                    Este campo es requerido.
+                                                </small>
+                                                <small class="form-text text-danger"
+                                                       *ngIf="confirmPasswordInput.errors.minlength">
+                                                    Tu contraseña de confirmación debe tener al menos 4 caracteres de
+                                                    largo.
+                                                </small>
+                                                <small class="form-text text-danger"
+                                                       *ngIf="confirmPasswordInput.errors.maxlength">
+                                                    Tu contraseña de confirmación no debe tener más de 50 caracteres de
+                                                    largo.
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div _ngcontent-c24="" class="col-md-6">
+                                    <div _ngcontent-c24="" class="form-group row">
+                                        <label _ngcontent-c24="" class="col-md-3 label-control"
+                                               for="address">Dirección: </label>
+                                        <div _ngcontent-c24="" class="col-md-9">
+                                            <textarea type="text" class="form-control" [(ngModel)]="userApp.address"
+                                                      id="address" name="address" #login="ngModel" rows="4"></textarea>
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="identification"><i class="ft-hash"></i> Número de
-                                            identificación</label>
-                                        <input type="text" class="form-control"
-                                               [(ngModel)]="userApp.identificationNumber" id="identification"
-                                               name="identification" #identification="ngModel" placeholder="Número de identificación"
-                                               required minlength="1" maxlength="200">
-                                        <div *ngIf="identification.dirty && identification.invalid">
-                                            <small class="form-text text-danger" *ngIf="identification.errors.required">
-                                                Este campo es requerido.
-                                            </small>
-                                            <small class="form-text text-danger" *ngIf="identification.errors.minlength"
-                                            >
-                                                Su número de identificación debe tener al menos 1 caracter de largo.
-                                            </small>
-                                            <small class="form-text text-danger" *ngIf="identification.errors.maxlength"
-                                            >
-                                                Su número de identificación no debe tener mas de 50 caracteres de largo.
-                                            </small>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="email"><i class="ft-at-sign"></i> Correo electronico</label>
-                                        <input type="email" class="form-control" id="email" name="email"
-                                               #email="ngModel" placeholder="ejemplo@correo.com"
-                                               [(ngModel)]="userApp.mail" [(ngModel)]="registerAccount.email"
-                                               minlength=5 maxlength=254 email required>
-                                        <div *ngIf="email.dirty && email.invalid">
-                                            <small class="form-text text-danger" *ngIf="email.errors.required"
-                                            >
-                                                Este campo es requerido.
-                                            </small>
-                                            <small class="form-text text-danger" *ngIf="email.errors.invalid"
-                                            >
-                                                Este correo es invalido.
-                                            </small>
-                                            <small class="form-text text-danger" *ngIf="email.errors.minlength"
-                                            >
-                                                Su correo debe tener al menos 5 caracteres de largo.
-                                            </small>
-                                            <small class="form-text text-danger" *ngIf="email.errors.maxlength"
-                                            >
-                                                Su correo no debe tener mas de 100 caracteres de largo.
-                                            </small>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="address"><i class="ft-globe"></i> Dirección</label>
-                                        <input type="text" class="form-control" [(ngModel)]="userApp.address"
-                                               id="address" name="address" #login="ngModel" placeholder="Dirección">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="password"><i class="ft-lock"></i> Contraseña</label>
-                                        <input type="password" class="form-control" id="password" name="password"
-                                               #password="ngModel" placeholder="Contraseña"
-                                               [(ngModel)]="registerAccount.password" minlength=4 maxlength=50 required>
-                                        <div *ngIf="password.dirty && password.invalid">
-                                            <small class="form-text text-danger" *ngIf="password.errors.required"
-                                            >
-                                                Este campo es requerido.
-                                            </small>
-                                            <small class="form-text text-danger" *ngIf="password.errors.minlength"
-                                            >
-                                                Su contraseña debe tener al menos 4 caracteres de largo.
-                                            </small>
-                                            <small class="form-text text-danger" *ngIf="password.errors.maxlength"
-                                            >
-                                                Su contraseña no debe tener mas de 50 caracteres de largo.
-                                            </small>
-                                        </div>
-                                        <p></p>
-                                        <label>Fortaleza:</label>
-
-                                        <jhi-password-strength-bar
-                                            [passwordToCheck]="registerAccount.password"></jhi-password-strength-bar>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="confirmPassword"><i class="ft-lock"></i> Confirmar
-                                            contraseña</label>
-                                        <input type="password" class="form-control" id="confirmPassword"
-                                               name="confirmPassword" #confirmPasswordInput="ngModel"
-                                               placeholder="Confirmar contraseña"
-                                               [(ngModel)]="confirmPassword" minlength=4 maxlength=50 required>
-                                        <div *ngIf="confirmPasswordInput.dirty && confirmPasswordInput.invalid">
-                                            <small class="form-text text-danger"
-                                                   *ngIf="confirmPasswordInput.errors.required"
-                                            >
-                                                Este campo es requerido.
-                                            </small>
-                                            <small class="form-text text-danger"
-                                                   *ngIf="confirmPasswordInput.errors.minlength"
-                                            >
-                                                Su contraseña de confirmación debe tener al menos 4 caracteres de largo.
-                                            </small>
-                                            <small class="form-text text-danger"
-                                                   *ngIf="confirmPasswordInput.errors.maxlength"
-                                            >
-                                                Su contraseña de confirmación no debe tener mas de 50 caracteres de
-                                                largo.
-                                            </small>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Que tipo de usuario desea ser?</label>
-                                        <div class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" id="customRadioInline1" value="institution"
-                                                   name="customRadioInline1" class="custom-control-input"
-                                                   (change)="setRole('institution')">
-                                            <label class="custom-control-label"
-                                                   for="customRadioInline1">Institución</label>
-                                        </div>
-                                        <div class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" id="customRadioInline2" value="participant"
-                                                   name="customRadioInline1" class="custom-control-input"
-                                                   (change)="setRole('participant')">
-                                            <label class="custom-control-label"
-                                                   for="customRadioInline2">Participante</label>
+                                    <div _ngcontent-c24="" class="form-group row">
+                                        <label _ngcontent-c24="" class="col-md-3 label-control">¿Qué tipo de usuario desea ser? </label>
+                                        <div _ngcontent-c24="" class="col-md-9">
+                                            <div _ngcontent-c24="" class="col-md-9">
+                                                <div _ngcontent-c24="" class="custom-control custom-radio">
+                                                    <input type="radio" id="customRadioInline1" value="institution"
+                                                           name="customRadioInline1" class="custom-control-input"
+                                                           (change)="setRole('institution')">
+                                                    <label class="custom-control-label"
+                                                           for="customRadioInline1">Institución</label>
+                                                </div>
+                                                <div _ngcontent-c24="" class="custom-control custom-radio">
+                                                    <input type="radio" id="customRadioInline2" value="participant"
+                                                           name="customRadioInline1" class="custom-control-input"
+                                                           (change)="setRole('participant')">
+                                                    <label class="custom-control-label"
+                                                           for="customRadioInline2">Participante</label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="form-actions center">
-                            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="previousState()">
-                                <i class="ft-x"></i> Atras
-                            </button>
+                        <div class="form-actions right">
+                            <a href="">
+                                <button type="button" class="btn btn-raised btn-warning mr-1">
+                                    <i class="ft-x"></i> Atras
+                                </button>
+                            </a>
                             <button type="submit"
                                     [disabled]="registerForm.form.invalid ||userApp.rol === ''"
                                     class="btn btn-raised btn-primary">
@@ -204,7 +245,6 @@
                             </button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>

@@ -30,13 +30,24 @@
                                        id="field_answer"
                                        [(ngModel)]="newAnswer.answer"/>
                             </div>
-                            <div>
-                                <button [attr.disabled]="!newAnswer.answer ? '' : null" type="button"
-                                        (click)="addAnswerToQuestion()" id="addAnswerBtn"
+                            <div *ngIf="!newAnswer.answer; else validAnswerInput" [ngbPopover]="popoverAnswerText"
+                                 triggers="mouseenter:mouseleave" popoverTitle="Respuesta inválida." class="col-6">
+                                <button [disabled]="true" type="button" id="addAnswerBtn"
                                         class="btn btn-raised btn-primary">
                                     <i class="ft-plus"></i><span id="id"> Agregar respuesta</span>
                                 </button>
                             </div>
+                            <ng-template #popoverAnswerText>
+                                <small>Asegúrese de escribir la respuesta antes de agregarla.</small>
+                            </ng-template>
+                            <ng-template #validAnswerInput>
+                                <div class="col-6">
+                                    <button (click)="addAnswerToQuestion()" id="addAnswerValidBtn"
+                                            class="btn btn-raised btn-primary">
+                                        <i class="ft-plus"></i><span id="answerInputId"> Agregar respuesta</span>
+                                    </button>
+                                </div>
+                            </ng-template>
                         </div>
                         <div id="testPreview" class="col-md-6 col-sm-6 col-lg-6">
                             <label class="">Vista preliminar</label>
@@ -54,13 +65,25 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <button [attr.disabled]="newQuestion.answers.length >= 2 ? null : ''" type="button"
-                                            (click)="addQuestionToTest()" id="addQuestionBtn"
+                                <div [ngbPopover]="popoverQuestionText" popoverTitle="Pregunta incompleta."
+                                     triggers="mouseenter:mouseleave"
+                                     class="col-6" *ngIf="newQuestion.answers.length < 2; else validQuestionBtn">
+                                    <button [disabled]="true" type="button" id="addQuestionBtn"
                                             class="btn btn-raised btn-primary">
                                         <i class="ft-check"></i><span> Completar pregunta.</span>
                                     </button>
                                 </div>
+                                <ng-template #popoverQuestionText>
+                                    <small>Asegúrese de agregar como mínimo 2 respuestas a la pregunta.</small>
+                                </ng-template>
+                                <ng-template #validQuestionBtn>
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-raised btn-primary"
+                                                (click)="addQuestionToTest()" id="addQuestionValidBtn">
+                                            <i class="ft-check"></i><span> Completar pregunta.</span>
+                                        </button>
+                                    </div>
+                                </ng-template>
                             </div>
                         </div>
                     </div>
@@ -90,15 +113,36 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
-                            (click)="previousState()">
-                        <i class="ft-x"></i><span> Cancelar</span>
-                    </button>
-                    <button type="submit" id="save-entity" class="btn btn-raised btn-primary"
-                            [disabled]="!validateQuestions()">
-                        <i class="ft-save"></i>&nbsp;<span> Registrar</span>
-                    </button>
+                <h4 class="form-section"></h4>
+                <div class="row">
+                    <div class="col-auto">
+                        <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
+                                (click)="previousState()">
+                            <i class="ft-x"></i><span> Cancelar</span>
+                        </button>
+                    </div>
+                    <div [ngbPopover]="popoverText"
+                         triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido."
+                         *ngIf="editForm.form.invalid || isSaving || !validateQuestions(); else validRegisterBtn"
+                         class="col-auto">
+                        <button type="submit" id="save-entity-invalid" class="btn btn-raised btn-primary"
+                                [disabled]="true">
+                            <i class="ft-save"></i>&nbsp;<span> Registrar</span>
+                        </button>
+                    </div>
+                    <ng-template #popoverText>
+                        <small class="display-block">Por favor, asegúrese de que todos los campos estén completos.
+                        </small>
+                        <small>Es necesario que agregue mínimo una pregunta a la prueba.
+                        </small>
+                    </ng-template>
+                    <ng-template #validRegisterBtn>
+                        <div class="col-auto">
+                            <button type="submit" id="save-entity-valid" class="btn btn-raised btn-primary">
+                                <i class="ft-save"></i>&nbsp;<span> Registrar</span>
+                            </button>
+                        </div>
+                    </ng-template>
                 </div>
             </div>
         </form>

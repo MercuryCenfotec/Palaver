@@ -37,7 +37,8 @@
                     <div class="form-group col-lg-6 col-md-6 col-sm-12">
                         <label class="form-control-label" for="field_beginDate">Fecha de inicio estimada</label>
                         <div class="input-group">
-                            <input id="field_beginDate" type="text" class="form-control" name="beginDate" ngbDatepicker
+                            <input #floatBeginDate="ngModel" id="field_beginDate" type="text" class="form-control"
+                                   name="beginDate" ngbDatepicker
                                    #beginDateDp="ngbDatepicker" [(ngModel)]="focusGroup.beginDate"
                                    required [readonly]="true"/>
                             <span class="input-group-append">
@@ -45,17 +46,15 @@
                                 [icon]="'calendar-alt'"></fa-icon></button>
                         </span>
                         </div>
-                        <div [hidden]="!(editForm.controls.beginDate?.dirty && editForm.controls.beginDate?.invalid)">
-                            <small class="form-text text-danger"
-                                   [hidden]="!editForm.controls.beginDate?.errors?.required">
-                                ¡Fecha de inicio requerida!
-                            </small>
-                        </div>
+                        <small class="form-text text-muted danger" *ngIf="!floatBeginDate.valid && (floatEndDate.dirty ||
+                                 floatEndDate.touched)">¡Fecha de finalización requerida!
+                        </small>
                     </div>
                     <div class="form-group col-lg-6 col-md-6 col-sm-12">
                         <label class="form-control-label" for="field_endDate">Fecha de finalización estimada</label>
                         <div class="input-group">
-                            <input id="field_endDate" type="text" class="form-control" name="endDate" ngbDatepicker
+                            <input #floatEndDate="ngModel" id="field_endDate" type="text" class="form-control"
+                                   name="endDate" ngbDatepicker
                                    #endDateDp="ngbDatepicker" [(ngModel)]="focusGroup.endDate"
                                    required [readonly]="true"/>
                             <span class="input-group-append">
@@ -63,12 +62,12 @@
                                 [icon]="'calendar-alt'"></fa-icon></button>
                         </span>
                         </div>
-                        <div [hidden]="!(editForm.controls.endDate?.dirty && editForm.controls.endDate?.invalid)">
-                            <small class="form-text text-danger"
-                                   [hidden]="!editForm.controls.endDate?.errors?.required">
-                                This field is required.
-                            </small>
-                        </div>
+                        <small class="form-text text-muted danger" *ngIf="!floatEndDate.valid && (floatEndDate.dirty ||
+                                 floatEndDate.touched)">¡Fecha de finalización requerida!
+                        </small>
+                        <small class="form-text text-muted danger" *ngIf="!validEndDate()">
+                            La fecha de finalización tiene que ser posterior a la fecha inicial.
+                        </small>
                     </div>
 
                     <div class="form-group" [hidden]="true">
@@ -114,15 +113,31 @@
                         </select>
                     </div>
                 </div>
-                <div>
-                    <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1" (click)="previousState()">
-                        <i class="ft-x"></i>&nbsp;<span> Cancelar</span>
-                    </button>
-                    <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving"
-                            class="btn btn-raised btn-primary">
-                        <i class="ft-save"></i>&nbsp;<span> Editar</span>
-                    </button>
+                <div class="row">
+                    <div class="col-auto">
+                        <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
+                                (click)="previousState()">
+                            <i class="ft-x"></i>&nbsp;<span> Cancelar</span>
+                        </button>
+                    </div>
+                    <div *ngIf="editForm.form.invalid || isSaving || !validEndDate(); else validEditBtn"
+                         ngbPopover="Por favor, asegúrese de que todos los campos estén completos."
+                         triggers="mouseenter:mouseleave" popoverTitle="Formulario invalido." class="col-auto">
+                        <button type="submit" id="save-entity-invalid" [disabled]="true"
+                                class="btn btn-raised btn-primary">
+                            <i class="ft-save"></i>&nbsp;<span> Editar</span>
+                        </button>
+                    </div>
+                    <ng-template #validEditBtn>
+                        <div class="col-auto">
+                            <button type="submit" id="save-entity-valid"
+                                    class="btn btn-raised btn-primary">
+                                <i class="ft-save"></i>&nbsp;<span> Editar</span>
+                            </button>
+                        </div>
+                    </ng-template>
                 </div>
+            </div>
         </form>
     </div>
 </div>

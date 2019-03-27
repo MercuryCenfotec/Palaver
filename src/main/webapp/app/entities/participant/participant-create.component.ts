@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -13,8 +13,8 @@ import { ICategory } from 'app/shared/model/category.model';
 import { CategoryService } from 'app/entities/category';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { FocusGroupService } from 'app/entities/focus-group';
-// import * as AWS from 'aws-sdk';
-import { IUser, UserService } from 'app/core';
+import { IUser, LoginService, UserService } from 'app/core';
+import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'jhi-participant-create',
@@ -28,6 +28,7 @@ export class ParticipantCreateComponent implements OnInit {
     user: IUser;
     userApp: IUserApp;
     users: IUserApp[];
+    success: boolean;
 
     categories: ICategory[];
 
@@ -36,15 +37,24 @@ export class ParticipantCreateComponent implements OnInit {
 
     constructor(
         protected jhiAlertService: JhiAlertService,
+        private loginService: LoginService,
         protected participantService: ParticipantService,
         protected userAppService: UserAppService,
+        protected router: Router,
         protected categoryService: CategoryService,
         protected focusGroupService: FocusGroupService,
         protected activatedRoute: ActivatedRoute,
-        protected userService: UserService
+        protected userService: UserService,
+        protected config: NgbDatepickerConfig
     ) {}
 
     ngOnInit() {
+        this.success = false;
+        // Deshabilitar fechas futuras
+        const currentDate = new Date();
+        this.config.maxDate = { year: currentDate.getFullYear() - 5, month: currentDate.getMonth() + 1, day: currentDate.getDate() };
+        this.config.outsideDays = 'hidden';
+
         this.userService.getUserWithAuthorities().subscribe(data => {
             this.user = data;
             this.userAppService.findByUserId(this.user.id).subscribe(userAppData => {
@@ -97,7 +107,8 @@ export class ParticipantCreateComponent implements OnInit {
     }
 
     previousState() {
-        window.history.back();
+        window.location.href = '';
+        this.loginService.logout();
     }
 
     save() {
@@ -121,7 +132,9 @@ export class ParticipantCreateComponent implements OnInit {
 
     protected onSaveSuccess() {
         this.isSaving = false;
-        this.previousState();
+        this.success = true;
+        this.loginService.logout();
+        // this.router.navigate(['/participant-home']);
     }
 
     protected onSaveError() {

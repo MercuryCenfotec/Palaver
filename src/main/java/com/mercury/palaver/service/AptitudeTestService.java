@@ -8,6 +8,7 @@ import com.mercury.palaver.repository.TestQuestionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -21,17 +22,20 @@ public class AptitudeTestService {
     private final TestQuestionRepository testQuestionRepo;
     private final TestAnswerOptionRepository testAnswerOptionRepo;
     private final TestQuestionService testQuestionService;
+    private final FocusGroupService focusGroupService;
 
     public AptitudeTestService(AptitudeTestRepository aptitudeTestRepo,
                                TestQuestionRepository testQuestionRepo,
                                TestAnswerOptionRepository testAnswerOptionRepo,
                                TestQuestionService testQuestionService,
-                               FocusGroupRepository focusGroupRepo) {
+                               FocusGroupRepository focusGroupRepo,
+                               FocusGroupService focusGroupService) {
         this.aptitudeTestRepo = aptitudeTestRepo;
         this.testQuestionRepo = testQuestionRepo;
         this.testAnswerOptionRepo = testAnswerOptionRepo;
         this.testQuestionService = testQuestionService;
         this.focusGroupRepo = focusGroupRepo;
+        this.focusGroupService = focusGroupService;
     }
 
     public AptitudeTest save(AptitudeTest aptitudeTest) {
@@ -56,6 +60,21 @@ public class AptitudeTestService {
         }
         return aptitudeTests;
     }
+
+    public List<AptitudeTest> findAllAvailableByInstitution(Long institutionId) {
+        Institution institution = new Institution();
+        institution.setId(institutionId);
+
+        List<AptitudeTest> availableTests = new ArrayList<>();
+        for (AptitudeTest aptitudeTest : aptitudeTestRepo.findAllByInstitution(institution)) {
+            if (focusGroupService.testIsAvailable(aptitudeTest.getId())){
+                aptitudeTest.setQuestions(new HashSet<>(testQuestionService.findAllQuestionsAndAnswersByAptitudeTestId(aptitudeTest.getId())));
+                availableTests.add(aptitudeTest);
+            }
+        }
+        return availableTests;
+    }
+
 
     public boolean isInUse(Long testId) {
         AptitudeTest test = new AptitudeTest();

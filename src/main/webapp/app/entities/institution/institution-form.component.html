@@ -1,13 +1,16 @@
 <div class="card">
     <div class="card-header">
-        <h2 class="card-title" id="jhi-institution-heading">Instituciones</h2>
+        <div class="alert alert-success" *ngIf="success">
+            <strong>¡Su registro ha sido exitoso!</strong> Por favor inicie sesión nuevamente.
+        </div>
     </div>
     <div class="card-body">
         <div class="px-3">
             <form class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate
-                  (ngSubmit)="save()" #editForm="ngForm">
+                  (ngSubmit)="save()" #editForm="ngForm" *ngIf="!success">
                 <div class="row justify-content-md-center">
                     <div class="col-md-6">
+                        <h2 class="card-title" id="jhi-institution-heading">Instituciones</h2>
                         <div class="form-body">
                             <h4 class="form-section"><i class="ft-user"></i>Registro</h4>
                             <jhi-alert-error></jhi-alert-error>
@@ -44,10 +47,15 @@
                             <div class="form-group">
                                 <label class="form-control-label" for="field_telephone">Teléfono</label>
                                 <input type="text" class="form-control" name="telephone" id="field_telephone"
-                                       [(ngModel)]="institution.telephone" required #floatTelephone="ngModel"/>
-                                <small class="form-text text-muted danger" *ngIf="!floatTelephone.valid && (floatTelephone.dirty ||
-                                 floatTelephone.touched)">¡Telefono requerido!
-                                </small>
+                                       [(ngModel)]="institution.telephone" required #floatTelephone="ngModel" minlength="7"/>
+                                <div class="form-text text-muted danger" *ngIf="floatTelephone.dirty && floatTelephone.invalid || floatTelephone.touched">
+                                    <small class="form-text text-muted danger" *ngIf="floatTelephone.errors.required">
+                                        ¡Telefono requerido!
+                                    </small>
+                                    <small class="form-text text-danger" *ngIf="floatTelephone.errors.minlength">
+                                        Tu teléfono debe tener al menos 7 caracteres de largo.
+                                    </small>
+                                </div>
                             </div>
                             <!--<div class="form-group">
                                 <label class="form-control-label" for="field_membership">Membresía</label>

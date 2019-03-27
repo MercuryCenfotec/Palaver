@@ -508,6 +508,54 @@ public class UserResourceIntTest {
 
     @Test
     @Transactional
+    public void updateUserRoleInstitution() throws Exception {
+        // Initialize the database
+        userRepository.saveAndFlush(user);
+        int databaseSizeBeforeUpdate = userRepository.findAll().size();
+
+        // Update the user
+        User updatedUser = userRepository.findById(user.getId()).get();
+
+        restUserMockMvc.perform(put("/api/users/add_authorization/institution")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(updatedUser)))
+            .andExpect(status().isOk());
+
+        // Validate the User in the database
+        List<User> userList = userRepository.findAll();
+        assertThat(userList).hasSize(databaseSizeBeforeUpdate);
+        User testUser = userList.get(userList.size() - 1);
+        Authority auth = new Authority();
+        auth.setName(AuthoritiesConstants.INSTITUTION);
+        assertThat(testUser.getAuthorities()).contains(auth);
+    }
+
+    @Test
+    @Transactional
+    public void updateUserRoleParticipant() throws Exception {
+        // Initialize the database
+        userRepository.saveAndFlush(user);
+        int databaseSizeBeforeUpdate = userRepository.findAll().size();
+
+        // Update the user
+        User updatedUser = userRepository.findById(user.getId()).get();
+
+        restUserMockMvc.perform(put("/api/users/add_authorization/participant")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(updatedUser)))
+            .andExpect(status().isOk());
+
+        // Validate the User in the database
+        List<User> userList = userRepository.findAll();
+        assertThat(userList).hasSize(databaseSizeBeforeUpdate);
+        User testUser = userList.get(userList.size() - 1);
+        Authority auth = new Authority();
+        auth.setName(AuthoritiesConstants.PARTICIPANT);
+        assertThat(testUser.getAuthorities()).contains(auth);
+    }
+
+    @Test
+    @Transactional
     public void testUserEquals() throws Exception {
         TestUtil.equalsVerifier(User.class);
         User user1 = new User();
