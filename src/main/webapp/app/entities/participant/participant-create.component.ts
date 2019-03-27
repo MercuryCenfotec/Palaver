@@ -28,6 +28,7 @@ export class ParticipantCreateComponent implements OnInit {
     user: IUser;
     userApp: IUserApp;
     users: IUserApp[];
+    success: boolean;
 
     categories: ICategory[];
 
@@ -48,7 +49,8 @@ export class ParticipantCreateComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        //Deshabilitar fechas futuras
+        this.success = false;
+        // Deshabilitar fechas futuras
         const currentDate = new Date();
         this.config.maxDate = { year: currentDate.getFullYear() - 5, month: currentDate.getMonth() + 1, day: currentDate.getDate() };
         this.config.outsideDays = 'hidden';
@@ -130,7 +132,9 @@ export class ParticipantCreateComponent implements OnInit {
 
     protected onSaveSuccess() {
         this.isSaving = false;
-        this.router.navigate(['/participant-home']);
+        this.success = true;
+        this.loginService.logout();
+         // this.router.navigate(['/participant-home']);
     }
 
     protected onSaveError() {
