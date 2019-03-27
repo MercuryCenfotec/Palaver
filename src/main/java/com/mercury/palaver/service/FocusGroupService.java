@@ -1,5 +1,6 @@
 package com.mercury.palaver.service;
 
+import com.mercury.palaver.domain.AptitudeTest;
 import com.mercury.palaver.domain.FocusGroup;
 import com.mercury.palaver.domain.TestAnswerOption;
 import com.mercury.palaver.domain.TestQuestion;
@@ -52,5 +53,12 @@ public class FocusGroupService {
             return true;
         }
         return false;
+    }
+
+    public boolean testIsAvailable(Long testId) {
+        AptitudeTest test = new AptitudeTest();
+        test.setId(testId);
+        Optional<FocusGroup> opt = focusGroupRepo.findByAptitudeTest(test);
+        return !opt.isPresent();
     }
 }

@@ -134,7 +134,7 @@ export class ParticipantCreateComponent implements OnInit {
         this.isSaving = false;
         this.success = true;
         this.loginService.logout();
-         // this.router.navigate(['/participant-home']);
+        // this.router.navigate(['/participant-home']);
     }
 
     protected onSaveError() {

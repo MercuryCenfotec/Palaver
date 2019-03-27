@@ -28,19 +28,12 @@
                         <table class="table table-responsive-md text-center">
                             <thead>
                             <tr>
-                                <th><span></span></th>
                                 <th><span>Nombre</span></th>
                                 <th><span>Acciones</span></th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr *ngFor="let aptitudeTest of aptitudeTests | filter:searchText; trackBy: trackId">
-                                <td>
-                                    <div class="custom-control custom-checkbox m-0">
-                                        <input type="checkbox" class="custom-control-input" id="{{aptitudeTest.id}}">
-                                        <label class="custom-control-label" for="{{aptitudeTest.id}}"></label>
-                                    </div>
-                                </td>
                                 <td>{{aptitudeTest.name}}</td>
                                 <td>
                                     <a class="info p-0" data-original-title="" title=""

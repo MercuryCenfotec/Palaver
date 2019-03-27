@@ -3,7 +3,7 @@ import { DragulaModule } from 'ng2-dragula';
 import { ClipboardModule } from 'ngx-clipboard';
 import { PalaverSharedLibsModule, JhiAlertComponent, JhiAlertErrorComponent } from './';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
-import { NgbDatepickerModule, NgbModalModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerModule, NgbModalModule, NgbPopoverModule, NgbTimepickerModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 @NgModule({
@@ -17,7 +17,9 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
         NgbDatepickerModule.forRoot(),
         NgbTimepickerModule.forRoot(),
         DragulaModule.forRoot(),
-        ClipboardModule
+        ClipboardModule,
+        NgbTooltipModule,
+        NgbPopoverModule
     ],
     declarations: [JhiAlertComponent, JhiAlertErrorComponent],
     exports: [

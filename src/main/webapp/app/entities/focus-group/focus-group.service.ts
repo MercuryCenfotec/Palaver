@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
+import { IAptitudeTest } from 'app/shared/model/aptitude-test.model';
 
 type EntityResponseType = HttpResponse<IFocusGroup>;
 type EntityArrayResponseType = HttpResponse<IFocusGroup[]>;
@@ -89,5 +90,9 @@ export class FocusGroupService {
 
     isCancelable(groupId: number): Observable<HttpResponse<boolean>> {
         return this.http.get<boolean>(`${this.resourceUrl}/cancelable/${groupId}`, { observe: 'response' });
+    }
+
+    testIsAvailable(testId: number): Observable<HttpResponse<boolean>> {
+        return this.http.get<boolean>(`${this.resourceUrl}/aptitude-test/${testId}`, { observe: 'response' });
     }
 }

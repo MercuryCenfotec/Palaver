@@ -117,5 +117,4 @@ export class InstitutionFormComponent implements OnInit {
     protected onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
     }
-
 }
