@@ -121,7 +121,7 @@
                 <div
                     *ngIf="editForm.form.invalid || isSaving || !validateAnswers() || !validEndDate(); else validEditBtn"
                     [ngbPopover]="popoverText"
-                    triggers="mouseenter:mouseleave" popoverTitle="Formulario invalido." class="col-auto">
+                    triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido." class="col-auto">
                     <button type="submit" id="save-entity-invalid" [disabled]="true"
                             class="btn btn-raised btn-primary">
                         <i class="ft-save"></i>&nbsp;<span> Guardar</span>
