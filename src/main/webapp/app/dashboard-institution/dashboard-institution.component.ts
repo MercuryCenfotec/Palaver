@@ -45,7 +45,7 @@ export class DashboardInstitutionComponent implements OnInit {
 
     loadParticipants(pThis) {
         for (let i = 0; i < this.focusGroups.length; i++) {
-            this.focusGroups[i].participants.forEach(function (value) {
+            this.focusGroups[i].participants.forEach(value => {
                 if (!pThis.searchParticipant(pThis, value)) {
                     pThis.participants.push(value);
                 }
@@ -57,7 +57,7 @@ export class DashboardInstitutionComponent implements OnInit {
         let found = false;
 
         if (pThis.participants.length > 0) {
-            pThis.participants.forEach(function (resp) {
+            pThis.participants.forEach(resp => {
                 if (resp.id === value.id) {
                     found = true;
                 }

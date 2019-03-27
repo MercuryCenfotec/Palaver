@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 
-import { VERSION } from 'app/app.constants';
-import { AccountService, LoginModalService, LoginService, UserService } from 'app/core';
-import { ProfileService } from 'app/layouts/profiles/profile.service';
-import { IUserApp, UserApp } from 'app/shared/model/user-app.model';
-import { IParticipant } from 'app/shared/model/participant.model';
-import { ParticipantService } from 'app/entities/participant';
-import { UserAppService } from 'app/entities/user-app';
+import {VERSION} from 'app/app.constants';
+import {AccountService, LoginModalService, LoginService, UserService} from 'app/core';
+import {ProfileService} from 'app/layouts/profiles/profile.service';
+import {IUserApp, UserApp} from 'app/shared/model/user-app.model';
+import {IParticipant, Participant} from 'app/shared/model/participant.model';
+import {ParticipantService} from 'app/entities/participant';
+import {UserAppService} from 'app/entities/user-app';
+import {InstitutionService} from 'app/entities/institution';
+import {IInstitution, Institution} from 'app/shared/model/institution.model';
 
 @Component({
     selector: 'jhi-navbar',
@@ -24,7 +26,8 @@ export class NavbarComponent implements OnInit {
     version: string;
     user: IUserApp;
     currentAccount: any;
-    participant: IParticipant;
+    participant = new Participant(null, null, null, null, '', null, null, null);
+    institution = new Institution(null, '', '', '', '', null);
 
     constructor(
         private loginService: LoginService,
@@ -34,7 +37,8 @@ export class NavbarComponent implements OnInit {
         private participantService: ParticipantService,
         protected userAppService: UserAppService,
         private router: Router,
-        private userService: UserService
+        private userService: UserService,
+        private institutionService: InstitutionService
     ) {
         this.version = VERSION ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
@@ -42,11 +46,6 @@ export class NavbarComponent implements OnInit {
 
     ngOnInit() {
         this.currentAccount = this.userService.getUserWithAuthorities().forEach(jhiUser => {
-            this.userAppService.findByUserId(jhiUser.id).subscribe(userApp => {
-                this.participantService.findByUser(userApp.id).subscribe(foundParticipant => {
-                    this.participant = foundParticipant;
-                });
-            });
         });
 
         this.profileService.getProfileInfo().then(profileInfo => {
@@ -83,117 +82,126 @@ export class NavbarComponent implements OnInit {
 
     findActualUser() {
         this.currentAccount = this.userService.getUserWithAuthorities().subscribe(jhiUser => {
-            this.userService.query().subscribe(tmpUser => {
-                for (let k = 0; k < tmpUser.body.length; k++) {
-                    if (tmpUser.body[k].id === jhiUser.id) {
-                        let permissions: string[] = [];
-                        for (let i = 0; i < tmpUser.body[k].authorities.length; i++) {
-                            switch (tmpUser.body[k].authorities[i]) {
-                                case 'ROLE_ADMIN':
-                                    permissions = [
-                                        'calendarPermissions',
-                                        'participantProfilePermissions',
-                                        'userAppPermissions',
-                                        'participantPermissions',
-                                        'institutionPermissions',
-                                        'incentivePermissions',
-                                        'aptitudeTestsPermissions',
-                                        'testResultPermissions',
-                                        'testQuestionPermissions',
-                                        'testAnswerPermissions',
-                                        'focusGroupPermissions',
-                                        'meetingPermissions',
-                                        'membershipPermissions',
-                                        'paymentMethodPermissions',
-                                        'systemVariablePermissions',
-                                        'categoryPermissions',
-                                        'balancePermissions',
-                                        'paymentPermissions'
-                                    ];
-                                    break;
-                                case 'ROLE_PARTICIPANT':
-                                    permissions = [
-                                        'calendarPermissions',
-                                        'participantProfilePermissions',
-                                        'paymentMethodPermissions',
-                                        'balancePermissions',
-                                        'paymentPermissions'
-                                    ];
-                                    break;
-                                case 'ROLE_INSTITUTION':
-                                    permissions = [
-                                        'incentivePermissions',
-                                        'aptitudeTestsPermissions',
-                                        'focusGroupPermissions',
-                                        'membershipPermissions',
-                                        'paymentMethodPermissions',
-                                        'categoryPermissions',
-                                        'balancePermissions',
-                                        'paymentPermissions'
-                                    ];
-                                    break;
-                                case 'ROLE_SUBADMIN':
-                                    permissions = [
-                                        'userAppPermissions',
-                                        'participantPermissions',
-                                        'institutionPermissions',
-                                        'incentivePermissions',
-                                        'aptitudeTestsPermissions',
-                                        'testResultPermissions',
-                                        'testQuestionPermissions',
-                                        'testAnswerPermissions',
-                                        'focusGroupPermissions',
-                                        'meetingPermissions',
-                                        'membershipPermissions',
-                                        'paymentMethodPermissions',
-                                        'systemVariablePermissions',
-                                        'categoryPermissions',
-                                        'balancePermissions',
-                                        'paymentPermissions'
-                                    ];
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                        for (let j = 0; j < permissions.length; j++) {
-                            document.getElementById(permissions[j]).hidden = false;
-                        }
+            if (jhiUser.authorities.includes('ROLE_INSTITUTION') ||
+                jhiUser.authorities.includes('ROLE_PARTICIPANT')) {
+                this.userAppService.findByUserId(jhiUser.id).subscribe(userApp => {
+                    if (userApp.rol === 'institution') {
+                        this.institutionService.getByUserUser(jhiUser.id).subscribe(foundInstitution => {
+                            this.institution = foundInstitution.body;
+                            this.participant.id = 0;
+                        });
+                    } else if (userApp.rol === 'participant') {
+                        this.participantService.findByUser(userApp.id).subscribe(foundParticipant => {
+                            this.participant = foundParticipant;
+                            this.institution.id = 0;
+                        });
                     }
-                }
-            });
+                });
+            }
+            this.setPermissions(jhiUser);
         });
+    }
+
+    setPermissions(jhiUser) {
+        let permissions: string[] = [];
+        for (let i = 0; i < jhiUser.authorities.length; i++) {
+            switch (jhiUser.authorities[i]) {
+                case 'ROLE_ADMIN':
+                    permissions = [
+                        'calendarPermissions',
+                        'userAppPermissions',
+                        'participantPermissions',
+                        'institutionPermissions',
+                        'incentivePermissions',
+                        'aptitudeTestsPermissions',
+                        'testResultPermissions',
+                        'testQuestionPermissions',
+                        'testAnswerPermissions',
+                        'focusGroupPermissions',
+                        'meetingPermissions',
+                        'membershipPermissions',
+                        'paymentMethodPermissions',
+                        'systemVariablePermissions',
+                        'categoryPermissions',
+                        'balancePermissions',
+                        'paymentPermissions'
+                    ];
+                    break;
+                case 'ROLE_PARTICIPANT':
+                    permissions = [
+                        'calendarPermissions',
+                        'participantPPermissions',
+                        'paymentMethodPermissions',
+                        'balancePermissions',
+                        'paymentPermissions'
+                    ];
+                    break;
+                case 'ROLE_INSTITUTION':
+                    permissions = [
+                        'institutionPPermissions',
+                        'incentivePermissions',
+                        'aptitudeTestsPermissions',
+                        'focusGroupPermissions',
+                        'membershipPermissions',
+                        'paymentMethodPermissions',
+                        'categoryPermissions',
+                        'balancePermissions',
+                        'paymentPermissions'
+                    ];
+                    break;
+                case 'ROLE_SUBADMIN':
+                    permissions = [
+                        'userAppPermissions',
+                        'participantPermissions',
+                        'institutionPermissions',
+                        'incentivePermissions',
+                        'aptitudeTestsPermissions',
+                        'testResultPermissions',
+                        'testQuestionPermissions',
+                        'testAnswerPermissions',
+                        'focusGroupPermissions',
+                        'meetingPermissions',
+                        'membershipPermissions',
+                        'paymentMethodPermissions',
+                        'systemVariablePermissions',
+                        'categoryPermissions',
+                        'balancePermissions',
+                        'paymentPermissions'
+                    ];
+                    break;
+                default:
+                    break;
+            }
+        }
+        for (let j = 0; j < permissions.length; j++) {
+            document.getElementById(permissions[j]).hidden = false;
+        }
     }
 
     logoRedirection() {
         this.currentAccount = this.userService.getUserWithAuthorities().subscribe(jhiUser => {
-            this.userService.query().subscribe(tmpUser => {
-                for (let k = 0; k < tmpUser.body.length; k++) {
-                    if (tmpUser.body[k].id === jhiUser.id) {
-                        for (let i = 0; i < tmpUser.body[k].authorities.length; i++) {
-                            switch (tmpUser.body[k].authorities[i]) {
-                                case 'ROLE_ADMIN':
-                                    this.router.navigate(['']);
-                                    break;
-                                case 'ROLE_PARTICIPANT':
-                                    this.router.navigate(['participant-home']);
-                                    break;
-                                case 'ROLE_INSTITUTION':
-                                    this.router.navigate(['dashboard-institution']);
-                                    break;
-                                case 'ROLE_SUBADMIN':
-                                    this.router.navigate(['']);
-                                    break;
-                                case 'ROLE_GROUP':
-                                    this.router.navigate(['focus-group/management']);
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                    }
+            for (let i = 0; i < jhiUser.authorities.length; i++) {
+                switch (jhiUser.authorities[i]) {
+                    case 'ROLE_ADMIN':
+                        this.router.navigate(['']);
+                        break;
+                    case 'ROLE_PARTICIPANT':
+                        this.router.navigate(['participant-home']);
+                        break;
+                    case 'ROLE_INSTITUTION':
+                        this.router.navigate(['dashboard-institution']);
+                        break;
+                    case 'ROLE_SUBADMIN':
+                        this.router.navigate(['']);
+                        break;
+                    case 'ROLE_GROUP':
+                        this.loginService.logout();
+                        this.router.navigate(['']);
+                        break;
+                    default:
+                        break;
                 }
-            });
+            }
         });
     }
 }
