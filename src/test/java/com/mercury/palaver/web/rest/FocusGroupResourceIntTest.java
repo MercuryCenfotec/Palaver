@@ -3,6 +3,7 @@ package com.mercury.palaver.web.rest;
 import com.mercury.palaver.PalaverApp;
 
 import com.mercury.palaver.domain.FocusGroup;
+import com.mercury.palaver.domain.Institution;
 import com.mercury.palaver.repository.FocusGroupRepository;
 import com.mercury.palaver.service.FocusGroupService;
 import com.mercury.palaver.web.rest.errors.ExceptionTranslator;
@@ -69,6 +70,7 @@ public class FocusGroupResourceIntTest {
     @Autowired
     private FocusGroupRepository focusGroupRepository;
 
+    @Autowired
     private FocusGroupService focusGroupService;
 
     @Mock
@@ -115,13 +117,17 @@ public class FocusGroupResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static FocusGroup createEntity(EntityManager em) {
+        Long l = new Long(1);
+        Institution institution = new Institution();
+        institution.setId(l);
         FocusGroup focusGroup = new FocusGroup()
             .name(DEFAULT_NAME)
             .description(DEFAULT_DESCRIPTION)
             .beginDate(DEFAULT_BEGIN_DATE)
             .endDate(DEFAULT_END_DATE)
             .code(DEFAULT_CODE)
-            .passingGrade(DEFAULT_PASSING_GRADE);
+            .passingGrade(DEFAULT_PASSING_GRADE)
+            .institution(institution);
         return focusGroup;
     }
 
@@ -149,7 +155,6 @@ public class FocusGroupResourceIntTest {
         assertThat(testFocusGroup.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testFocusGroup.getBeginDate()).isEqualTo(DEFAULT_BEGIN_DATE);
         assertThat(testFocusGroup.getEndDate()).isEqualTo(DEFAULT_END_DATE);
-        assertThat(testFocusGroup.getCode()).isEqualTo(DEFAULT_CODE);
         assertThat(testFocusGroup.getPassingGrade()).isEqualTo(DEFAULT_PASSING_GRADE);
     }
 

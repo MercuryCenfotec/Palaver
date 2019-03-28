@@ -69,6 +69,7 @@ public class AptitudeTestResourceIntTest {
 
     private AptitudeTest aptitudeTest;
 
+    @Autowired
     private AptitudeTestService aptitudeTestService;
 
     @Before

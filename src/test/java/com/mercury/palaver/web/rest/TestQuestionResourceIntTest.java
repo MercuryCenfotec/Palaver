@@ -66,6 +66,7 @@ public class TestQuestionResourceIntTest {
 
     private TestQuestion testQuestion;
 
+    @Autowired
     private TestQuestionService testQuestionService;
 
     @Before
