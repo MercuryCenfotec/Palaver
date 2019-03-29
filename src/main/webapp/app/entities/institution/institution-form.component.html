@@ -24,7 +24,7 @@
                                 <input type="text" class="form-control" name="name" id="field_name"
                                        [(ngModel)]="institution.name" required #floatName="ngModel"/>
                                 <small class="form-text text-muted danger" *ngIf="!floatName.valid && (floatName.dirty ||
-                                 floatName.touched)">¡Nombre requerido!
+                                 floatName.touched)">Este campo es requerido.
                                 </small>
                             </div>
                             <div class="form-group">
@@ -33,7 +33,7 @@
                                           [(ngModel)]="institution.description" required #floatDescription="ngModel"
                                           [ngModelOptions]="{updateOn: 'blur'}"></textarea>
                                 <small class="form-text text-muted danger" *ngIf="!floatDescription.valid &&
-                                (floatDescription.dirty || floatDescription.touched)">¡Descripción requerida!
+                                (floatDescription.dirty || floatDescription.touched)">Este campo es requerido.
                                 </small>
                             </div>
                             <!--<div class="form-group">
@@ -48,9 +48,9 @@
                                 <label class="form-control-label" for="field_telephone">Teléfono</label>
                                 <input type="text" class="form-control" name="telephone" id="field_telephone"
                                        [(ngModel)]="institution.telephone" required #floatTelephone="ngModel" minlength="7"/>
-                                <div class="form-text text-muted danger" *ngIf="floatTelephone.dirty && floatTelephone.invalid || floatTelephone.touched">
+                                <div class="form-text text-muted danger" *ngIf="(floatTelephone.dirty || floatTelephone.touched) && floatTelephone.invalid">
                                     <small class="form-text text-muted danger" *ngIf="floatTelephone.errors.required">
-                                        ¡Telefono requerido!
+                                        Este campo es requerido.
                                     </small>
                                     <small class="form-text text-danger" *ngIf="floatTelephone.errors.minlength">
                                         Tu teléfono debe tener al menos 7 caracteres de largo.
