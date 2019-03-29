@@ -68,16 +68,35 @@
                                 </select>
                             </div>-->
                         </div>
-                        <div class="form-actions">
-                            <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
-                                    (click)="previousState()">
-                                <i class="ft-x"></i> Cancelar
-                            </button>
-                            <button class="btn btn-raised btn-primary" type="submit" id="save-entity"
-                                    [disabled]="editForm.form.invalid || isSaving">
-                                <i class="ft ft-file-text"></i> Registrar
-                            </button>
-
+                        <div class="row">
+                            <div class="col-auto">
+                                <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
+                                        (click)="previousState()">
+                                    <i class="ft-x"></i> Cancelar
+                                </button>
+                            </div>
+                            <div [ngbPopover]="popoverText"
+                                 triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido."
+                                 *ngIf="editForm.form.invalid || isSaving; else validRegisterBtn"
+                                 class="col-auto">
+                                <button type="submit"
+                                        [disabled]="true"
+                                        class="btn btn-raised btn-primary">
+                                    <i class="ft ft-file-text"></i> Registrar
+                                </button>
+                            </div>
+                            <ng-template #popoverText>
+                                <small class="display-block">Por favor, asegúrese de que todos los campos estén completos.
+                                </small>
+                            </ng-template>
+                            <ng-template #validRegisterBtn>
+                                <div class="col-auto">
+                                    <button type="submit" id="save-entity"
+                                            class="btn btn-raised btn-primary">
+                                        <i class="ft ft-file-text"></i> Registrar
+                                    </button>
+                                </div>
+                            </ng-template>
                         </div>
                     </div>
 

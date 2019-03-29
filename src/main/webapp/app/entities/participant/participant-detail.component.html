@@ -14,9 +14,7 @@
                         </div>
                         <div class="col-2">
                             <div class="align-self-center halfway-fab text-center">
-                                <a class="profile-image">
                                     <img src="https://lh3.googleusercontent.com/2aJfB6trLglywvIh6MSN58qh-r2b-_2GoXk4dWL5fIZmMAWdTN3f98Ugpi6U_glIm0w" class="rounded-circle img-border gradient-summer width-100" alt="Card image">
-                                </a>
                             </div>
                         </div>
                         <div class="col-5">
@@ -47,13 +45,11 @@
                         <div class="col-12 col-md-6 col-lg-4">
                             <ul class="no-list-style">
                                 <li class="mb-2" *ngIf="participant.user">
-                                    <span class="text-bold-500 primary"><a><i class="ft ft-clipboard"></i> Nombre:</a></span>
-                                    <span class="display-block overflow-hidden">
-                                        <a class="black" [routerLink]="['/user-app', participant.user?.id, 'view']">{{participant.user?.name}}</a>
-                                    </span>
+                                    <span class="text-bold-500 primary"><i class="ft ft-clipboard"></i> Nombre:</span>
+                                    <span class="display-block overflow-hidden" [routerLink]="['/user-app', participant.user?.id, 'view']">{{participant.user?.name}}</span>
                                 </li>
                                 <li class="mb-2">
-                                    <span class="text-bold-500 primary"><a><i class="ft ft-map-pin"></i> Fecha de nacimiento:</a></span>
+                                    <span class="text-bold-500 primary"><i class="ft ft-calendar"></i> Fecha de nacimiento:</span>
                                     <span class="display-block overflow-hidden">{{participant.birthdate | date}}</span>
                                 </li>
                             </ul>
@@ -61,7 +57,7 @@
                         <div class="col-12 col-md-6 col-lg-4">
                             <ul class="no-list-style">
                                 <li class="mb-2">
-                                    <span class="text-bold-500 primary"><a><i class="ft ft-message-square"></i> Estado civil:</a></span>
+                                    <span class="text-bold-500 primary"><i class="ft ft-message-square"></i> Estado civil:</span>
                                     <div [ngSwitch]="participant.gender">
                                         <div *ngSwitchCase="'MALE'">
                                             <div [ngSwitch]="participant.civilStatus">
@@ -121,7 +117,7 @@
                                     <!--</span>-->
                                 <!--</li>-->
                                 <li class="mb-2">
-                                    <span class="text-bold-500 primary"><a><i class="ft ft-user"></i> Género:</a></span>
+                                    <span class="text-bold-500 primary"><i class="ft ft-user"></i> Género:</span>
 
                                     <div [ngSwitch]="participant.gender">
                                         <span class="display-block overflow-hidden" *ngSwitchCase="'MALE'">Hombre</span>

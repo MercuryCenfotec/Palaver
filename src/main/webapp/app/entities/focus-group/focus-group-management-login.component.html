@@ -6,18 +6,18 @@
                     <div class="card gradient-indigo-purple text-center width-700">
                         <div class="card-body">
                             <div class="card-block">
-                                <h2 class="white">Ingrese su codigo de grupo</h2>
+                                <h2 class="white">Ingrese su código de grupo</h2>
                                 <hr/>
                                 <form role="form" (ngSubmit)="login()">
 
                                     <div class="alert alert-warning" *ngIf="authenticationError">
-                                        <strong>¡Fallo al autentificar el codigo!</strong> Por favor revise sus credenciales y
+                                        <strong>¡Fallo al autentificar el código!</strong> Por favor revise sus credenciales y
                                         vuelva a intentar.
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-12">
                                             <input type="text" class="form-control" name="code" id="code"
-                                                   placeholder="Codigo de grupo" required [(ngModel)]="code" [(ngModel)]="password" [(ngModel)]="username">
+                                                   placeholder="Código de grupo" required [(ngModel)]="code" [(ngModel)]="password" [(ngModel)]="username">
                                         </div>
                                     </div>
                                     <div class="form-group">

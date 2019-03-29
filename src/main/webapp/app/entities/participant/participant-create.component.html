@@ -117,15 +117,34 @@
                             <!--</div>-->
 
                         </div>
-                        <div _ngcontent-c5="" class="form-actions right">
-                            <button _ngcontent-c5="" class="btn btn-raised btn-warning mr-1" type="button" id="cancel-save" (click)="previousState()">
-                                <i _ngcontent-c5="" class="ft-x"></i>
-                                <fa-icon></fa-icon>Cancelar
-                            </button>
-                            <button _ngcontent-c5="" class="btn btn-raised btn-primary" type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving">
-                                <i _ngcontent-c5="" class="ft ft-file-text"></i>
-                                <fa-icon></fa-icon>Registrar
-                            </button>
+                        <div _ngcontent-c5="" class="row form-actions right">
+                            <div class="col-auto">
+                                <button _ngcontent-c5="" class="btn btn-raised btn-warning mr-1" type="button" id="cancel-save" (click)="previousState()">
+                                    <i _ngcontent-c5="" class="ft-x"></i>
+                                    <fa-icon></fa-icon>Cancelar
+                                </button>
+                            </div>
+                            <div [ngbPopover]="popoverText"
+                                 triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido."
+                                 *ngIf="editForm.form.invalid || isSaving; else validRegisterBtn"
+                                 class="col-auto">
+                                <button _ngcontent-c5="" class="btn btn-raised btn-primary" type="submit" id="save-entity" [disabled]="true">
+                                    <i _ngcontent-c5="" class="ft ft-file-text"></i>
+                                    <fa-icon></fa-icon>Registrar
+                                </button>
+                            </div>
+                            <ng-template #popoverText>
+                                <small class="display-block">Por favor, asegúrese de que todos los campos estén completos.
+                                </small>
+                            </ng-template>
+                            <ng-template #validRegisterBtn>
+                                <div class="col-auto">
+                                    <button _ngcontent-c5="" class="btn btn-raised btn-primary" type="submit" id="save-entity">
+                                        <i _ngcontent-c5="" class="ft ft-file-text"></i>
+                                        <fa-icon></fa-icon>Registrar
+                                    </button>
+                                </div>
+                            </ng-template>
                         </div>
                     </form>
                 </div>
