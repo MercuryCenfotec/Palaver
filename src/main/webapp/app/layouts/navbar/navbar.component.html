@@ -45,8 +45,15 @@
                                     <span>Participante</span>
                                 </a>
                             </li>
-                            <li id="participantProfilePermissions" hidden *ngIf="participant">
+                            <li id="participantPPermissions" hidden *ngIf="participant">
                                 <a class="dropdown-item" [routerLink]="['/participant', participant.id, 'view' ]" routerLinkActive="active"
+                                   [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                                    <fa-icon icon="user" fixedWidth="true"></fa-icon>
+                                    <span>Mi perfil</span>
+                                </a>
+                            </li>
+                            <li id="institutionPPermissions" hidden *ngIf="institution">
+                                <a class="dropdown-item" [routerLink]="['/institution', institution.id, 'view' ]" routerLinkActive="active"
                                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                                     <fa-icon icon="user" fixedWidth="true"></fa-icon>
                                     <span>Mi perfil</span>

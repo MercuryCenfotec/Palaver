@@ -120,7 +120,7 @@ public class UserService {
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         Set<Authority> authorities = new HashSet<>();
         authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
-        if(userDTO.getAuthorities() != null){
+        if(userDTO.getAuthorities() != null && userDTO.getAuthorities().contains("subadmin")){
             authorityRepository.findById(AuthoritiesConstants.SUBADMIN).ifPresent(authorities::add);
         }
         newUser.setAuthorities(authorities);

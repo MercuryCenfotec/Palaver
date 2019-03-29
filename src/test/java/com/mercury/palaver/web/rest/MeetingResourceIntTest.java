@@ -68,6 +68,7 @@ public class MeetingResourceIntTest {
     @Autowired
     private MeetingRepository meetingRepository;
 
+    @Autowired
     private ZoomApiService zoomApiService;
 
     @Autowired
@@ -142,8 +143,8 @@ public class MeetingResourceIntTest {
         assertThat(testMeeting.getTime()).isEqualTo(DEFAULT_TIME);
         assertThat(testMeeting.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testMeeting.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
-        assertThat(testMeeting.getCallURL()).isEqualTo(DEFAULT_CALL_URL);
-        assertThat(testMeeting.getCallCode()).isEqualTo(DEFAULT_CALL_CODE);
+        assertThat(testMeeting.getCallURL()).contains("https://zoom.us/");
+        assertThat(testMeeting.getCallCode()).contains("https://zoom.us/");
     }
 
     @Test
