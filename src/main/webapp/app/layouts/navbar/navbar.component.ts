@@ -179,6 +179,7 @@ export class NavbarComponent implements OnInit {
     }
 
     logoRedirection() {
+        this.router.navigate(['']);
         this.currentAccount = this.userService.getUserWithAuthorities().subscribe(jhiUser => {
             for (let i = 0; i < jhiUser.authorities.length; i++) {
                 switch (jhiUser.authorities[i]) {
@@ -199,6 +200,7 @@ export class NavbarComponent implements OnInit {
                         this.router.navigate(['']);
                         break;
                     default:
+                        this.router.navigate(['']);
                         break;
                 }
             }

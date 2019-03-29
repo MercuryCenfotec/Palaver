@@ -20,11 +20,26 @@
                                                    placeholder="Código de grupo" required [(ngModel)]="code" [(ngModel)]="password" [(ngModel)]="username">
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <button [disabled]="code === undefined" type="submit" class="btn btn-pink btn-block btn-raised">Confirmar</button>
-                                        </div>
+                                    <div [ngbPopover]="popoverText"
+                                         triggers="mouseenter:mouseleave" popoverTitle="Código inválido."
+                                         *ngIf="code === undefined; else validRegisterBtn"
+                                         class="col-md-12">
+                                        <button type="submit"
+                                                [disabled]="true"
+                                                class="btn btn-pink btn-block btn-raised">Confirmar
+                                        </button>
                                     </div>
+                                    <ng-template #popoverText>
+                                        <small class="display-block">Por favor, asegúrese de ingresar un código.
+                                        </small>
+                                    </ng-template>
+                                    <ng-template #validRegisterBtn>
+                                        <div class="col-md-12">
+                                            <button type="submit"
+                                                    class="btn btn-pink btn-block btn-raised">Confirmar
+                                            </button>
+                                        </div>
+                                    </ng-template>
                                 </form>
                             </div>
                         </div>
