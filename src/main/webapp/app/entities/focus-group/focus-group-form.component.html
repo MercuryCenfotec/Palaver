@@ -75,13 +75,13 @@
                 <div class="col-xl-4 col-lg-4 col-md-4">
                     <div *ngIf="focusGroup.aptitudeTest" class="form-group">
                         <label class="form-control-label" for="field-grade">Nota mínima para participar</label>
-                        <input jhiNumericOnly #floatGrade="ngModel" type="text" class="form-control"
+                        <input #floatGrade="ngModel" type="number" class="form-control"
                                name="passing_grade" id="field-grade" maxlength="3"
                                [(ngModel)]="focusGroup.passingGrade" required/>
                         <small class="display-inline-block form-text text-muted danger" *ngIf="!floatGrade.valid && (floatGrade.dirty ||
                                  floatGrade.touched)">¡Nota obligatoria!
                         </small>
-                        <small class="display-inline-block form-text text-muted danger" *ngIf="focusGroup.passingGrade>100">¡La nota tiene que ser menor o igual a 100!
+                        <small class="display-inline-block form-text text-muted danger" *ngIf="!validatePassingGrade()">¡La nota tiene que ser un número positivo mayor que 0 y menor o igual a 100!
                         </small>
                     </div>
                 </div>
@@ -119,7 +119,7 @@
                     </button>
                 </div>
                 <div
-                    *ngIf="editForm.form.invalid || isSaving || !validateAnswers() || !validEndDate(); else validEditBtn"
+                    *ngIf="editForm.form.invalid || isSaving || !validateAnswers() || !validEndDate() || !validatePassingGrade(); else validEditBtn"
                     [ngbPopover]="popoverText"
                     triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido." class="col-auto">
                     <button type="submit" id="save-entity-invalid" [disabled]="true"

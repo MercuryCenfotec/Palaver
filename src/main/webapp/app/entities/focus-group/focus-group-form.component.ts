@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -19,7 +19,8 @@ import { IAptitudeTest } from 'app/shared/model/aptitude-test.model';
 import { AptitudeTestService } from 'app/entities/aptitude-test';
 import { ITestAnswerOption } from 'app/shared/model/test-answer-option.model';
 import { ITestQuestion } from 'app/shared/model/test-question.model';
-import { NgbDatepickerConfig, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import { Subscriber } from 'app/shared/util/subscriber';
 
 @Component({
     selector: 'jhi-focus-group-form',
@@ -34,7 +35,7 @@ export class FocusGroupFormComponent implements OnInit {
     aptitudeTests: IAptitudeTest[];
     participants: IParticipant[];
     endDateSelected: boolean;
-    testAvailable: boolean;
+    clonedTest: boolean;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
@@ -46,8 +47,23 @@ export class FocusGroupFormComponent implements OnInit {
         protected activatedRoute: ActivatedRoute,
         protected userService: UserService,
         protected aptitudeTestService: AptitudeTestService,
-        protected config: NgbDatepickerConfig
+        protected config: NgbDatepickerConfig,
+        private __router: Router,
+        protected subscriber: Subscriber<boolean>
     ) {
+        subscriber.subscribe(cloningAccepted => {
+            if (!cloningAccepted) {
+                this.focusGroup.aptitudeTest = null;
+                this.clonedTest = false;
+            } else {
+                this.clonedTest = true;
+                for (const question of this.focusGroup.aptitudeTest.questions) {
+                    for (const answer of question.answers) {
+                        answer.desired = false;
+                    }
+                }
+            }
+        });
         const current = new Date();
         config.minDate = {
             year: current.getFullYear(),
@@ -67,7 +83,7 @@ export class FocusGroupFormComponent implements OnInit {
         });
         this.userService.getUserWithAuthorities().subscribe(user => {
             this.institutionService.getByUserUser(user.id).subscribe(institution => {
-                this.aptitudeTestService.findAllAvailableByInstitution(institution.body.id).subscribe(aptitudeTests => {
+                this.aptitudeTestService.findAllByInstitution(institution.body.id).subscribe(aptitudeTests => {
                     this.aptitudeTests = aptitudeTests.body;
                 });
             });
@@ -103,7 +119,7 @@ export class FocusGroupFormComponent implements OnInit {
     }
 
     previousState() {
-        window.history.back();
+        this.__router.navigate(['/', 'focus-group']);
     }
 
     save() {
@@ -167,10 +183,19 @@ export class FocusGroupFormComponent implements OnInit {
     validateTest() {
         if (this.focusGroup.aptitudeTest !== null) {
             this.focusGroupService.testIsAvailable(this.focusGroup.aptitudeTest.id).subscribe(group => {
-                return group.body;
+                if (!group.body) {
+                    this.__router.navigate(['/', 'focus-group', { outlets: { popup: 'clone-test' } }]);
+                }
             });
         } else {
             this.focusGroup.passingGrade = null;
         }
+    }
+
+    validatePassingGrade() {
+        if (this.focusGroup.passingGrade > 100 || this.focusGroup.passingGrade < 1) {
+            return false;
+        }
+        return true;
     }
 }

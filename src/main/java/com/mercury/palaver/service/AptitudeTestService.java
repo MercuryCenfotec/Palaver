@@ -22,20 +22,17 @@ public class AptitudeTestService {
     private final TestQuestionRepository testQuestionRepo;
     private final TestAnswerOptionRepository testAnswerOptionRepo;
     private final TestQuestionService testQuestionService;
-    private final FocusGroupService focusGroupService;
 
     public AptitudeTestService(AptitudeTestRepository aptitudeTestRepo,
                                TestQuestionRepository testQuestionRepo,
                                TestAnswerOptionRepository testAnswerOptionRepo,
                                TestQuestionService testQuestionService,
-                               FocusGroupRepository focusGroupRepo,
-                               FocusGroupService focusGroupService) {
+                               FocusGroupRepository focusGroupRepo) {
         this.aptitudeTestRepo = aptitudeTestRepo;
         this.testQuestionRepo = testQuestionRepo;
         this.testAnswerOptionRepo = testAnswerOptionRepo;
         this.testQuestionService = testQuestionService;
         this.focusGroupRepo = focusGroupRepo;
-        this.focusGroupService = focusGroupService;
     }
 
     public AptitudeTest save(AptitudeTest aptitudeTest) {
@@ -44,6 +41,22 @@ public class AptitudeTestService {
             question.setAptitudeTest(aptitudeTest);
             question = testQuestionRepo.save(question);
             for (TestAnswerOption answer : question.getAnswers()) {
+                answer.setTestQuestion(question);
+                testAnswerOptionRepo.save(answer);
+            }
+        }
+        return aptitudeTest;
+    }
+
+    public AptitudeTest clone(AptitudeTest aptitudeTest) {
+        aptitudeTest.setId(null);
+        aptitudeTest = aptitudeTestRepo.save(aptitudeTest);
+        for (TestQuestion question : aptitudeTest.getQuestions()) {
+            question.setId(null);
+            question.setAptitudeTest(aptitudeTest);
+            question = testQuestionRepo.save(question);
+            for (TestAnswerOption answer : question.getAnswers()) {
+                answer.setId(null);
                 answer.setTestQuestion(question);
                 testAnswerOptionRepo.save(answer);
             }
@@ -67,7 +80,7 @@ public class AptitudeTestService {
 
         List<AptitudeTest> availableTests = new ArrayList<>();
         for (AptitudeTest aptitudeTest : aptitudeTestRepo.findAllByInstitution(institution)) {
-            if (focusGroupService.testIsAvailable(aptitudeTest.getId())){
+            if (testIsAvailable(aptitudeTest.getId())){
                 aptitudeTest.setQuestions(new HashSet<>(testQuestionService.findAllQuestionsAndAnswersByAptitudeTestId(aptitudeTest.getId())));
                 availableTests.add(aptitudeTest);
             }
@@ -81,5 +94,12 @@ public class AptitudeTestService {
         test.setId(testId);
         Optional<FocusGroup> opt = focusGroupRepo.findByAptitudeTest(test);
         return (opt.isPresent());
+    }
+
+    public boolean testIsAvailable(Long testId) {
+        AptitudeTest test = new AptitudeTest();
+        test.setId(testId);
+        Optional<FocusGroup> opt = focusGroupRepo.findByAptitudeTest(test);
+        return !opt.isPresent();
     }
 }

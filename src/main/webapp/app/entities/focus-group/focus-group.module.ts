@@ -21,7 +21,7 @@ import {
     FocusGroupTestDialogComponent,
     FocusGroupTestDialogPopupComponent
 } from 'app/entities/focus-group/focus-group-test-dialog.component';
-import { NumberOnlyDirective } from 'app/shared/util/number-directive';
+import { FocusGroupCloneTestComponent, FocusGroupCloneTestPopupComponent } from 'app/entities/focus-group/focus-group-clone-test.component';
 
 const ENTITY_STATES = [...focusGroupRoute, ...focusGroupPopupRoute];
 
@@ -41,13 +41,16 @@ const ENTITY_STATES = [...focusGroupRoute, ...focusGroupPopupRoute];
         ParticipantFilterPipe,
         FocusGroupTestDialogComponent,
         FocusGroupTestDialogPopupComponent,
-        NumberOnlyDirective
+        FocusGroupCloneTestComponent,
+        FocusGroupCloneTestPopupComponent
     ],
     entryComponents: [
         FocusGroupComponent,
         FocusGroupUpdateComponent,
         FocusGroupDeleteDialogComponent,
         FocusGroupDeletePopupComponent,
+        FocusGroupCloneTestComponent,
+        FocusGroupCloneTestPopupComponent,
         FocusGroupTestDialogComponent,
         FocusGroupTestDialogPopupComponent,
         ParticipateComponent,

@@ -5,6 +5,7 @@ import com.mercury.palaver.domain.FocusGroup;
 import com.mercury.palaver.domain.Institution;
 import com.mercury.palaver.repository.FocusGroupRepository;
 import com.mercury.palaver.security.AuthoritiesConstants;
+import com.mercury.palaver.service.AptitudeTestService;
 import com.mercury.palaver.service.FocusGroupService;
 import com.mercury.palaver.web.rest.errors.BadRequestAlertException;
 import com.mercury.palaver.web.rest.util.HeaderUtil;
@@ -40,10 +41,12 @@ public class FocusGroupResource {
 
     private final FocusGroupRepository focusGroupRepository;
     private final FocusGroupService focusGroupService;
+    private final AptitudeTestService aptitudeTestService;
 
-    public FocusGroupResource(FocusGroupRepository focusGroupRepository, FocusGroupService focusGroupService) {
+    public FocusGroupResource(FocusGroupRepository focusGroupRepository, FocusGroupService focusGroupService, AptitudeTestService aptitudeTestService) {
         this.focusGroupRepository = focusGroupRepository;
         this.focusGroupService = focusGroupService;
+        this.aptitudeTestService = aptitudeTestService;
     }
 
     /**
@@ -154,7 +157,7 @@ public class FocusGroupResource {
 
     @GetMapping("/focus-groups/aptitude-test/{testId}")
     public ResponseEntity<Boolean> getFocusGroupByAptitudeTest(@PathVariable Long testId) {
-        return ResponseEntity.ok().body(focusGroupService.testIsAvailable(testId));
+        return ResponseEntity.ok().body(aptitudeTestService.testIsAvailable(testId));
     }
 
 }
