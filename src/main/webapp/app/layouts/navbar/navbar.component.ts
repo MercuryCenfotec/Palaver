@@ -200,7 +200,6 @@ export class NavbarComponent implements OnInit {
                         this.router.navigate(['']);
                         break;
                     default:
-                        this.router.navigate(['']);
                         break;
                 }
             }
