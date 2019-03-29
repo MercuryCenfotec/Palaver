@@ -3,7 +3,7 @@
         <div _ngcontent-c24="" class="card">
             <div _ngcontent-c24="" class="card-header">
                 <h4 _ngcontent-c24="" class="card-title" id="horz-layout-colored-controls">Usuario</h4>
-                <p _ngcontent-c24="" class="mb-0">Bienvenido a <strong style="color: #F5B23E;">Palaver!</strong>
+                <p _ngcontent-c24="" class="mb-0">¡Bienvenido a <strong style="color: #F5B23E;">Palaver!</strong>
                     Necesitamos que nos brindes cierta información para poder hacer tu experiencia la mejor.
                     Ya seas una institución, con el deseo de crear y llevar a cabo grupos de enfoque, o un participante,
                     que desea compartir su opinión, especifícalo al final del formulario.
@@ -12,23 +12,23 @@
                 <jhi-alert-error></jhi-alert-error>
 
                 <div class="alert alert-success" *ngIf="success">
-                    <strong>Su registro ha sido exitoso!</strong> Por favor revise su correo para verificar su cuenta.
+                    <strong>¡Su registro ha sido exitoso!</strong> Por favor revise su correo para verificar su cuenta.
                 </div>
 
                 <div class="alert alert-danger" *ngIf="error">
-                    <strong>Registro fallido!</strong> Por favor intente de nuevo.
+                    <strong>¡Registro fallido!</strong> Por favor intente de nuevo.
                 </div>
 
                 <div class="alert alert-danger" *ngIf="errorUserExists">
-                    <strong>El nombre de usuario ya se encuentra registrado!</strong> Por favor utilice otro.
+                    <strong>¡El nombre de usuario ya se encuentra registrado!</strong> Por favor utilice otro.
                 </div>
 
                 <div class="alert alert-danger" *ngIf="errorEmailExists">
-                    <strong>El correo electronico ya se encuentra en uso!</strong> Por favor utilice otro.
+                    <strong>¡El correo electrónico ya se encuentra en uso!</strong> Por favor utilice otro.
                 </div>
 
                 <div class="alert alert-danger" *ngIf="doNotMatch">
-                    La contraseña y la confirmacion no concuerdan!
+                    ¡La contraseña y la confirmación no concuerdan!
                 </div>
             </div>
             <div _ngcontent-c24="" class="card-body">
@@ -44,22 +44,20 @@
                             <div _ngcontent-c24="" class="row">
                                 <div _ngcontent-c24="" class="col-md-6">
                                     <div class="form-group row">
-                                        <label _ngcontent-c24="" class="col-md-3 label-control" for="login">Nombre
-                                            usuario: </label>
+                                        <label _ngcontent-c24="" class="col-md-3 label-control" for="userName">Nombre
+                                            de usuario: </label>
                                         <div _ngcontent-c24="" class="col-md-9">
                                             <input type="text" class="form-control" [(ngModel)]="registerAccount.login"
-                                                   id="login" name="login" #login="ngModel"
+                                                   id="userName" name="userName" #userName="ngModel"
                                                    required minlength="1" maxlength="50">
-                                            <div *ngIf="login.dirty && login.invalid">
-                                                <small class="form-text text-danger" *ngIf="login.errors.required">
+                                            <div *ngIf="(userName.dirty || userName.touched) && userName.invalid">
+                                                <small class="form-text text-danger" *ngIf="userName.errors.required">
                                                     Este campo es requerido.
                                                 </small>
-                                                <small class="form-text text-danger" *ngIf="login.errors.minlength"
-                                                >
+                                                <small class="form-text text-danger" *ngIf="userName.errors.minlength">
                                                     Tu nombre de usuario debe tener al menos 1 caracter de largo.
                                                 </small>
-                                                <small class="form-text text-danger" *ngIf="login.errors.maxlength"
-                                                >
+                                                <small class="form-text text-danger" *ngIf="userName.errors.maxlength">
                                                     Tu nombre de usuario no debe tener mas de 50 caracteres de largo.
                                                 </small>
                                             </div>
@@ -74,7 +72,7 @@
                                             <input type="text" class="form-control" [(ngModel)]="userApp.name" id="name"
                                                    name="name" #name="ngModel"
                                                    minlength="8" required>
-                                            <div *ngIf="name.dirty && name.invalid">
+                                            <div *ngIf="(name.dirty || name.touched) && name.invalid">
                                                 <small class="form-text text-danger" *ngIf="name.errors.required">
                                                     Este campo es requerido.
                                                 </small>
@@ -93,7 +91,7 @@
                                                    [(ngModel)]="userApp.identificationNumber" id="identification"
                                                    name="identification" #identification="ngModel"
                                                    required minlength="9" maxlength="200">
-                                            <div *ngIf="identification.dirty && identification.invalid">
+                                            <div *ngIf="(identification.dirty || identification.touched) && identification.invalid">
                                                 <small class="form-text text-danger"
                                                        *ngIf="identification.errors.required">
                                                     Este campo es requerido.
@@ -121,7 +119,7 @@
                                                    #email="ngModel" [(ngModel)]="userApp.mail"
                                                    [(ngModel)]="registerAccount.email"
                                                    minlength=5 maxlength=254 email required>
-                                            <div *ngIf="email.dirty && email.invalid">
+                                            <div *ngIf="(email.dirty || email.touched) && email.invalid">
                                                 <small class="form-text text-danger" *ngIf="email.errors.required">
                                                     Este campo es requerido.
                                                 </small>
@@ -150,7 +148,7 @@
                                                    #password="ngModel" placeholder="Contraseña"
                                                    [(ngModel)]="registerAccount.password" minlength=4 maxlength=50
                                                    required>
-                                            <div *ngIf="password.dirty && password.invalid">
+                                            <div *ngIf="(password.dirty || password.touched) && password.invalid">
                                                 <small class="form-text text-danger" *ngIf="password.errors.required">
                                                     Este campo es requerido.
                                                 </small>
@@ -178,7 +176,7 @@
                                             <input type="password" class="form-control" id="confirmPassword"
                                                    name="confirmPassword" #confirmPasswordInput="ngModel"
                                                    [(ngModel)]="confirmPassword" minlength=4 maxlength=50 required>
-                                            <div *ngIf="confirmPasswordInput.dirty && confirmPasswordInput.invalid">
+                                            <div *ngIf="(confirmPasswordInput.dirty || confirmPasswordInput.touched) && confirmPasswordInput.invalid">
                                                 <small class="form-text text-danger"
                                                        *ngIf="confirmPasswordInput.errors.required">
                                                     Este campo es requerido.
@@ -232,17 +230,35 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-actions right">
-                            <a href="">
-                                <button type="button" class="btn btn-raised btn-warning mr-1">
-                                    <i class="ft-x"></i> Atras
+                        <div class="row">
+                            <div class="col-auto">
+                                <a href="">
+                                    <button type="button" class="btn btn-raised btn-warning mr-1">
+                                        <i class="ft-x"></i> Atrás
+                                    </button>
+                                </a>
+                            </div>
+                            <div [ngbPopover]="popoverText"
+                                 triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido."
+                                 *ngIf="registerForm.form.invalid ||userApp.rol === ''; else validRegisterBtn"
+                                 class="col-auto">
+                                <button type="submit"
+                                        [disabled]="true"
+                                        class="btn btn-raised btn-primary">
+                                    <i class="ft-check"></i> Confirmar
                                 </button>
-                            </a>
-                            <button type="submit"
-                                    [disabled]="registerForm.form.invalid ||userApp.rol === ''"
-                                    class="btn btn-raised btn-primary">
-                                <i class="ft-check"></i> Confirmar
-                            </button>
+                            </div>
+                            <ng-template #popoverText>
+                                <small class="display-block">Por favor, asegúrese de que todos los campos estén completos.
+                                </small>
+                            </ng-template>
+                            <ng-template #validRegisterBtn>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-raised btn-primary">
+                                        <i class="ft-check"></i> Confirmar
+                                    </button>
+                                </div>
+                            </ng-template>
                         </div>
                     </form>
                 </div>
