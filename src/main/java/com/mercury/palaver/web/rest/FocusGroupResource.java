@@ -1,5 +1,6 @@
 package com.mercury.palaver.web.rest;
 import com.mercury.palaver.domain.FocusGroup;
+import com.mercury.palaver.domain.Institution;
 import com.mercury.palaver.repository.FocusGroupRepository;
 import com.mercury.palaver.security.AuthoritiesConstants;
 import com.mercury.palaver.service.AptitudeTestService;
@@ -12,6 +13,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
