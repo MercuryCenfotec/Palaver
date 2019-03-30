@@ -1,8 +1,10 @@
 package com.mercury.palaver.web.rest;
+
+import com.mercury.palaver.domain.AptitudeTest;
 import com.mercury.palaver.domain.FocusGroup;
+import com.mercury.palaver.domain.Institution;
 import com.mercury.palaver.repository.FocusGroupRepository;
 import com.mercury.palaver.security.AuthoritiesConstants;
-import com.mercury.palaver.service.AptitudeTestService;
 import com.mercury.palaver.service.FocusGroupService;
 import com.mercury.palaver.web.rest.errors.BadRequestAlertException;
 import com.mercury.palaver.web.rest.util.HeaderUtil;
@@ -10,13 +12,19 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.util.Collections;
 import java.util.List;
+import java.util.Observable;
 import java.util.Optional;
 
 /**
@@ -32,12 +40,10 @@ public class FocusGroupResource {
 
     private final FocusGroupRepository focusGroupRepository;
     private final FocusGroupService focusGroupService;
-    private final AptitudeTestService aptitudeTestService;
 
-    public FocusGroupResource(FocusGroupRepository focusGroupRepository, FocusGroupService focusGroupService, AptitudeTestService aptitudeTestService) {
+    public FocusGroupResource(FocusGroupRepository focusGroupRepository, FocusGroupService focusGroupService) {
         this.focusGroupRepository = focusGroupRepository;
         this.focusGroupService = focusGroupService;
-        this.aptitudeTestService = aptitudeTestService;
     }
 
     /**
@@ -53,7 +59,7 @@ public class FocusGroupResource {
         if (focusGroup.getId() != null) {
             throw new BadRequestAlertException("A new focusGroup cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        FocusGroup result = focusGroupRepository.save(focusGroup);
+        FocusGroup result = focusGroupService.save(focusGroup);
         return ResponseEntity.created(new URI("/api/focus-groups/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -148,7 +154,7 @@ public class FocusGroupResource {
 
     @GetMapping("/focus-groups/aptitude-test/{testId}")
     public ResponseEntity<Boolean> getFocusGroupByAptitudeTest(@PathVariable Long testId) {
-        return ResponseEntity.ok().body(aptitudeTestService.testIsAvailable(testId));
+        return ResponseEntity.ok().body(focusGroupService.testIsAvailable(testId));
     }
 
 }
