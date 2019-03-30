@@ -11,7 +11,7 @@ import { MeetingService } from './meeting.service';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { FocusGroupService } from 'app/entities/focus-group';
 import { UserService } from 'app/core';
-import {NgbDatepickerConfig} from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'jhi-meeting-create',

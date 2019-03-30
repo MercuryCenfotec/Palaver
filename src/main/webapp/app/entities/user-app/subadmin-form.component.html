@@ -224,11 +224,9 @@
                         </div>
                         <div class="row">
                             <div class="col-auto">
-                                <a href="">
-                                    <button type="button" class="btn btn-raised btn-warning mr-1">
-                                        <i class="ft-x"></i> Atrás
+                                    <button (click)="previousState()" type="button" class="btn btn-raised btn-warning mr-1">
+                                        <i class="ft-chevron-left"></i> Atrás
                                     </button>
-                                </a>
                             </div>
                             <div [ngbPopover]="popoverText"
                                  triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido."

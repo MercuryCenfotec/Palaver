@@ -1,16 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
-import {VERSION} from 'app/app.constants';
-import {AccountService, LoginModalService, LoginService, UserService} from 'app/core';
-import {ProfileService} from 'app/layouts/profiles/profile.service';
-import {IUserApp, UserApp} from 'app/shared/model/user-app.model';
-import {IParticipant, Participant} from 'app/shared/model/participant.model';
-import {ParticipantService} from 'app/entities/participant';
-import {UserAppService} from 'app/entities/user-app';
-import {InstitutionService} from 'app/entities/institution';
-import {IInstitution, Institution} from 'app/shared/model/institution.model';
+import { VERSION } from 'app/app.constants';
+import { AccountService, LoginModalService, LoginService, UserService } from 'app/core';
+import { ProfileService } from 'app/layouts/profiles/profile.service';
+import { IUserApp, UserApp } from 'app/shared/model/user-app.model';
+import { IParticipant, Participant } from 'app/shared/model/participant.model';
+import { ParticipantService } from 'app/entities/participant';
+import { UserAppService } from 'app/entities/user-app';
+import { InstitutionService } from 'app/entities/institution';
+import { IInstitution, Institution } from 'app/shared/model/institution.model';
 
 @Component({
     selector: 'jhi-navbar',
@@ -45,8 +45,7 @@ export class NavbarComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.currentAccount = this.userService.getUserWithAuthorities().forEach(jhiUser => {
-        });
+        this.currentAccount = this.userService.getUserWithAuthorities().forEach(jhiUser => {});
 
         this.profileService.getProfileInfo().then(profileInfo => {
             this.inProduction = profileInfo.inProduction;
@@ -82,8 +81,7 @@ export class NavbarComponent implements OnInit {
 
     findActualUser() {
         this.currentAccount = this.userService.getUserWithAuthorities().subscribe(jhiUser => {
-            if (jhiUser.authorities.includes('ROLE_INSTITUTION') ||
-                jhiUser.authorities.includes('ROLE_PARTICIPANT')) {
+            if (jhiUser.authorities.includes('ROLE_INSTITUTION') || jhiUser.authorities.includes('ROLE_PARTICIPANT')) {
                 this.userAppService.findByUserId(jhiUser.id).subscribe(userApp => {
                     if (userApp.rol === 'institution') {
                         this.institutionService.getByUserUser(jhiUser.id).subscribe(foundInstitution => {
@@ -179,6 +177,7 @@ export class NavbarComponent implements OnInit {
     }
 
     logoRedirection() {
+        this.router.navigate(['']);
         this.currentAccount = this.userService.getUserWithAuthorities().subscribe(jhiUser => {
             for (let i = 0; i < jhiUser.authorities.length; i++) {
                 switch (jhiUser.authorities[i]) {

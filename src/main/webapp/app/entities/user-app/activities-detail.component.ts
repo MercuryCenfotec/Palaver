@@ -40,8 +40,7 @@ export class ActivitiesDetailComponent implements OnInit {
     actions: CalendarEventAction[] = [
         {
             label: '<i class="ft ft-video" hidden></i>',
-            onClick: ({ event }: { event: CalendarEvent }): void => {
-            }
+            onClick: ({ event }: { event: CalendarEvent }): void => {}
         }
     ];
 

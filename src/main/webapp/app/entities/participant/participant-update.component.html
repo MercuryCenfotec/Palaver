@@ -2,7 +2,7 @@
     <div _ngcontent-c5="" class="col-md-6">
         <div _ngcontent-c5="" class="card">
             <div _ngcontent-c5="" class="card-header">
-                <h4 _ngcontent-c5="" class="card-title" id="basic-layout-colored-form-control">Modificar participante</h4>
+                <h4 _ngcontent-c5="" class="card-title" id="basic-layout-colored-form-control">Editar información</h4>
             </div>
             <div _ngcontent-c5="" class="card-body">
                 <div _ngcontent-c5="" class="px-3">
@@ -18,21 +18,26 @@
                                     <div _ngcontent-c5="" class="form-group">
                                         <label _ngcontent-c5="" for="field_birthdate">Fecha de nacimiento</label>
                                         <div class="input-group">
-                                            <input _ngcontent-c5="" class="form-control border-primary"
+                                            <input _ngcontent-c5="" class="form-control"
                                                    id="field_birthdate" name="birthdate" type="text" ngbDatepicker
                                                    #birthdateDp="ngbDatepicker" [(ngModel)]="participant.birthdate"
-                                                   required>
+                                                   required #birthDate="ngModel">
                                             <span class="input-group-append">
                                                 <button type="button" class="btn btn-secondary"
                                                         (click)="birthdateDp.toggle()">
                                                     <fa-icon [icon]="'calendar-alt'"></fa-icon></button>
                                             </span>
                                         </div>
-                                        <div
-                                            [hidden]="!(editForm.controls.birthdate?.dirty && editForm.controls.birthdate?.invalid)">
+                                        <div [hidden]="!((birthDate?.dirty || birthDate?.touched) && birthDate?.invalid)">
                                             <small class="form-text text-danger"
-                                                   [hidden]="!editForm.controls.birthdate?.errors?.required">
+                                                   [hidden]="!birthDate?.errors?.required">
                                                 Este campo es requerido.
+                                            </small>
+                                        </div>
+                                        <div [hidden]="!((birthDate?.dirty || birthDate?.touched) && birthDate?.invalid)">
+                                            <small class="form-text text-danger"
+                                                   [hidden]="!editForm.controls.birthdate?.errors?.max">
+                                                La fecha es inválida.
                                             </small>
                                         </div>
                                     </div>
@@ -82,7 +87,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
 
                             <!--<h4 _ngcontent-c5="" class="form-section">-->
@@ -100,15 +104,35 @@
                             <!--</div>-->
 
                         </div>
-                        <div _ngcontent-c5="" class="form-actions right">
-                            <button _ngcontent-c5="" class="btn btn-raised btn-warning mr-1" type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-                                <i _ngcontent-c5="" class="ft-x"></i>
-                                <fa-icon></fa-icon>Cancelar
-                            </button>
-                            <button _ngcontent-c5="" class="btn btn-raised btn-primary" type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving">
-                                <i _ngcontent-c5="" class="fa fa-check-square-o"></i>
-                                <fa-icon></fa-icon>Guardar
-                            </button>
+                        <div class="row">
+                            <div class="col-auto">
+                                <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
+                                        (click)="previousState()">
+                                    <i class="ft-chevron-left"></i> Atrás
+                                </button>
+                            </div>
+                            <div [ngbPopover]="popoverText"
+                                 triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido."
+                                 *ngIf="editForm.form.invalid || isSaving; else validRegisterBtn"
+                                 class="col-auto">
+                                <button type="submit"
+                                        [disabled]="true"
+                                        class="btn btn-raised btn-primary">
+                                    <i class="ft ft-check"></i> Guardar
+                                </button>
+                            </div>
+                            <ng-template #popoverText>
+                                <small class="display-block">Por favor, asegúrese de que todos los campos estén completos.
+                                </small>
+                            </ng-template>
+                            <ng-template #validRegisterBtn>
+                                <div class="col-auto">
+                                    <button type="submit" id="save-entity"
+                                            class="btn btn-raised btn-primary">
+                                        <i class="ft ft-check"></i> Guardar
+                                    </button>
+                                </div>
+                            </ng-template>
                         </div>
                     </form>
                 </div>
