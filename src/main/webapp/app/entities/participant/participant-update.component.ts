@@ -13,6 +13,7 @@ import { ICategory } from 'app/shared/model/category.model';
 import { CategoryService } from 'app/entities/category';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { FocusGroupService } from 'app/entities/focus-group';
+import {NgbDatepickerConfig} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'jhi-participant-update',
@@ -35,11 +36,15 @@ export class ParticipantUpdateComponent implements OnInit {
         protected userAppService: UserAppService,
         protected categoryService: CategoryService,
         protected focusGroupService: FocusGroupService,
-        protected activatedRoute: ActivatedRoute
+        protected activatedRoute: ActivatedRoute,
+        protected config: NgbDatepickerConfig
     ) {}
 
     ngOnInit() {
         this.isSaving = false;
+        const currentDate = new Date();
+        this.config.maxDate = { year: currentDate.getFullYear() - 5, month: 12, day: 31 };
+        this.config.outsideDays = 'hidden';
         this.activatedRoute.data.subscribe(({ participant }) => {
             this.participant = participant;
         });
