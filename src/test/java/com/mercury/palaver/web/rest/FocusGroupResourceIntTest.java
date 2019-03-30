@@ -3,9 +3,7 @@ package com.mercury.palaver.web.rest;
 import com.mercury.palaver.PalaverApp;
 
 import com.mercury.palaver.domain.FocusGroup;
-import com.mercury.palaver.domain.Institution;
 import com.mercury.palaver.repository.FocusGroupRepository;
-import com.mercury.palaver.service.FocusGroupService;
 import com.mercury.palaver.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -67,17 +65,17 @@ public class FocusGroupResourceIntTest {
     private static final Integer DEFAULT_PASSING_GRADE = 1;
     private static final Integer UPDATED_PASSING_GRADE = 2;
 
+    private static final Integer DEFAULT_PARTICIPANTS_AMOUNT = 1;
+    private static final Integer UPDATED_PARTICIPANTS_AMOUNT = 2;
+
+    private static final String DEFAULT_STATUS = "AAAAAAAAAA";
+    private static final String UPDATED_STATUS = "BBBBBBBBBB";
+
     @Autowired
     private FocusGroupRepository focusGroupRepository;
 
-    @Autowired
-    private FocusGroupService focusGroupService;
-
     @Mock
     private FocusGroupRepository focusGroupRepositoryMock;
-
-    @Mock
-    private FocusGroupService focusGroupServiceMock;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -101,7 +99,7 @@ public class FocusGroupResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final FocusGroupResource focusGroupResource = new FocusGroupResource(focusGroupRepository, focusGroupService);
+        final FocusGroupResource focusGroupResource = new FocusGroupResource(focusGroupRepository);
         this.restFocusGroupMockMvc = MockMvcBuilders.standaloneSetup(focusGroupResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -117,9 +115,6 @@ public class FocusGroupResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static FocusGroup createEntity(EntityManager em) {
-        Long l = new Long(1);
-        Institution institution = new Institution();
-        institution.setId(l);
         FocusGroup focusGroup = new FocusGroup()
             .name(DEFAULT_NAME)
             .description(DEFAULT_DESCRIPTION)
@@ -127,7 +122,8 @@ public class FocusGroupResourceIntTest {
             .endDate(DEFAULT_END_DATE)
             .code(DEFAULT_CODE)
             .passingGrade(DEFAULT_PASSING_GRADE)
-            .institution(institution);
+            .participantsAmount(DEFAULT_PARTICIPANTS_AMOUNT)
+            .status(DEFAULT_STATUS);
         return focusGroup;
     }
 
@@ -155,7 +151,10 @@ public class FocusGroupResourceIntTest {
         assertThat(testFocusGroup.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testFocusGroup.getBeginDate()).isEqualTo(DEFAULT_BEGIN_DATE);
         assertThat(testFocusGroup.getEndDate()).isEqualTo(DEFAULT_END_DATE);
+        assertThat(testFocusGroup.getCode()).isEqualTo(DEFAULT_CODE);
         assertThat(testFocusGroup.getPassingGrade()).isEqualTo(DEFAULT_PASSING_GRADE);
+        assertThat(testFocusGroup.getParticipantsAmount()).isEqualTo(DEFAULT_PARTICIPANTS_AMOUNT);
+        assertThat(testFocusGroup.getStatus()).isEqualTo(DEFAULT_STATUS);
     }
 
     @Test
@@ -265,12 +264,14 @@ public class FocusGroupResourceIntTest {
             .andExpect(jsonPath("$.[*].beginDate").value(hasItem(DEFAULT_BEGIN_DATE.toString())))
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
-            .andExpect(jsonPath("$.[*].passingGrade").value(hasItem(DEFAULT_PASSING_GRADE)));
+            .andExpect(jsonPath("$.[*].passingGrade").value(hasItem(DEFAULT_PASSING_GRADE)))
+            .andExpect(jsonPath("$.[*].participantsAmount").value(hasItem(DEFAULT_PARTICIPANTS_AMOUNT)))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
     
     @SuppressWarnings({"unchecked"})
     public void getAllFocusGroupsWithEagerRelationshipsIsEnabled() throws Exception {
-        FocusGroupResource focusGroupResource = new FocusGroupResource(focusGroupRepositoryMock, focusGroupServiceMock);
+        FocusGroupResource focusGroupResource = new FocusGroupResource(focusGroupRepositoryMock);
         when(focusGroupRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         MockMvc restFocusGroupMockMvc = MockMvcBuilders.standaloneSetup(focusGroupResource)
@@ -287,7 +288,7 @@ public class FocusGroupResourceIntTest {
 
     @SuppressWarnings({"unchecked"})
     public void getAllFocusGroupsWithEagerRelationshipsIsNotEnabled() throws Exception {
-        FocusGroupResource focusGroupResource = new FocusGroupResource(focusGroupRepositoryMock, focusGroupServiceMock);
+        FocusGroupResource focusGroupResource = new FocusGroupResource(focusGroupRepositoryMock);
             when(focusGroupRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
             MockMvc restFocusGroupMockMvc = MockMvcBuilders.standaloneSetup(focusGroupResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
@@ -317,7 +318,9 @@ public class FocusGroupResourceIntTest {
             .andExpect(jsonPath("$.beginDate").value(DEFAULT_BEGIN_DATE.toString()))
             .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
-            .andExpect(jsonPath("$.passingGrade").value(DEFAULT_PASSING_GRADE));
+            .andExpect(jsonPath("$.passingGrade").value(DEFAULT_PASSING_GRADE))
+            .andExpect(jsonPath("$.participantsAmount").value(DEFAULT_PARTICIPANTS_AMOUNT))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
 
     @Test
@@ -346,7 +349,9 @@ public class FocusGroupResourceIntTest {
             .beginDate(UPDATED_BEGIN_DATE)
             .endDate(UPDATED_END_DATE)
             .code(UPDATED_CODE)
-            .passingGrade(UPDATED_PASSING_GRADE);
+            .passingGrade(UPDATED_PASSING_GRADE)
+            .participantsAmount(UPDATED_PARTICIPANTS_AMOUNT)
+            .status(UPDATED_STATUS);
 
         restFocusGroupMockMvc.perform(put("/api/focus-groups")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -363,6 +368,8 @@ public class FocusGroupResourceIntTest {
         assertThat(testFocusGroup.getEndDate()).isEqualTo(UPDATED_END_DATE);
         assertThat(testFocusGroup.getCode()).isEqualTo(UPDATED_CODE);
         assertThat(testFocusGroup.getPassingGrade()).isEqualTo(UPDATED_PASSING_GRADE);
+        assertThat(testFocusGroup.getParticipantsAmount()).isEqualTo(UPDATED_PARTICIPANTS_AMOUNT);
+        assertThat(testFocusGroup.getStatus()).isEqualTo(UPDATED_STATUS);
     }
 
     @Test

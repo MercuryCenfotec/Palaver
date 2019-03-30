@@ -36,6 +36,14 @@
         {
             "fieldName": "passingGrade",
             "fieldType": "Integer"
+        },
+        {
+            "fieldName": "participantsAmount",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "String"
         }
     ],
     "relationships": [

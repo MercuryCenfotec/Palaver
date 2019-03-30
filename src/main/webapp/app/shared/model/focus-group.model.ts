@@ -13,6 +13,8 @@ export interface IFocusGroup {
     endDate?: Moment;
     code?: string;
     passingGrade?: number;
+    participantsAmount?: number;
+    status?: string;
     incentive?: IIncentive;
     institution?: IInstitution;
     categories?: ICategory[];
@@ -29,6 +31,8 @@ export class FocusGroup implements IFocusGroup {
         public endDate?: Moment,
         public code?: string,
         public passingGrade?: number,
+        public participantsAmount?: number,
+        public status?: string,
         public incentive?: IIncentive,
         public institution?: IInstitution,
         public categories?: ICategory[],
