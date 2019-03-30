@@ -6,11 +6,11 @@
                     <div class="row justify-content-md-center">
                         <div class="col-md-6">
                             <div *ngIf="userApp">
-                                <h4 class="text-bold-500 primary"><i class="ft-user"></i> Informción de Usuario</h4>
+                                <h4 class="text-bold-500 primary"><i class="ft-user"></i> Información de usuario</h4>
                                 <hr>
                                 <div class="card-block">
                                     <div class="mb-3">
-                                        <span class="text-bold-500 primary"><i class="ft-edit-3"></i> Nombre de Usuario</span>
+                                        <span class="text-bold-500 primary"><i class="ft-edit-3"></i> Nombre de usuario</span>
                                         <span class="display-block overflow-hidden">{{userApp.user?.login}}</span>
                                     </div>
                                     <div class="mb-3">
@@ -18,12 +18,12 @@
                                         <span class="display-block overflow-hidden">{{userApp.name}}</span>
                                     </div>
                                     <div class="mb-3">
-                                        <span class="text-bold-500 primary"><i class="ft-hash"></i> Numero de identificacion</span>
+                                        <span class="text-bold-500 primary"><i class="ft-hash"></i> Numero de identificación</span>
                                         <span
                                             class="display-block overflow-hidden">{{userApp.identificationNumber}}</span>
                                     </div>
                                     <div class="mb-3">
-                                        <span class="text-bold-500 primary"><i class="ft-at-sign"></i> Correo electronico</span>
+                                        <span class="text-bold-500 primary"><i class="ft-at-sign"></i> Correo electrónico</span>
                                         <span class="display-block overflow-hidden">{{userApp.mail}}</span>
                                     </div>
                                     <div class="mb-3">
@@ -37,11 +37,11 @@
                                 </div>
                                 <button type="submit" class="btn btn-raised btn-info mr-1"
                                         (click)="previousState()">
-                                    <i class="ft-chevron-left"></i> Atras
+                                    <i class="ft-chevron-left"></i> Atrás
                                 </button>
                                 <button type="button" [routerLink]="['/user-app', userApp.id, 'edit']"
                                         class="btn btn-raised btn-success">
-                                    <i class="ft-edit"></i> Editar
+                                    <i class="ft-edit"></i> Modificar
                                 </button>
                             </div>
                         </div>

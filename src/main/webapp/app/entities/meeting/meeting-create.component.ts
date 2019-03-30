@@ -11,6 +11,7 @@ import { MeetingService } from './meeting.service';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { FocusGroupService } from 'app/entities/focus-group';
 import { UserService } from 'app/core';
+import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'jhi-meeting-create',
@@ -27,8 +28,18 @@ export class MeetingCreateComponent implements OnInit {
         protected meetingService: MeetingService,
         protected focusGroupService: FocusGroupService,
         protected activatedRoute: ActivatedRoute,
-        protected userService: UserService
-    ) {}
+        protected userService: UserService,
+        protected config: NgbDatepickerConfig
+    ) {
+        const current = new Date();
+        config.minDate = {
+            year: current.getFullYear(),
+            month: current.getMonth() + 1,
+            day: current.getDate()
+        };
+        config.maxDate = { year: 2099, month: 12, day: 31 };
+        config.outsideDays = 'hidden';
+    }
 
     ngOnInit() {
         this.meeting = new class implements IMeeting {

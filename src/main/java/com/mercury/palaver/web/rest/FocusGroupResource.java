@@ -1,6 +1,9 @@
 package com.mercury.palaver.web.rest;
 import com.mercury.palaver.domain.FocusGroup;
 import com.mercury.palaver.repository.FocusGroupRepository;
+import com.mercury.palaver.security.AuthoritiesConstants;
+import com.mercury.palaver.service.AptitudeTestService;
+import com.mercury.palaver.service.FocusGroupService;
 import com.mercury.palaver.web.rest.errors.BadRequestAlertException;
 import com.mercury.palaver.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -28,9 +31,13 @@ public class FocusGroupResource {
     private static final String ENTITY_NAME = "focusGroup";
 
     private final FocusGroupRepository focusGroupRepository;
+    private final FocusGroupService focusGroupService;
+    private final AptitudeTestService aptitudeTestService;
 
-    public FocusGroupResource(FocusGroupRepository focusGroupRepository) {
+    public FocusGroupResource(FocusGroupRepository focusGroupRepository, FocusGroupService focusGroupService, AptitudeTestService aptitudeTestService) {
         this.focusGroupRepository = focusGroupRepository;
+        this.focusGroupService = focusGroupService;
+        this.aptitudeTestService = aptitudeTestService;
     }
 
     /**
@@ -110,4 +117,38 @@ public class FocusGroupResource {
         focusGroupRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    @PostMapping("/focus-groups/merge")
+    public void mergeFocusGroup(@Valid @RequestBody FocusGroup focusGroup) {
+
+        EntityManagerFactory emf;
+        EntityManager entityManager;
+        EntityTransaction transaction;
+
+        emf = Persistence.createEntityManagerFactory("jbd-pu");
+        entityManager = emf.createEntityManager();
+        transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        entityManager.merge(focusGroup);
+    }
+
+    @GetMapping("/focus-groups/cancelable/{groupId}")
+    public ResponseEntity<Boolean> isCancelable(@PathVariable Long groupId) {
+        return ResponseEntity.ok().body(focusGroupService.isCancelable(groupId));
+    }
+
+    @GetMapping("/focus-groups/institution/{institutionId}")
+    public List<FocusGroup> getFocusGroupsTestsByInstitution(@PathVariable Long institutionId) {
+        log.debug("REST request to get all AptitudeTests");
+        Institution institution = new Institution();
+        institution.setId(institutionId);
+        return focusGroupRepository.findAllByInstitution(institution);
+    }
+
+    @GetMapping("/focus-groups/aptitude-test/{testId}")
+    public ResponseEntity<Boolean> getFocusGroupByAptitudeTest(@PathVariable Long testId) {
+        return ResponseEntity.ok().body(aptitudeTestService.testIsAvailable(testId));
+    }
+
 }

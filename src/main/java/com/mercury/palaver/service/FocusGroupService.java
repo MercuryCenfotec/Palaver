@@ -21,25 +21,21 @@ public class FocusGroupService {
     private final TestAnswerOptionRepository testAnswerOptionRepo;
     private final FocusGroupRepository focusGroupRepo;
     private final UserService userService;
+    private final AptitudeTestService aptitudeTestService;
 
-    public FocusGroupService(TestAnswerOptionRepository testAnswerOptionRepo, FocusGroupRepository focusGroupRepo, UserService userService) {
+    public FocusGroupService(TestAnswerOptionRepository testAnswerOptionRepo, FocusGroupRepository focusGroupRepo, UserService userService, AptitudeTestService aptitudeTestService) {
         this.testAnswerOptionRepo = testAnswerOptionRepo;
         this.focusGroupRepo = focusGroupRepo;
         this.userService = userService;
+        this.aptitudeTestService = aptitudeTestService;
     }
 
     public FocusGroup save(FocusGroup group) {
         String code = MD5.getMd5(group.getName() + DateUtil.getDate());
         userService.registerGroupManagementUser(code);
         group.setCode(code);
+        if (group.getAptitudeTest() != null) processAptitudeTest(group);
         group = focusGroupRepo.save(group);
-        if (group.getAptitudeTest() != null) {
-            for (TestQuestion question : group.getAptitudeTest().getQuestions()) {
-                for (TestAnswerOption answer : question.getAnswers()) {
-                    if (answer.isDesired()) testAnswerOptionRepo.save(answer);
-                }
-            }
-        }
         return group;
     }
 
@@ -55,10 +51,16 @@ public class FocusGroupService {
         return false;
     }
 
-    public boolean testIsAvailable(Long testId) {
-        AptitudeTest test = new AptitudeTest();
-        test.setId(testId);
-        Optional<FocusGroup> opt = focusGroupRepo.findByAptitudeTest(test);
-        return !opt.isPresent();
+    private void processAptitudeTest(FocusGroup group){
+        if (!aptitudeTestService.testIsAvailable(group.getAptitudeTest().getId())) {
+            group.getAptitudeTest().setName("Copia - " +group.getAptitudeTest().getName());
+            group.setAptitudeTest(aptitudeTestService.clone(group.getAptitudeTest()));
+        } else {
+            for (TestQuestion question : group.getAptitudeTest().getQuestions()) {
+                for (TestAnswerOption answer : question.getAnswers()) {
+                    if (answer.isDesired()) testAnswerOptionRepo.save(answer);
+                }
+            }
+        }
     }
 }

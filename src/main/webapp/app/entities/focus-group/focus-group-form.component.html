@@ -2,7 +2,7 @@
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
             <div class="row justify-content-md-center"></div>
-            <h2 id="jhi-focus-group-heading">Creación de grupos de enfoque</h2>
+            <h2 id="jhi-focus-group-heading">Grupo de enfoque</h2>
             <div>
                 <h4 class="form-section"><i class="ft-info"></i>Información</h4>
                 <div class="form-group">
@@ -10,7 +10,7 @@
                     <input #floatName="ngModel" type="text" class="form-control" name="name" id="field_name"
                            [(ngModel)]="focusGroup.name" required/>
                     <small class="form-text text-muted danger" *ngIf="!floatName.valid && (floatName.dirty ||
-                                 floatName.touched)">¡Nombre requerido!
+                                 floatName.touched)">Este campo es requerido.
                     </small>
                 </div>
                 <div class="form-group">
@@ -19,7 +19,7 @@
                            id="field_description" [ngModelOptions]="{updateOn: 'blur'}"
                         [(ngModel)]="focusGroup.description" required></textarea>
                     <small class="form-text text-muted danger" *ngIf="!floatDescription.valid && (floatDescription.dirty ||
-                                 floatDescription.touched)">¡Descripción requerida!
+                                 floatDescription.touched)">Este campo es requerido.
                     </small>
                 </div>
 
@@ -37,7 +37,7 @@
                             </span>
                         </div>
                         <small class="form-text text-muted danger" *ngIf="!floatStartDate.valid && (floatStartDate.dirty ||
-                                 floatStartDate.touched)">¡Fecha de inicio requerida!
+                                 floatStartDate.touched)">Este campo es requerido.
                         </small>
                     </div>
                     <div class="form-group col-lg-6 col-md-6 col-sm-12">
@@ -53,9 +53,10 @@
                             </span>
                         </div>
                         <small class="form-text text-muted danger" *ngIf="!floatEndDate.valid && (floatEndDate.dirty ||
-                                 floatEndDate.touched)">¡Fecha de finalización requerida!
+                                 floatEndDate.touched)">Este campo es requerido.
                         </small>
-                        <small class="form-text text-muted danger" *ngIf="!validEndDate()">
+                        <small class="form-text text-muted danger" *ngIf="!floatEndDate.valid && (floatEndDate.dirty ||
+                                 floatEndDate.touched) || !validEndDate()">
                             La fecha de finalización tiene que ser posterior a la fecha inicial.
                         </small>
                     </div>
@@ -75,13 +76,13 @@
                 <div class="col-xl-4 col-lg-4 col-md-4">
                     <div *ngIf="focusGroup.aptitudeTest" class="form-group">
                         <label class="form-control-label" for="field-grade">Nota mínima para participar</label>
-                        <input jhiNumericOnly #floatGrade="ngModel" type="text" class="form-control"
+                        <input #floatGrade="ngModel" type="number" class="form-control"
                                name="passing_grade" id="field-grade" maxlength="3"
                                [(ngModel)]="focusGroup.passingGrade" required/>
                         <small class="display-inline-block form-text text-muted danger" *ngIf="!floatGrade.valid && (floatGrade.dirty ||
-                                 floatGrade.touched)">¡Nota obligatoria!
+                                 floatGrade.touched)">Este campo es requerido.
                         </small>
-                        <small class="display-inline-block form-text text-muted danger" *ngIf="focusGroup.passingGrade>100">¡La nota tiene que ser menor o igual a 100!
+                        <small class="display-inline-block form-text text-muted danger" *ngIf="!validatePassingGrade()">¡La nota tiene que ser un número positivo mayor que 0 y menor o igual a 100!
                         </small>
                     </div>
                 </div>
@@ -119,7 +120,7 @@
                     </button>
                 </div>
                 <div
-                    *ngIf="editForm.form.invalid || isSaving || !validateAnswers() || !validEndDate(); else validEditBtn"
+                    *ngIf="editForm.form.invalid || isSaving || !validateAnswers() || !validEndDate() || !validatePassingGrade(); else validEditBtn"
                     [ngbPopover]="popoverText"
                     triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido." class="col-auto">
                     <button type="submit" id="save-entity-invalid" [disabled]="true"

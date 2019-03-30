@@ -14,9 +14,7 @@
                         </div>
                         <div class="col-2">
                             <div class="align-self-center halfway-fab text-center">
-                                <a class="profile-image">
                                     <img src="https://lh3.googleusercontent.com/2aJfB6trLglywvIh6MSN58qh-r2b-_2GoXk4dWL5fIZmMAWdTN3f98Ugpi6U_glIm0w" class="rounded-circle img-border gradient-summer width-100" alt="Card image">
-                                </a>
                             </div>
                         </div>
                         <div class="col-5">
@@ -47,15 +45,15 @@
                         <div class="col-12 col-md-6 col-lg-4">
                             <ul class="no-list-style">
                                 <li class="mb-2">
-                                    <span class="text-bold-500 primary"><a><i class="ft ft-clipboard"></i> Nombre:</a></span>
+                                    <span class="text-bold-500 primary"><i class="ft ft-clipboard"></i> Nombre:</span>
                                     <span class="display-block overflow-hidden">{{institution.name}}</span>
                                 </li>
                                 <li class="mb-2" *ngIf="institution.user">
-                                    <span class="text-bold-500 primary"><a><i class="ft ft-user"></i> Usuario:</a></span>
+                                    <span class="text-bold-500 primary"><i class="ft ft-user"></i> Usuario:</span>
                                     <span class="display-block overflow-hidden" [routerLink]="['/user-app', institution.user?.id, 'view']">{{institution.user.name}}</span>
                                 </li>
                                 <li class="mb-2" *ngIf="institution.user">
-                                    <span class="text-bold-500 primary"><a><i class="ft ft-map-pin"></i> Dirección:</a></span>
+                                    <span class="text-bold-500 primary"><i class="ft ft-map-pin"></i> Dirección:</span>
                                     <span class="display-block overflow-hidden" [routerLink]="['/user-app', institution.user?.id, 'view']">{{institution.user.address}}</span>
                                 </li>
                             </ul>
@@ -63,15 +61,15 @@
                         <div class="col-12 col-md-6 col-lg-4">
                             <ul class="no-list-style">
                                 <li class="mb-2">
-                                    <span class="text-bold-500 primary"><a><i class="ft ft-message-square"></i> Descripción:</a></span>
+                                    <span class="text-bold-500 primary"><i class="ft ft-message-square"></i> Descripción:</span>
                                     <span class="display-block overflow-hidden">{{institution.description}}</span>
                                 </li>
                                 <li class="mb-2" *ngIf="institution.user">
-                                    <span class="text-bold-500 primary"><a><i class="ft ft-lock"></i> Cédula jurídica:</a></span>
+                                    <span class="text-bold-500 primary"><i class="ft ft-lock"></i> Cédula jurídica:</span>
                                     <span class="display-block overflow-hidden" [routerLink]="['/user-app', institution.user?.id, 'view']">{{institution.user.identificationNumber}}</span>
                                 </li>
                                 <li class="mb-2" *ngIf="institution.membership">
-                                    <span class="text-bold-500 primary"><a><i class="ft ft-credit-card"></i> Membresía:</a></span>
+                                    <span class="text-bold-500 primary"><i class="ft ft-credit-card"></i> Membresía:</span>
                                     <span class="display-block overflow-hidden" [routerLink]="['/membership', institution.membership?.id, 'view']">{{institution.membership.typeMembership}}</span>
                                 </li>
                             </ul>
@@ -79,11 +77,11 @@
                         <div class="col-12 col-md-6 col-lg-4">
                             <ul class="no-list-style">
                                 <li class="mb-2">
-                                    <span class="text-bold-500 primary"><a><i class="ft ft-smartphone"></i> Teléfono:</a></span>
+                                    <span class="text-bold-500 primary"><i class="ft ft-smartphone"></i> Teléfono:</span>
                                     <span class="display-block overflow-hidden">{{institution.telephone}}</span>
                                 </li>
                                 <li class="mb-2" *ngIf="institution.user">
-                                    <span class="text-bold-500 primary"><a><i class="ft ft-mail"></i> E-mail:</a></span>
+                                    <span class="text-bold-500 primary"><i class="ft ft-mail"></i> E-mail:</span>
                                     <span class="display-block overflow-hidden" [routerLink]="['/user-app', institution.user?.id, 'view']">{{institution.user.mail}}</span>
                                 </li>
                             </ul>

@@ -8,7 +8,6 @@ import { map } from 'rxjs/operators';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
-import { IAptitudeTest } from 'app/shared/model/aptitude-test.model';
 
 type EntityResponseType = HttpResponse<IFocusGroup>;
 type EntityArrayResponseType = HttpResponse<IFocusGroup[]>;
