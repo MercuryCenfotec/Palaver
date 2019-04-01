@@ -198,4 +198,11 @@ export class FocusGroupFormComponent implements OnInit {
         }
         return true;
     }
+
+    validateParticipantsAmount() {
+        if (this.focusGroup.participantsAmount < 5 || this.focusGroup.participantsAmount > 10) {
+            return false;
+        }
+        return true;
+    }
 }
