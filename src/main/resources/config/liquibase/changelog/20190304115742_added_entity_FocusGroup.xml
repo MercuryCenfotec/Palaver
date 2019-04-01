@@ -65,7 +65,9 @@
             <column name="aptitude_test_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-
+            <column name="meeting_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_focus_group_meeting_id" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         

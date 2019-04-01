@@ -41,18 +41,21 @@ public class Institution implements Serializable {
     @Column(name = "telephone", nullable = false)
     private String telephone;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval=true)
     @JoinColumn(unique = true)
     private UserApp user;
 
-    @OneToMany(mappedBy = "institution")
+    @OneToMany(mappedBy = "institution",cascade = CascadeType.REMOVE,orphanRemoval = true)
     @JsonIgnoreProperties("institution")
     private Set<AptitudeTest> aptitudeTests = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties("institutions")
     private Membership membership;
 
+    @OneToMany(mappedBy = "institution",cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @JsonIgnore
+    private Set<FocusGroup> focusGroups = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -163,6 +166,31 @@ public class Institution implements Serializable {
 
     public void setMembership(Membership membership) {
         this.membership = membership;
+    }
+
+    public Set<FocusGroup> getFocusGroups() {
+        return focusGroups;
+    }
+
+    public Institution focusGroups(Set<FocusGroup> focusGroups) {
+        this.focusGroups = focusGroups;
+        return this;
+    }
+
+    public Institution addFocusGroup(FocusGroup focusGroup) {
+        this.focusGroups.add(focusGroup);
+        focusGroup.setInstitution(this);
+        return this;
+    }
+
+    public Institution removeFocusGroup(FocusGroup focusGroup) {
+        this.focusGroups.remove(focusGroup);
+        focusGroup.setInstitution(null);
+        return this;
+    }
+
+    public void setFocusGroups(Set<FocusGroup> focusGroups) {
+        this.focusGroups = focusGroups;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

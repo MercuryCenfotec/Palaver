@@ -46,19 +46,14 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="focus_group_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         <dropDefaultValue tableName="meeting" columnName="jhi_time" columnDataType="datetime"/>
 
         <loadData encoding="UTF-8"
-                  file="config/liquibase/meetings.csv"
-                  separator=";"
-                  tableName="meeting"/>
-        
+        file="config/liquibase/meetings.csv"
+        separator=";"
+        tableName="meeting"/>
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>

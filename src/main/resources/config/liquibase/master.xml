@@ -29,7 +29,6 @@
     <include file="config/liquibase/changelog/20190304115740_added_entity_constraints_TestQuestion.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190304115741_added_entity_constraints_TestAnswerOption.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190304115742_added_entity_constraints_FocusGroup.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190304115743_added_entity_constraints_Meeting.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190304115745_added_entity_constraints_PaymentMethod.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190304115748_added_entity_constraints_BalanceAccount.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190304115749_added_entity_constraints_Payment.xml" relativeToChangelogFile="false"/>

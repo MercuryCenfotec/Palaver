@@ -2,6 +2,8 @@ package com.mercury.palaver.domain;
 
 
 
+import org.hibernate.action.internal.OrphanRemovalAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -40,7 +42,7 @@ public class UserApp implements Serializable {
     @Column(name = "rol", nullable = false)
     private String rol;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval=true)
     @JoinColumn(unique = true)
     private User user;
 

@@ -1,5 +1,16 @@
 {
-    "name": "Meeting",
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "focusGroup",
+            "otherEntityName": "focusGroup",
+            "relationshipType": "one-to-one",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "meeting",
+            "otherEntityRelationshipNameUndefined": false
+        }
+    ],
     "fields": [
         {
             "fieldName": "date",
@@ -35,22 +46,12 @@
             "fieldType": "String"
         }
     ],
-    "relationships": [
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "focusGroup",
-            "otherEntityName": "focusGroup",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "meeting"
-        }
-    ],
     "changelogDate": "20190304115743",
-    "entityTableName": "meeting",
     "dto": "no",
-    "pagination": "no",
+    "searchEngine": false,
     "service": "no",
+    "entityTableName": "meeting",
+    "databaseType": "sql",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*"
+    "pagination": "no"
 }

@@ -46,17 +46,17 @@ public class Participant implements Serializable {
     @Column(name = "picture")
     private String picture;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval=true)
     @JoinColumn(unique = true)
     private UserApp user;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "participant_category",
                joinColumns = @JoinColumn(name = "participant_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
     private Set<Category> categories = new HashSet<>();
 
-    @ManyToMany(mappedBy = "participants")
+    @ManyToMany(mappedBy = "participants",cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Set<FocusGroup> focusGroups = new HashSet<>();
 
