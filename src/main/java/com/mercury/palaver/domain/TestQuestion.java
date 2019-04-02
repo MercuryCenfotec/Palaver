@@ -35,7 +35,7 @@ public class TestQuestion implements Serializable {
     @JsonIgnoreProperties("questions")
     private AptitudeTest aptitudeTest;
 
-    @OneToMany(mappedBy = "testQuestion")
+    @OneToMany(mappedBy = "testQuestion",cascade = CascadeType.REMOVE,orphanRemoval=true)
     private Set<TestAnswerOption> answers = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {

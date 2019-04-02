@@ -37,7 +37,7 @@ public class AptitudeTest implements Serializable {
     @JsonIgnoreProperties("aptitudeTests")
     private Institution institution;
 
-    @OneToMany(mappedBy = "aptitudeTest")
+    @OneToMany(mappedBy = "aptitudeTest",cascade = CascadeType.REMOVE,orphanRemoval=true)
     private Set<TestQuestion> questions = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {

@@ -73,7 +73,7 @@ public class FocusGroup implements Serializable {
                inverseJoinColumns = @JoinColumn(name = "participant_id", referencedColumnName = "id"))
     private Set<Participant> participants = new HashSet<>();
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JsonIgnoreProperties("focusGroups")
     private AptitudeTest aptitudeTest;
 
