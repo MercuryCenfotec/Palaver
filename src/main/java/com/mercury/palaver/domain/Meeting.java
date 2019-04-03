@@ -1,7 +1,7 @@
 package com.mercury.palaver.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -45,8 +45,8 @@ public class Meeting implements Serializable {
     @Column(name = "call_code")
     private String callCode;
 
-    @ManyToOne
-    @JsonIgnoreProperties("meetings")
+    @OneToOne(mappedBy = "meeting",cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private FocusGroup focusGroup;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

@@ -2,8 +2,13 @@ package com.mercury.palaver.web.rest;
 
 import com.mercury.palaver.PalaverApp;
 
-import com.mercury.palaver.domain.Meeting;
+import com.mercury.palaver.domain.*;
+import com.mercury.palaver.domain.enumeration.CivilStatus;
+import com.mercury.palaver.domain.enumeration.Gender;
+import com.mercury.palaver.repository.FocusGroupRepository;
 import com.mercury.palaver.repository.MeetingRepository;
+import com.mercury.palaver.repository.ParticipantRepository;
+import com.mercury.palaver.repository.UserAppRepository;
 import com.mercury.palaver.service.ZoomApiService;
 import com.mercury.palaver.web.rest.errors.ExceptionTranslator;
 
@@ -64,6 +69,15 @@ public class MeetingResourceIntTest {
 
     private static final String DEFAULT_CALL_CODE = "AAAAAAAAAA";
     private static final String UPDATED_CALL_CODE = "BBBBBBBBBB";
+
+    @Autowired
+    private ParticipantRepository participantRepository;
+
+    @Autowired
+    private UserAppRepository userAppRepository;
+
+    @Autowired
+    private FocusGroupRepository focusGroupRepository;
 
     @Autowired
     private MeetingRepository meetingRepository;
@@ -237,6 +251,14 @@ public class MeetingResourceIntTest {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
             .andExpect(jsonPath("$.[*].callURL").value(hasItem(DEFAULT_CALL_URL.toString())))
             .andExpect(jsonPath("$.[*].callCode").value(hasItem(DEFAULT_CALL_CODE.toString())));
+    }
+
+    @Test
+    @Transactional
+    public void getAllMeetingsByParticipant() throws Exception {
+
+        // Get the meeting
+        restMeetingMockMvc.perform(get("/ap/meetings/by-participant/{idParticipant}", 1));
     }
     
     @Test

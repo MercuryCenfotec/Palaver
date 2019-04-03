@@ -22,6 +22,7 @@ export class MeetingCreateComponent implements OnInit {
     isSaving: boolean;
     dateDp: any;
     time: string;
+    focusGroup: IFocusGroup;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
@@ -55,7 +56,7 @@ export class MeetingCreateComponent implements OnInit {
         this.isSaving = false;
         this.userService.getUserWithAuthorities().subscribe(user => {
             this.focusGroupService.findByCode(user.login).subscribe(group => {
-                this.meeting.focusGroup = group.body;
+                this.focusGroup = group.body;
             });
         });
     }
@@ -75,7 +76,15 @@ export class MeetingCreateComponent implements OnInit {
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IMeeting>>) {
-        result.subscribe((res: HttpResponse<IMeeting>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+        result.subscribe((res: HttpResponse<IMeeting>) => {
+            this.focusGroup.meeting = res.body;
+            this.focusGroupService.update(this.focusGroup).subscribe(
+                focusGroup => {
+                    this.onSaveSuccess();
+                },
+                (res: HttpErrorResponse) => this.onSaveError()
+            );
+        });
     }
 
     protected onSaveSuccess() {

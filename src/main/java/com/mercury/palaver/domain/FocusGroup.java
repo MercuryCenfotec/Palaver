@@ -53,7 +53,7 @@ public class FocusGroup implements Serializable {
     @Column(name = "status")
     private String status;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties("focusGroups")
     private Incentive incentive;
 
@@ -61,13 +61,13 @@ public class FocusGroup implements Serializable {
     @JsonIgnoreProperties("focusGroups")
     private Institution institution;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "focus_group_category",
                joinColumns = @JoinColumn(name = "focus_group_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
     private Set<Category> categories = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "focus_group_participant",
                joinColumns = @JoinColumn(name = "focus_group_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "participant_id", referencedColumnName = "id"))
@@ -76,6 +76,10 @@ public class FocusGroup implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties("focusGroups")
     private AptitudeTest aptitudeTest;
+
+    @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval=true)
+    @JoinColumn(unique = true)
+    private Meeting meeting;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -277,6 +281,19 @@ public class FocusGroup implements Serializable {
 
     public void setAptitudeTest(AptitudeTest aptitudeTest) {
         this.aptitudeTest = aptitudeTest;
+    }
+
+    public Meeting getMeeting() {
+        return meeting;
+    }
+
+    public FocusGroup meeting(Meeting meeting) {
+        this.meeting = meeting;
+        return this;
+    }
+
+    public void setMeeting(Meeting meeting) {
+        this.meeting = meeting;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

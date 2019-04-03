@@ -48,5 +48,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="aptitude_test"/>
 
+        <addForeignKeyConstraint baseColumnNames="meeting_id"
+                                 baseTableName="focus_group"
+                                 constraintName="fk_focus_group_meeting_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="meeting"/>
+
     </changeSet>
 </databaseChangeLog>

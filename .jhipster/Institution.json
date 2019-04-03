@@ -1,5 +1,39 @@
 {
-    "name": "Institution",
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "user",
+            "otherEntityName": "userApp",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "institution",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "aptitudeTest",
+            "otherEntityName": "aptitudeTest",
+            "otherEntityRelationshipName": "institution",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "membership",
+            "otherEntityName": "membership",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "institution",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipName": "focusGroup",
+            "otherEntityName": "focusGroup",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "institution",
+            "otherEntityRelationshipNameUndefined": false
+        }
+    ],
     "fields": [
         {
             "fieldName": "name",
@@ -30,36 +64,12 @@
             ]
         }
     ],
-    "relationships": [
-        {
-            "relationshipType": "one-to-one",
-            "relationshipName": "user",
-            "otherEntityName": "userApp",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "institution"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "aptitudeTest",
-            "otherEntityName": "aptitudeTest",
-            "otherEntityRelationshipName": "institution"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "membership",
-            "otherEntityName": "membership",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "institution"
-        }
-    ],
     "changelogDate": "20190304115736",
-    "entityTableName": "institution",
     "dto": "no",
-    "pagination": "no",
+    "searchEngine": false,
     "service": "no",
+    "entityTableName": "institution",
+    "databaseType": "sql",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*"
+    "pagination": "no"
 }
