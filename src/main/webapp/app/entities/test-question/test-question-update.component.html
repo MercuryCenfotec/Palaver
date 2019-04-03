@@ -6,7 +6,8 @@
                 <h4 class="form-section"><i class="ft-info"></i>Información de la pregunta</h4>
                 <div class="form-group">
                     <label class="form-control-label" for="field_question">Pregunta</label>
-                    <input #floatQuestion="ngModel" [class.ng-invalid]="repeatedQuestion()" type="text" class="form-control" name="question" id="field_question"
+                    <input #floatQuestion="ngModel" [class.ng-invalid]="repeatedQuestion()" type="text"
+                           class="form-control" name="question" id="field_question"
                            [(ngModel)]="testQuestion.question" required/>
                     <small class="form-text text-muted danger" *ngIf="!floatQuestion.valid && (floatQuestion.dirty ||
                                  floatQuestion.touched)">

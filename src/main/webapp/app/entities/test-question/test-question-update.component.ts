@@ -114,7 +114,7 @@ export class TestQuestionUpdateComponent implements OnInit {
     repeatedEditedAnswer(givenAnswer: ITestAnswerOption): boolean {
         for (const answer of this.testQuestion.answers) {
             if (answer !== givenAnswer) {
-                if (answer.answer === givenAnswer.answer) {
+                if (answer.answer === givenAnswer.answer && answer.answer !== 'delete') {
                     return true;
                 }
             }
