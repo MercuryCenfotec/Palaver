@@ -13,32 +13,46 @@
                     </small>
                 </div>
                 <div id="addQuestionSection">
-                    <h4 class="form-section"><i class="ft-info"></i>Agregar preguntas</h4>
+                    <h4 class="form-section"><i class="ft-plus"></i>Agregar preguntas</h4>
                     <div class="row">
                         <div id="testForm" class="col-md-6 col-sm-6 col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label" for="field_name">Pregunta</label>
                                 <input [attr.disabled]="newQuestion.answers.length ? '' : null"
                                        type="text" class="form-control" name="question"
-                                       id="field_question"
+                                       id="field_question" [class.ng-invalid]="repeatedQuestion()"
                                        [(ngModel)]="newQuestion.question"/>
+                                <small class="form-text text-muted danger" *ngIf="repeatedQuestion()">
+                                    No puede haber preguntas repetidas.
+                                </small>
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="field_answer">Respuesta</label>
-                                <input [attr.disabled]="!newQuestion.question ? '' : null" id="answerInput"
+                                <input [attr.disabled]="!newQuestion.question ? '' : null"
                                        type="text" class="form-control" name="answer"
-                                       id="field_answer"
+                                       id="field_answer" [class.ng-invalid]="repeatedAnswer()"
                                        [(ngModel)]="newAnswer.answer"/>
+                                <small class="form-text text-muted danger" *ngIf="repeatedAnswer()">
+                                    No puede haber respuestas repetidas.
+                                </small>
                             </div>
-                            <div *ngIf="!newAnswer.answer; else validAnswerInput" [ngbPopover]="popoverAnswerText"
-                                 triggers="mouseenter:mouseleave" popoverTitle="Respuesta inválida." class="col-6">
+                            <div
+                                *ngIf="!newAnswer.answer || repeatedQuestion() || repeatedAnswer(); else validAnswerInput"
+                                [ngbPopover]="popoverAnswerText"
+                                triggers="mouseenter:mouseleave" popoverTitle="Respuesta inválida." class="col-6">
                                 <button [disabled]="true" type="button" id="addAnswerBtn"
                                         class="btn btn-raised btn-primary">
                                     <i class="ft-plus"></i><span id="id"> Agregar respuesta</span>
                                 </button>
                             </div>
                             <ng-template #popoverAnswerText>
-                                <small>Asegúrese de escribir la respuesta antes de agregarla.</small>
+                                <small class="display-block">
+                                    Asegúrese de escribir la respuesta antes de agregarla y de que la respuesta no
+                                    esté repetida.
+                                </small>
+                                <small>
+                                    No puede haber preguntas repetidas
+                                </small>
                             </ng-template>
                             <ng-template #validAnswerInput>
                                 <div class="col-6">

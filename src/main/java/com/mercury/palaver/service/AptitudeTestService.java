@@ -48,6 +48,29 @@ public class AptitudeTestService {
         return aptitudeTest;
     }
 
+    public AptitudeTest update(AptitudeTest test) {
+        AptitudeTest tempTest = new AptitudeTest();
+        tempTest.setName(test.getName());
+        tempTest.setInstitution(test.getInstitution());
+        tempTest.setCreatedDate(test.getCreatedDate());
+        tempTest.setId(test.getId());
+        for (TestQuestion question : test.getQuestions()) {
+            if (question.getId() == null) {
+                question.setAptitudeTest(test);
+                question = testQuestionRepo.save(question);
+                for (TestAnswerOption answer : question.getAnswers()) {
+                    answer.setTestQuestion(question);
+                    testAnswerOptionRepo.save(answer);
+                }
+            } else if (question.getQuestion().equals("delete")) {
+                testQuestionService.delete(question.getId());
+            } else {
+                tempTest.addQuestions(question);
+            }
+        }
+        return aptitudeTestRepo.save(tempTest);
+    }
+
     public AptitudeTest clone(AptitudeTest aptitudeTest) {
         aptitudeTest.setId(null);
         aptitudeTest = aptitudeTestRepo.save(aptitudeTest);
@@ -80,12 +103,23 @@ public class AptitudeTestService {
 
         List<AptitudeTest> availableTests = new ArrayList<>();
         for (AptitudeTest aptitudeTest : aptitudeTestRepo.findAllByInstitution(institution)) {
-            if (testIsAvailable(aptitudeTest.getId())){
+            if (testIsAvailable(aptitudeTest.getId())) {
                 aptitudeTest.setQuestions(new HashSet<>(testQuestionService.findAllQuestionsAndAnswersByAptitudeTestId(aptitudeTest.getId())));
                 availableTests.add(aptitudeTest);
             }
         }
         return availableTests;
+    }
+
+    public boolean delete(Long testId) {
+        Optional<AptitudeTest> opt = aptitudeTestRepo.findById(testId);
+        if (opt.isPresent()) {
+            for (TestQuestion question : opt.get().getQuestions()) {
+                testQuestionService.delete(question.getId());
+            }
+            aptitudeTestRepo.delete(opt.get());
+        }
+        return false;
     }
 
 

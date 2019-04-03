@@ -15,7 +15,6 @@
             <div class="card-body">
                 <div class="card-block">
                     <div class="table-responsive" *ngIf="aptitudeTests; else noAptitudeTests">
-
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <i class="input-group-text ft-search info" id="basic-addon1"></i>
@@ -23,31 +22,22 @@
                             <input type="text" class="form-control"
                                    placeholder="Buscar por nombre..." [(ngModel)]="searchText"/>
                         </div>
-
                         <table class="table table-responsive-md text-center">
                             <thead>
                             <tr>
                                 <th><span>Nombre</span></th>
+                                <th><span>Cantidad de preguntas</span></th>
                                 <th><span>Acciones</span></th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr *ngFor="let aptitudeTest of aptitudeTests | filter:searchText; trackBy: trackId">
                                 <td>{{aptitudeTest.name}}</td>
+                                <td>{{aptitudeTest.questions.length}}</td>
                                 <td>
                                     <a class="info p-0" data-original-title="" title=""
                                        [routerLink]="['/aptitude-test', aptitudeTest.id, 'view' ]">
                                         <i class="ft-eye font-medium-3 mr-2"></i>
-                                    </a>
-                                    <a class="success p-0" data-original-title="" title=""
-                                       [routerLink]="['/aptitude-test', aptitudeTest.id, 'edit']">
-                                        <i class="ft-edit-2 font-medium-3 mr-2"></i>
-                                    </a>
-                                    <a class="danger p-0" data-original-title="" title=""
-                                       [routerLink]="['/', 'aptitude-test', { outlets: { popup: aptitudeTest.id + '/delete'} }]"
-                                       replaceUrl="true"
-                                       queryParamsHandling="merge">
-                                        <i class="ft-x font-medium-3 mr-2"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -57,7 +47,6 @@
                     <ng-template #noAptitudeTests>
                         <span>No hay pruebas de aptitud registradas.</span>
                     </ng-template>
-
                 </div>
             </div>
         </div>

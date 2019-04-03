@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
 import { JhiAlertService } from 'ng-jhipster';
 import { IAptitudeTest } from 'app/shared/model/aptitude-test.model';
 import { AptitudeTestService } from './aptitude-test.service';
@@ -28,7 +27,8 @@ export class AptitudeTestUpdateComponent implements OnInit {
         protected aptitudeTestService: AptitudeTestService,
         protected institutionService: InstitutionService,
         protected activatedRoute: ActivatedRoute,
-        protected questionsService: TestQuestionService
+        protected questionsService: TestQuestionService,
+        protected router: Router
     ) {}
 
     ngOnInit() {
@@ -37,7 +37,7 @@ export class AptitudeTestUpdateComponent implements OnInit {
             this.aptitudeTest = aptitudeTest;
             this.questionsService.findAllByAptituteTest(this.aptitudeTest.id).subscribe(data => {
                 this.aptitudeTest.questions = data.body;
-                console.log(this.aptitudeTest);
+                console.log(data.body);
             });
         });
         this.newQuestion = new class implements ITestQuestion {
@@ -52,26 +52,15 @@ export class AptitudeTestUpdateComponent implements OnInit {
             id: number;
             testQuestion: ITestQuestion;
         }();
-        this.institutionService
-            .query()
-            .pipe(
-                filter((mayBeOk: HttpResponse<IInstitution[]>) => mayBeOk.ok),
-                map((response: HttpResponse<IInstitution[]>) => response.body)
-            )
-            .subscribe((res: IInstitution[]) => (this.institutions = res), (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     previousState() {
-        window.history.back();
+        this.router.navigate(['/aptitude-test', this.aptitudeTest.id, 'view']);
     }
 
     save() {
         this.isSaving = true;
-        if (this.aptitudeTest.id !== undefined) {
-            this.subscribeToSaveResponse(this.aptitudeTestService.update(this.aptitudeTest));
-        } else {
-            this.subscribeToSaveResponse(this.aptitudeTestService.create(this.aptitudeTest));
-        }
+        this.subscribeToSaveResponse(this.aptitudeTestService.update(this.aptitudeTest));
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IAptitudeTest>>) {
@@ -89,10 +78,6 @@ export class AptitudeTestUpdateComponent implements OnInit {
 
     protected onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
-    }
-
-    trackInstitutionById(index: number, item: IInstitution) {
-        return item.id;
     }
 
     addAnswerToQuestion() {
@@ -120,7 +105,66 @@ export class AptitudeTestUpdateComponent implements OnInit {
         question.answers = this.newQuestion.answers;
         this.aptitudeTest.questions.push(question);
         this.newQuestion.question = '';
+        this.newAnswer.answer = '';
         this.newQuestion.answers = [];
-        console.log(this.aptitudeTest);
+        this.newQuestion.answers = [];
+    }
+
+    removeQuestionFromTest(deletedQuestion: ITestQuestion) {
+        this.aptitudeTest.questions.splice(this.aptitudeTest.questions.indexOf(deletedQuestion), 1);
+    }
+
+    removeAnswerFromPreview(deletedAnswer: ITestAnswerOption) {
+        this.newQuestion.answers.splice(this.newQuestion.answers.indexOf(deletedAnswer), 1);
+    }
+
+    validateQuestions(): boolean {
+        return this.aptitudeTest.questions.length > 0;
+    }
+
+    repeatedQuestion(): boolean {
+        const mockQuestion = new class implements ITestQuestion {
+            answers: ITestAnswerOption[];
+            aptitudeTest: IAptitudeTest;
+            id: number;
+            question: string;
+        }();
+        mockQuestion.question = this.newQuestion.question;
+        for (const question of this.aptitudeTest.questions) {
+            if (question.question === mockQuestion.question) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    repeatedAnswer(): boolean {
+        const mockAnswer = new class implements ITestAnswerOption {
+            answer: string;
+            desired: boolean;
+            id: number;
+            testQuestion: ITestQuestion;
+        }();
+        mockAnswer.answer = this.newAnswer.answer;
+        for (const answer of this.newQuestion.answers) {
+            if (answer.answer === mockAnswer.answer) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    removeQuestion(question: ITestQuestion) {
+        question.question = 'delete';
+    }
+
+    validQuestionsLength(): boolean {
+        let amount = 0;
+        for (const question of this.aptitudeTest.questions) {
+            if (question.question !== 'delete') {
+                amount++;
+            }
+        }
+        return amount > 1;
     }
 }

@@ -44,4 +44,8 @@ export class AptitudeTestService {
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
+
+    isInUse(testId: number): Observable<HttpResponse<boolean>> {
+        return this.http.get<boolean>(`${this.resourceUrl}/in-use/${testId}`, { observe: 'response' });
+    }
 }

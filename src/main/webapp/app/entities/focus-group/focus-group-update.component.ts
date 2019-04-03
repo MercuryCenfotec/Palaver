@@ -147,4 +147,11 @@ export class FocusGroupUpdateComponent implements OnInit {
     validEndDate(): boolean {
         return this.focusGroup.endDate > this.focusGroup.beginDate;
     }
+
+    validateParticipantsAmount() {
+        if (this.focusGroup.participantsAmount < 5 || this.focusGroup.participantsAmount > 10) {
+            return false;
+        }
+        return true;
+    }
 }

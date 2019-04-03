@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { IAptitudeTest } from 'app/shared/model/aptitude-test.model';
 import { TestQuestionService } from 'app/entities/test-question';
@@ -11,7 +11,7 @@ import { TestQuestionService } from 'app/entities/test-question';
 export class AptitudeTestDetailComponent implements OnInit {
     aptitudeTest: IAptitudeTest;
 
-    constructor(protected activatedRoute: ActivatedRoute, protected questionsService: TestQuestionService) {}
+    constructor(protected activatedRoute: ActivatedRoute, protected questionsService: TestQuestionService, protected router: Router) {}
 
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ aptitudeTest }) => {
@@ -24,6 +24,6 @@ export class AptitudeTestDetailComponent implements OnInit {
     }
 
     previousState() {
-        window.history.back();
+        this.router.navigate(['/aptitude-test']);
     }
 }

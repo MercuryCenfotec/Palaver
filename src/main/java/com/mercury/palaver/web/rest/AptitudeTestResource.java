@@ -71,7 +71,7 @@ public class AptitudeTestResource {
         if (aptitudeTest.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        AptitudeTest result = aptitudeTestRepository.save(aptitudeTest);
+        AptitudeTest result = aptitudeTestService.update(aptitudeTest);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, aptitudeTest.getId().toString()))
             .body(result);
@@ -110,7 +110,7 @@ public class AptitudeTestResource {
     @DeleteMapping("/aptitude-tests/{id}")
     public ResponseEntity<Void> deleteAptitudeTest(@PathVariable Long id) {
         log.debug("REST request to delete AptitudeTest : {}", id);
-        aptitudeTestRepository.deleteById(id);
+        aptitudeTestService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 

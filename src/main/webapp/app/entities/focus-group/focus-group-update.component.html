@@ -10,15 +10,29 @@
                     <input type="text" class="form-control" id="id" name="id"
                            [(ngModel)]="focusGroup.id" readonly/>
                 </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_name">Nombre</label>
-                    <input type="text" class="form-control" name="name" id="field_name"
-                           [(ngModel)]="focusGroup.name" required/>
-                    <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
-                        <small class="form-text text-danger"
-                               [hidden]="!editForm.controls.name?.errors?.required">
-                            ¡Nombre requerido!
-                        </small>
+                <div class="row">
+                    <div class="col-sm-8 col-8 col-md-8 col-lg-8">
+                        <div class="form-group">
+                            <label class="form-control-label" for="field_name">Nombre</label>
+                            <input #floatName="ngModel" type="text" class="form-control" name="name" id="field_name"
+                                   [(ngModel)]="focusGroup.name" required/>
+                            <small class="form-text text-muted danger" *ngIf="!floatName.valid && (floatName.dirty ||
+                                 floatName.touched)">Este campo es requerido.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-12 col-md-12 col-lg-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="field_name">Cantidad de participantes</label>
+                            <input #floatAmount="ngModel" type="number" class="form-control" name="participantsAmount" id="field_amount"
+                                   [(ngModel)]="focusGroup.participantsAmount" required/>
+                            <small class="form-text text-muted danger" *ngIf="!floatAmount.valid && (floatAmount.dirty ||
+                                 floatAmount.touched)">Este campo es requerido.
+                            </small>
+                            <small class="form-text text-muted danger" *ngIf="!validateParticipantsAmount()">
+                                La cantidad tiene que ser un numero entero mayor a 5 y menor o igual a 10.
+                            </small>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
