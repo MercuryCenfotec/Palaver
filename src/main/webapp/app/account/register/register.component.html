@@ -72,8 +72,7 @@
                                                for="name">Nombre: </label>
                                         <div _ngcontent-c24="" class="col-md-9">
                                             <input type="text" class="form-control" [(ngModel)]="userApp.name" id="name"
-                                                   name="name" #name="ngModel"
-                                                   minlength="8" required>
+                                                   name="name" #name="ngModel" required>
                                             <div *ngIf="name.dirty && name.invalid">
                                                 <small class="form-text text-danger" *ngIf="name.errors.required">
                                                     Este campo es requerido.
