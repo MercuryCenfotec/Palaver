@@ -58,7 +58,6 @@ public class FocusGroup implements Serializable {
     private Incentive incentive;
 
     @ManyToOne
-    @JsonIgnoreProperties("focusGroups")
     private Institution institution;
 
     @ManyToMany(cascade = CascadeType.REMOVE)
@@ -74,7 +73,6 @@ public class FocusGroup implements Serializable {
     private Set<Participant> participants = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties("focusGroups")
     private AptitudeTest aptitudeTest;
 
     @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval=true)
