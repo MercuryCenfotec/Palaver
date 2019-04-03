@@ -1,30 +1,26 @@
 <div class="row justify-content-center">
-    <div class="col-8 card">
-        <div class="card-header row">
-            <div class="col-xl-8 col-lg-7 col-md-12 col-sm-12">
-                <h2>Grupo de enfoque - {{focusGroup.name}}</h2>
-            </div>
-        </div>
-        <hr>
-        <div class="card-body">
-            <div class="card-block row justify-content-between">
-                <div class="col-lg-7 col-md-12 col-sm-12">
-                    <div class="">
-                        <span class="text-bold-500 primary display-block">Descripción:</span>
-                        <span>{{focusGroup.description}}</span>
-                    </div>
+    <div class="card col-8">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-sm-12 col-12 col-md-12 col-lg-8">
+                    <h3>{{focusGroup.name}}</h3>
+                    <h5 class="col-12 col-md-12 col-sm-12">Información del grupo</h5>
                 </div>
-                <div class="col-lg-5 col-md-12 col-sm-12">
-                    <div id="codeCard" class="card bg-primary">
+                <div class="col-sm-12 col-12 col-md-12 col-lg-4">
+                    <ng-template #codeCopiedTitle>Copiado <i class="ft-check white"></i></ng-template>
+                    <div id="codeCard" class="card bg-primary cursor-pointer" placement="top"
+                         [ngbPopover]="'El texto ha sido copiado al portapapeles.'" [popoverTitle]="codeCopiedTitle"
+                         (click)="copy()">
                         <div class="card-body col-12">
                             <div class="px-3 py-3">
                                 <div class="media">
                                     <div class="media-left align-self-center">
-                                        <i class="ft-clipboard white font-large-1 float-left"></i>
+                                        <i class="ft-copy white font-large-1 float-left"></i>
                                     </div>
                                     <div class="media-body white text-right">
-                                        <span class="text-bold-500 display-block">Código del grupo</span>
-                                        <span>{{focusGroup.code}}<!-- Haga click para copiar.--></span>
+                                        <span
+                                            class="text-bold-500 display-block overflow-hidden">Código del grupo</span>
+                                        <span class="display-block overflow-hidden">Haga click para copiar.</span>
                                     </div>
                                 </div>
                             </div>
@@ -32,33 +28,163 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="card-body">
             <div class="card-block">
-                <span class="text-bold-500 primary display-block">Fecha de inicio:</span>
-                <span>{{focusGroup.beginDate | date:'longDate'}}</span>
-            </div>
-            <div class="card-block">
-                <span class="text-bold-500 primary display-block">Fecha de finalización:</span>
-                <span>{{focusGroup.endDate | date:'longDate'}}</span>
-            </div>
-            <div class="card-block">
-                <span class="text-bold-500 primary display-block">Incentivo:</span>
-                <span *ngIf="focusGroup.incentive; else noIncentive">{{focusGroup.incentive}}</span>
-                <ng-template #noIncentive>
-                    <span>No hay incentivos seleccionados.</span>
-                </ng-template>
-            </div>
-            <div class="card-block">
-                <button type="submit"
-                        (click)="previousState()"
-                        class="btn btn-raised btn-warning mr-1">
-                    <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Volver</span>
-                </button>
-
-                <button type="button"
-                        [routerLink]="['/focus-group', focusGroup.id, 'edit']"
-                        class="btn btn-raised btn-primary">
-                    <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Editar</span>
-                </button>
+                <div class="mb-3">
+                    <span class="text-bold-500 primary">Descripción:</span>
+                    <span class="display-block overflow-hidden">{{focusGroup.description}}</span>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <ul class="no-list-style">
+                            <li class="mb-2">
+                                <span class="text-bold-500 primary"><a class="cursor-text"><i
+                                    class="ft-calendar font-small-3"></i> Fecha de inicio:</a></span>
+                                <span
+                                    class="display-block overflow-hidden">{{focusGroup.beginDate | date:'longDate'}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <ul class="no-list-style">
+                            <li class="mb-2">
+                                <span class="text-bold-500 primary"><a class="cursor-text"><i
+                                    class="ft-calendar font-small-3"></i> Fecha de finalización:</a></span>
+                                <span
+                                    class="display-block overflow-hidden">{{focusGroup.endDate | date:'longDate'}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <ul class="no-list-style">
+                            <li class="mb-2">
+                                <span class="text-bold-500 primary"><a class="cursor-text"><i
+                                    class="ft-calendar font-small-3"></i> Incentivo:</a></span>
+                                <span *ngIf="focusGroup.incentive; else noIncentive"
+                                      class="display-block overflow-hidden">{{focusGroup.incentive.name}}</span>
+                                <ng-template #noIncentive>
+                                    <span class="display-block overflow-hidden">No hay incentivos seleccionados.</span>
+                                </ng-template>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <hr>
+                <div id="questionCardSection" class="row">
+                    <h5 class="col-12 col-md-12 col-sm-12"><i class="ft-clipboard"></i> Prueba de aptitud</h5>
+                    <hr>
+                    <div *ngIf="focusGroup.aptitudeTest; else noAptitudeTest" class="card-block col-12">
+                        <a class="info p-0" data-original-title="" title=""
+                           [routerLink]="['/aptitude-test', focusGroup.aptitudeTest.id, 'view' ]">
+                            {{focusGroup.aptitudeTest.name}}
+                        </a>
+                        <!--<div id="question{{i}}" class="card bg-blue-grey bg-lighten-5"-->
+                        <!--*ngFor="let question of focusGroup.aptitudeTest.questions; let i = index">-->
+                        <!--<div class="card-header">-->
+                        <!--<span class="text-bold-500 primary">¿{{question.question}}?</span>-->
+                        <!--</div>-->
+                        <!--<div class="card-body">-->
+                        <!--<div class="card-block">-->
+                        <!--<div class="card-block">-->
+                        <!--<span *ngFor="let answer of question.answers" class="display-block"><i-->
+                        <!--class="ft-minus"></i>{{answer.answer}}</span>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                    </div>
+                    <ng-template #noAptitudeTest>
+                        <span>No se seleccionó una prueba de aptitud.</span>
+                    </ng-template>
+                </div>
+                <hr>
+                <div class="row">
+                    <h5 class="col-12 col-md-12 col-sm-12"><i class="ft-users"></i> Participantes</h5>
+                    <div class="input-group my-3">
+                        <div class="input-group-prepend">
+                            <i class="input-group-text ft-search info" id="basic-addon1"></i>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Buscar por nombre..."
+                               [(ngModel)]="searchText"/>
+                    </div>
+                    <div *ngIf="(focusGroup.participants | participantFilter:searchText) as items; else noParticipants"
+                         class="col-12">
+                        <div *ngFor="let participant of items"
+                             class="col-sm-12 col-12 col-md-8 col-lg-6 col-xl-6">
+                            <div class="card shadow-lg">
+                                <div class="card-header text-center">
+                                    <img src="{{participant.picture}}" alt="Imagen de usuario"
+                                         width="150" height="150" class="rounded-circle gradient-mint">
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-block text-center">
+                                        <h4 class="card-title">{{participant.user.user.firstName}} {{participant.user.user.lastName}}</h4>
+                                        <p class="category text-gray font-small-4">{{participant.user.mail}}</p>
+                                        <a class="btn btn-lg gradient-pomegranate font-small-2 white p-2 mr-2 btn-hoverable">Expulsar
+                                            participante</a>
+                                        <!--<a class="btn btn-lg btn-outline-grey font-small-2 p-2">Enviar mensaje</a>-->
+                                        <!--<hr class="grey">-->
+                                        <!--<div class="row grey">-->
+                                        <!--<div class="col-4">-->
+                                        <!--<a><i class="ft-star mr-1"></i> <span>4.9</span></a>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-4">-->
+                                        <!--<a><i class="ft-globe mr-1"></i> <span>USA</span></a>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-4">-->
+                                        <!--<a><i class="ft-book mr-1"></i> <span>21</span></a>-->
+                                        <!--</div>-->
+                                        <!--</div>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="items.length === 0" class="card-block">
+                            <span class="display-block overflow-hidden">No se encontraron resultados.</span>
+                        </div>
+                    </div>
+                    <ng-template #noParticipants>
+                        <div class="card-block">
+                            <span class="display-block overflow-hidden">Aún no hay participantes aceptados.</span>
+                        </div>
+                    </ng-template>
+                </div>
+                <div class="card-block row">
+                    <div class="col-auto">
+                        <button type="submit"
+                                (click)="previousState()"
+                                class="btn btn-raised btn-warning mr-1">
+                            <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Volver</span>
+                        </button>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button"
+                                [routerLink]="['/focus-group', focusGroup.id, 'edit']"
+                                class="btn btn-raised btn-primary">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Editar</span>
+                        </button>
+                    </div>
+                    <div *ngIf="!isCancelable; else validCancelBtn"
+                         ngbPopover="Si desea cancelar este grupo de enfoque, por favor contacte a nuestros administradores."
+                         triggers="mouseenter:mouseleave" popoverTitle="Lo sentimos." class="col-auto">
+                        <button type="button"
+                                [routerLink]="['/', 'focus-group', { outlets: { popup: focusGroup.id + '/delete'} }]"
+                                class="btn btn-raised btn-danger" [disabled]="!isCancelable">
+                            <span><i class="ft-x font-medium-3 mr-2"></i> Cancelar</span>
+                        </button>
+                    </div>
+                    <ng-template #validCancelBtn>
+                        <div class="col-auto">
+                            <button type="button"
+                                    [routerLink]="['/', 'focus-group', { outlets: { popup: focusGroup.id + '/delete'} }]"
+                                    class="btn btn-raised btn-danger" [disabled]="!isCancelable">
+                                <span><i class="ft-x font-medium-3 mr-2"></i> Cancelar</span>
+                            </button>
+                        </div>
+                    </ng-template>
+                </div>
             </div>
         </div>
     </div>

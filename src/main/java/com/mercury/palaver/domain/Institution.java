@@ -46,7 +46,9 @@ public class Institution implements Serializable {
     private UserApp user;
 
     @OneToMany(mappedBy = "institution")
+    @JsonIgnoreProperties("institution")
     private Set<AptitudeTest> aptitudeTests = new HashSet<>();
+
     @ManyToOne
     @JsonIgnoreProperties("institutions")
     private Membership membership;

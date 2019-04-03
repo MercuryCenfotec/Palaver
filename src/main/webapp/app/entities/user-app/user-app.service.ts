@@ -39,4 +39,8 @@ export class UserAppService {
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
+
+    isSpecified(id: number): Observable<HttpResponse<boolean>> {
+        return this.http.get<boolean>(`${this.resourceUrl}/specified/${id}`, { observe: 'response' });
+    }
 }

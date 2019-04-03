@@ -73,6 +73,29 @@ public class UserResource {
     }
 
     /**
+     * POST  /users  : Creates a new user linked to a groupCode.
+     * <p>
+     * The user needs to be activated on creation.
+     *
+     * @param userDTO the user to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new user, or with status 400 (Bad Request) if the login or email is already in use
+     * @throws URISyntaxException       if the Location URI syntax is incorrect
+     * @throws BadRequestAlertException 400 (Bad Request) if the login or email is already in use
+     */
+    @PostMapping("/users/save-group-code")
+    public ResponseEntity<User> createUserGroup(@Valid @RequestBody UserDTO userDTO) throws URISyntaxException {
+        log.debug("REST request to save User linked to a group with code: {}", userDTO);
+        if (userRepository.findOneByLogin(userDTO.getLogin().toLowerCase()).isPresent()) {
+            throw new LoginAlreadyUsedException();
+        }
+        User newUser = userService.createUser(userDTO);
+
+        return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
+            .headers(HeaderUtil.createAlert("A user is created with identifier " + newUser.getLogin(), newUser.getLogin()))
+            .body(newUser);
+    }
+
+    /**
      * POST  /users  : Creates a new user.
      * <p>
      * Creates a new user if the login and email are not already used, and sends an
@@ -105,12 +128,17 @@ public class UserResource {
         }
     }
 
-    @PostMapping("/users/add_authorization/{role}")
+    @PutMapping("/users/add_authorization/{role}")
     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.USER + "\")")
-    public ResponseEntity setAuthority(@Valid @RequestBody UserDTO userDTO, @PathVariable String role) {
-        User updatedUser;
+    public ResponseEntity<UserDTO> setAuthority(@Valid @RequestBody UserDTO userDTO, @PathVariable String role) {
+        /*User updatedUser;
         updatedUser = userService.updateUserRole(role, userDTO);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);*/
+
+        Optional<UserDTO> updatedUser = userService.updateUserRole(role, userDTO);
+
+        return ResponseUtil.wrapOrNotFound(updatedUser,
+            HeaderUtil.createAlert("A user is updated with identifier " + userDTO.getLogin(), userDTO.getLogin()));
     }
 
     /**
@@ -122,7 +150,7 @@ public class UserResource {
      * @throws LoginAlreadyUsedException 400 (Bad Request) if the login is already in use
      */
     @PutMapping("/users")
-    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.USER + "\")")
     public ResponseEntity<UserDTO> updateUser(@Valid @RequestBody UserDTO userDTO) {
         log.debug("REST request to update User : {}", userDTO);
         Optional<User> existingUser = userRepository.findOneByEmailIgnoreCase(userDTO.getEmail());
@@ -170,12 +198,11 @@ public class UserResource {
     @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}")
     public ResponseEntity<UserDTO> getUser(@PathVariable String login) {
         log.debug("REST request to get User : {}", login);
-        return ResponseUtil.wrapOrNotFound(
+        ResponseEntity<UserDTO> response = ResponseUtil.wrapOrNotFound(
             userService.getUserWithAuthoritiesByLogin(login)
                 .map(UserDTO::new));
+        return response;
     }
-
-    @GetMapping("/user/")
 
     /**
      * DELETE /users/:login : delete the "login" User.
@@ -184,7 +211,6 @@ public class UserResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/users/{login:" + Constants.LOGIN_REGEX + "}")
-    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Void> deleteUser(@PathVariable String login) {
         log.debug("REST request to delete User: {}", login);
         userService.deleteUser(login);

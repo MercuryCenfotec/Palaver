@@ -1,0 +1,114 @@
+<div class="card">
+    <div class="card-header">
+    </div>
+    <div class="card-body">
+        <div class="px-3">
+            <form class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate
+                  (ngSubmit)="save()" #editForm="ngForm">
+                <div class="row justify-content-md-center">
+                    <div class="col-md-6">
+                        <h2 class="card-title" id="jhi-meeting-heading">Reunión</h2>
+                        <div class="form-body">
+                            <h4 class="form-section"><i class="ft-user"></i>Registro</h4>
+                            <!--<div class="form-group" [hidden]="!meeting.id">-->
+                                <!--<label for="id">ID</label>-->
+                                <!--<input type="text" class="form-control" id="id" name="id"-->
+                                       <!--[(ngModel)]="meeting.id" readonly/>-->
+                            <!--</div>-->
+                            <div class="form-group">
+                                <label for="field_date">Fecha de la reunión</label>
+                                <div class="input-group">
+                                    <input id="field_date" type="text" class="form-control" name="date" ngbDatepicker  #dateDp="ngbDatepicker" [(ngModel)]="meeting.date"
+                                           required #date="ngModel"/>
+                                    <span class="input-group-append">
+                                            <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()">
+                                                <fa-icon [icon]="'calendar-alt'"></fa-icon>
+                                            </button>
+                                    </span>
+                                </div>
+                                <div [hidden]="!((date?.touched || date?.dirty) && date?.invalid)">
+                                    <small class="form-text text-danger"
+                                           [hidden]="!date?.errors?.required">
+                                        Este campo es requerido.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_time">Hora</label>
+                                <div class="d-flex">
+                                    <input #timeR="ngModel" id="field_time" type="time" class="form-control" name="time" [(ngModel)]="time" placeholder="HH:mm"
+                                           required/>
+                                </div>
+                                <div [hidden]="!((timeR?.dirty || timeR?.touched) && timeR?.invalid)">
+                                    <small class="form-text text-danger"
+                                           [hidden]="!timeR?.errors?.required">
+                                        Este campo es requerido.
+                                    </small>
+                                    <small class="form-text text-danger"
+                                           [hidden]="!timeR?.errors?.LocalTime">
+                                        Este campo debería ser de tiempo.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_name">Nombre</label>
+                                <input #nameR="ngModel" type="text" class="form-control" name="name" id="field_name"
+                                       [(ngModel)]="meeting.name" required/>
+                                <div [hidden]="!((nameR?.dirty || nameR?.touched) && nameR?.invalid)">
+                                    <small class="form-text text-danger"
+                                           [hidden]="!nameR?.errors?.required">
+                                        Este campo es requerido.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_description">Descripción</label>
+                                <input type="text" class="form-control" name="description" id="field_description"
+                                       [(ngModel)]="meeting.description" />
+                            </div>
+                            <!--<div class="form-group">-->
+                                <!--<label class="form-control-label" for="field_focusGroup">Focus Group</label>-->
+                                <!--<select class="form-control" id="field_focusGroup" name="focusGroup" [(ngModel)]="meeting.focusGroup" required>-->
+                                    <!--<option [ngValue]="null"></option>-->
+                                    <!--<option [ngValue]="focusGroupOption.id === meeting.focusGroup?.id ? meeting.focusGroup : focusGroupOption" *ngFor="let focusGroupOption of focusgroups; trackBy: trackFocusGroupById">{{focusGroupOption.name}}</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        </div>
+                        <div class="row">
+                            <div class="col-auto">
+                                <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
+                                        (click)="previousState()">
+                                    <i class="ft-x"></i> Cancelar
+                                </button>
+                            </div>
+                            <div
+                                *ngIf="editForm.form.invalid || isSaving; else validRegisterBtn"
+                                [ngbPopover]="popoverText"
+                                triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido." class="col-auto">
+                                <button class="btn btn-raised btn-primary" type="submit" id="save-entity"
+                                        [disabled]="true">
+                                    <i class="ft ft-file-text"></i> Registrar
+                                </button>
+                            </div>
+                            <ng-template #popoverText>
+                                <small class="display-block">Por favor, asegúrese de que todos los campos estén completos.
+                                </small>
+                            </ng-template>
+                            <ng-template #validRegisterBtn>
+                                <div class="col-auto">
+                                    <button type="submit" id="save-entity"
+                                            class="btn btn-raised btn-primary">
+                                        <i class="ft ft-file-text"></i> Registrar
+                                    </button>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

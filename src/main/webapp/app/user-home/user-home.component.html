@@ -1,0 +1,85 @@
+<div _ngcontent-c6="" class="card-header">
+    <h4 _ngcontent-c6="" class="card-title">
+        Grupos de enfoque
+    </h4>
+    <h6>¡Estas empresas necesitan tu opinión sobre sus productos! Si cumples con los requisitos, solicita participar y recibe una recompensa por tu ayuda.</h6>
+    <jhi-alert></jhi-alert>
+</div>
+<div _ngcontent-c25="" class="row pl-3 pr-3" matchheight="card" ng-reflect-match-height="card" *ngIf="focusGroups">
+
+    <div _ngcontent-c6="" class="input-group pr-3 pl-3">
+        <div _ngcontent-c6="" class="input-group-prepend">
+            <i _ngcontent-c16="" class="input-group-text ft-search info" id="basic-addon1"></i>
+        </div>
+        <input type="text" class="form-control" placeholder="Buscar por nombre..."
+               [(ngModel)]="searchText"/>
+    </div>
+
+    <ng-container *ngIf="( focusGroups | participantFGFilter : searchText) as result">
+        <div _ngcontent-c25="" class="col-md-6 col-sm-12" *ngFor="let focusGroup of result">
+            <!--<form [routerLink]="['/focus-group', focusGroup.id, 'view']">-->
+                <div _ngcontent-c25="" class="card card-inverse bg-primary text-center gradient-blue-grey-blue" style="height: 312.703px;">
+                    <div _ngcontent-c25="" class="card-body">
+                        <div _ngcontent-c25="" class="card-block pt-3">
+                            <div _ngcontent-c25="" class="row d-flex">
+                                <div _ngcontent-c25="" class="col align-self-center" style="min-height: 280px; max-height: 280px;">
+                                    <img _ngcontent-c25="" alt="element 01" src="https://res.cloudinary.com/utilisimo/image/upload/v1553384683/logoPeq2_j0gcfm.png" width="190" style="height: 280px; object-fit: contain;"></div>
+                                <div _ngcontent-c25="" class="col align-self-center">
+                                    <h4 _ngcontent-c25="" class="card-title mt-3">{{focusGroup.name}}</h4>
+                                    <p _ngcontent-c25="" class="card-text">{{focusGroup.description}}</p>
+                                    <a _ngcontent-c22="" id="btn-{{focusGroup.id}}" class="btn btn-raised mr-1 shadow-z-2 gradient-amber-amber" (click)="askParticipation(focusGroup.id,modalToDisplay)">Participar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <!--</form>-->
+        </div>
+
+        <div _ngcontent-c25="" class="card card-inverse bg-primary text-center gradient-blue-grey-blue mr-3 ml-3" style="height: 312.703px;" *ngIf="result.length === 0">
+            <div _ngcontent-c25="" class="card-body">
+                <div _ngcontent-c25="" class="card-block pt-3">
+                    <img _ngcontent-c25="" alt="element 01" src="https://res.cloudinary.com/utilisimo/image/upload/v1553481262/noResult_hhjbda.png" class="width-95-per mt-4">
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>
+
+<ng-template #modalToDisplay let-c="close" let-d="dismiss">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title" id="jhi-institution-heading">{{focusGroup.aptitudeTest.name}}</h2>
+        </div>
+        <div class="card-body">
+            <div class="px-3">
+                <form class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate
+                      #editForm>
+                    <div class="form-body">
+                        <div *ngFor="let testQuestion of testQuestions">
+                            <h4 class="form-section"><i class="ft-feather"></i>¿{{testQuestion.question}}?</h4>
+                            <div class="form-group">
+                                <div class="custom-control custom-radio custom-control-inline"
+                                     *ngFor="let testAnswerOption of testQuestion.answers">
+                                    <input type="radio" id="answer{{testAnswerOption.id}}" name="{{testQuestion.id}}" class="custom-control-input">
+                                    <label class="custom-control-label"
+                                           for="answer{{testAnswerOption.id}}"><span><i class="ft-minus"></i>{{testAnswerOption.answer}}</span></label><br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
+                                (click)="d('Force cancel')">
+                            <i class="ft-x"></i> Cancelar
+                        </button>
+                        <button class="btn btn-raised btn-primary" type="submit" id="save-entity"
+                                (click)="sendAptitudeTestAnswers(editForm); d('Force cancel')">
+                            <i class="ft ft-file-text"></i> Finalizar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</ng-template>

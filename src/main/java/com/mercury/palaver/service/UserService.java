@@ -120,6 +120,9 @@ public class UserService {
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         Set<Authority> authorities = new HashSet<>();
         authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
+        if(userDTO.getAuthorities() != null && userDTO.getAuthorities().contains("subadmin")){
+            authorityRepository.findById(AuthoritiesConstants.SUBADMIN).ifPresent(authorities::add);
+        }
         newUser.setAuthorities(authorities);
         userRepository.save(newUser);
         this.clearUserCaches(newUser);
@@ -196,20 +199,50 @@ public class UserService {
      *  @param role role of the user
      * @param userDTO user
      */
-    public User updateUserRole(String role, UserDTO userDTO) {
-        Set<Authority> authorities = new HashSet<>();
+    public Optional<UserDTO> updateUserRole(String role, UserDTO userDTO) {
+        /*Set<Authority> authorities = new HashSet<>();
         User user = null;
         if(userRepository.findById(userDTO.getId()).isPresent()){
             user = userRepository.findById(userDTO.getId()).get();
+            authorities = user.getAuthorities();
             if(role.equals("institution")){
                 authorityRepository.findById(AuthoritiesConstants.INSTITUTION).ifPresent(authorities::add);
             }else if(role.equals("participant")){
                 authorityRepository.findById(AuthoritiesConstants.PARTICIPANT).ifPresent(authorities::add);
+            }else if(role.equals("subadmin")) {
+                authorityRepository.findById(AuthoritiesConstants.SUBADMIN).ifPresent(authorities::add);
             }
             user.setAuthorities(authorities);
-
         }
-        return userRepository.save(user);
+        return userRepository.save(user);*/
+
+        return Optional.of(userRepository
+            .findById(userDTO.getId()))
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .map(user -> {
+                this.clearUserCaches(user);
+                user.setLogin(userDTO.getLogin().toLowerCase());
+                user.setFirstName(userDTO.getFirstName());
+                user.setLastName(userDTO.getLastName());
+                user.setEmail(userDTO.getEmail().toLowerCase());
+                user.setImageUrl(userDTO.getImageUrl());
+                user.setActivated(userDTO.isActivated());
+                user.setLangKey(userDTO.getLangKey());
+                Set<Authority> managedAuthorities = user.getAuthorities();
+                Authority auth = new Authority();
+                if(role.equals("institution")){
+                    auth.setName(AuthoritiesConstants.INSTITUTION);
+                    managedAuthorities.add(auth);
+                }else if(role.equals("participant")){
+                    auth.setName(AuthoritiesConstants.PARTICIPANT);
+                    managedAuthorities.add(auth);
+                }
+                this.clearUserCaches(user);
+                log.debug("Changed Information for User: {}", user);
+                return user;
+            })
+            .map(UserDTO::new);
     }
 
     /**
@@ -316,4 +349,20 @@ public class UserService {
         Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE)).evict(user.getLogin());
         Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE)).evict(user.getEmail());
     }
+
+    public void registerGroupManagementUser(String groupCode) {
+        User newUser = new User();
+        newUser.setLogin(groupCode);
+        // new user gets initially a generated password
+        newUser.setPassword(passwordEncoder.encode(groupCode));
+        newUser.setFirstName(groupCode);
+        newUser.setLastName(groupCode);
+        newUser.setActivated(true);
+        Set<Authority> authorities = new HashSet<>();
+        authorityRepository.findById(AuthoritiesConstants.GROUP).ifPresent(authorities::add);
+        newUser.setAuthorities(authorities);
+        userRepository.save(newUser);
+        log.debug("Created Information for User: {}", newUser);
+    }
+
 }

@@ -1,6 +1,8 @@
 package com.mercury.palaver.web.rest;
+
 import com.mercury.palaver.domain.TestQuestion;
 import com.mercury.palaver.repository.TestQuestionRepository;
+import com.mercury.palaver.service.TestQuestionService;
 import com.mercury.palaver.web.rest.errors.BadRequestAlertException;
 import com.mercury.palaver.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -29,8 +31,11 @@ public class TestQuestionResource {
 
     private final TestQuestionRepository testQuestionRepository;
 
-    public TestQuestionResource(TestQuestionRepository testQuestionRepository) {
+    private final TestQuestionService testQuestionService;
+
+    public TestQuestionResource(TestQuestionRepository testQuestionRepository, TestQuestionService testQuestionService) {
         this.testQuestionRepository = testQuestionRepository;
+        this.testQuestionService = testQuestionService;
     }
 
     /**
@@ -46,7 +51,7 @@ public class TestQuestionResource {
         if (testQuestion.getId() != null) {
             throw new BadRequestAlertException("A new testQuestion cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        TestQuestion result = testQuestionRepository.save(testQuestion);
+        TestQuestion result = testQuestionService.save(testQuestion);
         return ResponseEntity.created(new URI("/api/test-questions/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -67,7 +72,7 @@ public class TestQuestionResource {
         if (testQuestion.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        TestQuestion result = testQuestionRepository.save(testQuestion);
+        TestQuestion result = testQuestionService.update(testQuestion);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, testQuestion.getId().toString()))
             .body(result);
@@ -106,7 +111,13 @@ public class TestQuestionResource {
     @DeleteMapping("/test-questions/{id}")
     public ResponseEntity<Void> deleteTestQuestion(@PathVariable Long id) {
         log.debug("REST request to delete TestQuestion : {}", id);
-        testQuestionRepository.deleteById(id);
+        testQuestionService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/test-questions/aptitude/{id}")
+    public List<TestQuestion> getAllByAptitudeTest(@PathVariable Long id) {
+        log.debug("REST request to get all TestQuestions");
+        return testQuestionService.findAllQuestionsAndAnswersByAptitudeTestId(id);
     }
 }

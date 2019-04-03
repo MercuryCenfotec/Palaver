@@ -32,6 +32,18 @@
         {
             "fieldName": "code",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "passingGrade",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "participantsAmount",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "String"
         }
     ],
     "relationships": [
@@ -64,6 +76,13 @@
             "otherEntityName": "participant",
             "otherEntityField": "id",
             "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "aptitudeTest",
+            "otherEntityName": "aptitudeTest",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "focusGroup"
         }
     ],
     "changelogDate": "20190304115742",

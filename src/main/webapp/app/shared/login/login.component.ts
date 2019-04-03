@@ -5,6 +5,8 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { LoginService } from 'app/core/login/login.service';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
+import { UserAppService } from 'app/entities/user-app';
+import { UserService } from 'app/core';
 
 @Component({
     selector: 'jhi-login-modal',
@@ -24,7 +26,9 @@ export class JhiLoginModalComponent implements AfterViewInit {
         private elementRef: ElementRef,
         private renderer: Renderer,
         private router: Router,
-        public activeModal: NgbActiveModal
+        public activeModal: NgbActiveModal,
+        public userAppService: UserAppService,
+        protected userService: UserService
     ) {
         this.credentials = {};
     }
@@ -53,6 +57,33 @@ export class JhiLoginModalComponent implements AfterViewInit {
             .then(() => {
                 this.authenticationError = false;
                 this.activeModal.dismiss('login success');
+
+                this.userService.getUserWithAuthorities().subscribe(user => {
+                    this.userAppService.findByUserId(user.id).subscribe(userApp => {
+                        this.userAppService.isSpecified(user.id).subscribe(isSpecified => {
+                            if (!isSpecified.body) {
+                                switch (userApp.rol) {
+                                    case 'institution':
+                                        this.router.navigate(['/institution/new']);
+                                        break;
+                                    case 'participant':
+                                        this.router.navigate(['/participant/new']);
+                                        break;
+                                }
+                            } else {
+                                switch (userApp.rol) {
+                                    case 'institution':
+                                        this.router.navigate(['/dashboard-institution']);
+                                        break;
+                                    case 'participant':
+                                        this.router.navigate(['/participant-home']);
+                                        break;
+                                }
+                            }
+                        });
+                    });
+                });
+
                 if (this.router.url === '/register' || /^\/activate\//.test(this.router.url) || /^\/reset\//.test(this.router.url)) {
                     this.router.navigate(['']);
                 }

@@ -1,66 +1,81 @@
-<div>
-    <h2 id="page-heading">
-        <span>Test Results</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-test-result" [routerLink]="['/test-result/new']">
-            <fa-icon [icon]="'plus'"></fa-icon>
-            <span >
-            Create new Test Result
-            </span>
-        </button>
-    </h2>
-    <jhi-alert></jhi-alert>
-    <br/>
-    <div class="table-responsive" *ngIf="testResults">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-            <th><span>ID</span></th>
-            <th><span>Grade</span></th>
-            <th><span>Focus Group</span></th>
-            <th><span>Participant</span></th>
-            <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let testResult of testResults ;trackBy: trackId">
-                <td><a [routerLink]="['/test-result', testResult.id, 'view' ]">{{testResult.id}}</a></td>
-                <td>{{testResult.grade}}</td>
-                <td>
-                    <div *ngIf="testResult.focusGroup">
-                        <a [routerLink]="['../focus-group', testResult.focusGroup?.id, 'view' ]" >{{testResult.focusGroup?.id}}</a>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Resultados de pruebas</h4>
+            </div>
+            <div class="card-body">
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-sm-12 col-3 col-md-3 col-lg-3 col-xl-3">
+                            <div class="input-group my-3">
+                                <div class="input-group-prepend">
+                                    <i class="input-group-text ft-search info"></i>
+                                </div>
+                                <input type="text" jhiNumericOnly  class="form-control" maxlength="5" placeholder="Buscar por nota..."
+                                       [(ngModel)]="gradeInput"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-9 col-md-9 col-lg-9 col-xl-9">
+                            <div class="input-group my-3">
+                                <div class="input-group-prepend">
+                                    <i class="input-group-text ft-search info"></i>
+                                </div>
+                                <input type="text"  class="form-control"  placeholder="Buscar por nombre..."
+                                       [(ngModel)]="nameInput"/>
+                            </div>
+                        </div>
                     </div>
-                </td>
-                <td>
-                    <div *ngIf="testResult.participant">
-                        <a [routerLink]="['../participant', testResult.participant?.id, 'view' ]" >{{testResult.participant?.id}}</a>
+                    <div class="table-responsive" *ngIf="testResults">
+                        <table class="table table-responsive-md text-center">
+                            <thead>
+                            <tr>
+                                <!--<th><span>ID</span></th>
+                                <th><span></span></th>-->
+                                <th><span>Calificación esperada</span></th>
+                                <th><span>Participante</span></th>
+                                <th><span>Calificación</span></th>
+                                <th><span>Acciones</span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let testResult of testResults | testParticipantFilter:nameInput | testResultFilter:gradeInput; trackBy: trackId">
+                                <!--<td><a [routerLink]="['/test-result', testResult.id, 'view' ]">{{testResult.id}}</a>
+                                </td>
+                                <td>
+                                    <div class="custom-control custom-checkbox m-0">
+                                        <input type="checkbox" class="custom-control-input" id="{{testResult.id}}">
+                                        <label class="custom-control-label" for="{{testResult.id}}"></label>
+                                    </div>
+                                </td>-->
+                                <td>
+                                    <div *ngIf="testResult.focusGroup">
+                                        <a [routerLink]="['../focus-group', testResult.focusGroup?.id, 'view' ]">{{testResult.focusGroup?.passingGrade}}</a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div *ngIf="testResult.participant">
+                                        <a [routerLink]="['../participant', testResult.participant?.id, 'view' ]">{{testResult.participant?.user.name}}</a>
+                                    </div>
+                                </td>
+                                <td>{{testResult.grade}}</td>
+                                <td>
+                                    <button id="btnReject" class="btn btn-raised btn-danger mr-1"
+                                            (click)="rejectParticipant(testResult)">
+                                        <i class="ft-x"></i> Rechazar
+                                    </button>
+                                    <button class="btn btn-raised btn-primary" id="btnAccept"
+                                            (click)="acceptParticipant(testResult)">
+                                        <i class="ft ft-check"></i> Aceptar
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
-                </td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['/test-result', testResult.id, 'view' ]"
-                                class="btn btn-info btn-sm">
-                            <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/test-result', testResult.id, 'edit']"
-                                class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', 'test-result', { outlets: { popup: testResult.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+

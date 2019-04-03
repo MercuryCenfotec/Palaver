@@ -4,6 +4,7 @@ import com.mercury.palaver.PalaverApp;
 
 import com.mercury.palaver.domain.Meeting;
 import com.mercury.palaver.repository.MeetingRepository;
+import com.mercury.palaver.service.ZoomApiService;
 import com.mercury.palaver.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -68,6 +69,9 @@ public class MeetingResourceIntTest {
     private MeetingRepository meetingRepository;
 
     @Autowired
+    private ZoomApiService zoomApiService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -89,7 +93,7 @@ public class MeetingResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final MeetingResource meetingResource = new MeetingResource(meetingRepository);
+        final MeetingResource meetingResource = new MeetingResource(meetingRepository,zoomApiService);
         this.restMeetingMockMvc = MockMvcBuilders.standaloneSetup(meetingResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -139,8 +143,8 @@ public class MeetingResourceIntTest {
         assertThat(testMeeting.getTime()).isEqualTo(DEFAULT_TIME);
         assertThat(testMeeting.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testMeeting.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
-        assertThat(testMeeting.getCallURL()).isEqualTo(DEFAULT_CALL_URL);
-        assertThat(testMeeting.getCallCode()).isEqualTo(DEFAULT_CALL_CODE);
+        assertThat(testMeeting.getCallURL()).contains("https://zoom.us/");
+        assertThat(testMeeting.getCallCode()).contains("https://zoom.us/");
     }
 
     @Test

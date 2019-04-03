@@ -3,12 +3,12 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Instituciones
-                    <button id="jh-create-entity" class="btn btn-raised btn-primary float-right" [routerLink]="['/institution/new']">
+                    <!--<button id="jh-create-entity" class="btn btn-raised btn-primary float-right" [routerLink]="['/institution/new']">
                         <i class="ft-plus"></i>
                         <span >
             Registrar nueva institución
             </span>
-                    </button>
+                    </button>-->
                 </h4>
             </div>
             <div class="card-body">
@@ -18,43 +18,41 @@
                         <table class="table table-responsive-md text-center">
                             <thead>
                             <tr>
-                                <th><span>ID</span></th>
-                                <th><span></span></th>
+                                <!--<th><span>ID</span></th>-->
+                                <!--<th><span></span></th>-->
                                 <th><span>Nombre</span></th>
-                                <th><span>Descripción</span></th>
-                                <th><span>Logo</span></th>
+                                <!--<th><span>Logo</span></th>-->
                                 <th><span>Teléfono</span></th>
                                 <th><span>Usuario</span></th>
-                                <th><span>Membresía</span></th>
+                                <!--<th><span>Membresía</span></th>-->
                                 <th><span>Acciones</span></th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr *ngFor="let institution of institutions ;trackBy: trackId">
-                                <td><a [routerLink]="['/institution', institution.id, 'view' ]">{{institution.id}}</a></td>
-                                <td>
+                                <!--<td><a [routerLink]="['/institution', institution.id, 'view' ]">{{institution.id}}</a></td>-->
+                                <!--<td>
                                     <div class="custom-control custom-checkbox m-0">
                                         <input type="checkbox" class="custom-control-input" id="{{institution.id}}">
                                         <label class="custom-control-label" for="{{institution.id}}"></label>
                                     </div>
-                                </td>
+                                </td>-->
                                 <td>{{institution.name}}</td>
-                                <td>{{institution.description}}</td>
-                                <td>{{institution.logo}}</td>
+                                <!--<td>{{institution.logo}}</td>-->
                                 <td>{{institution.telephone}}</td>
                                 <td>
                                     <div *ngIf="institution.user">
                                         <a [routerLink]="['../user-app', institution.user?.id, 'view' ]" >{{institution.user?.name}}</a>
                                     </div>
                                 </td>
-                                <td>
+                                <!--<td>
                                     <div *ngIf="institution.membership">
                                         <a [routerLink]="['../membership', institution.membership?.id, 'view' ]" >{{institution.membership?.id}}</a>
                                     </div>
-                                </td>
+                                </td>-->
                                 <td>
                                     <a class="info p-0" data-original-title="" title="" [routerLink]="['/institution', institution.id, 'view' ]">
-                                        <i class="ft-user font-medium-3 mr-2"></i>
+                                        <i class="ft-eye font-medium-3 mr-2"></i>
                                     </a>
                                     <a class="success p-0" data-original-title="" title="" [routerLink]="['/institution', institution.id, 'edit']">
                                         <i class="ft-edit-2 font-medium-3 mr-2"></i>

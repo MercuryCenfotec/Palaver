@@ -5,8 +5,9 @@ import { filter, map } from 'rxjs/operators';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { IAptitudeTest } from 'app/shared/model/aptitude-test.model';
-import { AccountService } from 'app/core';
+import { AccountService, UserService } from 'app/core';
 import { AptitudeTestService } from './aptitude-test.service';
+import { InstitutionService } from 'app/entities/institution';
 
 @Component({
     selector: 'jhi-aptitude-test',
@@ -16,31 +17,33 @@ export class AptitudeTestComponent implements OnInit, OnDestroy {
     aptitudeTests: IAptitudeTest[];
     currentAccount: any;
     eventSubscriber: Subscription;
+    searchText;
 
     constructor(
         protected aptitudeTestService: AptitudeTestService,
         protected jhiAlertService: JhiAlertService,
         protected eventManager: JhiEventManager,
-        protected accountService: AccountService
+        protected accountService: AccountService,
+        protected userService: UserService,
+        protected institutionService: InstitutionService
     ) {}
 
+    loadByInstitution() {
+        this.loadAll();
+    }
+
     loadAll() {
-        this.aptitudeTestService
-            .query()
-            .pipe(
-                filter((res: HttpResponse<IAptitudeTest[]>) => res.ok),
-                map((res: HttpResponse<IAptitudeTest[]>) => res.body)
-            )
-            .subscribe(
-                (res: IAptitudeTest[]) => {
-                    this.aptitudeTests = res;
-                },
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
+        this.userService.getUserWithAuthorities().subscribe(user => {
+            this.institutionService.getByUserUser(user.id).subscribe(institution => {
+                this.aptitudeTestService.findAllByInstitution(institution.body.id).subscribe(aptitudeTests => {
+                    this.aptitudeTests = aptitudeTests.body;
+                });
+            });
+        });
     }
 
     ngOnInit() {
-        this.loadAll();
+        this.loadByInstitution();
         this.accountService.identity().then(account => {
             this.currentAccount = account;
         });

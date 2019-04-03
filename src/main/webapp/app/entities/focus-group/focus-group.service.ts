@@ -15,6 +15,7 @@ type EntityArrayResponseType = HttpResponse<IFocusGroup[]>;
 @Injectable({ providedIn: 'root' })
 export class FocusGroupService {
     public resourceUrl = SERVER_API_URL + 'api/focus-groups';
+    public resourceUrlPublic = SERVER_API_URL + 'api-public/focus-groups';
 
     constructor(protected http: HttpClient) {}
 
@@ -37,6 +38,10 @@ export class FocusGroupService {
         return this.http
             .get<IFocusGroup>(`${this.resourceUrl}/${id}`, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+    }
+
+    findAllByInstitution(institutionId: number): Observable<EntityArrayResponseType> {
+        return this.http.get<IFocusGroup[]>(`${this.resourceUrl}/institution/${institutionId}`, { observe: 'response' });
     }
 
     query(req?: any): Observable<EntityArrayResponseType> {
@@ -74,5 +79,19 @@ export class FocusGroupService {
             });
         }
         return res;
+    }
+
+    findByCode(code: string): Observable<EntityResponseType> {
+        return this.http
+            .get<IFocusGroup>(`${this.resourceUrlPublic}/find-by-code/${code}`, { observe: 'response' })
+            .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+    }
+
+    isCancelable(groupId: number): Observable<HttpResponse<boolean>> {
+        return this.http.get<boolean>(`${this.resourceUrl}/cancelable/${groupId}`, { observe: 'response' });
+    }
+
+    testIsAvailable(testId: number): Observable<HttpResponse<boolean>> {
+        return this.http.get<boolean>(`${this.resourceUrl}/aptitude-test/${testId}`, { observe: 'response' });
     }
 }

@@ -4,6 +4,7 @@ import com.mercury.palaver.PalaverApp;
 
 import com.mercury.palaver.domain.AptitudeTest;
 import com.mercury.palaver.repository.AptitudeTestRepository;
+import com.mercury.palaver.service.AptitudeTestService;
 import com.mercury.palaver.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -68,10 +69,13 @@ public class AptitudeTestResourceIntTest {
 
     private AptitudeTest aptitudeTest;
 
+    @Autowired
+    private AptitudeTestService aptitudeTestService;
+
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final AptitudeTestResource aptitudeTestResource = new AptitudeTestResource(aptitudeTestRepository);
+        final AptitudeTestResource aptitudeTestResource = new AptitudeTestResource(aptitudeTestRepository, aptitudeTestService);
         this.restAptitudeTestMockMvc = MockMvcBuilders.standaloneSetup(aptitudeTestResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

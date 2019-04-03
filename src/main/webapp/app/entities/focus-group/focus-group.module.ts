@@ -9,9 +9,19 @@ import {
     FocusGroupDeletePopupComponent,
     FocusGroupDeleteDialogComponent,
     focusGroupRoute,
-    focusGroupPopupRoute
+    focusGroupPopupRoute,
+    ParticipateComponent
 } from './';
 import { FocusGroupFormComponent } from 'app/entities/focus-group/focus-group-form.component';
+import { FocusGroupManagementLoginComponent } from 'app/entities/focus-group/focus-group-management-login.component';
+import { FocusGroupManagementComponent } from 'app/entities/focus-group/focus-group-management.component';
+import { FocusGroupFilterPipe } from 'app/entities/focus-group/filter.pipe';
+import { ParticipantFilterPipe } from 'app/entities/participant/filter.pipe';
+import {
+    FocusGroupTestDialogComponent,
+    FocusGroupTestDialogPopupComponent
+} from 'app/entities/focus-group/focus-group-test-dialog.component';
+import { FocusGroupCloneTestComponent, FocusGroupCloneTestPopupComponent } from 'app/entities/focus-group/focus-group-clone-test.component';
 
 const ENTITY_STATES = [...focusGroupRoute, ...focusGroupPopupRoute];
 
@@ -23,9 +33,30 @@ const ENTITY_STATES = [...focusGroupRoute, ...focusGroupPopupRoute];
         FocusGroupUpdateComponent,
         FocusGroupDeleteDialogComponent,
         FocusGroupDeletePopupComponent,
-        FocusGroupFormComponent
+        FocusGroupFormComponent,
+        ParticipateComponent,
+        FocusGroupManagementLoginComponent,
+        FocusGroupManagementComponent,
+        FocusGroupFilterPipe,
+        ParticipantFilterPipe,
+        FocusGroupTestDialogComponent,
+        FocusGroupTestDialogPopupComponent,
+        FocusGroupCloneTestComponent,
+        FocusGroupCloneTestPopupComponent
     ],
-    entryComponents: [FocusGroupComponent, FocusGroupUpdateComponent, FocusGroupDeleteDialogComponent, FocusGroupDeletePopupComponent],
+    entryComponents: [
+        FocusGroupComponent,
+        FocusGroupUpdateComponent,
+        FocusGroupDeleteDialogComponent,
+        FocusGroupDeletePopupComponent,
+        FocusGroupCloneTestComponent,
+        FocusGroupCloneTestPopupComponent,
+        FocusGroupTestDialogComponent,
+        FocusGroupTestDialogPopupComponent,
+        ParticipateComponent,
+        FocusGroupManagementLoginComponent,
+        FocusGroupManagementComponent
+    ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PalaverFocusGroupModule {}

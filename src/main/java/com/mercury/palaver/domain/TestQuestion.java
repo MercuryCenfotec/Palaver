@@ -1,6 +1,7 @@
 package com.mercury.palaver.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 
@@ -8,6 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -29,9 +32,11 @@ public class TestQuestion implements Serializable {
     private String question;
 
     @ManyToOne
-    @JsonIgnoreProperties("testQuestions")
+    @JsonIgnoreProperties("questions")
     private AptitudeTest aptitudeTest;
 
+    @OneToMany(mappedBy = "testQuestion")
+    private Set<TestAnswerOption> answers = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -65,6 +70,31 @@ public class TestQuestion implements Serializable {
 
     public void setAptitudeTest(AptitudeTest aptitudeTest) {
         this.aptitudeTest = aptitudeTest;
+    }
+
+    public Set<TestAnswerOption> getAnswers() {
+        return answers;
+    }
+
+    public TestQuestion answers(Set<TestAnswerOption> testAnswerOptions) {
+        this.answers = testAnswerOptions;
+        return this;
+    }
+
+    public TestQuestion addAnswers(TestAnswerOption testAnswerOption) {
+        this.answers.add(testAnswerOption);
+        testAnswerOption.setTestQuestion(this);
+        return this;
+    }
+
+    public TestQuestion removeAnswers(TestAnswerOption testAnswerOption) {
+        this.answers.remove(testAnswerOption);
+        testAnswerOption.setTestQuestion(null);
+        return this;
+    }
+
+    public void setAnswers(Set<TestAnswerOption> testAnswerOptions) {
+        this.answers = testAnswerOptions;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

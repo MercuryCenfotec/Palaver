@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -17,7 +17,8 @@ export class FocusGroupDeleteDialogComponent {
     constructor(
         protected focusGroupService: FocusGroupService,
         public activeModal: NgbActiveModal,
-        protected eventManager: JhiEventManager
+        protected eventManager: JhiEventManager,
+        protected router: Router
     ) {}
 
     clear() {
@@ -31,6 +32,7 @@ export class FocusGroupDeleteDialogComponent {
                 content: 'Deleted an focusGroup'
             });
             this.activeModal.dismiss(true);
+            window.history.go(-2);
         });
     }
 }
@@ -47,7 +49,10 @@ export class FocusGroupDeletePopupComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ focusGroup }) => {
             setTimeout(() => {
-                this.ngbModalRef = this.modalService.open(FocusGroupDeleteDialogComponent as Component, { size: 'lg', backdrop: 'static' });
+                this.ngbModalRef = this.modalService.open(FocusGroupDeleteDialogComponent as Component, {
+                    size: 'lg',
+                    backdrop: 'static'
+                });
                 this.ngbModalRef.componentInstance.focusGroup = focusGroup;
                 this.ngbModalRef.result.then(
                     result => {

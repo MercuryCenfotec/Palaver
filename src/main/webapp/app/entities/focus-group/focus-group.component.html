@@ -2,56 +2,59 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Grupo de enfoque
-                    <button id="jh-create-entity" class="btn btn-raised btn-primary float-right" [routerLink]="['/focus-group/new']">
+                <h4 class="card-title">Grupos de enfoque
+                    <button id="jh-create-entity" class="btn btn-raised btn-primary float-right"
+                            [routerLink]="['/focus-group/new']">
                         <i class="ft-plus"></i>
-                        <span >
-            Registrar nuevo grupo de enfoque
-            </span>
+                        <span>
+                            Registrar nuevo grupo de enfoque
+                        </span>
                     </button>
                 </h4>
             </div>
             <div class="card-body">
                 <div class="card-block">
-                    <jhi-alert></jhi-alert>
+                    <!--<jhi-alert></jhi-alert>-->
                     <div class="table-responsive" *ngIf="focusGroups">
+
+                        <div _ngcontent-c6="" class="input-group">
+                            <div _ngcontent-c6="" class="input-group-prepend">
+                                <i _ngcontent-c16="" class="input-group-text ft-search info" id="basic-addon1"></i>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Buscar por nombre..."
+                                   [(ngModel)]="searchText"/>
+                        </div>
+
                         <table class="table table-responsive-md text-center">
                             <thead>
                             <tr>
-                                <th><span></span></th>
                                 <th><span>Nombre</span></th>
-                                <th><span>Descripción</span></th>
                                 <th><span>Fecha de inicio</span></th>
-                                <th><span>Fecha de finalizacion</span></th>
+                                <th><span>Fecha de finalización</span></th>
                                 <th><span>Código</span></th>
                                 <th><span>Acciones</span></th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr *ngFor="let focusGroup of focusGroups ;trackBy: trackId">
-                                <td>
-                                    <div class="custom-control custom-checkbox m-0">
-                                        <input type="checkbox" class="custom-control-input" id="{{focusGroup.id}}">
-                                        <label class="custom-control-label" for="{{focusGroup.id}}"></label>
-                                    </div>
-                                </td>
+                            <tr *ngFor="let focusGroup of focusGroups | focusGroupFilter:searchText;">
                                 <td>{{focusGroup.name}}</td>
-                                <td>{{focusGroup.description}}</td>
                                 <td>{{focusGroup.beginDate | date:'mediumDate'}}</td>
                                 <td>{{focusGroup.endDate | date:'mediumDate'}}</td>
                                 <td>{{focusGroup.code}}</td>
                                 <td>
-                                    <a class="info p-0" data-original-title="" title="" [routerLink]="['/focus-group', focusGroup.id, 'view' ]">
+                                    <a class="info p-0" data-original-title="" title=""
+                                       [routerLink]="['/focus-group', focusGroup.id, 'view' ]">
                                         <i class="ft-eye font-medium-3 mr-2"></i>
                                     </a>
-                                    <a class="success p-0" data-original-title="" title="" [routerLink]="['/focus-group', focusGroup.id, 'edit']">
+                                    <a class="success p-0" data-original-title="" title=""
+                                       [routerLink]="['/focus-group', focusGroup.id, 'edit']">
                                         <i class="ft-edit-2 font-medium-3 mr-2"></i>
                                     </a>
-                                    <a class="danger p-0" data-original-title="" title="" [routerLink]="['/', 'focus-group', { outlets: { popup: focusGroup.id + '/delete'} }]"
-                                       replaceUrl="true"
-                                       queryParamsHandling="merge">
-                                        <i class="ft-x font-medium-3 mr-2"></i>
-                                    </a>
+                                    <!--<a class="danger p-0" data-original-title="" title="" [routerLink]="['/', 'focus-group', { outlets: { popup: focusGroup.id + '/delete'} }]"-->
+                                    <!--replaceUrl="true"-->
+                                    <!--queryParamsHandling="merge">-->
+                                    <!--<i class="ft-x font-medium-3 mr-2"></i>-->
+                                    <!--</a>-->
                                 </td>
                             </tr>
                             </tbody>

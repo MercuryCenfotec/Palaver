@@ -44,11 +44,21 @@ public class FocusGroup implements Serializable {
     @Column(name = "code")
     private String code;
 
+    @Column(name = "passing_grade")
+    private Integer passingGrade;
+
+    @Column(name = "participants_amount")
+    private Integer participantsAmount;
+
+    @Column(name = "status")
+    private String status;
+
     @ManyToOne
     @JsonIgnoreProperties("focusGroups")
     private Incentive incentive;
 
     @ManyToOne
+    @JsonIgnoreProperties("focusGroups")
     private Institution institution;
 
     @ManyToMany
@@ -62,6 +72,10 @@ public class FocusGroup implements Serializable {
                joinColumns = @JoinColumn(name = "focus_group_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "participant_id", referencedColumnName = "id"))
     private Set<Participant> participants = new HashSet<>();
+
+    @ManyToOne
+    @JsonIgnoreProperties("focusGroups")
+    private AptitudeTest aptitudeTest;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -135,6 +149,45 @@ public class FocusGroup implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Integer getPassingGrade() {
+        return passingGrade;
+    }
+
+    public FocusGroup passingGrade(Integer passingGrade) {
+        this.passingGrade = passingGrade;
+        return this;
+    }
+
+    public void setPassingGrade(Integer passingGrade) {
+        this.passingGrade = passingGrade;
+    }
+
+    public Integer getParticipantsAmount() {
+        return participantsAmount;
+    }
+
+    public FocusGroup participantsAmount(Integer participantsAmount) {
+        this.participantsAmount = participantsAmount;
+        return this;
+    }
+
+    public void setParticipantsAmount(Integer participantsAmount) {
+        this.participantsAmount = participantsAmount;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public FocusGroup status(String status) {
+        this.status = status;
+        return this;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Incentive getIncentive() {
@@ -212,6 +265,19 @@ public class FocusGroup implements Serializable {
     public void setParticipants(Set<Participant> participants) {
         this.participants = participants;
     }
+
+    public AptitudeTest getAptitudeTest() {
+        return aptitudeTest;
+    }
+
+    public FocusGroup aptitudeTest(AptitudeTest aptitudeTest) {
+        this.aptitudeTest = aptitudeTest;
+        return this;
+    }
+
+    public void setAptitudeTest(AptitudeTest aptitudeTest) {
+        this.aptitudeTest = aptitudeTest;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -243,6 +309,9 @@ public class FocusGroup implements Serializable {
             ", beginDate='" + getBeginDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
             ", code='" + getCode() + "'" +
+            ", passingGrade=" + getPassingGrade() +
+            ", participantsAmount=" + getParticipantsAmount() +
+            ", status='" + getStatus() + "'" +
             "}";
     }
 }

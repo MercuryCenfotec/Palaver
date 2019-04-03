@@ -1,52 +1,163 @@
 <div class="row justify-content-center">
     <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-            <h2 id="jhi-aptitude-test-heading">Create or edit a Aptitude Test</h2>
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()">
+            <h2 id="jhi-aptitude-test-heading">Editar prueba de aptitud</h2>
             <div>
-                <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!aptitudeTest.id">
-                    <label for="id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id"
-                        [(ngModel)]="aptitudeTest.id" readonly />
-                </div>
+                <h4 class="form-section"><i class="ft-info"></i>Información</h4>
                 <div class="form-group">
-                    <label class="form-control-label" for="field_name">Name</label>
-                    <input type="text" class="form-control" name="name" id="field_name"
-                        [(ngModel)]="aptitudeTest.name" required/>
-                    <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.name?.errors?.required">
-                        This field is required.
-                        </small>
+                    <label class="form-control-label" for="field_name">Nombre</label>
+                    <input #floatName="ngModel" type="text" class="form-control" name="name" id="field_name"
+                           [(ngModel)]="aptitudeTest.name" required/>
+                    <small class="form-text text-muted danger" *ngIf="!floatName.valid && (floatName.dirty ||
+                                 floatName.touched)">¡Nombre requerido!
+                    </small>
+                </div>
+                <div id="addQuestionSection">
+                    <h4 class="form-section"><i class="ft-plus"></i>Agregar preguntas</h4>
+                    <div class="row">
+                        <div id="testForm" class="col-md-6 col-sm-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_name">Pregunta</label>
+                                <input [attr.disabled]="newQuestion.answers.length ? '' : null"
+                                       type="text" class="form-control" name="question"
+                                       id="field_question" [class.ng-invalid]="repeatedQuestion()"
+                                       [(ngModel)]="newQuestion.question"/>
+                                <small class="form-text text-muted danger" *ngIf="repeatedQuestion()">
+                                    No puede haber preguntas repetidas.
+                                </small>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_answer">Respuesta</label>
+                                <input [attr.disabled]="!newQuestion.question ? '' : null"
+                                       type="text" class="form-control" name="answer"
+                                       id="field_answer" [class.ng-invalid]="repeatedAnswer()"
+                                       [(ngModel)]="newAnswer.answer"/>
+                                <small class="form-text text-muted danger" *ngIf="repeatedAnswer()">
+                                    No puede haber respuestas repetidas.
+                                </small>
+                            </div>
+                            <div
+                                *ngIf="!newAnswer.answer || repeatedQuestion() || repeatedAnswer(); else validAnswerInput"
+                                [ngbPopover]="popoverAnswerText"
+                                triggers="mouseenter:mouseleave" popoverTitle="Respuesta inválida." class="col-6">
+                                <button [disabled]="true" type="button" id="addAnswerBtn"
+                                        class="btn btn-raised btn-primary">
+                                    <i class="ft-plus"></i><span id="id"> Agregar respuesta</span>
+                                </button>
+                            </div>
+                            <ng-template #popoverAnswerText>
+                                <small class="display-block">
+                                    Asegúrese de escribir la respuesta antes de agregarla y de que la respuesta no
+                                    esté repetida.
+                                </small>
+                                <small>
+                                    No puede haber preguntas repetidas
+                                </small>
+                            </ng-template>
+                            <ng-template #validAnswerInput>
+                                <div class="col-6">
+                                    <button (click)="addAnswerToQuestion()" id="addAnswerValidBtn"
+                                            class="btn btn-raised btn-primary">
+                                        <i class="ft-plus"></i><span id="answerInputId"> Agregar respuesta</span>
+                                    </button>
+                                </div>
+                            </ng-template>
+                        </div>
+                        <div id="testPreview" class="col-md-6 col-sm-6 col-lg-6">
+                            <label class="">Vista preliminar</label>
+                            <div *ngIf="newQuestion.question">
+                                <div class="card bg-blue-grey bg-lighten-5">
+                                    <div class="card-header">
+                                        <span class="text-bold-500 primary">¿{{newQuestion.question}}?</span>
+                                    </div>
+                                    <div id="previewAnswers" class="card-body">
+                                        <div class="card-block">
+                                            <span *ngFor="let answer of newQuestion.answers" class="display-block">
+                                                <i (click)="removeAnswerFromPreview(answer)"
+                                                   class="cursor-pointer warning ft-x font-medium-3 mr-2"></i>
+                                                <i class="ft-minus"></i>{{answer.answer}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div [ngbPopover]="popoverQuestionText" popoverTitle="Pregunta incompleta."
+                                     triggers="mouseenter:mouseleave"
+                                     class="col-6" *ngIf="newQuestion.answers.length < 2; else validQuestionBtn">
+                                    <button [disabled]="true" type="button" id="addQuestionBtn"
+                                            class="btn btn-raised btn-primary">
+                                        <i class="ft-check"></i><span> Completar pregunta.</span>
+                                    </button>
+                                </div>
+                                <ng-template #popoverQuestionText>
+                                    <small>Asegúrese de agregar como mínimo 2 respuestas a la pregunta.</small>
+                                </ng-template>
+                                <ng-template #validQuestionBtn>
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-raised btn-primary"
+                                                (click)="addQuestionToTest()" id="addQuestionValidBtn">
+                                            <i class="ft-check"></i><span> Completar pregunta.</span>
+                                        </button>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_createdDate">Created Date</label>
-                    <input type="text" class="form-control" name="createdDate" id="field_createdDate"
-                        [(ngModel)]="aptitudeTest.createdDate" required/>
-                    <div [hidden]="!(editForm.controls.createdDate?.dirty && editForm.controls.createdDate?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.createdDate?.errors?.required">
-                        This field is required.
-                        </small>
+                <div id="questionCardSection" class="">
+                    <h4 class="form-section"><i class="ft-clipboard"></i>Preguntas</h4>
+                    <div id="question{{i}}" class="card bg-blue-grey bg-lighten-5"
+                         *ngFor="let question of aptitudeTest.questions; let i = index">
+                        <div *ngIf="question.question !== 'delete'">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-sm-10 col-md-10 col-11">
+                                        <span class="text-bold-500 primary">¿{{question.question}}?</span>
+                                    </div>
+                                    <div *ngIf="question.id; else newQuestion" class="col-sm-2 col-md-2 col-1 col-lg-1">
+                                        <a [routerLink]="['/test-question', question.id, 'edit' ]"><i
+                                            class="ft-edit-2 font-medium-3"></i></a>
+                                        <a *ngIf="validQuestionsLength(); else invalidDelBtn"
+                                           (click)="removeQuestion(question)"><i
+                                            class="ft-x font-medium-3 danger"></i></a>
+                                        <ng-template #invalidDelBtn>
+                                            <a [ngbPopover]="popoverDelText" container="body"
+                                               triggers="mouseenter:mouseleave" popoverTitle="Mínimo alcanzado.">
+                                                <i class="ft-x font-medium-3 grey cursor-not-allowed"></i>
+                                            </a>
+                                            <ng-template #popoverDelText>
+                                                <small>
+                                                    Una prueba tiene que tener como mínimo 1 pregunta.
+                                                </small>
+                                            </ng-template>
+                                        </ng-template>
+                                    </div>
+                                    <ng-template #newQuestion>
+                                        <div class="col-1 col-sm-1 col-md-1 col-lg-1 text-right">
+                                            <i (click)="removeQuestionFromTest(question)"
+                                               class="cursor-pointer warning ft-x font-medium-3 mr-2"></i>
+                                        </div>
+                                    </ng-template>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-block">
+                                    <div class="card-block">
+                                            <span *ngFor="let answer of question.answers" class="display-block"><i
+                                                class="ft-minus"></i>{{answer.answer}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_institution">Institution</label>
-                    <select class="form-control" id="field_institution" name="institution" [(ngModel)]="aptitudeTest.institution" >
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="institutionOption.id === aptitudeTest.institution?.id ? aptitudeTest.institution : institutionOption" *ngFor="let institutionOption of institutions; trackBy: trackInstitutionById">{{institutionOption.id}}</option>
-                    </select>
+                <div>
+                    <button type="button" id="cancel-edit" class="btn btn-raised btn-warning mr-1"
+                            (click)="previousState()">
+                        <i class="ft-x"></i><span> Cancelar</span>
+                    </button>
+                    <button type="submit" id="save-entity" class="btn btn-raised btn-primary">
+                        <i class="ft-save"></i>&nbsp;<span> Completar</span>
+                    </button>
                 </div>
-            </div>
-            <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
-                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
-                </button>
-                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
-                </button>
             </div>
         </form>
     </div>

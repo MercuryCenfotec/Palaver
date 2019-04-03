@@ -2,11 +2,14 @@
     <div _ngcontent-c5="" class="col-md-6">
         <div _ngcontent-c5="" class="card">
             <div _ngcontent-c5="" class="card-header">
-                <h4 _ngcontent-c5="" class="card-title" id="basic-layout-colored-form-control">Crear un participante</h4>
+                <h4 _ngcontent-c5="" class="card-title" id="basic-layout-colored-form-control">Participantes</h4>
+                <div class="alert alert-success" *ngIf="success">
+                    <strong>¡Su registro ha sido exitoso!</strong> Por favor inicie sesión nuevamente.
+                </div>
             </div>
             <div _ngcontent-c5="" class="card-body">
                 <div _ngcontent-c5="" class="px-3">
-                    <form _ngcontent-c5="" class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+                    <form _ngcontent-c5="" class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm" *ngIf="!success">
                         <div _ngcontent-c5="" class="form-body">
                             <h4 _ngcontent-c5="" class="form-section">
                                 <i _ngcontent-c5="" class="ft-info"></i>
@@ -18,21 +21,26 @@
                                     <div _ngcontent-c5="" class="form-group">
                                         <label _ngcontent-c5="" for="field_birthdate">Fecha de nacimiento</label>
                                         <div class="input-group">
-                                            <input _ngcontent-c5="" class="form-control border-primary"
+                                            <input _ngcontent-c5="" class="form-control"
                                                    id="field_birthdate" name="birthdate" type="text" ngbDatepicker
                                                    #birthdateDp="ngbDatepicker" [(ngModel)]="participant.birthdate"
-                                                   required>
+                                                   required #birthDate="ngModel">
                                             <span class="input-group-append">
                                                 <button type="button" class="btn btn-secondary"
                                                         (click)="birthdateDp.toggle()">
                                                     <fa-icon [icon]="'calendar-alt'"></fa-icon></button>
                                             </span>
                                         </div>
-                                        <div
-                                            [hidden]="!(editForm.controls.birthdate?.dirty && editForm.controls.birthdate?.invalid)">
+                                        <div [hidden]="!((birthDate?.dirty || birthDate?.touched) && birthDate?.invalid)">
                                             <small class="form-text text-danger"
-                                                   [hidden]="!editForm.controls.birthdate?.errors?.required">
-                                                This field is required.
+                                                   [hidden]="!birthDate?.errors?.required">
+                                                Este campo es requerido.
+                                            </small>
+                                        </div>
+                                        <div [hidden]="!((birthDate?.dirty || birthDate?.touched) && birthDate?.invalid)">
+                                            <small class="form-text text-danger"
+                                                   [hidden]="!editForm.controls.birthdate?.errors?.max">
+                                                La fecha es inválida.
                                             </small>
                                         </div>
                                     </div>
@@ -42,16 +50,16 @@
                                     <div _ngcontent-c5="" class="form-group">
                                         <label _ngcontent-c5="" for="field_gender">Género</label>
                                         <select _ngcontent-c16="" class="form-control" [(ngModel)]="participant.gender"
-                                                id="field_gender" name="gender" required>
-                                            <option value="MALE">MALE</option>
-                                            <option value="FEMALE">FEMALE</option>
-                                            <option value="UNDEFINED">UNDEFINED</option>
+                                                id="field_gender" name="gender" required #gender="ngModel">
+                                            <option value="MALE">Hombre</option>
+                                            <option value="FEMALE">Mujer</option>
+                                            <option value="UNDEFINED">Otro</option>
                                         </select>
                                         <div
-                                            [hidden]="!(editForm.controls.gender?.dirty && editForm.controls.gender?.invalid)">
+                                            [hidden]="!((gender?.dirty || gender?.touched) && gender?.invalid)">
                                             <small class="form-text text-danger"
-                                                   [hidden]="!editForm.controls.gender?.errors?.required">
-                                                This field is required.
+                                                   [hidden]="!gender?.errors?.required">
+                                                Este campo es requerido.
                                             </small>
                                         </div>
                                     </div>
@@ -66,66 +74,77 @@
                                         <label _ngcontent-c5="" for="field_civilStatus">Estado civil</label>
                                         <select _ngcontent-c16="" class="form-control"
                                                 [(ngModel)]="participant.civilStatus" id="field_civilStatus"
-                                                name="civilStatus" required>
-                                            <option value="MARRIED">MARRIED</option>
-                                            <option value="WIDOWED">WIDOWED</option>
-                                            <option value="SEPARATED">SEPARATED</option>
-                                            <option value="DIVORCED">DIVORCED</option>
-                                            <option value="SINGLE">SINGLE</option>
+                                                name="civilStatus" required #civil="ngModel">
+                                            <option value="MARRIED">Casado/a</option>
+                                            <option value="WIDOWED">Viudo/a</option>
+                                            <option value="SEPARATED">Separado/a</option>
+                                            <option value="DIVORCED">Divorciado/a</option>
+                                            <option value="SINGLE">Soltero/a</option>
                                         </select>
                                         <div
-                                            [hidden]="!(editForm.controls.civilStatus?.dirty && editForm.controls.civilStatus?.invalid)">
+                                            [hidden]="!((civil?.dirty || civil?.touched) && civil?.invalid)">
                                             <small class="form-text text-danger"
-                                                   [hidden]="!editForm.controls.civilStatus?.errors?.required">
-                                                This field is required.
+                                                   [hidden]="!civil?.errors?.required">
+                                                Este campo es requerido.
                                             </small>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div _ngcontent-c5="" class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="field_user">User</label>
-                                        <select class="form-control" id="field_user" name="user" [(ngModel)]="participant.user">
-                                            <option [ngValue]="null"></option>
-                                            <option [ngValue]="userAppOption.id === participant.user?.id ? participant.user : userAppOption"
-                                                    *ngFor="let userAppOption of users; trackBy: trackUserAppById">{{userAppOption.id}}</option>
-                                        </select>
-                                    </div>
-                                </div>
-
                             </div>
 
-                            <div _ngcontent-c5="" class="form-group">
-                                <label _ngcontent-c16="">Seleccionar imagen</label>
-                                <input _ngcontent-c16="" class="form-control-file" name="picture" id="field_picture"
-                                       [(ngModel)]="participant.picture" type="file">
-                            </div>
+                            <!--<div _ngcontent-c5="" class="form-group">-->
+                                <!--&lt;!&ndash;<label _ngcontent-c16=""></label>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<input _ngcontent-c16="" class="form-control-file" name="picture" id="field_picture"&ndash;&gt;-->
+                                        <!--&lt;!&ndash;type="file">&ndash;&gt;-->
 
-                            <h4 _ngcontent-c5="" class="form-section">
-                                <i _ngcontent-c5="" class="ft-mail"></i>
-                                Categorías de interés
-                            </h4>
+                                <!--<label for="imageUpload">Seleccionar imagen</label>-->
+                                <!--<input class="form-control-file" type="file" [(ngModel)]="participant.picture" (change)="fileEvent($event)" name="imageUpload" id="imageUpload"/>-->
+                            <!--</div>-->
 
-                            <div class="form-group">
-                                <label for="field_category">Categorías</label>
-                                <select class="form-control" id="field_category" multiple name="category"
-                                        [(ngModel)]="participant.categories">
-                                    <option [ngValue]="getSelected(participant.categories, categoryOption)"
-                                            *ngFor="let categoryOption of categories; trackBy: trackCategoryById">{{categoryOption.name}}</option>
-                                </select>
-                            </div>
+                            <!--<h4 _ngcontent-c5="" class="form-section">-->
+                                <!--<i _ngcontent-c5="" class="ft-mail"></i>-->
+                                <!--Categorías de interés-->
+                            <!--</h4>-->
+
+                            <!--<div class="form-group">-->
+                                <!--<label for="field_category">Categorías</label>-->
+                                <!--<select class="form-control" id="field_category" multiple name="category"-->
+                                        <!--[(ngModel)]="participant.categories">-->
+                                    <!--<option [ngValue]="getSelected(participant.categories, categoryOption)"-->
+                                            <!--*ngFor="let categoryOption of categories; trackBy: trackCategoryById">{{categoryOption.name}}</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
 
                         </div>
-                        <div _ngcontent-c5="" class="form-actions right">
-                            <button _ngcontent-c5="" class="btn btn-raised btn-warning mr-1" type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-                                <i _ngcontent-c5="" class="ft-x"></i>
-                                <fa-icon [icon]="'ban'"></fa-icon>&nbsp;Cancel
-                            </button>
-                            <button _ngcontent-c5="" class="btn btn-raised btn-primary" type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving">
-                                <i _ngcontent-c5="" class="fa fa-check-square-o"></i>
-                                <fa-icon [icon]="'save'"></fa-icon>&nbsp;Save
-                            </button>
+                        <div _ngcontent-c5="" class="row form-actions right">
+                            <div class="col-auto">
+                                <button _ngcontent-c5="" class="btn btn-raised btn-warning mr-1" type="button" id="cancel-save" (click)="previousState()">
+                                    <i _ngcontent-c5="" class="ft-x"></i>
+                                    <fa-icon></fa-icon>Cancelar
+                                </button>
+                            </div>
+                            <div [ngbPopover]="popoverText"
+                                 triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido."
+                                 *ngIf="editForm.form.invalid || isSaving; else validRegisterBtn"
+                                 class="col-auto">
+                                <button _ngcontent-c5="" class="btn btn-raised btn-primary" type="submit" id="save-entity" [disabled]="true">
+                                    <i _ngcontent-c5="" class="ft ft-file-text"></i>
+                                    <fa-icon></fa-icon>Registrar
+                                </button>
+                            </div>
+                            <ng-template #popoverText>
+                                <small class="display-block">Por favor, asegúrese de que todos los campos estén completos.
+                                </small>
+                            </ng-template>
+                            <ng-template #validRegisterBtn>
+                                <div class="col-auto">
+                                    <button _ngcontent-c5="" class="btn btn-raised btn-primary" type="submit" id="save-entity">
+                                        <i _ngcontent-c5="" class="ft ft-file-text"></i>
+                                        <fa-icon></fa-icon>Registrar
+                                    </button>
+                                </div>
+                            </ng-template>
                         </div>
                     </form>
                 </div>

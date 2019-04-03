@@ -35,4 +35,8 @@ export class TestResultService {
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
+
+    findAllByFocusGroup(groupId: number): Observable<EntityArrayResponseType> {
+        return this.http.get<ITestResult[]>(`${this.resourceUrl}/focus-group/${groupId}`, { observe: 'response' });
+    }
 }

@@ -18,8 +18,6 @@ import { FocusGroupService } from 'app/entities/focus-group';
 export class MeetingUpdateComponent implements OnInit {
     meeting: IMeeting;
     isSaving: boolean;
-
-    focusgroups: IFocusGroup[];
     dateDp: any;
     time: string;
 
@@ -34,15 +32,9 @@ export class MeetingUpdateComponent implements OnInit {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ meeting }) => {
             this.meeting = meeting;
-            this.time = this.meeting.time != null ? this.meeting.time.format(DATE_TIME_FORMAT) : null;
+            this.time = this.meeting.time != null ? this.meeting.time.format('hh:mm:ss') : null;
+            console.log(this.time);
         });
-        this.focusGroupService
-            .query()
-            .pipe(
-                filter((mayBeOk: HttpResponse<IFocusGroup[]>) => mayBeOk.ok),
-                map((response: HttpResponse<IFocusGroup[]>) => response.body)
-            )
-            .subscribe((res: IFocusGroup[]) => (this.focusgroups = res), (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     previousState() {
@@ -51,7 +43,7 @@ export class MeetingUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        this.meeting.time = this.time != null ? moment(this.time, DATE_TIME_FORMAT) : null;
+        this.meeting.time = this.time != null ? moment(this.time, 'LT') : null;
         if (this.meeting.id !== undefined) {
             this.subscribeToSaveResponse(this.meetingService.update(this.meeting));
         } else {

@@ -1,4 +1,5 @@
 package com.mercury.palaver.web.rest;
+import com.mercury.palaver.domain.FocusGroup;
 import com.mercury.palaver.domain.TestResult;
 import com.mercury.palaver.repository.TestResultRepository;
 import com.mercury.palaver.web.rest.errors.BadRequestAlertException;
@@ -108,5 +109,13 @@ public class TestResultResource {
         log.debug("REST request to delete TestResult : {}", id);
         testResultRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/test-results/focus-group/{groupId}")
+    public List<TestResult> getAllAptitudeTestsByInstitution(@PathVariable Long groupId) {
+        log.debug("REST request to get all AptitudeTests");
+        FocusGroup group = new FocusGroup();
+        group.setId(groupId);
+        return testResultRepository.findAllByFocusGroup(group);
     }
 }

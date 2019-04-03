@@ -1,6 +1,7 @@
 package com.mercury.palaver.web.rest;
 import com.mercury.palaver.domain.AptitudeTest;
 import com.mercury.palaver.repository.AptitudeTestRepository;
+import com.mercury.palaver.service.AptitudeTestService;
 import com.mercury.palaver.web.rest.errors.BadRequestAlertException;
 import com.mercury.palaver.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -29,8 +30,11 @@ public class AptitudeTestResource {
 
     private final AptitudeTestRepository aptitudeTestRepository;
 
-    public AptitudeTestResource(AptitudeTestRepository aptitudeTestRepository) {
+    private final AptitudeTestService aptitudeTestService;
+
+    public AptitudeTestResource(AptitudeTestRepository aptitudeTestRepository, AptitudeTestService aptitudeTestService) {
         this.aptitudeTestRepository = aptitudeTestRepository;
+        this.aptitudeTestService = aptitudeTestService;
     }
 
     /**
@@ -46,7 +50,7 @@ public class AptitudeTestResource {
         if (aptitudeTest.getId() != null) {
             throw new BadRequestAlertException("A new aptitudeTest cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        AptitudeTest result = aptitudeTestRepository.save(aptitudeTest);
+        AptitudeTest result = aptitudeTestService.save(aptitudeTest);
         return ResponseEntity.created(new URI("/api/aptitude-tests/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -67,7 +71,7 @@ public class AptitudeTestResource {
         if (aptitudeTest.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        AptitudeTest result = aptitudeTestRepository.save(aptitudeTest);
+        AptitudeTest result = aptitudeTestService.update(aptitudeTest);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, aptitudeTest.getId().toString()))
             .body(result);
@@ -106,7 +110,24 @@ public class AptitudeTestResource {
     @DeleteMapping("/aptitude-tests/{id}")
     public ResponseEntity<Void> deleteAptitudeTest(@PathVariable Long id) {
         log.debug("REST request to delete AptitudeTest : {}", id);
-        aptitudeTestRepository.deleteById(id);
+        aptitudeTestService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/aptitude-tests/institution/{institutionId}")
+    public List<AptitudeTest> getAllAptitudeTestsByInstitution(@PathVariable Long institutionId) {
+        log.debug("REST request to get all AptitudeTests");
+        return aptitudeTestService.findAllByInstitution(institutionId);
+    }
+
+    @GetMapping("/aptitude-tests/institution/available/{institutionId}")
+    public List<AptitudeTest> getAllAvailableAptitudeTestsByInstitution(@PathVariable Long institutionId) {
+        log.debug("REST request to get all AptitudeTests");
+        return aptitudeTestService.findAllAvailableByInstitution(institutionId);
+    }
+
+    @GetMapping("/aptitude-tests/is-in-use/{testId}")
+    public ResponseEntity<Boolean> isCancelable(@PathVariable Long testId) {
+        return ResponseEntity.ok().body(aptitudeTestService.isInUse(testId));
     }
 }
