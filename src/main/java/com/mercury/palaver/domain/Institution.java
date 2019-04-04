@@ -41,19 +41,19 @@ public class Institution implements Serializable {
     @Column(name = "telephone", nullable = false)
     private String telephone;
 
-    @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval=true)
+    @OneToOne
     @JoinColumn(unique = true)
     private UserApp user;
 
-    @OneToMany(mappedBy = "institution",cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToMany(mappedBy = "institution")
     @JsonIgnoreProperties("institution")
     private Set<AptitudeTest> aptitudeTests = new HashSet<>();
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JsonIgnoreProperties("institutions")
     private Membership membership;
 
-    @OneToMany(mappedBy = "institution",cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToMany(mappedBy = "institution")
     @JsonIgnore
     private Set<FocusGroup> focusGroups = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
