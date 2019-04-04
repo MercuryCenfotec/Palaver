@@ -106,22 +106,12 @@ export class NavbarComponent implements OnInit {
             switch (jhiUser.authorities[i]) {
                 case 'ROLE_ADMIN':
                     permissions = [
-                        'calendarPermissions',
                         'userAppPermissions',
                         'participantPermissions',
                         'institutionPermissions',
-                        'incentivePermissions',
-                        'aptitudeTestsPermissions',
-                        'testResultPermissions',
-                        'testQuestionPermissions',
-                        'testAnswerPermissions',
-                        'focusGroupPermissions',
-                        'meetingPermissions',
                         'membershipPermissions',
                         'paymentMethodPermissions',
                         'systemVariablePermissions',
-                        'categoryPermissions',
-                        'balancePermissions',
                         'paymentPermissions'
                     ];
                     break;
@@ -142,29 +132,14 @@ export class NavbarComponent implements OnInit {
                         'focusGroupPermissions',
                         'membershipPermissions',
                         'paymentMethodPermissions',
-                        'categoryPermissions',
                         'balancePermissions',
                         'paymentPermissions'
                     ];
                     break;
                 case 'ROLE_SUBADMIN':
                     permissions = [
-                        'userAppPermissions',
                         'participantPermissions',
-                        'institutionPermissions',
-                        'incentivePermissions',
-                        'aptitudeTestsPermissions',
-                        'testResultPermissions',
-                        'testQuestionPermissions',
-                        'testAnswerPermissions',
-                        'focusGroupPermissions',
-                        'meetingPermissions',
-                        'membershipPermissions',
-                        'paymentMethodPermissions',
-                        'systemVariablePermissions',
-                        'categoryPermissions',
-                        'balancePermissions',
-                        'paymentPermissions'
+                        'institutionPermissions'
                     ];
                     break;
                 default:
