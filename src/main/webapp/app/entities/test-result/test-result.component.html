@@ -2,7 +2,16 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Resultados de pruebas</h4>
+                <h4 class="card-title">
+                    Resultados de pruebas
+                    <button id="go-back" class="btn btn-raised btn-primary float-right"
+                            [routerLink]="['/focus-group/management']">
+                        <i class="ft-arrow-left"></i>
+                        <span>
+                            Volver
+                        </span>
+                    </button>
+                </h4>
             </div>
             <div class="card-body">
                 <div class="card-block">
