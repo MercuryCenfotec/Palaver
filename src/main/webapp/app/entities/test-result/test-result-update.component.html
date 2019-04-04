@@ -3,7 +3,6 @@
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
             <h2 id="jhi-test-result-heading">Create or edit a Test Result</h2>
             <div>
-                <jhi-alert-error></jhi-alert-error>
                 <div class="form-group" [hidden]="!testResult.id">
                     <label for="id">ID</label>
                     <input type="text" class="form-control" id="id" name="id"
