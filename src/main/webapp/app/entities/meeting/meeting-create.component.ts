@@ -76,8 +76,8 @@ export class MeetingCreateComponent implements OnInit {
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IMeeting>>) {
-        result.subscribe((res: HttpResponse<IMeeting>) => {
-            this.focusGroup.meeting = res.body;
+        result.subscribe((meeting: HttpResponse<IMeeting>) => {
+            this.focusGroup.meeting = meeting.body;
             this.focusGroupService.update(this.focusGroup).subscribe(
                 focusGroup => {
                     this.onSaveSuccess();

@@ -8,7 +8,6 @@
                             <div class="col-md-6">
                                 <div class="form-body">
                                     <h4 class="form-section"><i class="ft-user"></i> Editar información</h4>
-                                    <jhi-alert-error></jhi-alert-error>
                                     <div class="form-group" hidden>
                                         <label for="id">Id</label>
                                         <input type="text" class="form-control" id="id" name="id"
@@ -18,7 +17,7 @@
                                         <label for="login"><i class="ft-edit-3"></i> Nombre de usuario</label>
                                         <input type="text" class="form-control" [(ngModel)]="user.login"
                                                id="login" name="login" #login="ngModel" placeholder="Nombre de usuario"
-                                               required minlength="1" maxlength="50">
+                                               required minlength="1" maxlength="50" disabled>
                                         <div *ngIf="login.dirty && login.invalid">
                                             <small class="form-text text-danger" *ngIf="login.errors.required">
                                                 Este campo es requerido.
