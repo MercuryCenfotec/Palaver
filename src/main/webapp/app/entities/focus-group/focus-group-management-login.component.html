@@ -3,17 +3,16 @@
         <div class="card">
             <div class="card-header">
                 <div class="col-12 d-flex align-items-center justify-content-center">
-                    <div class="card gradient-indigo-purple text-center width-700">
+                    <div class="card text-center width-700">
                         <div class="card-body">
                             <div class="card-block">
-                                <h2 class="white">Ingrese su código de grupo</h2>
+                                <h2 class="">Ingrese su código de grupo</h2>
                                 <hr/>
+                                <div class="alert alert-danger" *ngIf="authenticationError===true">
+                                    <strong>¡Fallo al autentificar el código!</strong> Por favor revise sus credenciales y
+                                    vuelva a intentar.
+                                </div>
                                 <form role="form" (ngSubmit)="login()">
-
-                                    <div class="alert alert-warning" *ngIf="authenticationError">
-                                        <strong>¡Fallo al autentificar el código!</strong> Por favor revise sus credenciales y
-                                        vuelva a intentar.
-                                    </div>
                                     <div class="form-group">
                                         <div class="col-md-12">
                                             <input type="text" class="form-control" name="code" id="code"
@@ -26,7 +25,7 @@
                                          class="col-md-12">
                                         <button type="submit"
                                                 [disabled]="true"
-                                                class="btn btn-pink btn-block btn-raised">Confirmar
+                                                class="btn btn-primary btn-block btn-raised">Confirmar
                                         </button>
                                     </div>
                                     <ng-template #popoverText>
@@ -36,7 +35,7 @@
                                     <ng-template #validRegisterBtn>
                                         <div class="col-md-12">
                                             <button type="submit"
-                                                    class="btn btn-pink btn-block btn-raised">Confirmar
+                                                    class="btn btn-primary btn-block btn-raised">Confirmar
                                             </button>
                                         </div>
                                     </ng-template>
