@@ -8,7 +8,7 @@ import { IInstitution } from 'app/shared/model/institution.model';
 import { InstitutionService } from './institution.service';
 import { IUserApp } from 'app/shared/model/user-app.model';
 import { UserAppService } from 'app/entities/user-app';
-import { IMembership } from 'app/shared/model/membership.model';
+import { IMembership, Membership } from 'app/shared/model/membership.model';
 import { MembershipService } from 'app/entities/membership';
 import { IUser, LoginService, UserService } from 'app/core';
 
@@ -92,6 +92,10 @@ export class InstitutionFormComponent implements OnInit {
         this.isSaving = true;
         this.institution.user = this.userApp;
         this.institution.logo = 'logo';
+
+        const membership = new Membership(1);
+        this.institution.membership = membership;
+
         this.subscribeToSaveResponse(this.institutionService.create(this.institution));
     }
 
