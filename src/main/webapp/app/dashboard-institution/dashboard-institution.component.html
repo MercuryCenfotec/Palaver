@@ -155,8 +155,11 @@
                         <td *ngIf="focusGroup.endDate.toString() < today">
                             <a class="btn btn-raised btn-round btn-danger" style="cursor: default;">Finalizado</a>
                         </td>
-                        <td *ngIf="focusGroup.endDate.toString() >= today">
+                        <td *ngIf="focusGroup.endDate.toString() >= today && focusGroup.beginDate.toString() <= today">
                             <a class="btn btn-raised btn-round btn-success" style="cursor: default;">En curso</a>
+                        </td>
+                        <td *ngIf="focusGroup.beginDate.toString() > today">
+                            <a class="btn btn-raised btn-round btn-warning" style="cursor: default;">Reclutando</a>
                         </td>
                     </tr>
                     </tbody>
