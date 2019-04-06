@@ -8,6 +8,8 @@ import { JhiAlertService } from 'ng-jhipster';
 import { IParticipant } from 'app/shared/model/participant.model';
 import { IAptitudeTest } from 'app/shared/model/aptitude-test.model';
 import { AptitudeTestService } from 'app/entities/aptitude-test';
+import moment = require('moment');
+import { Moment } from 'moment';
 
 @Component({
     selector: 'jhi-dashboard-institution',
@@ -19,7 +21,9 @@ export class DashboardInstitutionComponent implements OnInit {
     focusGroups: IFocusGroup[];
     participants: IParticipant[];
     aptitudeTests: IAptitudeTest[];
-    today: Date;
+    today: string;
+    endedFG = 0;
+    onCourseFG = 0;
 
     constructor(
         protected userService: UserService,
@@ -34,11 +38,23 @@ export class DashboardInstitutionComponent implements OnInit {
             this.institutionService.getByUserUser(user.id).subscribe(institution => {
                 this.focusGroupService.findAllByInstitution(institution.body.id).subscribe(groups => {
                     this.focusGroups = groups.body;
+                    this.loadInfo();
                 });
                 this.aptitudeTestService.findAllByInstitution(institution.body.id).subscribe(tests => {
                     this.aptitudeTests = tests.body;
                 });
             });
+        });
+    }
+
+    loadInfo() {
+        this.focusGroups.forEach(resp => {
+            debugger;
+            if (resp.endDate.toString() < moment().format('YYYY-MM-DD')) {
+                this.endedFG += 1;
+            } else {
+                this.onCourseFG += 1;
+            }
         });
     }
 
@@ -67,9 +83,10 @@ export class DashboardInstitutionComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.today = new Date();
+        this.today = moment().format('YYYY-MM-DD');
         this.participants = [];
         this.loadAll();
+
         this.userService.getUserWithAuthorities().subscribe(user => {
             this.institutionService.getByUserUser(user.id).subscribe(institution => {
                 this.institution = institution.body;
