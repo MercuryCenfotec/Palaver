@@ -15,6 +15,8 @@ import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { FocusGroupService } from 'app/entities/focus-group';
 import { IUser, LoginService, UserService } from 'app/core';
 import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import {BalanceAccountService} from "app/entities/balance-account";
+import {BalanceAccount} from "app/shared/model/balance-account.model";
 
 @Component({
     selector: 'jhi-participant-create',
@@ -29,9 +31,8 @@ export class ParticipantCreateComponent implements OnInit {
     userApp: IUserApp;
     users: IUserApp[];
     success: boolean;
-
+    balanceAccount = new BalanceAccount(null, 0, 0, 0, 'Cuenta interna', null);
     categories: ICategory[];
-
     focusgroups: IFocusGroup[];
     birthdateDp: any;
 
@@ -45,7 +46,8 @@ export class ParticipantCreateComponent implements OnInit {
         protected focusGroupService: FocusGroupService,
         protected activatedRoute: ActivatedRoute,
         protected userService: UserService,
-        protected config: NgbDatepickerConfig
+        protected config: NgbDatepickerConfig,
+        private balanceService: BalanceAccountService
     ) {}
 
     ngOnInit() {
@@ -132,8 +134,13 @@ export class ParticipantCreateComponent implements OnInit {
 
     protected onSaveSuccess() {
         this.isSaving = false;
-        this.success = true;
-        this.loginService.logout();
+        this.userAppService.findByUserId(this.userApp.user.id).subscribe(newUser =>{
+            this.balanceAccount.user = newUser;
+            this.balanceService.create(this.balanceAccount).subscribe( () =>{
+                this.loginService.logout();
+                this.success = true;
+            });
+        });
         // this.router.navigate(['/participant-home']);
     }
 
