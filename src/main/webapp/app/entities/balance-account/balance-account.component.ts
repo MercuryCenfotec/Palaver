@@ -18,6 +18,7 @@ export class BalanceAccountComponent implements OnInit, OnDestroy {
     eventSubscriber: Subscription;
     balanceAccount: IBalanceAccount;
     actualBalance: IBalanceAccount;
+    formatedBalance: string;
 
     constructor(
         protected balanceAccountService: BalanceAccountService,
@@ -34,13 +35,18 @@ export class BalanceAccountComponent implements OnInit, OnDestroy {
             this.userAppService.findByUserId(user.id).subscribe(userAppData => {
                 this.balanceAccountService.findByUserId(userAppData.id).subscribe(balance => {
                     this.actualBalance = balance.body;
+                    const formatter = new Intl.NumberFormat('es', {
+                        style: 'currency',
+                        currency: 'CRC',
+                        minimumFractionDigits: 2
+                    });
+                    this.formatedBalance = formatter.format(balance.body.balance);
                 });
             });
         });
         this.accountService.identity().then(account => {
             this.currentAccount = account;
         });
-        this.registerChangeInBalanceAccounts();
     }
 
     ngOnDestroy() {

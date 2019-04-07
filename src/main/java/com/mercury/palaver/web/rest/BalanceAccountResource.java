@@ -1,6 +1,7 @@
 package com.mercury.palaver.web.rest;
 import com.mercury.palaver.domain.BalanceAccount;
 import com.mercury.palaver.repository.BalanceAccountRepository;
+import com.mercury.palaver.service.MailService;
 import com.mercury.palaver.web.rest.errors.BadRequestAlertException;
 import com.mercury.palaver.web.rest.util.HeaderUtil;
 import com.stripe.Stripe;
@@ -34,8 +35,11 @@ public class BalanceAccountResource {
 
     private final BalanceAccountRepository balanceAccountRepository;
 
-    public BalanceAccountResource(BalanceAccountRepository balanceAccountRepository) {
+    private final MailService mailService;
+
+    public BalanceAccountResource(BalanceAccountRepository balanceAccountRepository, MailService mailService) {
         this.balanceAccountRepository = balanceAccountRepository;
+        this.mailService = mailService;
     }
 
     /**
@@ -98,6 +102,7 @@ public class BalanceAccountResource {
         int newAmount = balanceAccount.getBalance() + (amount / 100);
         balanceAccount.setBalance(newAmount);
         BalanceAccount result = balanceAccountRepository.save(balanceAccount);
+        mailService.sendPaymentEmail(balanceAccount.getUser().getUser());
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, balanceAccount.getId().toString()))
             .body(result);
