@@ -15,8 +15,8 @@ import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { FocusGroupService } from 'app/entities/focus-group';
 import { IUser, LoginService, UserService } from 'app/core';
 import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
-import {BalanceAccountService} from "app/entities/balance-account";
-import {BalanceAccount} from "app/shared/model/balance-account.model";
+import {BalanceAccountService} from 'app/entities/balance-account';
+import {BalanceAccount} from 'app/shared/model/balance-account.model';
 
 @Component({
     selector: 'jhi-participant-create',
@@ -134,9 +134,9 @@ export class ParticipantCreateComponent implements OnInit {
 
     protected onSaveSuccess() {
         this.isSaving = false;
-        this.userAppService.findByUserId(this.userApp.user.id).subscribe(newUser =>{
+        this.userAppService.findByUserId(this.userApp.user.id).subscribe(newUser => {
             this.balanceAccount.user = newUser;
-            this.balanceService.create(this.balanceAccount).subscribe( () =>{
+            this.balanceService.create(this.balanceAccount).subscribe( () => {
                 this.loginService.logout();
                 this.success = true;
             });

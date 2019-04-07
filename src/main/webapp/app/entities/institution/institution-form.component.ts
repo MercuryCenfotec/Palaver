@@ -11,8 +11,8 @@ import { UserAppService } from 'app/entities/user-app';
 import { IMembership } from 'app/shared/model/membership.model';
 import { MembershipService } from 'app/entities/membership';
 import { IUser, LoginService, UserService } from 'app/core';
-import {BalanceAccountService} from "app/entities/balance-account";
-import {BalanceAccount} from "app/shared/model/balance-account.model";
+import {BalanceAccountService} from 'app/entities/balance-account';
+import {BalanceAccount} from 'app/shared/model/balance-account.model';
 
 @Component({
     selector: 'jhi-institution-form',
@@ -110,9 +110,9 @@ export class InstitutionFormComponent implements OnInit {
 
     protected onSaveSuccess() {
         this.isSaving = false;
-        this.userAppService.findByUserId(this.userApp.user.id).subscribe(newUser =>{
+        this.userAppService.findByUserId(this.userApp.user.id).subscribe(newUser => {
             this.balanceAccount.user = newUser;
-            this.balanceService.create(this.balanceAccount).subscribe( () =>{
+            this.balanceService.create(this.balanceAccount).subscribe( () => {
                 this.loginService.logout();
                 this.success = true;
             });
