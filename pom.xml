@@ -329,6 +329,11 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-heroku-connector</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.stripe</groupId>
+            <artifactId>stripe-java</artifactId>
+            <version>4.4.0</version>
+        </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
     </dependencies>
 
