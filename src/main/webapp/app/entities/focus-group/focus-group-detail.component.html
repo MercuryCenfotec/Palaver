@@ -166,12 +166,12 @@
                             <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Editar</span>
                         </button>
                     </div>
-                    <div *ngIf="!isCancelable; else validCancelBtn"
+                    <div *ngIf="!inProcess; else validCancelBtn"
                          ngbPopover="Si desea cancelar este grupo de enfoque, por favor contacte a nuestros administradores."
                          triggers="mouseenter:mouseleave" popoverTitle="Lo sentimos." class="col-auto">
                         <button type="button"
                                 [routerLink]="['/', 'focus-group', { outlets: { popup: focusGroup.id + '/delete'} }]"
-                                class="btn btn-raised btn-danger" [disabled]="!isCancelable">
+                                class="btn btn-raised btn-danger" [disabled]="!inProcess">
                             <span><i class="ft-x font-medium-3 mr-2"></i> Cancelar</span>
                         </button>
                     </div>
@@ -179,7 +179,7 @@
                         <div class="col-auto">
                             <button type="button"
                                     [routerLink]="['/', 'focus-group', { outlets: { popup: focusGroup.id + '/delete'} }]"
-                                    class="btn btn-raised btn-danger" [disabled]="!isCancelable">
+                                    class="btn btn-raised btn-danger" [disabled]="!inProcess">
                                 <span><i class="ft-x font-medium-3 mr-2"></i> Cancelar</span>
                             </button>
                         </div>

@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { IAptitudeTest } from 'app/shared/model/aptitude-test.model';
 import { TestQuestionService } from 'app/entities/test-question';
+import { FocusGroupService } from 'app/entities/focus-group';
+import { IFocusGroup } from 'app/shared/model/focus-group.model';
 
 @Component({
     selector: 'jhi-aptitude-test-detail',
@@ -10,8 +12,14 @@ import { TestQuestionService } from 'app/entities/test-question';
 })
 export class AptitudeTestDetailComponent implements OnInit {
     aptitudeTest: IAptitudeTest;
+    associatedGroup: IFocusGroup;
 
-    constructor(protected activatedRoute: ActivatedRoute, protected questionsService: TestQuestionService, protected router: Router) {}
+    constructor(
+        protected activatedRoute: ActivatedRoute,
+        protected questionsService: TestQuestionService,
+        protected focusGroupService: FocusGroupService,
+        protected router: Router
+    ) {}
 
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ aptitudeTest }) => {
