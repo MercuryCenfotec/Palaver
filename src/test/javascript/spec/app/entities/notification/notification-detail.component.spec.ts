@@ -4,24 +4,24 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
 import { PalaverTestModule } from '../../../test.module';
-import { TestResultDetailComponent } from 'app/entities/test-result/test-result-detail.component';
-import { TestResult } from 'app/shared/model/test-result.model';
+import { NotificationDetailComponent } from 'app/entities/notification/notification-detail.component';
+import { Notification } from 'app/shared/model/notification.model';
 
 describe('Component Tests', () => {
-    describe('TestResult Management Detail Component', () => {
-        let comp: TestResultDetailComponent;
-        let fixture: ComponentFixture<TestResultDetailComponent>;
-        const route = ({ data: of({ testResult: new TestResult(null, '123') }) } as any) as ActivatedRoute;
+    describe('Notification Management Detail Component', () => {
+        let comp: NotificationDetailComponent;
+        let fixture: ComponentFixture<NotificationDetailComponent>;
+        const route = ({ data: of({ notification: new Notification(123) }) } as any) as ActivatedRoute;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [PalaverTestModule],
-                declarations: [TestResultDetailComponent],
+                declarations: [NotificationDetailComponent],
                 providers: [{ provide: ActivatedRoute, useValue: route }]
             })
-                .overrideTemplate(TestResultDetailComponent, '')
+                .overrideTemplate(NotificationDetailComponent, '')
                 .compileComponents();
-            fixture = TestBed.createComponent(TestResultDetailComponent);
+            fixture = TestBed.createComponent(NotificationDetailComponent);
             comp = fixture.componentInstance;
         });
 
@@ -33,7 +33,7 @@ describe('Component Tests', () => {
                 comp.ngOnInit();
 
                 // THEN
-                expect(comp.testResult).toEqual(jasmine.objectContaining({ id: 123 }));
+                expect(comp.notification).toEqual(jasmine.objectContaining({ id: 123 }));
             });
         });
     });

@@ -4,28 +4,28 @@ import { Observable, of } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 
 import { PalaverTestModule } from '../../../test.module';
-import { TestResultComponent } from 'app/entities/test-result/test-result.component';
-import { TestResultService } from 'app/entities/test-result/test-result.service';
-import { TestResult } from 'app/shared/model/test-result.model';
+import { NotificationComponent } from 'app/entities/notification/notification.component';
+import { NotificationService } from 'app/entities/notification/notification.service';
+import { Notification } from 'app/shared/model/notification.model';
 
 describe('Component Tests', () => {
-    describe('TestResult Management Component', () => {
-        let comp: TestResultComponent;
-        let fixture: ComponentFixture<TestResultComponent>;
-        let service: TestResultService;
+    describe('Notification Management Component', () => {
+        let comp: NotificationComponent;
+        let fixture: ComponentFixture<NotificationComponent>;
+        let service: NotificationService;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [PalaverTestModule],
-                declarations: [TestResultComponent],
+                declarations: [NotificationComponent],
                 providers: []
             })
-                .overrideTemplate(TestResultComponent, '')
+                .overrideTemplate(NotificationComponent, '')
                 .compileComponents();
 
-            fixture = TestBed.createComponent(TestResultComponent);
+            fixture = TestBed.createComponent(NotificationComponent);
             comp = fixture.componentInstance;
-            service = fixture.debugElement.injector.get(TestResultService);
+            service = fixture.debugElement.injector.get(NotificationService);
         });
 
         it('Should call load all on init', () => {
@@ -34,7 +34,7 @@ describe('Component Tests', () => {
             spyOn(service, 'query').and.returnValue(
                 of(
                     new HttpResponse({
-                        body: [new TestResult(null, '20')],
+                        body: [new Notification(123)],
                         headers
                     })
                 )
@@ -45,7 +45,7 @@ describe('Component Tests', () => {
 
             // THEN
             expect(service.query).toHaveBeenCalled();
-            expect(comp.testResults[0]).toEqual(jasmine.objectContaining({ id: 123 }));
+            expect(comp.notifications[0]).toEqual(jasmine.objectContaining({ id: 123 }));
         });
     });
 });

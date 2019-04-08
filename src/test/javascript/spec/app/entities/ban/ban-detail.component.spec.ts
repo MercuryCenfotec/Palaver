@@ -4,24 +4,24 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
 import { PalaverTestModule } from '../../../test.module';
-import { TestResultDetailComponent } from 'app/entities/test-result/test-result-detail.component';
-import { TestResult } from 'app/shared/model/test-result.model';
+import { BanDetailComponent } from 'app/entities/ban/ban-detail.component';
+import { Ban } from 'app/shared/model/ban.model';
 
 describe('Component Tests', () => {
-    describe('TestResult Management Detail Component', () => {
-        let comp: TestResultDetailComponent;
-        let fixture: ComponentFixture<TestResultDetailComponent>;
-        const route = ({ data: of({ testResult: new TestResult(null, '123') }) } as any) as ActivatedRoute;
+    describe('Ban Management Detail Component', () => {
+        let comp: BanDetailComponent;
+        let fixture: ComponentFixture<BanDetailComponent>;
+        const route = ({ data: of({ ban: new Ban(123) }) } as any) as ActivatedRoute;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [PalaverTestModule],
-                declarations: [TestResultDetailComponent],
+                declarations: [BanDetailComponent],
                 providers: [{ provide: ActivatedRoute, useValue: route }]
             })
-                .overrideTemplate(TestResultDetailComponent, '')
+                .overrideTemplate(BanDetailComponent, '')
                 .compileComponents();
-            fixture = TestBed.createComponent(TestResultDetailComponent);
+            fixture = TestBed.createComponent(BanDetailComponent);
             comp = fixture.componentInstance;
         });
 
@@ -33,7 +33,7 @@ describe('Component Tests', () => {
                 comp.ngOnInit();
 
                 // THEN
-                expect(comp.testResult).toEqual(jasmine.objectContaining({ id: 123 }));
+                expect(comp.ban).toEqual(jasmine.objectContaining({ id: 123 }));
             });
         });
     });
