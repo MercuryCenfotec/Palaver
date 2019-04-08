@@ -4,24 +4,24 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 import { take, map } from 'rxjs/operators';
-import { TestResultService } from 'app/entities/test-result/test-result.service';
-import { ITestResult, TestResult } from 'app/shared/model/test-result.model';
+import { NotificationService } from 'app/entities/notification/notification.service';
+import { INotification, Notification } from 'app/shared/model/notification.model';
 
 describe('Service Tests', () => {
-    describe('TestResult Service', () => {
+    describe('Notification Service', () => {
         let injector: TestBed;
-        let service: TestResultService;
+        let service: NotificationService;
         let httpMock: HttpTestingController;
-        let elemDefault: ITestResult;
+        let elemDefault: INotification;
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [HttpClientTestingModule]
             });
             injector = getTestBed();
-            service = injector.get(TestResultService);
+            service = injector.get(NotificationService);
             httpMock = injector.get(HttpTestingController);
 
-            elemDefault = new TestResult(null, '0');
+            elemDefault = new Notification(0, 'AAAAAAA', 'AAAAAAA', false);
         });
 
         describe('Service methods', async () => {
@@ -36,7 +36,7 @@ describe('Service Tests', () => {
                 req.flush(JSON.stringify(returnedFromService));
             });
 
-            it('should create a TestResult', async () => {
+            it('should create a Notification', async () => {
                 const returnedFromService = Object.assign(
                     {
                         id: 0
@@ -45,17 +45,19 @@ describe('Service Tests', () => {
                 );
                 const expected = Object.assign({}, returnedFromService);
                 service
-                    .create(new TestResult(null))
+                    .create(new Notification(null))
                     .pipe(take(1))
                     .subscribe(resp => expect(resp).toMatchObject({ body: expected }));
                 const req = httpMock.expectOne({ method: 'POST' });
                 req.flush(JSON.stringify(returnedFromService));
             });
 
-            it('should update a TestResult', async () => {
+            it('should update a Notification', async () => {
                 const returnedFromService = Object.assign(
                     {
-                        grade: 'BBBBBB'
+                        message: 'BBBBBB',
+                        type: 'BBBBBB',
+                        isRead: true
                     },
                     elemDefault
                 );
@@ -69,10 +71,12 @@ describe('Service Tests', () => {
                 req.flush(JSON.stringify(returnedFromService));
             });
 
-            it('should return a list of TestResult', async () => {
+            it('should return a list of Notification', async () => {
                 const returnedFromService = Object.assign(
                     {
-                        grade: 'BBBBBB'
+                        message: 'BBBBBB',
+                        type: 'BBBBBB',
+                        isRead: true
                     },
                     elemDefault
                 );
@@ -89,7 +93,7 @@ describe('Service Tests', () => {
                 httpMock.verify();
             });
 
-            it('should delete a TestResult', async () => {
+            it('should delete a Notification', async () => {
                 const rxPromise = service.delete(123).subscribe(resp => expect(resp.ok));
 
                 const req = httpMock.expectOne({ method: 'DELETE' });

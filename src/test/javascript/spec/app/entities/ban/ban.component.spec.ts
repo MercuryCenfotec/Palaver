@@ -4,28 +4,28 @@ import { Observable, of } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 
 import { PalaverTestModule } from '../../../test.module';
-import { TestResultComponent } from 'app/entities/test-result/test-result.component';
-import { TestResultService } from 'app/entities/test-result/test-result.service';
-import { TestResult } from 'app/shared/model/test-result.model';
+import { BanComponent } from 'app/entities/ban/ban.component';
+import { BanService } from 'app/entities/ban/ban.service';
+import { Ban } from 'app/shared/model/ban.model';
 
 describe('Component Tests', () => {
-    describe('TestResult Management Component', () => {
-        let comp: TestResultComponent;
-        let fixture: ComponentFixture<TestResultComponent>;
-        let service: TestResultService;
+    describe('Ban Management Component', () => {
+        let comp: BanComponent;
+        let fixture: ComponentFixture<BanComponent>;
+        let service: BanService;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [PalaverTestModule],
-                declarations: [TestResultComponent],
+                declarations: [BanComponent],
                 providers: []
             })
-                .overrideTemplate(TestResultComponent, '')
+                .overrideTemplate(BanComponent, '')
                 .compileComponents();
 
-            fixture = TestBed.createComponent(TestResultComponent);
+            fixture = TestBed.createComponent(BanComponent);
             comp = fixture.componentInstance;
-            service = fixture.debugElement.injector.get(TestResultService);
+            service = fixture.debugElement.injector.get(BanService);
         });
 
         it('Should call load all on init', () => {
@@ -34,7 +34,7 @@ describe('Component Tests', () => {
             spyOn(service, 'query').and.returnValue(
                 of(
                     new HttpResponse({
-                        body: [new TestResult(null, '20')],
+                        body: [new Ban(123)],
                         headers
                     })
                 )
@@ -45,7 +45,7 @@ describe('Component Tests', () => {
 
             // THEN
             expect(service.query).toHaveBeenCalled();
-            expect(comp.testResults[0]).toEqual(jasmine.objectContaining({ id: 123 }));
+            expect(comp.bans[0]).toEqual(jasmine.objectContaining({ id: 123 }));
         });
     });
 });

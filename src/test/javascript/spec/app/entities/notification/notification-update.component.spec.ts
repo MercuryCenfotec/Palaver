@@ -4,35 +4,35 @@ import { HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
 import { PalaverTestModule } from '../../../test.module';
-import { TestResultUpdateComponent } from 'app/entities/test-result/test-result-update.component';
-import { TestResultService } from 'app/entities/test-result/test-result.service';
-import { TestResult } from 'app/shared/model/test-result.model';
+import { NotificationUpdateComponent } from 'app/entities/notification/notification-update.component';
+import { NotificationService } from 'app/entities/notification/notification.service';
+import { Notification } from 'app/shared/model/notification.model';
 
 describe('Component Tests', () => {
-    describe('TestResult Management Update Component', () => {
-        let comp: TestResultUpdateComponent;
-        let fixture: ComponentFixture<TestResultUpdateComponent>;
-        let service: TestResultService;
+    describe('Notification Management Update Component', () => {
+        let comp: NotificationUpdateComponent;
+        let fixture: ComponentFixture<NotificationUpdateComponent>;
+        let service: NotificationService;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [PalaverTestModule],
-                declarations: [TestResultUpdateComponent]
+                declarations: [NotificationUpdateComponent]
             })
-                .overrideTemplate(TestResultUpdateComponent, '')
+                .overrideTemplate(NotificationUpdateComponent, '')
                 .compileComponents();
 
-            fixture = TestBed.createComponent(TestResultUpdateComponent);
+            fixture = TestBed.createComponent(NotificationUpdateComponent);
             comp = fixture.componentInstance;
-            service = fixture.debugElement.injector.get(TestResultService);
+            service = fixture.debugElement.injector.get(NotificationService);
         });
 
         describe('save', () => {
             it('Should call update service on save for existing entity', fakeAsync(() => {
                 // GIVEN
-                const entity = new TestResult(null, '123');
+                const entity = new Notification(123);
                 spyOn(service, 'update').and.returnValue(of(new HttpResponse({ body: entity })));
-                comp.testResult = entity;
+                comp.notification = entity;
                 // WHEN
                 comp.save();
                 tick(); // simulate async
@@ -44,9 +44,9 @@ describe('Component Tests', () => {
 
             it('Should call create service on save for new entity', fakeAsync(() => {
                 // GIVEN
-                const entity = new TestResult();
+                const entity = new Notification();
                 spyOn(service, 'create').and.returnValue(of(new HttpResponse({ body: entity })));
-                comp.testResult = entity;
+                comp.notification = entity;
                 // WHEN
                 comp.save();
                 tick(); // simulate async

@@ -4,35 +4,35 @@ import { HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
 import { PalaverTestModule } from '../../../test.module';
-import { TestResultUpdateComponent } from 'app/entities/test-result/test-result-update.component';
-import { TestResultService } from 'app/entities/test-result/test-result.service';
-import { TestResult } from 'app/shared/model/test-result.model';
+import { BanUpdateComponent } from 'app/entities/ban/ban-update.component';
+import { BanService } from 'app/entities/ban/ban.service';
+import { Ban } from 'app/shared/model/ban.model';
 
 describe('Component Tests', () => {
-    describe('TestResult Management Update Component', () => {
-        let comp: TestResultUpdateComponent;
-        let fixture: ComponentFixture<TestResultUpdateComponent>;
-        let service: TestResultService;
+    describe('Ban Management Update Component', () => {
+        let comp: BanUpdateComponent;
+        let fixture: ComponentFixture<BanUpdateComponent>;
+        let service: BanService;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [PalaverTestModule],
-                declarations: [TestResultUpdateComponent]
+                declarations: [BanUpdateComponent]
             })
-                .overrideTemplate(TestResultUpdateComponent, '')
+                .overrideTemplate(BanUpdateComponent, '')
                 .compileComponents();
 
-            fixture = TestBed.createComponent(TestResultUpdateComponent);
+            fixture = TestBed.createComponent(BanUpdateComponent);
             comp = fixture.componentInstance;
-            service = fixture.debugElement.injector.get(TestResultService);
+            service = fixture.debugElement.injector.get(BanService);
         });
 
         describe('save', () => {
             it('Should call update service on save for existing entity', fakeAsync(() => {
                 // GIVEN
-                const entity = new TestResult(null, '123');
+                const entity = new Ban(123);
                 spyOn(service, 'update').and.returnValue(of(new HttpResponse({ body: entity })));
-                comp.testResult = entity;
+                comp.ban = entity;
                 // WHEN
                 comp.save();
                 tick(); // simulate async
@@ -44,9 +44,9 @@ describe('Component Tests', () => {
 
             it('Should call create service on save for new entity', fakeAsync(() => {
                 // GIVEN
-                const entity = new TestResult();
+                const entity = new Ban();
                 spyOn(service, 'create').and.returnValue(of(new HttpResponse({ body: entity })));
-                comp.testResult = entity;
+                comp.ban = entity;
                 // WHEN
                 comp.save();
                 tick(); // simulate async

@@ -26,7 +26,7 @@ export class UserHomeComponent implements OnInit {
     testQuestions: ITestQuestion[];
     focusGroup: IFocusGroup;
     participant: IParticipant;
-    testResult = new TestResult('', this.focusGroup, this.participant);
+    testResult = new TestResult(null, '', '', this.focusGroup, this.participant);
     currentAccount: any;
     eventSubscriber: Subscription;
     actualUserId: number;
