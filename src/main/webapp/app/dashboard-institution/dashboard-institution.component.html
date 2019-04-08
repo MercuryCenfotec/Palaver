@@ -102,34 +102,81 @@
 </div>
 <!--Statistics cards Ends-->
 
-<div class="row" matchHeight="card">
+<div class="row pr-3 pl-3" matchHeight="card">
 
-    <div class="col-xl-4 col-lg-12">
-        <div class="card shadow-lg">
-            <div class="card-header">
-                <h4 class="card-title mb-0">Participantes</h4>
+    <div _ngcontent-c26="" class="col-lg-4 col-md-6 col-sm-12">
+        <div _ngcontent-c25="" class="card row text-center shadow-lg">
+
+            <div class="card-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
+                <h4 class="card-title cursor-pointer">Membresías</h4>
             </div>
-            <div class="card-body" *ngIf="participants">
-                <div class="card-block">
-                    <div _ngcontent-c26="" class="media mb-1" *ngFor="let participant of participants">
-                        <a _ngcontent-c26="" *ngIf="participant.gender == 'MALE'">
-                            <img _ngcontent-c26="" class="media-object d-flex mr-3 bg-primary height-50 width-50 rounded-circle" src="https://res.cloudinary.com/utilisimo/image/upload/v1544891336/oi1fydm4aykjzdmn9mzh.png">
-                        </a>
-                        <a _ngcontent-c26="" *ngIf="participant.gender == 'FEMALE'">
-                            <img _ngcontent-c26="" class="media-object d-flex mr-3 bg-primary height-50 width-50 rounded-circle" src="https://res.cloudinary.com/utilisimo/image/upload/v1544885463/cy2nvotjzg3k3ig5jdaz.png">
-                        </a>
-                        <a _ngcontent-c26="" *ngIf="participant.gender == 'UNDEFINED'">
-                            <img _ngcontent-c26="" class="media-object d-flex mr-3 bg-primary height-50 width-50 rounded-circle" src="https://res.cloudinary.com/utilisimo/image/upload/v1553464422/user-placeholder_fqdsvl.png">
-                        </a>
-                        <div _ngcontent-c26="" class="media-body">
-                            <h4 _ngcontent-c26="" class="font-medium-1 mt-1 mb-0">{{participant.user.name}}</h4>
-                            <p _ngcontent-c26="" class="text-muted font-small-3">{{participant.user.identificationNumber}}</p>
+
+            <div _ngcontent-c25="" class="col-12 p-0 rounded">
+                <div _ngcontent-c25="" class="card-group shadow-lg rounded" style="margin: 18px 0 0 0;">
+
+                    <div _ngcontent-c25="" class="card m-0 rounded-bottom" style="box-shadow: 0 6px 0 0 rgba(0,0,0,.01), 0 15px 32px 0 rgba(0,0,0,.06);">
+                        <div _ngcontent-c25="" class="card-content">
+                            <div class= "text-center">
+                            <img _ngcontent-c25="" alt="Card image cap" class="card-img-top img-fluid width-80-per mt-3" src="../assets/img/GRATIS.png">
+                            </div>
+                            <div _ngcontent-c25="" class="card-body" style="padding: 1.5rem;">
+                                <h4 _ngcontent-c25="" class="card-title">Básica</h4>
+                                <p _ngcontent-c25="" class="card-text">
+                                    La <strong>membresía básica</strong> otorga permiso de hacer uso básico de la aplicación.
+                                </p>
+                            </div>
+                        </div>
+                        <div _ngcontent-c25="" class="card-footer text-center">
+                            <i class="btn ft-check font-medium-4 p-0"></i>
+                        </div>
+                    </div>
+                    <div _ngcontent-c25="" class="card m-0 rounded-bottom" style="box-shadow: 0 6px 0 0 rgba(0,0,0,.01), 0 15px 32px 0 rgba(0,0,0,.06);">
+                        <div _ngcontent-c25="" class="card-content">
+                            <div class="text-center">
+                                <img _ngcontent-c25="" alt="Card image cap" class="card-img-top img-fluid width-80-per mt-3" src="../assets/img/premium.png">
+                            </div>
+                            <div _ngcontent-c25="" class="card-body" style="padding: 1.5rem;">
+                                <h4 _ngcontent-c25="" class="card-title">Premium</h4>
+                                <p _ngcontent-c25="" class="card-text">
+                                    Por $20, la <strong>membresía premium</strong> otorga el permiso extra de crear tus propios incentivos.
+                                </p>
+                            </div>
+                        </div>
+                        <div _ngcontent-c25="" class="card-footer text-center" id="footerPremium">
+                            <a (click)="obtenerPlanPremium()" class="btn btn-flat btn-primary m-0">Obtener</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!--<div class="col-xl-4 col-lg-12">-->
+    <!--<div class="card shadow-lg">-->
+    <!--<div class="card-header">-->
+    <!--<h4 class="card-title mb-0">Participantes</h4>-->
+    <!--</div>-->
+    <!--<div class="card-body" *ngIf="participants">-->
+    <!--<div class="card-block">-->
+    <!--<div _ngcontent-c26="" class="media mb-1" *ngFor="let participant of participants">-->
+    <!--<a _ngcontent-c26="" *ngIf="participant.gender == 'MALE'">-->
+    <!--<img _ngcontent-c26="" class="media-object d-flex mr-3 bg-primary height-50 width-50 rounded-circle" src="https://res.cloudinary.com/utilisimo/image/upload/v1544891336/oi1fydm4aykjzdmn9mzh.png">-->
+    <!--</a>-->
+    <!--<a _ngcontent-c26="" *ngIf="participant.gender == 'FEMALE'">-->
+    <!--<img _ngcontent-c26="" class="media-object d-flex mr-3 bg-primary height-50 width-50 rounded-circle" src="https://res.cloudinary.com/utilisimo/image/upload/v1544885463/cy2nvotjzg3k3ig5jdaz.png">-->
+    <!--</a>-->
+    <!--<a _ngcontent-c26="" *ngIf="participant.gender == 'UNDEFINED'">-->
+    <!--<img _ngcontent-c26="" class="media-object d-flex mr-3 bg-primary height-50 width-50 rounded-circle" src="https://res.cloudinary.com/utilisimo/image/upload/v1553464422/user-placeholder_fqdsvl.png">-->
+    <!--</a>-->
+    <!--<div _ngcontent-c26="" class="media-body">-->
+    <!--<h4 _ngcontent-c26="" class="font-medium-1 mt-1 mb-0">{{participant.user.name}}</h4>-->
+    <!--<p _ngcontent-c26="" class="text-muted font-small-3">{{participant.user.identificationNumber}}</p>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
 
     <div class="col-xl-8 col-lg-12 col-12">
         <div class="card shadow-lg">

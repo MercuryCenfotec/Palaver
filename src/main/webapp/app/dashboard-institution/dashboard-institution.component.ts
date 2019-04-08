@@ -10,6 +10,10 @@ import { IAptitudeTest } from 'app/shared/model/aptitude-test.model';
 import { AptitudeTestService } from 'app/entities/aptitude-test';
 import moment = require('moment');
 import { Moment } from 'moment';
+import { Membership } from 'app/shared/model/membership.model';
+import { Observable } from 'rxjs';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { BalanceAccountService } from 'app/entities/balance-account';
 
 @Component({
     selector: 'jhi-dashboard-institution',
@@ -30,7 +34,8 @@ export class DashboardInstitutionComponent implements OnInit {
         protected institutionService: InstitutionService,
         protected focusGroupService: FocusGroupService,
         protected jhiAlertService: JhiAlertService,
-        protected aptitudeTestService: AptitudeTestService
+        protected aptitudeTestService: AptitudeTestService,
+        protected accountService: BalanceAccountService
     ) {}
 
     loadAll() {
@@ -49,7 +54,6 @@ export class DashboardInstitutionComponent implements OnInit {
 
     loadInfo() {
         this.focusGroups.forEach(resp => {
-            debugger;
             if (resp.endDate.toString() < moment().format('YYYY-MM-DD')) {
                 this.endedFG += 1;
             } else {
@@ -90,6 +94,10 @@ export class DashboardInstitutionComponent implements OnInit {
         this.userService.getUserWithAuthorities().subscribe(user => {
             this.institutionService.getByUserUser(user.id).subscribe(institution => {
                 this.institution = institution.body;
+                if (this.institution.membership.id == 2) {
+                    document.getElementById('footerPremium').innerHTML = '';
+                    document.getElementById('footerPremium').innerHTML = '<i class="btn ft-check font-medium-4 p-0"></i>';
+                }
                 this.aptitudeTestService.findAllByInstitution(institution.body.id).subscribe(aptitudeTests => {
                     this.aptitudeTests = aptitudeTests.body;
                 });
@@ -100,4 +108,23 @@ export class DashboardInstitutionComponent implements OnInit {
     protected onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
     }
+
+    obtenerPlanPremium() {
+        const premium = new Membership(2);
+
+        this.institution.membership = premium;
+
+        this.subscribeToSaveResponse(this.institutionService.update(this.institution));
+
+        document.getElementById('footerPremium').innerHTML = '';
+        document.getElementById('footerPremium').innerHTML = '<i class="btn ft-check font-medium-4 p-0"></i>';
+    }
+
+    protected subscribeToSaveResponse(result: Observable<HttpResponse<IInstitution>>) {
+        result.subscribe((res: HttpResponse<IInstitution>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+    }
+
+    protected onSaveSuccess() {}
+
+    protected onSaveError() {}
 }

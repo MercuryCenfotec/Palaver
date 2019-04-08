@@ -28,6 +28,7 @@ export class NavbarComponent implements OnInit {
     currentAccount: any;
     participant = new Participant(null, null, null, null, '', null, null, null);
     institution = new Institution(null, '', '', '', '', null);
+    membershipId;
 
     constructor(
         private loginService: LoginService,
@@ -86,6 +87,7 @@ export class NavbarComponent implements OnInit {
                     if (userApp.rol === 'institution') {
                         this.institutionService.getByUserUser(jhiUser.id).subscribe(foundInstitution => {
                             this.institution = foundInstitution.body;
+                            this.membershipId = foundInstitution.body.membership.id;
                             this.participant.id = 0;
                         });
                     } else if (userApp.rol === 'participant') {
@@ -137,10 +139,7 @@ export class NavbarComponent implements OnInit {
                     ];
                     break;
                 case 'ROLE_SUBADMIN':
-                    permissions = [
-                        'participantPermissions',
-                        'institutionPermissions'
-                    ];
+                    permissions = ['participantPermissions', 'institutionPermissions'];
                     break;
                 default:
                     break;
