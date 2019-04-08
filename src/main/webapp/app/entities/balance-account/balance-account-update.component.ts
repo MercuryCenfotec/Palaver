@@ -65,7 +65,7 @@ export class BalanceAccountUpdateComponent implements OnInit {
     save() {
         this.isSaving = true;
         if (this.balanceAccount.id !== undefined) {
-            this.subscribeToSaveResponse(this.balanceAccountService.update(this.balanceAccount));
+            this.subscribeToSaveResponse(this.balanceAccountService.update(this.balanceAccount, '', 0));
         } else {
             this.subscribeToSaveResponse(this.balanceAccountService.create(this.balanceAccount));
         }
