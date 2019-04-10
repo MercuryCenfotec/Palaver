@@ -12,7 +12,7 @@ import {UserAppService} from 'app/entities/user-app';
     selector: 'jhi-balance-account',
     templateUrl: './balance-account.component.html'
 })
-export class BalanceAccountComponent implements OnInit, OnDestroy {
+export class BalanceAccountComponent implements OnInit {
     balanceAccounts: IBalanceAccount[];
     currentAccount: any;
     eventSubscriber: Subscription;
@@ -47,10 +47,6 @@ export class BalanceAccountComponent implements OnInit, OnDestroy {
         this.accountService.identity().then(account => {
             this.currentAccount = account;
         });
-    }
-
-    ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
     }
 
     trackId(index: number, item: IBalanceAccount) {
