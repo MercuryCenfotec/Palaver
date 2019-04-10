@@ -107,6 +107,7 @@ export class UserHomeComponent implements OnInit {
                 this.openModal(modalToDisplay);
             } else {
                 this.testResult.grade = '100';
+                this.testResult.status = 'EnCurso';
                 this.testResultsService.create(this.testResult).subscribe(data => {
                     this.loadAllTests();
                 });
@@ -183,6 +184,7 @@ export class UserHomeComponent implements OnInit {
 
     sendAptitudeTestAnswers(form) {
         this.testResult.grade = this.calculateAverageGrade(form).toString();
+        this.testResult.status = 'EnCurso';
         this.testResultsService.create(this.testResult).subscribe(data => {
             this.loadAllTests();
         });
