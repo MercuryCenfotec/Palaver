@@ -44,12 +44,10 @@
                             class="btn btn-raised btn-warning mr-1">
                         <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Volver</span>
                     </button>
-                    <div *ngIf="!inProcess; else validEditBtn"
+                    <div *ngIf="!testIsEditable(); else validEditBtn"
                          ngbPopover="No es posible editar esta prueba debido a que esta siendo usada en un grupo de enfoque."
                          triggers="mouseenter:mouseleave" popoverTitle="Lo sentimos." class="col-auto">
-                        <button type="button"
-                                [routerLink]="['/aptitude-test', aptitudeTest.id, 'edit']"
-                                class="btn btn-raised btn-primary" [disabled]="!inProcess">
+                        <button type="button" class="btn btn-raised btn-primary" [disabled]="true">
                             <span><i class="ft-edit-2 font-medium-3 mr-2"></i> Editar</span>
                         </button>
                     </div>
@@ -57,13 +55,13 @@
                         <div class="col-auto">
                             <button type="button"
                                     [routerLink]="['/aptitude-test', aptitudeTest.id, 'edit']"
-                                    class="btn btn-raised btn-primary" [disabled]="!inProcess">
+                                    class="btn btn-raised btn-primary">
                                 <span><i class="ft-edit-2 font-medium-3 mr-2"></i> Editar</span>
                             </button>
                         </div>
                     </ng-template>
 
-                    <div *ngIf="!inProcess; else validDeleteBtn"
+                    <div *ngIf="!testIsEditable(); else validDeleteBtn"
                          ngbPopover="No es posible eliminar esta prueba debido a que esta siendo usada en un grupo de enfoque."
                          triggers="mouseenter:mouseleave" popoverTitle="Lo sentimos." class="col-auto">
                         <button type="button" class="btn btn-raised btn-danger" [disabled]="true">
@@ -74,7 +72,7 @@
                         <div class="col-auto">
                             <button type="button"
                                     [routerLink]="['/', 'aptitude-test', { outlets: { popup: aptitudeTest.id + '/delete'} }]"
-                                    class="btn btn-raised btn-danger" [disabled]="!inProcess">
+                                    class="btn btn-raised btn-danger">
                                 <span><i class="ft-x font-medium-3 mr-2"></i> Eliminar</span>
                             </button>
                         </div>

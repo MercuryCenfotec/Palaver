@@ -157,7 +157,7 @@ public class FocusGroupResource {
     public ResponseEntity<FocusGroup> getFocusGroupByTest(@PathVariable Long testId) {
         AptitudeTest test = new AptitudeTest();
         test.setId(testId);
-        Optional<FocusGroup> focusGroup = focusGroupRepository.findByAptitudeTest(test);
-        return ResponseUtil.wrapOrNotFound(focusGroup);
+        Optional<FocusGroup> optGroup = focusGroupRepository.findByAptitudeTest(test);
+        return (optGroup.isPresent()) ? ResponseEntity.ok().body(optGroup.get()) : ResponseEntity.ok().body(new FocusGroup());
     }
 }
