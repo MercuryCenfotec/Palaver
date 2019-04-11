@@ -109,4 +109,10 @@ public class BanResource {
         banService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    @GetMapping("/bans/verify/{isValid}")
+    public List<Ban> getAllBansByStatus(@PathVariable boolean isValid) {
+        log.debug("REST request to get all Bans");
+        return banService.findAllByStatus(isValid);
+    }
 }

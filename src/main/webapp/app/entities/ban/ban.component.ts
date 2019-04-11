@@ -26,17 +26,27 @@ export class BanComponent implements OnInit, OnDestroy {
 
     loadAll() {
         this.banService
-            .query()
+            .findAllByIsValid(false)
             .pipe(
                 filter((res: HttpResponse<IBan[]>) => res.ok),
                 map((res: HttpResponse<IBan[]>) => res.body)
             )
             .subscribe(
                 (res: IBan[]) => {
-                    this.bans = res;
+                    this.filterByComplaint(res);
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
+    }
+
+    filterByComplaint(allBans: IBan[]) {
+        const filteredBans: IBan[] = [];
+        for (let i = 0; i < allBans.length; i++) {
+            if (allBans[i].complaint !== '') {
+                filteredBans.push(allBans[i]);
+            }
+        }
+        this.bans = filteredBans;
     }
 
     ngOnInit() {
@@ -61,5 +71,18 @@ export class BanComponent implements OnInit, OnDestroy {
 
     protected onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
+    }
+
+    sendInvalid(desiredBan: IBan) {
+        this.banService.delete(desiredBan.id).subscribe(deletedBan => {
+            this.ngOnInit();
+        });
+    }
+
+    sendValid(desiredBan: IBan) {
+        desiredBan.isValid = true;
+        this.banService.update(desiredBan).subscribe( updatedBan => {
+            this.ngOnInit();
+        });
     }
 }

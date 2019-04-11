@@ -17,10 +17,8 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.text.NumberFormat;
+import java.util.*;
 
 /**
  * REST controller for managing BalanceAccount.
@@ -102,7 +100,11 @@ public class BalanceAccountResource {
         int newAmount = balanceAccount.getBalance() + (amount / 100);
         balanceAccount.setBalance(newAmount);
         BalanceAccount result = balanceAccountRepository.save(balanceAccount);
-        mailService.sendPaymentEmail(balanceAccount.getUser().getUser());
+        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.GERMANY);
+        String currency = format.format((amount / 100));
+        currency = currency.substring(0, currency.length() - 5);
+        currency = "₡ " + currency;
+        mailService.sendPaymentEmail(balanceAccount.getUser().getUser(), currency);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, balanceAccount.getId().toString()))
             .body(result);

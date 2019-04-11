@@ -4,6 +4,8 @@ import com.mercury.palaver.domain.Ban;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 /**
  * Spring Data  repository for the Ban entity.
@@ -11,5 +13,5 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface BanRepository extends JpaRepository<Ban, Long> {
-
+    List<Ban> findAllByIsValid(boolean isValid);
 }

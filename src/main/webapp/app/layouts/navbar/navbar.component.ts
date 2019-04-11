@@ -112,7 +112,8 @@ export class NavbarComponent implements OnInit {
                         'membershipPermissions',
                         'paymentMethodPermissions',
                         'systemVariablePermissions',
-                        'paymentPermissions'
+                        'paymentPermissions',
+                        'banPermissions'
                     ];
                     break;
                 case 'ROLE_PARTICIPANT':
@@ -139,7 +140,8 @@ export class NavbarComponent implements OnInit {
                 case 'ROLE_SUBADMIN':
                     permissions = [
                         'participantPermissions',
-                        'institutionPermissions'
+                        'institutionPermissions',
+                        'banPermissions'
                     ];
                     break;
                 default:

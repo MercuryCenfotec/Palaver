@@ -69,4 +69,10 @@ public class BanService {
     public void delete(Long id) {
         log.debug("Request to delete Ban : {}", id);        banRepository.deleteById(id);
     }
+
+    @Transactional(readOnly = true)
+    public List<Ban> findAllByStatus(boolean isValid) {
+        log.debug("Request to get all Bans");
+        return banRepository.findAllByIsValid(isValid);
+    }
 }
