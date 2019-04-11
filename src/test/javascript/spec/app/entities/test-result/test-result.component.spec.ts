@@ -34,7 +34,7 @@ describe('Component Tests', () => {
             spyOn(service, 'query').and.returnValue(
                 of(
                     new HttpResponse({
-                        body: [new TestResult('20')],
+                        body: [new TestResult(null, '20')],
                         headers
                     })
                 )

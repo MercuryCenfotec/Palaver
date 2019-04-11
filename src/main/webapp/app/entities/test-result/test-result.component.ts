@@ -34,7 +34,7 @@ export class TestResultComponent implements OnInit, OnDestroy {
     loadAll() {
         this.userService.getUserWithAuthorities().subscribe(user => {
             this.focusGroupService.findByCode(user.login).subscribe(group => {
-                this.testResultService.findAllByFocusGroup(group.body.id).subscribe(results => {
+                this.testResultService.findAllByFocusGroupAndStatus(group.body.id, 'EnCurso').subscribe(results => {
                     this.testResults = results.body;
                 });
             });
@@ -82,7 +82,6 @@ export class TestResultComponent implements OnInit, OnDestroy {
     }
 
     acceptParticipant(event: ITestResult) {
-        console.log(this.focusGroups);
         for (let i = 0; i < this.focusGroups.length; i++) {
             if (event.focusGroup.id === this.focusGroups[i].id) {
                 event.focusGroup = this.focusGroups[i];
@@ -90,14 +89,16 @@ export class TestResultComponent implements OnInit, OnDestroy {
         }
         event.focusGroup.participants.push(event.participant);
         this.focusGroupService.update(event.focusGroup).subscribe(data => {
-            this.testResultService.delete(event.id).subscribe(data2 => {
+            event.status = 'Aceptado';
+            this.testResultService.update(event).subscribe(data2 => {
                 this.loadAll();
             });
         });
     }
 
     rejectParticipant(event: ITestResult) {
-        this.testResultService.delete(event.id).subscribe(data => {
+        event.status = 'Rechazado';
+        this.testResultService.update(event).subscribe(data => {
             this.loadAll();
         });
     }

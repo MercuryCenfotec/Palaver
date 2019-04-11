@@ -1,0 +1,47 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="ban">
+            <h2><span>Ban</span> {{ban.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Reason</span></dt>
+                <dd>
+                    <span>{{ban.reason}}</span>
+                </dd>
+                <dt><span>Complaint</span></dt>
+                <dd>
+                    <span>{{ban.complaint}}</span>
+                </dd>
+                <dt><span>Is Valid</span></dt>
+                <dd>
+                    <span>{{ban.isValid}}</span>
+                </dd>
+                <dt><span>Participant</span></dt>
+                <dd>
+                    <div *ngIf="ban.participant">
+                        <a [routerLink]="['/participant', ban.participant?.id, 'view']">{{ban.participant?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span>Focus Group</span></dt>
+                <dd>
+                    <div *ngIf="ban.focusGroup">
+                        <a [routerLink]="['/focus-group', ban.focusGroup?.id, 'view']">{{ban.focusGroup?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/ban', ban.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

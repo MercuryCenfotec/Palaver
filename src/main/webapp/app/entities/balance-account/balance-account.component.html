@@ -1,15 +1,107 @@
 <div>
     <h2 id="page-heading">
-        <span>Balance Accounts</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-balance-account" [routerLink]="['/balance-account/new']">
-            <fa-icon [icon]="'plus'"></fa-icon>
-            <span >
-            Create new Balance Account
-            </span>
-        </button>
+        <span>Mi balance</span>
     </h2>
     <br/>
-    <div class="table-responsive" *ngIf="balanceAccounts">
+<div>
+    <div class="col-xl-3 col-lg-6 col-12" style="float: right; display:inline-block;">
+        <div class="card bg-danger">
+            <div class="card-body">
+                <div class="px-3 py-3">
+                    <div class="media">
+                        <div class="media-body white text-left">
+                            <h3>₡{{formatedBalance}}</h3>
+                            <span>Saldo actual</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="col-xl-6 col-lg-6 col-12">
+            <div class="card bg-primary">
+                <div class="card-body">
+                    <div class="px-3 py-3">
+                        <div class="media">
+                            <div class="media-body white text-left">
+                                <h3>Añadir ₡2.500</h3>
+                            </div>
+                            <div class="media-right align-self-center">
+                                <button class="btn btn-raised shadow-z-2 btn-success" (click)="openCheckout(250000)"><i class="ft-plus"></i>Añadir fondos</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-12">
+            <div class="card bg-primary">
+                <div class="card-body">
+                    <div class="px-3 py-3">
+                        <div class="media">
+                            <div class="media-body white text-left">
+                                <h3>Añadir ₡5.000</h3>
+                            </div>
+                            <div class="media-right align-self-center">
+                                <button class="btn btn-raised shadow-z-2 btn-success" (click)="openCheckout(500000)"><i class="ft-plus"></i>Añadir fondos</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-12">
+            <div class="card bg-primary">
+                <div class="card-body">
+                    <div class="px-3 py-3">
+                        <div class="media">
+                            <div class="media-body white text-left">
+                                <h3>Añadir ₡12.500</h3>
+                            </div>
+                            <div class="media-right align-self-center">
+                                <button class="btn btn-raised shadow-z-2 btn-success" (click)="openCheckout(1250000)"><i class="ft-plus"></i>Añadir fondos</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-12">
+            <div class="card bg-primary">
+                <div class="card-body">
+                    <div class="px-3 py-3">
+                        <div class="media">
+                            <div class="media-body white text-left">
+                                <h3>Añadir ₡25.000</h3>
+                            </div>
+                            <div class="media-right align-self-center">
+                                <button class="btn btn-raised shadow-z-2 btn-success" (click)="openCheckout(2500000)"><i class="ft-plus"></i>Añadir fondos</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-12">
+            <div class="card bg-primary">
+                <div class="card-body">
+                    <div class="px-3 py-3">
+                        <div class="media">
+                            <div class="media-body white text-left">
+                                <h3>Añadir ₡50.000</h3>
+                            </div>
+                            <div class="media-right align-self-center">
+                                <button class="btn btn-raised shadow-z-2 btn-success" (click)="openCheckout(5000000)"><i class="ft-plus"></i>Añadir fondos</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!--<div class="table-responsive" *ngIf="balanceAccounts">
         <table class="table table-striped">
             <thead>
             <tr>
@@ -61,5 +153,5 @@
             </tr>
             </tbody>
         </table>
-    </div>
+    </div>-->
 </div>

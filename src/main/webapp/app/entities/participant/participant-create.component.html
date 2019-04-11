@@ -22,12 +22,12 @@
                                         <label _ngcontent-c5="" for="field_birthdate">Fecha de nacimiento</label>
                                         <div class="input-group">
                                             <input _ngcontent-c5="" class="form-control"
-                                                   id="field_birthdate" name="birthdate" type="text" ngbDatepicker
-                                                   #birthdateDp="ngbDatepicker" [(ngModel)]="participant.birthdate"
+                                                   id="field_birthdate" name="birthDateDp" type="text" ngbDatepicker
+                                                   #birthDateDp="ngbDatepicker" [(ngModel)]="participant.birthdate"
                                                    required #birthDate="ngModel">
                                             <span class="input-group-append">
                                                 <button type="button" class="btn btn-secondary"
-                                                        (click)="birthdateDp.toggle()">
+                                                        (click)="birthDateDp.toggle()">
                                                     <fa-icon [icon]="'calendar-alt'"></fa-icon></button>
                                             </span>
                                         </div>
@@ -39,7 +39,7 @@
                                         </div>
                                         <div [hidden]="!((birthDate?.dirty || birthDate?.touched) && birthDate?.invalid)">
                                             <small class="form-text text-danger"
-                                                   [hidden]="!editForm.controls.birthdate?.errors?.max">
+                                                   [hidden]="!birthDate?.errors?.max">
                                                 La fecha es inválida.
                                             </small>
                                         </div>
@@ -128,7 +128,7 @@
                                  triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido."
                                  *ngIf="editForm.form.invalid || isSaving; else validRegisterBtn"
                                  class="col-auto">
-                                <button _ngcontent-c5="" class="btn btn-raised btn-primary" type="submit" id="save-entity" [disabled]="true">
+                                <button _ngcontent-c5="" class="btn btn-raised btn-primary" type="submit" id="save-invalid-entity" [disabled]="true">
                                     <i _ngcontent-c5="" class="ft ft-file-text"></i>
                                     <fa-icon></fa-icon>Registrar
                                 </button>
@@ -139,7 +139,7 @@
                             </ng-template>
                             <ng-template #validRegisterBtn>
                                 <div class="col-auto">
-                                    <button _ngcontent-c5="" class="btn btn-raised btn-primary" type="submit" id="save-entity">
+                                    <button _ngcontent-c5="" class="btn btn-raised btn-primary" type="submit" id="save-valid-entity">
                                         <i _ngcontent-c5="" class="ft ft-file-text"></i>
                                         <fa-icon></fa-icon>Registrar
                                     </button>

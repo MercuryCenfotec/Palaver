@@ -19,12 +19,16 @@ export class BalanceAccountService {
         return this.http.post<IBalanceAccount>(this.resourceUrl, balanceAccount, { observe: 'response' });
     }
 
-    update(balanceAccount: IBalanceAccount): Observable<EntityResponseType> {
-        return this.http.put<IBalanceAccount>(this.resourceUrl, balanceAccount, { observe: 'response' });
+    update(balanceAccount: IBalanceAccount, tokenId: string, amount: number): Observable<EntityResponseType> {
+        return this.http.put<IBalanceAccount>(this.resourceUrl + '/' + tokenId + '/' + amount, balanceAccount, { observe: 'response' });
     }
 
     find(id: number): Observable<EntityResponseType> {
         return this.http.get<IBalanceAccount>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    }
+
+    findByUserId(id: number): Observable<EntityResponseType> {
+        return this.http.get<IBalanceAccount>(`${this.resourceUrl}/user-app/${id}`, { observe: 'response' });
     }
 
     query(req?: any): Observable<EntityArrayResponseType> {
