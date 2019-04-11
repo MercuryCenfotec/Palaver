@@ -39,7 +39,7 @@
                                         </div>
                                         <div [hidden]="!((birthDate?.dirty || birthDate?.touched) && birthDate?.invalid)">
                                             <small class="form-text text-danger"
-                                                   [hidden]="!editForm.controls.birthdate?.errors?.max">
+                                                   [hidden]="!birthdate?.errors?.max">
                                                 La fecha es inválida.
                                             </small>
                                         </div>

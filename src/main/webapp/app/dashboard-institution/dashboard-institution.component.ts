@@ -49,7 +49,6 @@ export class DashboardInstitutionComponent implements OnInit {
 
     loadInfo() {
         this.focusGroups.forEach(resp => {
-            debugger;
             if (resp.endDate.toString() < moment().format('YYYY-MM-DD')) {
                 this.endedFG += 1;
             } else {

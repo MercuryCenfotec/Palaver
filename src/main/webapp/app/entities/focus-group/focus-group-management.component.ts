@@ -11,6 +11,8 @@ import { filter, map } from 'rxjs/operators';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ClipboardService } from 'ngx-clipboard';
 import * as moment from 'moment';
+import {BanService} from 'app/entities/ban';
+import {Ban, IBan} from 'app/shared/model/ban.model';
 
 @Component({
     selector: 'jhi-focus-group-management',
@@ -21,6 +23,7 @@ export class FocusGroupManagementComponent implements OnInit {
     participants: Participant[];
     participant: IParticipant;
     focusGroup: IFocusGroup;
+    ban =  new Ban(null, '', '', null, null, null);
     searchText;
 
     constructor(
@@ -29,7 +32,8 @@ export class FocusGroupManagementComponent implements OnInit {
         protected focusGroupService: FocusGroupService,
         protected meetingsService: MeetingService,
         protected participantService: ParticipantService,
-        protected modalService: NgbModal
+        protected modalService: NgbModal,
+        protected banService: BanService
     ) {}
 
     ngOnInit() {
@@ -82,10 +86,14 @@ export class FocusGroupManagementComponent implements OnInit {
                 this.focusGroup.participants.splice(i, 1);
             }
         }
+        this.ban.reason = input.value;
+        this.ban.focusGroup = this.focusGroup;
+        this.ban.participant = this.participant;
 
-        this.focusGroupService.update(this.focusGroup).subscribe(data => {
-            this.ngOnInit();
-            this.ngOnInit();
+        this.banService.create(this.ban).subscribe( newBan => {
+            this.focusGroupService.update(this.focusGroup).subscribe(data => {
+                this.ngOnInit();
+            });
         });
     }
 
