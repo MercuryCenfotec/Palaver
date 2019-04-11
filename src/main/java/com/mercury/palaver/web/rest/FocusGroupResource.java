@@ -1,5 +1,6 @@
 package com.mercury.palaver.web.rest;
 
+import com.mercury.palaver.domain.AptitudeTest;
 import com.mercury.palaver.domain.FocusGroup;
 import com.mercury.palaver.domain.Institution;
 import com.mercury.palaver.repository.FocusGroupRepository;
@@ -147,9 +148,16 @@ public class FocusGroupResource {
         return focusGroupRepository.findAllByInstitution(institution);
     }
 
-    @GetMapping("/focus-groups/aptitude-test/{testId}")
+    @GetMapping("/focus-groups/find-by-test/{testId}")
     public ResponseEntity<Boolean> getFocusGroupByAptitudeTest(@PathVariable Long testId) {
         return ResponseEntity.ok().body(focusGroupService.testIsAvailable(testId));
     }
 
+    @GetMapping("/focus-groups/aptitude-test/{testId}")
+    public ResponseEntity<FocusGroup> getFocusGroupByTest(@PathVariable Long testId) {
+        AptitudeTest test = new AptitudeTest();
+        test.setId(testId);
+        Optional<FocusGroup> focusGroup = focusGroupRepository.findByAptitudeTest(test);
+        return ResponseUtil.wrapOrNotFound(focusGroup);
+    }
 }

@@ -38,18 +38,47 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-block">
+                <div class="card-block row">
                     <button type="submit"
                             (click)="previousState()"
                             class="btn btn-raised btn-warning mr-1">
                         <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Volver</span>
                     </button>
+                    <div *ngIf="!inProcess; else validEditBtn"
+                         ngbPopover="No es posible editar esta prueba debido a que esta siendo usada en un grupo de enfoque."
+                         triggers="mouseenter:mouseleave" popoverTitle="Lo sentimos." class="col-auto">
+                        <button type="button"
+                                [routerLink]="['/aptitude-test', aptitudeTest.id, 'edit']"
+                                class="btn btn-raised btn-primary" [disabled]="!inProcess">
+                            <span><i class="ft-edit-2 font-medium-3 mr-2"></i> Editar</span>
+                        </button>
+                    </div>
+                    <ng-template #validEditBtn>
+                        <div class="col-auto">
+                            <button type="button"
+                                    [routerLink]="['/aptitude-test', aptitudeTest.id, 'edit']"
+                                    class="btn btn-raised btn-primary" [disabled]="!inProcess">
+                                <span><i class="ft-edit-2 font-medium-3 mr-2"></i> Editar</span>
+                            </button>
+                        </div>
+                    </ng-template>
 
-                    <button type="button"
-                            [routerLink]="['/aptitude-test', aptitudeTest.id, 'edit']"
-                            class="btn btn-raised btn-primary">
-                        <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Editar</span>
-                    </button>
+                    <div *ngIf="!inProcess; else validDeleteBtn"
+                         ngbPopover="No es posible eliminar esta prueba debido a que esta siendo usada en un grupo de enfoque."
+                         triggers="mouseenter:mouseleave" popoverTitle="Lo sentimos." class="col-auto">
+                        <button type="button" class="btn btn-raised btn-danger" [disabled]="true">
+                            <span><i class="ft-x font-medium-3 mr-2"></i> Eliminar</span>
+                        </button>
+                    </div>
+                    <ng-template #validDeleteBtn>
+                        <div class="col-auto">
+                            <button type="button"
+                                    [routerLink]="['/', 'aptitude-test', { outlets: { popup: aptitudeTest.id + '/delete'} }]"
+                                    class="btn btn-raised btn-danger" [disabled]="!inProcess">
+                                <span><i class="ft-x font-medium-3 mr-2"></i> Eliminar</span>
+                            </button>
+                        </div>
+                    </ng-template>
                 </div>
             </div>
         </div>

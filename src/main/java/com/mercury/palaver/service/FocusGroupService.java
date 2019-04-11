@@ -58,7 +58,7 @@ public class FocusGroupService {
         return !opt.isPresent();
     }
 
-    private void processAptitudeTest(FocusGroup group){
+    private void processAptitudeTest(FocusGroup group) {
         if (!aptitudeTestService.testIsAvailable(group.getAptitudeTest().getId())) {
             group.getAptitudeTest().setName("Copia - " +group.getAptitudeTest().getName());
             group.setAptitudeTest(aptitudeTestService.clone(group.getAptitudeTest()));

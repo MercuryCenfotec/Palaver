@@ -159,13 +159,22 @@
                             <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Volver</span>
                         </button>
                     </div>
-                    <div class="col-auto">
+                    <div *ngIf="!inProcess; else validEditBtn"
+                         ngbPopover="No se puede editar un grupo de enfoque esté en curso."
+                         triggers="mouseenter:mouseleave" popoverTitle="Lo sentimos." class="col-auto">
                         <button type="button"
-                                [routerLink]="['/focus-group', focusGroup.id, 'edit']"
-                                class="btn btn-raised btn-primary">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Editar</span>
+                                class="btn btn-raised btn-primary" [disabled]="true">
+                            <span><i class="ft-edit-2 font-medium-3 mr-2"></i> Editar</span>
                         </button>
                     </div>
+                    <ng-template #validEditBtn>
+                        <div class="col-auto">
+                            <button type="button" [routerLink]="['/focus-group', focusGroup.id, 'edit']"
+                                    class="btn btn-raised btn-primary">
+                                <span><i class="ft-edit-2 font-medium-3 mr-2"></i> Editar</span>
+                            </button>
+                        </div>
+                    </ng-template>
                     <div *ngIf="!inProcess; else validCancelBtn"
                          ngbPopover="Si desea cancelar este grupo de enfoque, por favor contacte a nuestros administradores."
                          triggers="mouseenter:mouseleave" popoverTitle="Lo sentimos." class="col-auto">

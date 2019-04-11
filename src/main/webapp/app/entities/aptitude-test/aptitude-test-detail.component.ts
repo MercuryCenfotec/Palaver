@@ -13,6 +13,7 @@ import { IFocusGroup } from 'app/shared/model/focus-group.model';
 export class AptitudeTestDetailComponent implements OnInit {
     aptitudeTest: IAptitudeTest;
     associatedGroup: IFocusGroup;
+    groupInProcess: boolean;
 
     constructor(
         protected activatedRoute: ActivatedRoute,
@@ -22,8 +23,13 @@ export class AptitudeTestDetailComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        this.groupInProcess = false;
         this.activatedRoute.data.subscribe(({ aptitudeTest }) => {
             this.aptitudeTest = aptitudeTest;
+            this.focusGroupService.findByAptitudeTest(aptitudeTest.id).subscribe(group => {
+                this.associatedGroup = group.body;
+                this.isInProcess();
+            });
             this.questionsService.findAllByAptituteTest(this.aptitudeTest.id).subscribe(data => {
                 this.aptitudeTest.questions = data.body;
                 console.log(this.aptitudeTest);
@@ -33,5 +39,11 @@ export class AptitudeTestDetailComponent implements OnInit {
 
     previousState() {
         this.router.navigate(['/aptitude-test']);
+    }
+
+    isInProcess() {
+        this.focusGroupService.isInProcess(this.associatedGroup.id).subscribe(data => {
+            this.groupInProcess = data.body;
+        });
     }
 }
