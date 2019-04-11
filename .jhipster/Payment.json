@@ -1,5 +1,27 @@
 {
-    "name": "Payment",
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "destinyAccount",
+            "otherEntityName": "balanceAccount",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "payment",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipName": "originAccount",
+            "otherEntityName": "balanceAccount",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "payment",
+            "otherEntityRelationshipNameUndefined": false
+        }
+    ],
     "fields": [
         {
             "fieldName": "date",
@@ -21,31 +43,18 @@
             "fieldValidateRules": [
                 "required"
             ]
-        }
-    ],
-    "relationships": [
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "destinyAccount",
-            "otherEntityName": "balanceAccount",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "payment"
         },
         {
-            "relationshipType": "many-to-one",
-            "relationshipName": "oringAccount",
-            "otherEntityName": "balanceAccount",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "payment"
+            "fieldName": "onHold",
+            "fieldType": "Boolean"
         }
     ],
     "changelogDate": "20190304115749",
-    "entityTableName": "payment",
     "dto": "no",
-    "pagination": "no",
+    "searchEngine": false,
     "service": "no",
+    "entityTableName": "payment",
+    "databaseType": "sql",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*"
+    "pagination": "no"
 }
