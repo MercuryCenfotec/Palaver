@@ -115,4 +115,16 @@ public class BanResource {
         log.debug("REST request to get all Bans");
         return banService.findAllByStatus(isValid);
     }
+
+    @GetMapping("/bans/verify-institution/{isValid}/{instId}")
+    public List<Ban> getAllBansByStatusAndInstitution(@PathVariable("isValid") boolean isValid, @PathVariable("instId") Long instId) {
+        log.debug("REST request to get all Bans");
+        return banService.findAllByStatusAndInstitution(isValid, instId);
+    }
+
+    @GetMapping("/bans/institution-ban/{instId}")
+    public List<Ban> getAllBansByInstitution(@PathVariable("instId") Long instId) {
+        log.debug("REST request to get all Bans");
+        return banService.findAllByInstitution(instId);
+    }
 }

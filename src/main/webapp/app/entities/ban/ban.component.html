@@ -33,8 +33,22 @@
                                         <a [routerLink]="['../focus-group', ban.focusGroup?.id, 'view' ]">{{ban.focusGroup?.name}}</a>
                                     </div>
                                 </td>
-                                <td>{{ban.reason}}</td>
-                                <td>{{ban.complaint}}</td>
+                                <td>
+                                    <div *ngIf="ban.reason.length >= 30">
+                                        <a class="text-bold-500 primary" (click)="showDetail(motive,ban)">Ver más</a>
+                                    </div>
+                                    <div *ngIf="ban.reason.length < 30">
+                                        {{ban.reason}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div *ngIf="ban.complaint.length >= 30">
+                                        <a class="text-bold-500 primary" (click)="showDetail(complaint,ban)">Ver más</a>
+                                    </div>
+                                    <div *ngIf="ban.complaint.length < 30">
+                                        {{ban.complaint}}
+                                    </div>
+                                </td>
                                 <td>
                                     <button id="btnInvalid" class="btn btn-raised btn-danger mr-1"
                                             (click)="sendInvalid(ban)">
@@ -55,3 +69,33 @@
     </div>
 </div>
 
+<ng-template #motive let-c="close" let-d="dismiss">
+    <div class="modal-header" style="background-color: #428bca; color: #fff;">
+        <h4 class="modal-title">Motivo especificado</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>{{ban.reason}}</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-raised" (click)="c('Close click')">Cerrar</button>
+    </div>
+</ng-template>
+
+
+<ng-template #complaint let-c="close" let-d="dismiss">
+    <div class="modal-header" style="background-color: #5bc0de; color: #fff;">
+        <h4 class="modal-title">Queja recibida</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>{{ban.complaint}}</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-raised" (click)="c('Close click')">Cerrar</button>
+    </div>
+</ng-template>
