@@ -35,4 +35,16 @@ export class BanService {
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
+
+    findAllByIsValid(isValid: boolean): Observable<EntityArrayResponseType> {
+        return this.http.get<IBan[]>(this.resourceUrl + '/verify/' + isValid, { observe: 'response' });
+    }
+
+    findAllByIsValidAndInstitution(isValid: boolean, id: number): Observable<EntityArrayResponseType> {
+        return this.http.get<IBan[]>(this.resourceUrl + '/verify-institution/' + isValid + '/' + id, { observe: 'response' });
+    }
+
+    findAllByInstitution(id: number): Observable<EntityArrayResponseType> {
+        return this.http.get<IBan[]>(this.resourceUrl + '/institution-ban/' + id, { observe: 'response' });
+    }
 }

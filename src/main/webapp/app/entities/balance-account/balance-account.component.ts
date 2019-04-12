@@ -62,7 +62,7 @@ export class BalanceAccountComponent implements OnInit {
         const handler = (<any>window).StripeCheckout.configure({
             key: 'pk_test_h6yLV7URu1btctSqXR1Rsn5y00ExJYJNll',
             locale: 'es',
-            token: function(token: any) {
+            token: (token: any) => {
                 parentReference.updateNow(token.id, amountToSubmit);
             }
         });
