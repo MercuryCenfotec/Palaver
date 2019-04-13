@@ -6,6 +6,8 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { IIncentive } from 'app/shared/model/incentive.model';
 import { IncentiveService } from './incentive.service';
+import { IFocusGroup } from 'app/shared/model/focus-group.model';
+import * as moment from 'moment';
 
 @Component({
     selector: 'jhi-incentive-delete-dialog',
@@ -28,9 +30,34 @@ export class IncentiveDeleteDialogComponent {
         this.incentiveService.delete(id).subscribe(response => {
             this.eventManager.broadcast({
                 name: 'incentiveListModification',
-                content: 'Deleted an incentive'
+                content: 'El incentivo ' + this.incentive.name + ' ha sido eliminado.'
             });
             this.activeModal.dismiss(true);
+        });
+    }
+
+    validateUse() {
+        this.incentiveService.find(this.incentive.id).subscribe(incentive => {
+            this.incentive = incentive.body;
+            if (this.incentive.focusGroups == null) {
+                return false;
+            } else {
+                this.incentive.focusGroups.forEach((focusGroup: IFocusGroup) => {
+                    if (
+                        focusGroup.beginDate.toDate().getDate() >
+                            moment()
+                                .toDate()
+                                .getDate() ||
+                        focusGroup.endDate.toDate().getDate() >
+                            moment()
+                                .toDate()
+                                .getDate()
+                    ) {
+                        return true;
+                    }
+                });
+                return false;
+            }
         });
     }
 }
@@ -47,7 +74,10 @@ export class IncentiveDeletePopupComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ incentive }) => {
             setTimeout(() => {
-                this.ngbModalRef = this.modalService.open(IncentiveDeleteDialogComponent as Component, { size: 'lg', backdrop: 'static' });
+                this.ngbModalRef = this.modalService.open(IncentiveDeleteDialogComponent as Component, {
+                    size: 'lg',
+                    backdrop: 'static'
+                });
                 this.ngbModalRef.componentInstance.incentive = incentive;
                 this.ngbModalRef.result.then(
                     result => {

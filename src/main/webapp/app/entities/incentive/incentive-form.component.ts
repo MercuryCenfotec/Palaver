@@ -2,25 +2,38 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
 import { IIncentive } from 'app/shared/model/incentive.model';
 import { IncentiveService } from './incentive.service';
+import { UserService } from 'app/core';
+import { InstitutionService } from 'app/entities/institution';
 
 @Component({
     selector: 'jhi-incentive-form',
     templateUrl: './incentive-form.component.html'
 })
-export class IncentiveUpdateComponent implements OnInit {
+export class IncentiveFormComponent implements OnInit {
     incentive: IIncentive;
     isSaving: boolean;
 
-    constructor(protected incentiveService: IncentiveService, protected activatedRoute: ActivatedRoute) {}
+    constructor(
+        protected incentiveService: IncentiveService,
+        protected activatedRoute: ActivatedRoute,
+        protected userService: UserService,
+        protected institutionService: InstitutionService
+    ) {}
 
     ngOnInit() {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ incentive }) => {
             this.incentive = incentive;
         });
+
+        this.userService.getUserWithAuthorities().subscribe(user => {
+            this.institutionService.getByUserUser(user.id).subscribe(institution => {
+                this.incentive.institution.id = institution.body.id;
+            });
+        });
+        this.incentive.quantity = 1;
     }
 
     previousState() {
@@ -29,11 +42,7 @@ export class IncentiveUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        if (this.incentive.id !== undefined) {
-            this.subscribeToSaveResponse(this.incentiveService.update(this.incentive));
-        } else {
-            this.subscribeToSaveResponse(this.incentiveService.create(this.incentive));
-        }
+        this.subscribeToSaveResponse(this.incentiveService.create(this.incentive));
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IIncentive>>) {
@@ -47,5 +56,12 @@ export class IncentiveUpdateComponent implements OnInit {
 
     protected onSaveError() {
         this.isSaving = false;
+    }
+
+    validateQuantity() {
+        if (this.incentive.quantity > 999 || this.incentive.quantity < 1) {
+            return false;
+        }
+        return true;
     }
 }

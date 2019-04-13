@@ -16,6 +16,7 @@ export class IncentiveComponent implements OnInit, OnDestroy {
     incentives: IIncentive[];
     currentAccount: any;
     eventSubscriber: Subscription;
+    searchText;
 
     constructor(
         protected incentiveService: IncentiveService,

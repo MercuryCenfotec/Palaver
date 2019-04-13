@@ -1,112 +1,88 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-            <h2 id="jhi-incentive-heading">Create or edit a Incentive</h2>
-            <div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_name">Name</label>
-                    <input type="text" class="form-control" name="name" id="field_name"
-                           #floatName="ngModel" [(ngModel)]="incentive.name" required/>
-                    <small class="form-text text-muted danger" *ngIf="!floatName.valid && (floatName.dirty ||
+<div class="card">
+    <div class="card-header">
+        <div class="alert alert-success" hidden>
+            <strong></strong>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="px-3">
+            <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+                <div class="row justify-content-md-center">
+                    <div class="col-md-6">
+                        <h2 class="card-title" id="jhi-institution-heading">Incentivos</h2>
+                        <div class="form-body">
+                            <h4 class="form-section"><i class="ft-package"></i>Información</h4>
+                            <div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="field_name">Nombre</label>
+                                    <input type="text" class="form-control" name="name" id="field_name"
+                                           #floatName="ngModel" [(ngModel)]="incentive.name" required/>
+                                    <small class="form-text text-muted danger" *ngIf="!floatName.valid && (floatName.dirty ||
                                  floatName.touched)">
-                    </small>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_image">Imagen</label>
-                    <input type="text" class="form-control" name="image" id="field_image"
-                           [(ngModel)]="incentive.image"/>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_quantity">Cantidad</label>
-                    <input type="number" class="form-control" name="quantity" id="field_quantity"
-                           min="1" max="999"
-                           [(ngModel)]="incentive.quantity" required #floatQuantity="ngModel"/>
-                    <small class="form-text text-danger"
-                           *ngIf="!floatQuantity.valid && (floatQuantity.dirty ||
+                                    </small>
+                                </div>
+                                <div class="form-group" hidden>
+                                    <label class="form-control-label" for="field_image">Imagen</label>
+                                    <input type="text" class="form-control" name="image" id="field_image"
+                                           [(ngModel)]="incentive.image"/>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="field_quantity">Cantidad</label>
+                                    <input type="number" class="form-control" name="quantity" id="field_quantity"
+                                           min="1" max="999"
+                                           [(ngModel)]="incentive.quantity" required #floatQuantity="ngModel"/>
+                                    <small class="form-text text-danger"
+                                           *ngIf="!floatQuantity.valid && (floatQuantity.dirty ||
                                  floatQuantity.touched)">Este campo es requerido.
-                    </small>
-                    <small class="form-text text-danger"
-                           *ngIf="!floatQuantity.min || !floatQuantity.max && (floatQuantity.dirty ||
-                                 floatQuantity.touched)">Este campo es debe ser un numero
-                    </small>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_description">Descripción</label>
-                    <input type="text" class="form-control" name="description" id="field_description"
-                           #floatDescription="ngModel" [(ngModel)]="incentive.description"/>
-                </div>
+                                    </small>
+                                    <small class="form-text text-danger"
+                                           *ngIf="!validateQuantity() && (floatQuantity.dirty ||
+                                 floatQuantity.touched)">Este campo ser mayor a 0 y menor a 999
+                                    </small>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="field_description">Descripción</label>
+                                    <textarea type="text" class="form-control" name="description" id="field_description"
+                                              #floatDescription="ngModel" [(ngModel)]="incentive.description"></textarea>
+                                </div>
+                            </div>
 
-            </div>
-
-            <div class="row">
-                <div class="col-auto">
-                    <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
-                            (click)="previousState()">
-                        <i class="ft-x"></i>&nbsp;<span> Cancelar</span>
-                    </button>
-                </div>
-                <div
-                    *ngIf="editForm.form.invalid || isSaving ; else validEditBtn"
-                    [ngbPopover]="popoverText"
-                    triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido." class="col-auto">
-                    <button type="submit" id="save-entity-invalid" [disabled]="true"
-                            class="btn btn-raised btn-primary">
-                        <i class="ft-save"></i>&nbsp;<span> Guardar</span>
-                    </button>
-                </div>
-                <ng-template #popoverText>
-                    <small class="display-block">Por favor, asegúrese de que todos los campos estén completos.</small>
-                </ng-template>
-                <ng-template #validEditBtn>
-                    <div class="col-auto">
-                        <button type="submit" id="save-entity-valid"
-                                class="btn btn-raised btn-primary">
-                            <i class="ft-save"></i>&nbsp;<span> Guardar</span>
-                        </button>
+                            <div class="row">
+                                <div class="col-auto">
+                                    <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
+                                            (click)="previousState()">
+                                        <i class="ft-x"></i>&nbsp;<span> Cancelar</span>
+                                    </button>
+                                </div>
+                                <div
+                                    *ngIf="editForm.form.invalid || isSaving ||!validateQuantity(); else validEditBtn"
+                                    [ngbPopover]="popoverText"
+                                    triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido."
+                                    class="col-auto">
+                                    <button type="submit" id="save-entity-invalid" [disabled]="true"
+                                            class="btn btn-raised btn-primary">
+                                        <i class="ft-save"></i>&nbsp;<span> Guardar</span>
+                                    </button>
+                                </div>
+                                <ng-template #popoverText>
+                                    <small class="display-block">Por favor, asegúrese de que todos los campos estén
+                                        completos.
+                                    </small>
+                                </ng-template>
+                                <ng-template #validEditBtn>
+                                    <div class="col-auto">
+                                        <button type="submit" id="save-entity-valid"
+                                                class="btn btn-raised btn-primary">
+                                            <i class="ft-save"></i>&nbsp;<span> Guardar</span>
+                                        </button>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </div>
                     </div>
-                </ng-template>
-            </div>
-        </form>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-<div class="row justify-content-center">
-    <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-            <div class="row justify-content-md-center"></div>
-            <h2 id="jhi-focus-group-heading">Incentivo</h2>
-            <div class="row">
-                <div class="col-auto">
-                    <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
-                            (click)="previousState()">
-                        <i class="ft-x"></i>&nbsp;<span> Cancelar</span>
-                    </button>
-                </div>
-                <div
-                    *ngIf="editForm.form.invalid || isSaving || !validateAnswers() || !validEndDate() ||
-                     !validatePassingGrade() || !validateParticipantsAmount(); else validEditBtn"
-                    [ngbPopover]="popoverText"
-                    triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido." class="col-auto">
-                    <button type="submit" id="save-entity-invalid" [disabled]="true"
-                            class="btn btn-raised btn-primary">
-                        <i class="ft-save"></i>&nbsp;<span> Guardar</span>
-                    </button>
-                </div>
-                <ng-template #popoverText>
-                    <small class="display-block">Por favor, asegúrese de que todos los campos estén completos.</small>
-                    <small>Si está usando una prueba de aptitud, necesita asignar una nota mínima y marcar la respuesta
-                        deseada de cada
-                        pregunta.
-                    </small>
-                </ng-template>
-                <ng-template #validEditBtn>
-                    <div class="col-auto">
-                        <button type="submit" id="save-entity-valid"
-                                class="btn btn-raised btn-primary">
-                            <i class="ft-save"></i>&nbsp;<span> Guardar</span>
-                        </button>
-                    </div>
-                </ng-template>
-            </div>
-        </form>
-    </div>
-</div>
+

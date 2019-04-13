@@ -36,5 +36,6 @@
     <include file="config/liquibase/changelog/20190304115749_added_entity_constraints_Payment.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190304115734_added_entity_constraints_UserApp.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190408224803_added_entity_constraints_Ban.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190304115737_added_entity_constraints_Incentive.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>
