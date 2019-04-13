@@ -18,6 +18,71 @@
             <div id="navbarSupportedContent" class="collapse navbar-collapse" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">
                 <ul class="navbar-nav ml-auto">
 
+                    <li *ngSwitchCase="true" class="nav-item" ngbDropdown placement="bottom-right">
+                        <a class="nav-link position-relative" id="dropdownBasic2" ngbDropdownToggle>
+                            <i class="ft-bell font-medium-3 blue-grey darken-4"></i>
+                            <span class="notification badge badge-pill badge-danger">{{userNotifications.length}}</span>
+                            <p class="d-none">Notifications</p>
+                        </a>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="notification-dropdown finish-him">
+                            <div class="noti-list">
+                                <div *ngFor="let notification of userNotifications">
+                                    <a *ngIf="notification.type === 'GroupAccepted'" class="dropdown-item noti-container py-3">
+                                        <i class="ft-bell success float-left d-block font-large-1 mt-1 mr-2"></i>
+                                        <span class="noti-wrapper">
+                                        <span class="noti-title line-height-1 d-block text-bold-400 success">¡Felicidades!</span>
+                                        <span class="noti-text">Has sido aceptado dentro del grupo de enfoque {{obtainGroup(notification.messageId).name}}</span>
+                                        <button type="button" class="close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </span>
+                                    </a>
+                                </div>
+                                <!--<a class="dropdown-item noti-container py-3 border-bottom border-bottom-blue-grey border-bottom-lighten-4">
+                                    <i class="ft-bell info float-left d-block font-large-1 mt-1 mr-2"></i>
+                                    <span class="noti-wrapper">
+                                        <span class="noti-title line-height-1 d-block text-bold-400 info">New Order Received</span>
+                                        <span class="noti-text">Lorem ipsum dolor sit ametitaque in, et!</span>
+                                        <button type="button" class="close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </span>
+                                </a>
+                                <a class="dropdown-item noti-container py-3 border-bottom border-bottom-blue-grey border-bottom-lighten-4">
+                                    <i class="ft-bell warning float-left d-block font-large-1 mt-1 mr-2"></i>
+                                    <span class="noti-wrapper">
+                                        <span class="noti-title line-height-1 d-block text-bold-400 warning">New User Registered</span>
+                                        <span class="noti-text">Lorem ipsum dolor sit ametitaque in </span>
+                                        <button type="button" class="close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </span>
+                                </a>
+                                <a class="dropdown-item noti-container py-3 border-bottom border-bottom-blue-grey border-bottom-lighten-4">
+                                    <i class="ft-bell danger float-left d-block font-large-1 mt-1 mr-2"></i>
+                                    <span class="noti-wrapper">
+                                        <span class="noti-title line-height-1 d-block text-bold-400 danger">New Order Received</span>
+                                        <span class="noti-text">Lorem ipsum dolor sit ametest?</span>
+                                        <button type="button" class="close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </span>
+                                </a>
+                                <a class="dropdown-item noti-container py-3">
+                                    <i class="ft-bell success float-left d-block font-large-1 mt-1 mr-2"></i>
+                                    <span class="noti-wrapper">
+                                        <span class="noti-title line-height-1 d-block text-bold-400 success">New User Registered</span>
+                                        <span class="noti-text">Lorem ipsum dolor sit ametnatus aut.</span>
+                                        <button type="button" class="close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </span>
+                                </a>-->
+                                <a class="noti-footer primary text-center d-block border-top border-top-blue-grey border-top-lighten-4 text-bold-400 py-1">Read All Notifications</a>
+                            </div>
+                        </div>
+                    </li>
+
                     <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active"
                         [routerLinkActiveOptions]="{exact: true}">
                         <a id="entityMenu" class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" (click)="findActualUser()">

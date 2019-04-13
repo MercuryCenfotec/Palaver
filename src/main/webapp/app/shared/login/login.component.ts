@@ -7,6 +7,10 @@ import { LoginService } from 'app/core/login/login.service';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { UserAppService } from 'app/entities/user-app';
 import { UserService } from 'app/core';
+import {filter, map} from "rxjs/operators";
+import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
+import {INotification} from "app/shared/model/notification.model";
+import {NotificationService} from "app/entities/notification";
 
 @Component({
     selector: 'jhi-login-modal',
@@ -18,6 +22,7 @@ export class JhiLoginModalComponent implements AfterViewInit {
     rememberMe: boolean;
     username: string;
     credentials: any;
+    userNotifications: INotification[];
 
     constructor(
         private eventManager: JhiEventManager,
@@ -28,7 +33,8 @@ export class JhiLoginModalComponent implements AfterViewInit {
         private router: Router,
         public activeModal: NgbActiveModal,
         public userAppService: UserAppService,
-        protected userService: UserService
+        protected userService: UserService,
+        protected  notificationService: NotificationService
     ) {
         this.credentials = {};
     }
@@ -76,6 +82,7 @@ export class JhiLoginModalComponent implements AfterViewInit {
                                         this.router.navigate(['/dashboard-institution']);
                                         break;
                                     case 'participant':
+                                        this.findMe(user.id);
                                         this.router.navigate(['/participant-home']);
                                         break;
                                 }
@@ -104,6 +111,21 @@ export class JhiLoginModalComponent implements AfterViewInit {
             .catch(() => {
                 this.authenticationError = true;
             });
+    }
+
+    findMe(userId) {
+                this.notificationService
+                    .findAllNotificationsByUser(userId.toString())
+                    .pipe(
+                        filter((res: HttpResponse<INotification[]>) => res.ok),
+                        map((res: HttpResponse<INotification[]>) => res.body)
+                    )
+                    .subscribe(
+                        (res: INotification[]) => {
+                            this.userNotifications = res;
+                            localStorage.setItem('notifications', JSON.stringify(this.userNotifications));
+                        }
+                    );
     }
 
     register() {

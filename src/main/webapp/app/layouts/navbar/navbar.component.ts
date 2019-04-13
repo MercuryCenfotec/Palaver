@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 import { VERSION } from 'app/app.constants';
-import { AccountService, LoginModalService, LoginService, UserService } from 'app/core';
+import {AccountService, IUser, LoginModalService, LoginService, UserService} from 'app/core';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { IUserApp, UserApp } from 'app/shared/model/user-app.model';
 import { IParticipant, Participant } from 'app/shared/model/participant.model';
@@ -11,6 +11,15 @@ import { ParticipantService } from 'app/entities/participant';
 import { UserAppService } from 'app/entities/user-app';
 import { InstitutionService } from 'app/entities/institution';
 import { IInstitution, Institution } from 'app/shared/model/institution.model';
+import {NotificationService} from "app/entities/notification";
+import {tmpdir} from "os";
+import {filter, map} from "rxjs/operators";
+import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
+import {IBan} from "app/shared/model/ban.model";
+import {INotification} from "app/shared/model/notification.model";
+import {JhiAlertService} from "ng-jhipster";
+import {FocusGroupService} from "app/entities/focus-group";
+import {IFocusGroup} from "app/shared/model/focus-group.model";
 
 @Component({
     selector: 'jhi-navbar',
@@ -28,6 +37,8 @@ export class NavbarComponent implements OnInit {
     currentAccount: any;
     participant = new Participant(null, null, null, null, '', null, null, null);
     institution = new Institution(null, '', '', '', '', null);
+    userNotifications: INotification[] = [];
+    obt: IFocusGroup;
 
     constructor(
         private loginService: LoginService,
@@ -38,7 +49,10 @@ export class NavbarComponent implements OnInit {
         protected userAppService: UserAppService,
         private router: Router,
         private userService: UserService,
-        private institutionService: InstitutionService
+        private institutionService: InstitutionService,
+        private notificationService: NotificationService,
+        protected jhiAlertService: JhiAlertService,
+        protected focusGroupService: FocusGroupService
     ) {
         this.version = VERSION ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
@@ -58,6 +72,9 @@ export class NavbarComponent implements OnInit {
     }
 
     isAuthenticated() {
+        if (this.accountService.isAuthenticated() === true) {
+            this.getNotifications();
+        }
         return this.accountService.isAuthenticated();
     }
 
@@ -68,6 +85,7 @@ export class NavbarComponent implements OnInit {
     logout() {
         this.collapseNavbar();
         this.loginService.logout();
+        localStorage.clear();
         this.router.navigate(['']);
     }
 
@@ -77,6 +95,10 @@ export class NavbarComponent implements OnInit {
 
     getImageUrl() {
         return this.isAuthenticated() ? this.accountService.getImageUrl() : null;
+    }
+
+    protected onError(errorMessage: string) {
+        this.jhiAlertService.error(errorMessage, null, null);
     }
 
     findActualUser() {
@@ -179,5 +201,35 @@ export class NavbarComponent implements OnInit {
                 }
             }
         });
+    }
+
+    loadAllUserNotifications(user: IUser) {
+        this.notificationService
+            .findAllNotificationsByUser(user.id.toString())
+            .pipe(
+                filter((res: HttpResponse<INotification[]>) => res.ok),
+                map((res: HttpResponse<INotification[]>) => res.body)
+            )
+            .subscribe(
+                (res: INotification[]) => {
+                    this.userNotifications = res;
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
+    }
+
+    obtainGroup(focusGroupId: number): IFocusGroup {
+        debugger
+        let obt: IFocusGroup;
+        this.focusGroupService.find(focusGroupId).subscribe( getIt => {
+            obt = getIt.body;
+        });
+        return obt;
+    }
+
+    getNotifications() {
+        if (JSON.parse(localStorage.getItem("notifications")) != null) {
+            this.userNotifications = JSON.parse(localStorage.getItem("notifications"));
+        }
     }
 }

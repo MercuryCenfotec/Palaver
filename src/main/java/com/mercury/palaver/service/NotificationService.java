@@ -69,4 +69,10 @@ public class NotificationService {
     public void delete(Long id) {
         log.debug("Request to delete Notification : {}", id);        notificationRepository.deleteById(id);
     }
+
+    @Transactional(readOnly = true)
+    public List<Notification> findAllByMessage(String destinationUser) {
+        log.debug("Request to get all Notifications");
+        return notificationRepository.findAllByMessage(destinationUser);
+    }
 }
