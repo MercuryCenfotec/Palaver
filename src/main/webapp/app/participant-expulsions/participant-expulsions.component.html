@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">
-                    Motivos de expulsiones
+                    Expulsiones recientes
                 </h4>
             </div>
             <div class="card-body">
@@ -14,20 +14,13 @@
                         <table class="table table-responsive-md text-center">
                             <thead>
                             <tr>
-                                <th><span>Participante</span></th>
                                 <th><span>Grupo de enfoque</span></th>
                                 <th><span>Motivo</span></th>
-                                <th><span>Queja</span></th>
-                                <th><span>Acciones</span></th>
+                                <th><span>Acción</span></th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr *ngFor="let ban of bans; trackBy: trackId">
-                                <td>
-                                    <div *ngIf="ban.participant">
-                                        <a [routerLink]="['../participant', ban.participant?.id, 'view' ]">{{ban.participant?.user.name}}</a>
-                                    </div>
-                                </td>
                                 <td>
                                     <div *ngIf="ban.focusGroup">
                                         <a [routerLink]="['../focus-group', ban.focusGroup?.id, 'view' ]">{{ban.focusGroup?.name}}</a>
@@ -42,21 +35,9 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <div *ngIf="ban.complaint.length >= 30">
-                                        <a class="text-bold-500 primary" (click)="showDetail(complaint,ban)">Ver más</a>
-                                    </div>
-                                    <div *ngIf="ban.complaint.length < 30">
-                                        {{ban.complaint}}
-                                    </div>
-                                </td>
-                                <td>
-                                    <button id="btnInvalid" class="btn btn-raised btn-danger mr-1"
-                                            (click)="sendInvalid(ban)">
-                                        <i class="ft-x"></i> No es válido
-                                    </button>
                                     <button class="btn btn-raised btn-primary" id="btnValid"
-                                            (click)="sendValid(ban)">
-                                        <i class="ft ft-check"></i> Válido
+                                            (click)="showDetail(complaint,ban)">
+                                        <i class="ft ft-check"></i> Imponer queja
                                     </button>
                                 </td>
                             </tr>
@@ -87,15 +68,25 @@
 
 <ng-template #complaint let-c="close" let-d="dismiss">
     <div class="modal-header" style="background-color: #5bc0de; color: #fff;">
-        <h4 class="modal-title">Queja recibida</h4>
+        <h4 class="modal-title">Imponer queja</h4>
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body">
-        <p class="primary text-center d-block  border-top-lighten-4 text-bold-400 py-1">{{ban.complaint}}</p>
+        <div class="form-group">
+            <p class="primary text-center d-block  border-top-lighten-4 text-bold-400 py-1">¿Consideras que el motivo por el cual te expulsaron no es correcto? Ingresa una queja para alzar la voz.</p>
+            <textarea #txtComplaint type="text" class="form-control" name="description" id="field_description"></textarea>
+        </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary btn-raised" (click)="c('Close click')">Cerrar</button>
+        <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
+                (click)="d('Force cancel')">
+            <i class="ft-x"></i> Cancelar
+        </button>
+        <button class="btn btn-raised btn-primary" type="submit" id="save-entity"
+                (click)="sendReport(txtComplaint,ban); d('Force cancel')">
+            <i class="ft ft-file-text"></i> Enviar reporte
+        </button>
     </div>
 </ng-template>

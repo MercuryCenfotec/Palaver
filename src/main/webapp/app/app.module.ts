@@ -26,6 +26,8 @@ import { UserHomeComponent } from './user-home/user-home.component';
 import { PalaverUserHomeModule } from 'app/user-home/user-home.module';
 import { DashboardInstitutionComponent } from './dashboard-institution/dashboard-institution.component';
 import { PalaverDashboardInstitutionModule } from 'app/dashboard-institution/dashboard-institution.module';
+import { ParticipantExpulsionsComponent } from './participant-expulsions/participant-expulsions.component';
+import {PalaverParticipantExpulsionsModule} from "app/participant-expulsions/participant-expulsions.module";
 
 registerLocaleData(localeEs);
 
@@ -43,6 +45,7 @@ registerLocaleData(localeEs);
         PalaverCoreModule,
         PalaverHomeModule,
         PalaverUserHomeModule,
+        PalaverParticipantExpulsionsModule,
         PalaverAccountModule,
         PalaverDashboardInstitutionModule,
         Ng2SearchPipeModule,

@@ -47,4 +47,8 @@ export class BanService {
     findAllByInstitution(id: number): Observable<EntityArrayResponseType> {
         return this.http.get<IBan[]>(this.resourceUrl + '/institution-ban/' + id, { observe: 'response' });
     }
+
+    findAllByParticipant(id: number): Observable<EntityArrayResponseType> {
+        return this.http.get<IBan[]>(this.resourceUrl + '/participant-ban/' + id, { observe: 'response' });
+    }
 }

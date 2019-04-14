@@ -184,6 +184,13 @@
                                     <span>Suspenciones</span>
                                 </a>
                             </li>
+                            <li id="expulsionPermissions" hidden>
+                                <a class="dropdown-item" [routerLink]="['participants-expulsions']" routerLinkActive="active"
+                                   [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                                    <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                                    <span>Expulsiones</span>
+                                </a>
+                            </li>
                             <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
                         </ul>
                     </li>

@@ -1,26 +1,20 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {VERSION} from 'app/app.constants';
-import {AccountService, IUser, LoginModalService, LoginService, UserService} from 'app/core';
+import {AccountService, LoginModalService, LoginService, UserService} from 'app/core';
 import {ProfileService} from 'app/layouts/profiles/profile.service';
-import {IUserApp, UserApp} from 'app/shared/model/user-app.model';
-import {IParticipant, Participant} from 'app/shared/model/participant.model';
+import {IUserApp} from 'app/shared/model/user-app.model';
+import {Participant} from 'app/shared/model/participant.model';
 import {ParticipantService} from 'app/entities/participant';
 import {UserAppService} from 'app/entities/user-app';
 import {InstitutionService} from 'app/entities/institution';
-import {IInstitution, Institution} from 'app/shared/model/institution.model';
-import {NotificationService} from "app/entities/notification";
-import {tmpdir} from "os";
-import {filter, map} from "rxjs/operators";
-import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
-import {IBan} from "app/shared/model/ban.model";
-import {INotification} from "app/shared/model/notification.model";
-import {JhiAlertService} from "ng-jhipster";
-import {FocusGroupService} from "app/entities/focus-group";
-import {IFocusGroup} from "app/shared/model/focus-group.model";
-import {BanService} from "app/entities/ban";
+import {Institution} from 'app/shared/model/institution.model';
+import {IBan} from 'app/shared/model/ban.model';
+import {INotification} from 'app/shared/model/notification.model';
+import {JhiAlertService} from 'ng-jhipster';
+import {FocusGroupService} from 'app/entities/focus-group';
+import {BanService} from 'app/entities/ban';
 
 @Component({
     selector: 'jhi-navbar',
@@ -39,8 +33,7 @@ export class NavbarComponent implements OnInit {
     participant = new Participant(null, null, null, null, '', null, null, null);
     institution = new Institution(null, '', '', '', '', null);
     userNotifications: INotification[] = [];
-    obt: IFocusGroup;
-    done: boolean = false;
+    done = false;
     ban: IBan;
 
     constructor(
@@ -53,7 +46,6 @@ export class NavbarComponent implements OnInit {
         private router: Router,
         private userService: UserService,
         private institutionService: InstitutionService,
-        private notificationService: NotificationService,
         protected jhiAlertService: JhiAlertService,
         protected focusGroupService: FocusGroupService,
         protected banService: BanService,
@@ -89,9 +81,12 @@ export class NavbarComponent implements OnInit {
     }
 
     logout() {
+        const newNotifications: INotification[] = [];
+        localStorage.clear();
+        this.userNotifications = newNotifications;
+        this.done = false;
         this.collapseNavbar();
         this.loginService.logout();
-        localStorage.clear();
         this.router.navigate(['']);
     }
 
@@ -150,7 +145,8 @@ export class NavbarComponent implements OnInit {
                         'participantPPermissions',
                         'paymentMethodPermissions',
                         'balancePermissions',
-                        'paymentPermissions'
+                        'paymentPermissions',
+                        'expulsionPermissions'
                     ];
                     break;
                 case 'ROLE_INSTITUTION':
@@ -209,31 +205,16 @@ export class NavbarComponent implements OnInit {
         });
     }
 
-    loadAllUserNotifications(user: IUser) {
-        this.notificationService
-            .findAllNotificationsByUser(user.id.toString())
-            .pipe(
-                filter((res: HttpResponse<INotification[]>) => res.ok),
-                map((res: HttpResponse<INotification[]>) => res.body)
-            )
-            .subscribe(
-                (res: INotification[]) => {
-                    this.userNotifications = res;
-                },
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
-    }
-
     getNotifications() {
-        if (JSON.parse(localStorage.getItem("notifications")) != null) {
-            this.userNotifications = JSON.parse(localStorage.getItem("notifications"));
+        if (JSON.parse(localStorage.getItem('notifications')) != null) {
+            this.userNotifications = JSON.parse(localStorage.getItem('notifications'));
         }
     }
 
     doThis() {
         if (this.done === false) {
-            let ele = document.getElementById('plsWork');
-            let node = document.createElement('DIV');
+            const ele = document.getElementById('plsWork');
+            const node = document.createElement('DIV');
             for (let i = 0; i < this.userNotifications.length; i++) {
                 switch (this.userNotifications[i].type) {
                     case 'GroupAccepted':
@@ -302,10 +283,5 @@ export class NavbarComponent implements OnInit {
             }
             this.done = true;
         }
-    }
-
-    showMe() {
-        debugger
-        console.log('Hee hee');
     }
 }

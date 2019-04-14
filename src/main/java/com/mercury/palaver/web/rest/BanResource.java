@@ -127,4 +127,10 @@ public class BanResource {
         log.debug("REST request to get all Bans");
         return banService.findAllByInstitution(instId);
     }
+
+    @GetMapping("/bans/participant-ban/{partiId}")
+    public List<Ban> getAllBansByParticipant(@PathVariable("partiId") Long partiId) {
+        log.debug("REST request to get all Bans");
+        return banService.findAllByParticipant(partiId);
+    }
 }

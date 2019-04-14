@@ -87,4 +87,10 @@ public class BanService {
         log.debug("Request to get all Bans");
         return banRepository.findAllByFocusGroup_InstitutionId(id);
     }
+
+    @Transactional(readOnly = true)
+    public List<Ban> findAllByParticipant(Long id) {
+        log.debug("Request to get all Bans");
+        return banRepository.findAllByParticipantId(id);
+    }
 }
