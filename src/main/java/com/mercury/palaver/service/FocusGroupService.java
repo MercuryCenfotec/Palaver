@@ -1,9 +1,6 @@
 package com.mercury.palaver.service;
 
-import com.mercury.palaver.domain.AptitudeTest;
-import com.mercury.palaver.domain.FocusGroup;
-import com.mercury.palaver.domain.TestAnswerOption;
-import com.mercury.palaver.domain.TestQuestion;
+import com.mercury.palaver.domain.*;
 import com.mercury.palaver.repository.FocusGroupRepository;
 import com.mercury.palaver.repository.TestAnswerOptionRepository;
 import com.mercury.palaver.service.util.DateUtil;
@@ -22,12 +19,18 @@ public class FocusGroupService {
     private final FocusGroupRepository focusGroupRepo;
     private final UserService userService;
     private final AptitudeTestService aptitudeTestService;
+    private final PaymentService paymentService;
 
-    public FocusGroupService(TestAnswerOptionRepository testAnswerOptionRepo, FocusGroupRepository focusGroupRepo, UserService userService, AptitudeTestService aptitudeTestService) {
+    public FocusGroupService(TestAnswerOptionRepository testAnswerOptionRepo,
+                             FocusGroupRepository focusGroupRepo,
+                             UserService userService,
+                             AptitudeTestService aptitudeTestService,
+                             PaymentService paymentService) {
         this.testAnswerOptionRepo = testAnswerOptionRepo;
         this.focusGroupRepo = focusGroupRepo;
         this.userService = userService;
         this.aptitudeTestService = aptitudeTestService;
+        this.paymentService = paymentService;
     }
 
     public FocusGroup save(FocusGroup group) {
@@ -35,8 +38,11 @@ public class FocusGroupService {
         userService.registerGroupManagementUser(code);
         group.setCode(code);
         if (group.getAptitudeTest() != null) processAptitudeTest(group);
-        group = focusGroupRepo.save(group);
-        return group;
+        Payment groupPayment = new Payment();
+        groupPayment.setAmmount((group.getParticipantsAmount() * 25000) + 30000);
+        groupPayment.setDescription("Pago por grupo - " + group.getName() + "_" + group.getCode());
+        paymentService.saveFocusGroupPayment(groupPayment, group.getInstitution().getUser());
+        return focusGroupRepo.save(group);
     }
 
     public boolean isCancelable(Long groupId) {
@@ -58,14 +64,33 @@ public class FocusGroupService {
         return !opt.isPresent();
     }
 
-    private void processAptitudeTest(FocusGroup group){
+    private void processAptitudeTest(FocusGroup group) {
         if (!aptitudeTestService.testIsAvailable(group.getAptitudeTest().getId())) {
-            group.getAptitudeTest().setName("Copia - " +group.getAptitudeTest().getName());
+            group.getAptitudeTest().setName("Copia - " + group.getAptitudeTest().getName());
             group.setAptitudeTest(aptitudeTestService.clone(group.getAptitudeTest()));
         } else {
             for (TestQuestion question : group.getAptitudeTest().getQuestions()) {
                 for (TestAnswerOption answer : question.getAnswers()) {
                     if (answer.isDesired()) testAnswerOptionRepo.save(answer);
+                }
+            }
+        }
+    }
+
+    public FocusGroup finishFocusGroup(Long groupId) {
+        FocusGroup group = focusGroupRepo.findById(groupId).get();
+        cleanTestAnswers(group);
+        paymentService.processParticipantsPayment(group);
+        group.setAptitudeTest(null);
+        return focusGroupRepo.save(group);
+    }
+
+    public void cleanTestAnswers(FocusGroup group) {
+        for (TestQuestion question : group.getAptitudeTest().getQuestions()) {
+            for (TestAnswerOption answer : question.getAnswers()) {
+                if (answer.isDesired()) {
+                    answer.setDesired(false);
+                    testAnswerOptionRepo.save(answer);
                 }
             }
         }

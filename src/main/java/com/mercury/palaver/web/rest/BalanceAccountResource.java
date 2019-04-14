@@ -1,5 +1,6 @@
 package com.mercury.palaver.web.rest;
 import com.mercury.palaver.domain.BalanceAccount;
+import com.mercury.palaver.domain.User;
 import com.mercury.palaver.repository.BalanceAccountRepository;
 import com.mercury.palaver.service.MailService;
 import com.mercury.palaver.web.rest.errors.BadRequestAlertException;
@@ -150,5 +151,14 @@ public class BalanceAccountResource {
         log.debug("REST request to delete BalanceAccount : {}", id);
         balanceAccountRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/balance-accounts/user-app/user/{id}")
+    public ResponseEntity<BalanceAccount> getBalanceAccountByUserUserId(@Valid @PathVariable Long id) {
+        log.debug("REST request to get BalanceAccount : {}", id);
+        User user = new User();
+        user.setId(id);
+        Optional<BalanceAccount> balanceAccount = balanceAccountRepository.findByUser_User(user);
+        return ResponseUtil.wrapOrNotFound(balanceAccount);
     }
 }

@@ -7,12 +7,10 @@ import { MeetingService } from 'app/entities/meeting';
 import { ParticipantService } from 'app/entities/participant';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
-import { filter, map } from 'rxjs/operators';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ClipboardService } from 'ngx-clipboard';
 import * as moment from 'moment';
-import {BanService} from 'app/entities/ban';
-import {Ban, IBan} from 'app/shared/model/ban.model';
+import { BanService } from 'app/entities/ban';
+import { Ban } from 'app/shared/model/ban.model';
 
 @Component({
     selector: 'jhi-focus-group-management',
@@ -23,7 +21,7 @@ export class FocusGroupManagementComponent implements OnInit {
     participants: Participant[];
     participant: IParticipant;
     focusGroup: IFocusGroup;
-    ban =  new Ban(null, '', '', null, null, null);
+    ban = new Ban(null, '', '', null, null, null);
     searchText;
 
     constructor(
@@ -90,7 +88,7 @@ export class FocusGroupManagementComponent implements OnInit {
         this.ban.focusGroup = this.focusGroup;
         this.ban.participant = this.participant;
 
-        this.banService.create(this.ban).subscribe( newBan => {
+        this.banService.create(this.ban).subscribe(newBan => {
             this.focusGroupService.update(this.focusGroup).subscribe(data => {
                 this.ngOnInit();
             });
@@ -104,5 +102,10 @@ export class FocusGroupManagementComponent implements OnInit {
                 .toDate()
                 .getDate()
         );
+    }
+
+    startMeeting() {
+        window.open('https://www.geeksforgeeks.org/open-a-link-without-clicking-on-it-using-javascript/');
+        this.focusGroupService.finishFocusGroup(this.focusGroup.id).subscribe(data => {});
     }
 }

@@ -37,7 +37,7 @@
                             </ul>
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
-                            <a *ngIf="checkDate()" href="{{meeting.callURL}}"><i class="ft-video"></i> Iniciar llamada.</a>
+                            <a *ngIf="checkDate()" (click)="startMeeting()"><i class="ft-video"></i> Iniciar llamada.</a>
                         </div>
                     </div>
                     <hr>
