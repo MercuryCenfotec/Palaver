@@ -6,8 +6,7 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { IIncentive } from 'app/shared/model/incentive.model';
 import { IncentiveService } from './incentive.service';
-import { IFocusGroup } from 'app/shared/model/focus-group.model';
-import * as moment from 'moment';
+import { FocusGroupService } from 'app/entities/focus-group';
 
 @Component({
     selector: 'jhi-incentive-delete-dialog',
@@ -35,30 +34,19 @@ export class IncentiveDeleteDialogComponent {
             this.activeModal.dismiss(true);
         });
     }
+}
 
-    validateUse() {
-        this.incentiveService.find(this.incentive.id).subscribe(incentive => {
-            this.incentive = incentive.body;
-            if (this.incentive.focusGroups == null) {
-                return false;
-            } else {
-                this.incentive.focusGroups.forEach((focusGroup: IFocusGroup) => {
-                    if (
-                        focusGroup.beginDate.toDate().getDate() >
-                            moment()
-                                .toDate()
-                                .getDate() ||
-                        focusGroup.endDate.toDate().getDate() >
-                            moment()
-                                .toDate()
-                                .getDate()
-                    ) {
-                        return true;
-                    }
-                });
-                return false;
-            }
-        });
+@Component({
+    selector: 'jhi-incentive-warning-dialog',
+    templateUrl: './incentive-warning-dialog.component.html'
+})
+export class IncentiveWarningDialogComponent {
+    incentive: IIncentive;
+
+    constructor(public activeModal: NgbActiveModal, protected eventManager: JhiEventManager) {}
+
+    clear() {
+        this.activeModal.dismiss('cancel');
     }
 }
 
@@ -69,26 +57,40 @@ export class IncentiveDeleteDialogComponent {
 export class IncentiveDeletePopupComponent implements OnInit, OnDestroy {
     protected ngbModalRef: NgbModalRef;
 
-    constructor(protected activatedRoute: ActivatedRoute, protected router: Router, protected modalService: NgbModal) {}
+    constructor(
+        protected activatedRoute: ActivatedRoute,
+        protected router: Router,
+        protected modalService: NgbModal,
+        protected focusGroupService: FocusGroupService
+    ) {}
 
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ incentive }) => {
             setTimeout(() => {
-                this.ngbModalRef = this.modalService.open(IncentiveDeleteDialogComponent as Component, {
-                    size: 'lg',
-                    backdrop: 'static'
-                });
-                this.ngbModalRef.componentInstance.incentive = incentive;
-                this.ngbModalRef.result.then(
-                    result => {
-                        this.router.navigate(['/incentive', { outlets: { popup: null } }]);
-                        this.ngbModalRef = null;
-                    },
-                    reason => {
-                        this.router.navigate(['/incentive', { outlets: { popup: null } }]);
-                        this.ngbModalRef = null;
+                this.focusGroupService.findAllByIncentiveBetwenNow(incentive.id).subscribe(groups => {
+                    if (groups.body.length > 0) {
+                        this.ngbModalRef = this.modalService.open(IncentiveWarningDialogComponent as Component, {
+                            size: 'lg',
+                            backdrop: 'static'
+                        });
+                    } else {
+                        this.ngbModalRef = this.modalService.open(IncentiveDeleteDialogComponent as Component, {
+                            size: 'lg',
+                            backdrop: 'static'
+                        });
                     }
-                );
+                    this.ngbModalRef.componentInstance.incentive = incentive;
+                    this.ngbModalRef.result.then(
+                        result => {
+                            this.router.navigate(['/incentive', { outlets: { popup: null } }]);
+                            this.ngbModalRef = null;
+                        },
+                        reason => {
+                            this.router.navigate(['/incentive', { outlets: { popup: null } }]);
+                            this.ngbModalRef = null;
+                        }
+                    );
+                });
             }, 0);
         });
     }

@@ -1,4 +1,4 @@
-<form name="deleteForm" *ngIf="!validateUse()" (ngSubmit)="confirmDelete(incentive.id)">
+<form name="deleteForm" (ngSubmit)="confirmDelete(incentive.id)">
     <div class="modal-header">
         <h4 class="modal-title">Confirmar acción</h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
@@ -12,24 +12,8 @@
         <button type="button" class="btn btn-raised btn-warning mr-1" data-dismiss="modal" (click)="clear()">
             <i class="ft-x"></i> Cancelar
         </button>
-        <button id="jhi-confirm-incentive-userApp" type="submit" class="btn btn-raised btn-danger mr-1">
+        <button id="jhi-confirm-delete-incentive" type="submit" class="btn btn-raised btn-danger mr-1">
             <i class="ft-alert-triangle"></i> Eliminar
-        </button>
-    </div>
-</form>
-<form name="deleteForm" *ngIf="validateUse()" (ngSubmit)="clear()">
-    <div class="modal-header">
-        <h4 class="modal-title">Advertencia</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                (click)="clear()">&times;
-        </button>
-    </div>
-    <div class="modal-body">
-        <p id="jhi-delete-userApp-heading">No se puede eliminar este incentivo ya que esta siendo utilizado en un grupo de enfoque activo.</p>
-    </div>
-    <div class="modal-footer">
-        <button id="jhi-confirm-delete-userApp" type="submit" class="btn btn-raised btn-danger mr-1">
-            <i class="ft-alert-triangle"></i> Entendido
         </button>
     </div>
 </form>

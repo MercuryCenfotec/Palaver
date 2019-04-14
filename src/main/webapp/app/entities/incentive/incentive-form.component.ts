@@ -6,6 +6,7 @@ import { IIncentive } from 'app/shared/model/incentive.model';
 import { IncentiveService } from './incentive.service';
 import { UserService } from 'app/core';
 import { InstitutionService } from 'app/entities/institution';
+import { ImageService } from 'app/shared/util/image.service';
 
 @Component({
     selector: 'jhi-incentive-form',
@@ -14,12 +15,14 @@ import { InstitutionService } from 'app/entities/institution';
 export class IncentiveFormComponent implements OnInit {
     incentive: IIncentive;
     isSaving: boolean;
+    image: any;
 
     constructor(
         protected incentiveService: IncentiveService,
         protected activatedRoute: ActivatedRoute,
         protected userService: UserService,
-        protected institutionService: InstitutionService
+        protected institutionService: InstitutionService,
+        protected imageService: ImageService
     ) {}
 
     ngOnInit() {
@@ -30,10 +33,10 @@ export class IncentiveFormComponent implements OnInit {
 
         this.userService.getUserWithAuthorities().subscribe(user => {
             this.institutionService.getByUserUser(user.id).subscribe(institution => {
-                this.incentive.institution.id = institution.body.id;
+                this.incentive.institution = institution.body;
             });
         });
-        this.incentive.quantity = 1;
+        this.incentive.quantity = 4;
     }
 
     previousState() {
@@ -42,7 +45,13 @@ export class IncentiveFormComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        this.subscribeToSaveResponse(this.incentiveService.create(this.incentive));
+        this.imageService.save(this.image).subscribe(
+            res => {},
+            url => {
+                this.incentive.image = url.error.text;
+                this.subscribeToSaveResponse(this.incentiveService.create(this.incentive));
+            }
+        );
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IIncentive>>) {
@@ -63,5 +72,21 @@ export class IncentiveFormComponent implements OnInit {
             return false;
         }
         return true;
+    }
+
+    onFileChange(event) {
+        if (event.target.files.length === 0) {
+            this.image = null;
+        } else {
+            this.image = event.target.files[0];
+        }
+    }
+
+    validateImage() {
+        if (!this.image) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

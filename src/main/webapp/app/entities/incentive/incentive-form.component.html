@@ -21,15 +21,22 @@
                                  floatName.touched)">
                                     </small>
                                 </div>
-                                <div class="form-group" hidden>
-                                    <label class="form-control-label" for="field_image">Imagen</label>
-                                    <input type="text" class="form-control" name="image" id="field_image"
-                                           [(ngModel)]="incentive.image"/>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="image">Imagen</label>
+
+                                    <div class="custom-file center-block d-block">
+                                        <input type="file" class="form-control-file" id="image"
+                                               (change)="onFileChange($event)"
+                                               accept="image/x-png,image/jpeg" required>
+                                    </div>
+                                    <small class="form-text text-danger"
+                                           *ngIf="!validateImage()">Este campo es requerido.
+                                    </small>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label" for="field_quantity">Cantidad</label>
                                     <input type="number" class="form-control" name="quantity" id="field_quantity"
-                                           min="1" max="999"
+                                           min="4" max="999"
                                            [(ngModel)]="incentive.quantity" required #floatQuantity="ngModel"/>
                                     <small class="form-text text-danger"
                                            *ngIf="!floatQuantity.valid && (floatQuantity.dirty ||
@@ -37,13 +44,14 @@
                                     </small>
                                     <small class="form-text text-danger"
                                            *ngIf="!validateQuantity() && (floatQuantity.dirty ||
-                                 floatQuantity.touched)">Este campo ser mayor a 0 y menor a 999
+                                 floatQuantity.touched)">Este campo ser mayor a 3 y menor a 999
                                     </small>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label" for="field_description">Descripción</label>
                                     <textarea type="text" class="form-control" name="description" id="field_description"
-                                              #floatDescription="ngModel" [(ngModel)]="incentive.description"></textarea>
+                                              #floatDescription="ngModel"
+                                              [(ngModel)]="incentive.description"></textarea>
                                 </div>
                             </div>
 
@@ -55,7 +63,7 @@
                                     </button>
                                 </div>
                                 <div
-                                    *ngIf="editForm.form.invalid || isSaving ||!validateQuantity(); else validEditBtn"
+                                    *ngIf="editForm.form.invalid || isSaving ||!validateQuantity()||!validateImage(); else validEditBtn"
                                     [ngbPopover]="popoverText"
                                     triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido."
                                     class="col-auto">

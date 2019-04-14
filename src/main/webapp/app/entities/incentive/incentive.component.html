@@ -27,6 +27,7 @@
                         <table class="table table-responsive-md text-center">
                             <thead>
                             <tr>
+                                <th></th>
                                 <th><span>Nombre</span></th>
                                 <th><span>Cantidad</span></th>
                                 <th><span>Descripción</span></th>
@@ -35,6 +36,7 @@
                             </thead>
                             <tbody>
                             <tr *ngFor="let incentive of incentives | incentiveFilter:searchText;">
+                                <td><img class="media-object round-media" src="{{incentive.image}}" alt="Generic placeholder image" style="height: 75px;" /></td>
                                 <td>{{incentive.name}}</td>
                                 <td>{{incentive.quantity}}</td>
                                 <td>{{incentive.description}}</td>

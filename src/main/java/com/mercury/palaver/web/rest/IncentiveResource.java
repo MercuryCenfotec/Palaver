@@ -85,6 +85,18 @@ public class IncentiveResource {
     }
 
     /**
+     * GET  /incentives/find_by_institution/:id : get the "id" of the incentive's institution.
+     *
+     * @param id the id of the institution of the incentive to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the incentive, or with status 404 (Not Found)
+     */
+    @GetMapping("/incentives/find_by_institution/{id}")
+    public List<Incentive> getIncentiveByInstitution(@PathVariable Long id) {
+        log.debug("REST request to get Incentive by institution id: {}", id);
+        return incentiveRepository.findAllByInstitution_Id(id);
+    }
+
+    /**
      * GET  /incentives/:id : get the "id" incentive.
      *
      * @param id the id of the incentive to retrieve
