@@ -15,6 +15,7 @@ import {INotification} from 'app/shared/model/notification.model';
 import {JhiAlertService} from 'ng-jhipster';
 import {FocusGroupService} from 'app/entities/focus-group';
 import {BanService} from 'app/entities/ban';
+import {NotificationService} from 'app/entities/notification';
 
 @Component({
     selector: 'jhi-navbar',
@@ -49,7 +50,8 @@ export class NavbarComponent implements OnInit {
         protected jhiAlertService: JhiAlertService,
         protected focusGroupService: FocusGroupService,
         protected banService: BanService,
-        protected modalService: NgbModal
+        protected modalService: NgbModal,
+        protected notificationService: NotificationService
     ) {
         this.version = VERSION ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
@@ -215,6 +217,7 @@ export class NavbarComponent implements OnInit {
         if (this.done === false) {
             const ele = document.getElementById('plsWork');
             const node = document.createElement('DIV');
+            node.setAttribute('id', 'notificationContainer');
             for (let i = 0; i < this.userNotifications.length; i++) {
                 switch (this.userNotifications[i].type) {
                     case 'GroupAccepted':
@@ -283,5 +286,18 @@ export class NavbarComponent implements OnInit {
             }
             this.done = true;
         }
+    }
+
+    clearAllNotifications() {
+        for (let i = 0; i < this.userNotifications.length; i++) {
+            this.notificationService.delete(this.userNotifications[i].id).subscribe( deleted => {
+
+            });
+        }
+        this.userNotifications = [];
+        localStorage.removeItem('notifications');
+        const parent = document.getElementById('plsWork');
+        const noti = document.getElementById('notificationContainer');
+        parent.removeChild(noti);
     }
 }
