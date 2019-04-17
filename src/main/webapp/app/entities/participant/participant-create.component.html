@@ -19,16 +19,15 @@
 
                                 <div _ngcontent-c5="" class="col-md-6">
                                     <div _ngcontent-c5="" class="form-group">
-                                        <label _ngcontent-c5="" for="field_birthdate">Fecha de nacimiento</label>
+                                        <label _ngcontent-c5="" for="field_beginDate">Fecha de nacimiento</label>
                                         <div class="input-group">
-                                            <input _ngcontent-c5="" class="form-control"
-                                                   id="field_birthdate" name="birthdate" type="text" ngbDatepicker
-                                                   #birthdateDp="ngbDatepicker" [(ngModel)]="participant.birthdate"
-                                                   required #birthDate="ngModel">
+                                            <input id="field_beginDate" type="text" class="form-control"
+                                                   name="beginDate" ngbDatepicker
+                                                   #beginDateDp="ngbDatepicker" [(ngModel)]="participant.birthdate"
+                                                   required [readonly]="true"/>
                                             <span class="input-group-append">
-                                                <button type="button" class="btn btn-secondary"
-                                                        (click)="birthdateDp.toggle()">
-                                                    <fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                                                <button type="button" class="btn btn-secondary" (click)="beginDateDp.toggle()"><fa-icon
+                                                [icon]="'calendar-alt'"></fa-icon></button>
                                             </span>
                                         </div>
                                         <div [hidden]="!((birthDate?.dirty || birthDate?.touched) && birthDate?.invalid)">
