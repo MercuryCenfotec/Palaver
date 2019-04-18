@@ -11,6 +11,7 @@ import com.mercury.palaver.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cglib.core.Local;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,7 @@ import javax.persistence.Persistence;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
@@ -84,6 +86,20 @@ public class FocusGroupResource {
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, focusGroup.getId().toString()))
             .body(result);
+    }
+
+    /**
+     * GET  /focus-groups/find_by_incentive : get all the focusGroups.
+     *
+     * @param id the id of the focusGroup's incentive to retrieve
+     * @return the ResponseEntity with status 200 (OK) and the list of focusGroups in body
+     */
+    @GetMapping("/focus-groups/find_by_incentive/{id}")
+    public List<FocusGroup> getAllFocusGroupsByIncentive(@PathVariable Long id) {
+        log.debug("REST request to get all FocusGroups by incentive id active right now :{}",id);
+        LocalDate hoy = LocalDate.now();
+        LocalDate ayer = hoy.minusDays(1);
+        return focusGroupRepository.findAllByIncentive_IdAndBeginDateIsBeforeAndEndDateIsAfter(id, ayer,hoy);
     }
 
     /**

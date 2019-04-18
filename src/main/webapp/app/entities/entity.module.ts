@@ -103,6 +103,10 @@ import { RouterModule } from '@angular/router';
             {
                 path: 'ban',
                 loadChildren: './ban/ban.module#PalaverBanModule'
+            },
+            {
+                path: 'message',
+                loadChildren: './message/message.module#PalaverMessageModule'
             }
             /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
         ])
