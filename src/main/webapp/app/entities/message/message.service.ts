@@ -71,4 +71,10 @@ export class MessageService {
         }
         return res;
     }
+
+    findAllByChat(id: number): Observable<EntityArrayResponseType> {
+        return this.http
+            .get<IMessage[]>(`${this.resourceUrl}/find_by_chat/${id}`, { observe: 'response' })
+            .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+    }
 }

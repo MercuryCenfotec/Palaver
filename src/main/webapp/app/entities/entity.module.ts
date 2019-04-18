@@ -107,6 +107,10 @@ import { RouterModule } from '@angular/router';
             {
                 path: 'message',
                 loadChildren: './message/message.module#PalaverMessageModule'
+            },
+            {
+                path: 'chat',
+                loadChildren: './chat/chat.module#PalaverChatModule'
             }
             /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
         ])

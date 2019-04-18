@@ -50,6 +50,19 @@ public class MessageService {
 
 
     /**
+     * Get all messages by chat id.
+     *
+     * @param id the id of the entity
+     * @return the entity
+     */
+    @Transactional(readOnly = true)
+    public List<Message> findAllByChat(Long id) {
+        log.debug("Request to get all Messages by chat: {}", id);
+        return messageRepository.findAllByChat_IdOrderBySendAsc(id);
+    }
+
+
+    /**
      * Get one message by id.
      *
      * @param id the id of the entity

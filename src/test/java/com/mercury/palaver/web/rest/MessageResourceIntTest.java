@@ -3,7 +3,7 @@ package com.mercury.palaver.web.rest;
 import com.mercury.palaver.PalaverApp;
 
 import com.mercury.palaver.domain.Message;
-import com.mercury.palaver.domain.UserApp;
+import com.mercury.palaver.domain.Chat;
 import com.mercury.palaver.repository.MessageRepository;
 import com.mercury.palaver.service.MessageService;
 import com.mercury.palaver.web.rest.errors.ExceptionTranslator;
@@ -56,6 +56,9 @@ public class MessageResourceIntTest {
     private static final String DEFAULT_MESSAGE = "AAAAAAAAAA";
     private static final String UPDATED_MESSAGE = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_IS_FOCUS_GROUP = false;
+    private static final Boolean UPDATED_IS_FOCUS_GROUP = true;
+
     @Autowired
     private MessageRepository messageRepository;
 
@@ -103,14 +106,13 @@ public class MessageResourceIntTest {
         Message message = new Message()
             .send(DEFAULT_SEND)
             .isRead(DEFAULT_IS_READ)
-            .message(DEFAULT_MESSAGE);
+            .message(DEFAULT_MESSAGE)
+            .isFocusGroup(DEFAULT_IS_FOCUS_GROUP);
         // Add required entity
-        UserApp userApp = UserAppResourceIntTest.createEntity(em);
-        em.persist(userApp);
+        Chat chat = ChatResourceIntTest.createEntity(em);
+        em.persist(chat);
         em.flush();
-        message.setReceiver(userApp);
-        // Add required entity
-        message.setTransmitter(userApp);
+        message.setChat(chat);
         return message;
     }
 
@@ -137,6 +139,7 @@ public class MessageResourceIntTest {
         assertThat(testMessage.getSend()).isEqualTo(DEFAULT_SEND);
         assertThat(testMessage.isIsRead()).isEqualTo(DEFAULT_IS_READ);
         assertThat(testMessage.getMessage()).isEqualTo(DEFAULT_MESSAGE);
+        assertThat(testMessage.isIsFocusGroup()).isEqualTo(DEFAULT_IS_FOCUS_GROUP);
     }
 
     @Test
@@ -207,7 +210,8 @@ public class MessageResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(message.getId().intValue())))
             .andExpect(jsonPath("$.[*].send").value(hasItem(sameInstant(DEFAULT_SEND))))
             .andExpect(jsonPath("$.[*].isRead").value(hasItem(DEFAULT_IS_READ.booleanValue())))
-            .andExpect(jsonPath("$.[*].message").value(hasItem(DEFAULT_MESSAGE.toString())));
+            .andExpect(jsonPath("$.[*].message").value(hasItem(DEFAULT_MESSAGE.toString())))
+            .andExpect(jsonPath("$.[*].isFocusGroup").value(hasItem(DEFAULT_IS_FOCUS_GROUP.booleanValue())));
     }
     
     @Test
@@ -223,7 +227,8 @@ public class MessageResourceIntTest {
             .andExpect(jsonPath("$.id").value(message.getId().intValue()))
             .andExpect(jsonPath("$.send").value(sameInstant(DEFAULT_SEND)))
             .andExpect(jsonPath("$.isRead").value(DEFAULT_IS_READ.booleanValue()))
-            .andExpect(jsonPath("$.message").value(DEFAULT_MESSAGE.toString()));
+            .andExpect(jsonPath("$.message").value(DEFAULT_MESSAGE.toString()))
+            .andExpect(jsonPath("$.isFocusGroup").value(DEFAULT_IS_FOCUS_GROUP.booleanValue()));
     }
 
     @Test
@@ -249,7 +254,8 @@ public class MessageResourceIntTest {
         updatedMessage
             .send(UPDATED_SEND)
             .isRead(UPDATED_IS_READ)
-            .message(UPDATED_MESSAGE);
+            .message(UPDATED_MESSAGE)
+            .isFocusGroup(UPDATED_IS_FOCUS_GROUP);
 
         restMessageMockMvc.perform(put("/api/messages")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -263,6 +269,7 @@ public class MessageResourceIntTest {
         assertThat(testMessage.getSend()).isEqualTo(UPDATED_SEND);
         assertThat(testMessage.isIsRead()).isEqualTo(UPDATED_IS_READ);
         assertThat(testMessage.getMessage()).isEqualTo(UPDATED_MESSAGE);
+        assertThat(testMessage.isIsFocusGroup()).isEqualTo(UPDATED_IS_FOCUS_GROUP);
     }
 
     @Test

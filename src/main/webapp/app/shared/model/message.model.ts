@@ -1,13 +1,13 @@
 import { Moment } from 'moment';
-import { IUserApp } from 'app/shared/model/user-app.model';
+import { IChat } from 'app/shared/model/chat.model';
 
 export interface IMessage {
     id?: number;
     send?: Moment;
     isRead?: boolean;
     message?: string;
-    receiver?: IUserApp;
-    transmitter?: IUserApp;
+    isFocusGroup?: boolean;
+    chat?: IChat;
 }
 
 export class Message implements IMessage {
@@ -16,9 +16,10 @@ export class Message implements IMessage {
         public send?: Moment,
         public isRead?: boolean,
         public message?: string,
-        public receiver?: IUserApp,
-        public transmitter?: IUserApp
+        public isFocusGroup?: boolean,
+        public chat?: IChat
     ) {
         this.isRead = this.isRead || false;
+        this.isFocusGroup = this.isFocusGroup || false;
     }
 }

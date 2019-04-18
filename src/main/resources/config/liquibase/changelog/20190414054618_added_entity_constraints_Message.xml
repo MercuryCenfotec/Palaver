@@ -8,17 +8,11 @@
     -->
     <changeSet id="20190414054618-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="receiver_id"
+        <addForeignKeyConstraint baseColumnNames="chat_id"
                                  baseTableName="message"
-                                 constraintName="fk_message_receiver_id"
+                                 constraintName="fk_message_chat_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="user_app"/>
-
-        <addForeignKeyConstraint baseColumnNames="transmitter_id"
-                                 baseTableName="message"
-                                 constraintName="fk_message_transmitter_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="user_app"/>
+                                 referencedTableName="chat"/>
 
     </changeSet>
 </databaseChangeLog>

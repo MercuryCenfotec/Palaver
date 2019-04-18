@@ -34,13 +34,12 @@ public class Message implements Serializable {
     @Column(name = "message", nullable = false)
     private String message;
 
-    @ManyToOne(optional = false)
-    @NotNull
-    private UserApp receiver;
+    @Column(name = "is_focus_group")
+    private Boolean isFocusGroup;
 
     @ManyToOne(optional = false)
     @NotNull
-    private UserApp transmitter;
+    private Chat chat;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -90,30 +89,30 @@ public class Message implements Serializable {
         this.message = message;
     }
 
-    public UserApp getReceiver() {
-        return receiver;
+    public Boolean isIsFocusGroup() {
+        return isFocusGroup;
     }
 
-    public Message receiver(UserApp userApp) {
-        this.receiver = userApp;
+    public Message isFocusGroup(Boolean isFocusGroup) {
+        this.isFocusGroup = isFocusGroup;
         return this;
     }
 
-    public void setReceiver(UserApp userApp) {
-        this.receiver = userApp;
+    public void setIsFocusGroup(Boolean isFocusGroup) {
+        this.isFocusGroup = isFocusGroup;
     }
 
-    public UserApp getTransmitter() {
-        return transmitter;
+    public Chat getChat() {
+        return chat;
     }
 
-    public Message transmitter(UserApp userApp) {
-        this.transmitter = userApp;
+    public Message chat(Chat chat) {
+        this.chat = chat;
         return this;
     }
 
-    public void setTransmitter(UserApp userApp) {
-        this.transmitter = userApp;
+    public void setChat(Chat chat) {
+        this.chat = chat;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -144,6 +143,7 @@ public class Message implements Serializable {
             ", send='" + getSend() + "'" +
             ", isRead='" + isIsRead() + "'" +
             ", message='" + getMessage() + "'" +
+            ", isFocusGroup='" + isIsFocusGroup() + "'" +
             "}";
     }
 }

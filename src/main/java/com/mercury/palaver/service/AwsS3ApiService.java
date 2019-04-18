@@ -7,11 +7,12 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.mercury.palaver.config.ApplicationProperties;
+import org.springframework.core.env.Environment;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -21,9 +22,10 @@ import java.util.Date;
 @Transactional
 public class AwsS3ApiService {
 
+    @Autowired
+    private Environment env;
     private AmazonS3 s3client;
-    private String accessKey = "AKIAYLSUGO2DAURPIFOK";
-    private String secretKey = "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";
+    private ApplicationProperties applicationProperties = new ApplicationProperties();
     private String bucketName = "palaver-images-bucket";
     private String endpointUrl = "https://s3.us-east-2.amazonaws.com";
 
@@ -45,7 +47,7 @@ public class AwsS3ApiService {
     }
 
     public String uploadFile(MultipartFile multipartFile) {
-        AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
+        AWSCredentials credentials = new BasicAWSCredentials(env.getProperty("S3_ACCESS_KEY"), env.getProperty("S3_SECRET_KEY"));
         this.s3client = new AmazonS3Client(credentials);
         String fileUrl = "";
         try {
