@@ -55,7 +55,7 @@
                                     </button>
                                 </div>
                                 <div
-                                    *ngIf="editForm.form.invalid || isSaving ||!validateQuantity(); else validEditBtn"
+                                    *ngIf="editForm.form.invalid ||!validateQuantity(); else validEditBtn"
                                     [ngbPopover]="popoverText"
                                     triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido."
                                     class="col-auto">
@@ -72,7 +72,7 @@
                                 <ng-template #validEditBtn>
                                     <div class="col-auto">
                                         <button type="submit" id="save-entity-valid"
-                                                class="btn btn-raised btn-primary">
+                                                class="btn btn-raised btn-primary" [disabled]="isSaving">
                                             <i class="ft-save"></i>&nbsp;<span> Guardar</span>
                                         </button>
                                     </div>
