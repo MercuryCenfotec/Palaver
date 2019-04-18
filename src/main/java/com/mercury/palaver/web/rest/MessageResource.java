@@ -90,6 +90,18 @@ public class MessageResource {
      * @param id the id of the message to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the message, or with status 404 (Not Found)
      */
+    @GetMapping("/messages/find_by_chat/{id}")
+    public List<Message> getAllMessageByChat(@PathVariable Long id) {
+        log.debug("REST request to get all Messages by chat : {}", id);
+        return messageService.findAllByChat(id);
+    }
+
+    /**
+     * GET  /messages/:id : get the "id" message.
+     *
+     * @param id the id of the message to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the message, or with status 404 (Not Found)
+     */
     @GetMapping("/messages/{id}")
     public ResponseEntity<Message> getMessage(@PathVariable Long id) {
         log.debug("REST request to get Message : {}", id);

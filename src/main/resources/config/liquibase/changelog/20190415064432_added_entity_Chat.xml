@@ -15,36 +15,32 @@
     <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
 
     <!--
-        Added the entity Message.
+        Added the entity Chat.
     -->
-    <changeSet id="20190414054618-1" author="jhipster">
-        <createTable tableName="message">
+    <changeSet id="20190415064432-1" author="jhipster">
+        <createTable tableName="chat">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="send" type="datetime">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="is_read" type="boolean">
+            <column name="last_send" type="datetime">
                 <constraints nullable="true" />
             </column>
 
-            <column name="message" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="is_focus_group" type="boolean">
+            <column name="last_message" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
-            <column name="chat_id" type="bigint">
+            <column name="participant_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="focus_group_id" type="bigint">
                 <constraints nullable="false" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="message" columnName="send" columnDataType="datetime"/>
+        <dropDefaultValue tableName="chat" columnName="last_send" columnDataType="datetime"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

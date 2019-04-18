@@ -4,6 +4,7 @@ import com.mercury.palaver.PalaverApp;
 import com.mercury.palaver.domain.FocusGroup;
 import com.mercury.palaver.domain.Institution;
 import com.mercury.palaver.repository.FocusGroupRepository;
+import com.mercury.palaver.service.AwsS3ApiService;
 import com.mercury.palaver.service.FocusGroupService;
 import com.mercury.palaver.service.ZoomApiService;
 import com.mercury.palaver.web.rest.errors.ExceptionTranslator;
@@ -50,7 +51,7 @@ public class PublicResourceIntTest {
     private FocusGroupRepository focusGroupRepository;
 
     @Autowired
-    private ZoomApiService zoomApiService;
+    private AwsS3ApiService awsS3ApiService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -69,7 +70,7 @@ public class PublicResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PublicResource publicResource = new PublicResource(focusGroupRepository, zoomApiService);
+        final PublicResource publicResource = new PublicResource(focusGroupRepository, awsS3ApiService);
         this.restPublicMockMvc = MockMvcBuilders.standaloneSetup(publicResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

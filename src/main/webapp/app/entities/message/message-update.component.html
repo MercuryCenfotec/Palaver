@@ -1,0 +1,80 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-message-heading">Create or edit a Message</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!message.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="message.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_send">Send</label>
+                    <div class="d-flex">
+                        <input id="field_send" type="datetime-local" class="form-control" name="send" [(ngModel)]="send" placeholder="YYYY-MM-DD HH:mm"
+                        required/>
+                    </div>
+                    <div [hidden]="!(editForm.controls.send?.dirty && editForm.controls.send?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.send?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.send?.errors?.ZonedDateTimelocal">
+                            This field should be a date and time.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_isRead">Is Read</label>
+                    <input type="checkbox" class="form-control" name="isRead" id="field_isRead"
+                        [(ngModel)]="message.isRead" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_message">Message</label>
+                    <input type="text" class="form-control" name="message" id="field_message"
+                        [(ngModel)]="message.message" required/>
+                    <div [hidden]="!(editForm.controls.message?.dirty && editForm.controls.message?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.message?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_isFocusGroup">Is Focus Group</label>
+                    <input type="checkbox" class="form-control" name="isFocusGroup" id="field_isFocusGroup"
+                        [(ngModel)]="message.isFocusGroup" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_lastMessage">Last Message</label>
+                    <input type="text" class="form-control" name="lastMessage" id="field_lastMessage"
+                        [(ngModel)]="message.lastMessage" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_chat">Chat</label>
+                    <select class="form-control" id="field_chat" name="chat" [(ngModel)]="message.chat"  required>
+                        <option *ngIf="!editForm.value.chat" [ngValue]="null" selected></option>
+                        <option [ngValue]="chatOption.id === message.chat?.id ? message.chat : chatOption" *ngFor="let chatOption of chats; trackBy: trackChatById">{{chatOption.id}}</option>
+                    </select>
+                </div>
+                <div [hidden]="!(editForm.controls.chat?.dirty && editForm.controls.chat?.invalid)">
+                    <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.chat?.errors?.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

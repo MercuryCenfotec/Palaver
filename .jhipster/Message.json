@@ -3,22 +3,15 @@
     "clientRootFolder": "",
     "relationships": [
         {
-            "relationshipName": "receiver",
-            "otherEntityName": "userApp",
+            "relationshipName": "chat",
+            "otherEntityName": "chat",
             "relationshipType": "many-to-one",
             "relationshipValidateRules": [
                 "required"
             ],
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipName": "transmitter",
-            "otherEntityName": "userApp",
-            "relationshipType": "many-to-one",
-            "relationshipValidateRules": [
-                "required"
-            ],
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "message",
+            "otherEntityRelationshipNameUndefined": false
         }
     ],
     "fields": [
@@ -39,6 +32,11 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "isFocusGroup",
+            "fieldType": "Boolean",
+            "fieldValidateRules": []
         }
     ],
     "changelogDate": "20190414054618",
