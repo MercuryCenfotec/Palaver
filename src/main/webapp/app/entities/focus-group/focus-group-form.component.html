@@ -90,6 +90,18 @@
                         </select>
                     </fieldset>
                 </div>
+                <h4 class="form-section"><i class="ft-box"></i>Incentivo</h4>
+                <div class="col-xl-12 col-lg-12 col-md-12">
+                    <fieldset class="form-group">
+                        <label for="customSelectIncentive">Incentivos</label>
+                        <select [(ngModel)]="focusGroup.incentive" class="custom-select d-block w-100"
+                                id="customSelectIncentive" name="aptitudeTest" (change)="validateTest()">
+                            <option [ngValue]="null">No utilizar incentivo.</option>
+                            <option *ngFor="let incentive of incentives"
+                                    [ngValue]="incentive">{{incentive.name}}</option>
+                        </select>
+                    </fieldset>
+                </div>
                 <div class="col-xl-4 col-lg-4 col-md-4">
                     <div *ngIf="focusGroup.aptitudeTest" class="form-group">
                         <label class="form-control-label" for="field-grade">Nota mínima para participar</label>

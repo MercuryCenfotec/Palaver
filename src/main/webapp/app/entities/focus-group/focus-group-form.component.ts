@@ -36,6 +36,7 @@ export class FocusGroupFormComponent implements OnInit {
     participants: IParticipant[];
     endDateSelected: boolean;
     clonedTest: boolean;
+    isMember = false;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
@@ -83,18 +84,18 @@ export class FocusGroupFormComponent implements OnInit {
         });
         this.userService.getUserWithAuthorities().subscribe(user => {
             this.institutionService.getByUserUser(user.id).subscribe(institution => {
+                if (institution.body.membership.id === 2) {
+                    this.isMember = true;
+                }
+
+                this.incentiveService.findAllByInstitution(institution.body.id).subscribe(incentives => {
+                    this.incentives = incentives.body;
+                });
                 this.aptitudeTestService.findAllByInstitution(institution.body.id).subscribe(aptitudeTests => {
                     this.aptitudeTests = aptitudeTests.body;
                 });
             });
         });
-        this.incentiveService
-            .query()
-            .pipe(
-                filter((mayBeOk: HttpResponse<IIncentive[]>) => mayBeOk.ok),
-                map((response: HttpResponse<IIncentive[]>) => response.body)
-            )
-            .subscribe((res: IIncentive[]) => (this.incentives = res), (res: HttpErrorResponse) => this.onError(res.message));
         this.institutionService
             .query()
             .pipe(
