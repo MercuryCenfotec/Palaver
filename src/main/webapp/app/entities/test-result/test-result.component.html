@@ -12,6 +12,9 @@
                         </span>
                     </button>
                 </h4>
+                <p _ngcontent-c24="" class="mb-0">Estos participantes solicitaron participar dentro del grupo de enfoque. ¡Evalúa sus calificaciones y
+                    acepta a los que hayan cumplido con la espectativa!</p>
+                <p _ngcontent-c24="" class="mb-0">De la misma manera puedes rechazar a aquellos que lamentablemente no hayan cumplido con lo esperado.</p>
             </div>
             <div class="card-body">
                 <div class="card-block">
@@ -59,7 +62,7 @@
                                 </td>-->
                                 <td>
                                     <div *ngIf="testResult.focusGroup">
-                                        <a [routerLink]="['../focus-group', testResult.focusGroup?.id, 'view' ]">{{testResult.focusGroup?.passingGrade}}</a>
+                                        {{testResult.focusGroup?.passingGrade}}
                                     </div>
                                 </td>
                                 <td>

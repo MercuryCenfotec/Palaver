@@ -49,7 +49,7 @@
                                     <span class="display-block overflow-hidden">{{institution.name}}</span>
                                 </li>
                                 <li class="mb-2" *ngIf="institution.user">
-                                    <span class="text-bold-500 primary"><i class="ft ft-user"></i> Usuario:</span>
+                                    <span class="text-bold-500 primary"><i class="ft ft-user"></i> Encargado:</span>
                                     <span class="display-block overflow-hidden" [routerLink]="['/user-app', institution.user?.id, 'view']">{{institution.user.name}}</span>
                                 </li>
                                 <li class="mb-2" *ngIf="institution.user">

@@ -52,6 +52,10 @@
                                     <span class="text-bold-500 primary"><i class="ft ft-calendar"></i> Fecha de nacimiento:</span>
                                     <span class="display-block overflow-hidden">{{participant.birthdate | date}}</span>
                                 </li>
+                                <li class="mb-2" *ngIf="participant.user">
+                                    <span class="text-bold-500 primary"><i class="ft ft-mail"></i> E-mail:</span>
+                                    <span class="display-block overflow-hidden" [routerLink]="['/user-app', participant.user?.id, 'view']">{{participant.user?.mail}}</span>
+                                </li>
                             </ul>
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
@@ -101,6 +105,10 @@
                                         </div>
                                     </div>
                                 </li>
+                                <li class="mb-2" *ngIf="participant.user">
+                                    <span class="text-bold-500 primary"><i class="ft ft-lock"></i> Identificación:</span>
+                                    <span class="display-block overflow-hidden" [routerLink]="['/user-app', participant.user?.id, 'view']">{{participant.user?.identificationNumber}}</span>
+                                </li>
                                 <!--<li class="mb-2">-->
                                     <!--<span class="text-bold-500 primary"><a><i class="ft ft-user"></i> Género:</a></span>-->
                                     <!--<span class="display-block overflow-hidden">{{participant.gender}}</span>-->
@@ -125,6 +133,10 @@
                                         <span class="display-block overflow-hidden" *ngSwitchCase="'UNDEFINED'">Otro</span>
                                         <span class="display-block overflow-hidden" *ngSwitchDefault>Otro</span>
                                     </div>
+                                </li>
+                                <li class="mb-2" *ngIf="participant.user">
+                                    <span class="text-bold-500 primary"><i class="ft ft-map-pin"></i> Dirección:</span>
+                                    <span class="display-block overflow-hidden" [routerLink]="['/user-app', participant.user?.id, 'view']">{{participant.user?.address}}</span>
                                 </li>
                             </ul>
                         </div>
