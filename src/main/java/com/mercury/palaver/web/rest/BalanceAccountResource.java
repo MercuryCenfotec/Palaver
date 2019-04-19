@@ -116,12 +116,12 @@ public class BalanceAccountResource {
             .body(result);
     }
 
-    @GetMapping("balance-accounts/retrieve/{userId}/{cardNumber}/{amount}")
-    public void retrieveAccountFunds(@PathVariable("userId") Long userId,
-                                     @PathVariable("cardNumber") String cardNumber,
-                                     @PathVariable("amount") String amount) {
-        paymentService.retrieveAccountFunds(userId, cardNumber, amount);
-    }
+//    @GetMapping("balance-accounts/retrieve/{userId}/{cardNumber}/{amount}")
+//    public void retrieveAccountFunds(@PathVariable("userId") Long userId,
+//                                     @PathVariable("cardNumber") String cardNumber,
+//                                     @PathVariable("amount") String amount) {
+//        paymentService.retrieveAccountFunds(userId, cardNumber, amount);
+//    }
 
     /**
      * GET  /balance-accounts : get all the balanceAccounts.
