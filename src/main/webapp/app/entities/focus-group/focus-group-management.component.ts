@@ -105,7 +105,9 @@ export class FocusGroupManagementComponent implements OnInit {
     }
 
     startMeeting() {
-        window.open('https://www.geeksforgeeks.org/open-a-link-without-clicking-on-it-using-javascript/');
-        this.focusGroupService.finishFocusGroup(this.focusGroup.id).subscribe(data => {});
+        window.open(this.meeting.callURL);
+        this.focusGroupService.finishFocusGroup(this.focusGroup.id).subscribe(group => {
+            console.log(group);
+        });
     }
 }

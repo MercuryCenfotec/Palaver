@@ -97,7 +97,7 @@ export class FocusGroupService {
 
     finishFocusGroup(groupId: number): Observable<EntityResponseType> {
         return this.http
-            .get<IFocusGroup>(`${this.resourceUrlPublic}/finish/${groupId}`, { observe: 'response' })
+            .get<IFocusGroup>(`${this.resourceUrl}/finish/${groupId}`, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 }

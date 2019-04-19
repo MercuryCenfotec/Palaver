@@ -1,8 +1,10 @@
 package com.mercury.palaver.web.rest;
+
 import com.mercury.palaver.domain.BalanceAccount;
 import com.mercury.palaver.domain.User;
 import com.mercury.palaver.repository.BalanceAccountRepository;
 import com.mercury.palaver.service.MailService;
+import com.mercury.palaver.service.PaymentService;
 import com.mercury.palaver.web.rest.errors.BadRequestAlertException;
 import com.mercury.palaver.web.rest.util.HeaderUtil;
 import com.stripe.Stripe;
@@ -36,11 +38,16 @@ public class BalanceAccountResource {
 
     private final BalanceAccountRepository balanceAccountRepository;
 
+    private final PaymentService paymentService;
+
     private final MailService mailService;
 
-    public BalanceAccountResource(BalanceAccountRepository balanceAccountRepository, MailService mailService) {
+    public BalanceAccountResource(BalanceAccountRepository balanceAccountRepository,
+                                  MailService mailService,
+                                  PaymentService paymentService) {
         this.balanceAccountRepository = balanceAccountRepository;
         this.mailService = mailService;
+        this.paymentService = paymentService;
     }
 
     /**
@@ -107,6 +114,13 @@ public class BalanceAccountResource {
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, balanceAccount.getId().toString()))
             .body(result);
+    }
+
+    @GetMapping("balance-accounts/retrieve/{userId}/{cardNumber}/{amount}")
+    public void retrieveAccountFunds(@PathVariable("userId") Long userId,
+                                     @PathVariable("cardNumber") String cardNumber,
+                                     @PathVariable("amount") String amount) {
+        paymentService.retrieveAccountFunds(userId, cardNumber, amount);
     }
 
     /**

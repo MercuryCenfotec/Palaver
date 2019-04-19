@@ -113,7 +113,7 @@
                        [(ngModel)]="searchText"/>
             </div>
             <div *ngIf="focusGroup.participants; else noParticipants">
-                <div *ngIf="(focusGroup.participants | participantFilter:searchText) as items" class="col-12 mb-3">
+                <div *ngIf="(focusGroup.participants | participantFilter:searchText) as items" class="col-12 mb-3 row">
                     <div *ngFor="let participant of items"
                          class="col-sm-12 col-12 col-md-8 col-lg-6 col-xl-6">
                         <div class="card shadow-lg">

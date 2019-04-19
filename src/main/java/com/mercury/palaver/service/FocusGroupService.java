@@ -1,6 +1,7 @@
 package com.mercury.palaver.service;
 
 import com.mercury.palaver.domain.*;
+import com.mercury.palaver.repository.AptitudeTestRepository;
 import com.mercury.palaver.repository.FocusGroupRepository;
 import com.mercury.palaver.repository.TestAnswerOptionRepository;
 import com.mercury.palaver.service.util.DateUtil;
@@ -19,17 +20,20 @@ public class FocusGroupService {
     private final FocusGroupRepository focusGroupRepo;
     private final UserService userService;
     private final AptitudeTestService aptitudeTestService;
+    private final AptitudeTestRepository aptitudeTestRepo;
     private final PaymentService paymentService;
 
     public FocusGroupService(TestAnswerOptionRepository testAnswerOptionRepo,
                              FocusGroupRepository focusGroupRepo,
                              UserService userService,
                              AptitudeTestService aptitudeTestService,
-                             PaymentService paymentService) {
+                             PaymentService paymentService,
+                             AptitudeTestRepository aptitudeTestRepo) {
         this.testAnswerOptionRepo = testAnswerOptionRepo;
         this.focusGroupRepo = focusGroupRepo;
         this.userService = userService;
         this.aptitudeTestService = aptitudeTestService;
+        this.aptitudeTestRepo = aptitudeTestRepo;
         this.paymentService = paymentService;
     }
 
@@ -41,7 +45,7 @@ public class FocusGroupService {
         Payment groupPayment = new Payment();
         groupPayment.setAmmount((group.getParticipantsAmount() * 25000) + 30000);
         groupPayment.setDescription("Pago por grupo - " + group.getName() + "_" + group.getCode());
-        paymentService.saveFocusGroupPayment(groupPayment, group.getInstitution().getUser());
+        paymentService.saveFocusGroupPayment(groupPayment, group.getInstitution().getUser().getId());
         return focusGroupRepo.save(group);
     }
 
@@ -79,9 +83,11 @@ public class FocusGroupService {
 
     public FocusGroup finishFocusGroup(Long groupId) {
         FocusGroup group = focusGroupRepo.findById(groupId).get();
-        cleanTestAnswers(group);
+        if (group.getAptitudeTest() != null) {
+            cleanTestAnswers(group);
+            group.setAptitudeTest(null);
+        }
         paymentService.processParticipantsPayment(group);
-        group.setAptitudeTest(null);
         return focusGroupRepo.save(group);
     }
 
