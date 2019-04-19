@@ -33,6 +33,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         this.success = false;
         this.registerAccount = {};
         this.userApp = new UserApp(null, '', '', '', '', '', null);
+        this.userApp.rol = 'participant';
     }
 
     ngAfterViewInit() {

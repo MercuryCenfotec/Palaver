@@ -23,22 +23,22 @@
                                         <div class="input-group">
                                             <input id="field_beginDate" type="text" class="form-control"
                                                    name="beginDate" ngbDatepicker
-                                                   #beginDateDp="ngbDatepicker" [(ngModel)]="participant.birthdate"
+                                                   #beginDateDp="ngbDatepicker" #beginDateInput="ngModel" [(ngModel)]="participant.birthdate"
                                                    required [readonly]="true"/>
                                             <span class="input-group-append">
                                                 <button type="button" class="btn btn-secondary" (click)="beginDateDp.toggle()"><fa-icon
                                                 [icon]="'calendar-alt'"></fa-icon></button>
                                             </span>
                                         </div>
-                                        <div [hidden]="!((birthDate?.dirty || birthDate?.touched) && birthDate?.invalid)">
+                                        <div [hidden]="!((beginDateInput?.dirty || beginDateInput?.touched) && beginDateInput?.invalid)">
                                             <small class="form-text text-danger"
-                                                   [hidden]="!birthDate?.errors?.required">
+                                                   [hidden]="!beginDateInput?.errors?.required">
                                                 Este campo es requerido.
                                             </small>
                                         </div>
-                                        <div [hidden]="!((birthDate?.dirty || birthDate?.touched) && birthDate?.invalid)">
+                                        <div [hidden]="!((beginDateInput?.dirty || beginDateInput?.touched) && beginDateInput?.invalid)">
                                             <small class="form-text text-danger"
-                                                   [hidden]="!birthdate?.errors?.max">
+                                                   [hidden]="!beginDateInput?.errors?.max">
                                                 La fecha es inválida.
                                             </small>
                                         </div>
