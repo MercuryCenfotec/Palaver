@@ -333,6 +333,8 @@
             <groupId>com.stripe</groupId>
             <artifactId>stripe-java</artifactId>
             <version>4.4.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>4.5.8</version>
@@ -340,7 +342,7 @@
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-s3</artifactId>
-            <version>1.11.438</version>
+            <version>1.11.415</version>
         </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
     </dependencies>

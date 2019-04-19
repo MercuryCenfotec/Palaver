@@ -30,7 +30,14 @@ export class IncentiveComponent implements OnInit, OnDestroy {
         protected institutionService: InstitutionService
     ) {}
 
-    loadAll() {}
+    loadAll() {
+        this.incentiveService.findAllByInstitution(this.institution.id).subscribe(
+            res => {
+                this.incentives = res.body;
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
+    }
 
     ngOnInit() {
         this.userService.getUserWithAuthorities().subscribe(user => {
