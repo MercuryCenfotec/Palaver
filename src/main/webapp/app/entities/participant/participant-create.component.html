@@ -9,7 +9,8 @@
             </div>
             <div _ngcontent-c5="" class="card-body">
                 <div _ngcontent-c5="" class="px-3">
-                    <form _ngcontent-c5="" class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm" *ngIf="!success">
+                    <form _ngcontent-c5="" class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form"
+                          novalidate (ngSubmit)="save()" #editForm="ngForm" *ngIf="!success">
                         <div _ngcontent-c5="" class="form-body">
                             <h4 _ngcontent-c5="" class="form-section">
                                 <i _ngcontent-c5="" class="ft-info"></i>
@@ -23,20 +24,24 @@
                                         <div class="input-group">
                                             <input id="field_beginDate" type="text" class="form-control"
                                                    name="beginDate" ngbDatepicker
-                                                   #beginDateDp="ngbDatepicker" #beginDateInput="ngModel" [(ngModel)]="participant.birthdate"
+                                                   #beginDateDp="ngbDatepicker" #beginDateInput="ngModel"
+                                                   [(ngModel)]="participant.birthdate"
                                                    required [readonly]="true"/>
                                             <span class="input-group-append">
-                                                <button type="button" class="btn btn-secondary" (click)="beginDateDp.toggle()"><fa-icon
-                                                [icon]="'calendar-alt'"></fa-icon></button>
+                                                <button type="button" class="btn btn-secondary"
+                                                        (click)="beginDateDp.toggle()"><fa-icon
+                                                    [icon]="'calendar-alt'"></fa-icon></button>
                                             </span>
                                         </div>
-                                        <div [hidden]="!((beginDateInput?.dirty || beginDateInput?.touched) && beginDateInput?.invalid)">
+                                        <div
+                                            [hidden]="!((beginDateInput?.dirty || beginDateInput?.touched) && beginDateInput?.invalid)">
                                             <small class="form-text text-danger"
                                                    [hidden]="!beginDateInput?.errors?.required">
                                                 Este campo es requerido.
                                             </small>
                                         </div>
-                                        <div [hidden]="!((beginDateInput?.dirty || beginDateInput?.touched) && beginDateInput?.invalid)">
+                                        <div
+                                            [hidden]="!((beginDateInput?.dirty || beginDateInput?.touched) && beginDateInput?.invalid)">
                                             <small class="form-text text-danger"
                                                    [hidden]="!beginDateInput?.errors?.max">
                                                 La fecha es inválida.
@@ -45,6 +50,23 @@
                                     </div>
                                 </div>
 
+                                <div _ngcontent-c5="" class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="image">Imagen</label>
+
+                                        <div class="custom-file center-block d-block">
+                                            <input type="file" class="form-control-file" id="image"
+                                                   (change)="onFileChange($event)"
+                                                   accept="image/x-png,image/jpeg" required>
+                                        </div>
+                                        <small class="form-text text-danger"
+                                               *ngIf="!validateImage()">Este campo es requerido.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div _ngcontent-c5="" class="row">
                                 <div _ngcontent-c5="" class="col-md-6">
                                     <div _ngcontent-c5="" class="form-group">
                                         <label _ngcontent-c5="" for="field_gender">Género</label>
@@ -63,11 +85,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                            </div>
-
-                            <div _ngcontent-c5="" class="row">
-
                                 <div _ngcontent-c5="" class="col-md-6">
                                     <div _ngcontent-c5="" class="form-group">
                                         <label _ngcontent-c5="" for="field_civilStatus">Estado civil</label>
@@ -89,58 +106,64 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
 
                             <!--<div _ngcontent-c5="" class="form-group">-->
-                                <!--&lt;!&ndash;<label _ngcontent-c16=""></label>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<input _ngcontent-c16="" class="form-control-file" name="picture" id="field_picture"&ndash;&gt;-->
-                                        <!--&lt;!&ndash;type="file">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<label _ngcontent-c16=""></label>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<input _ngcontent-c16="" class="form-control-file" name="picture" id="field_picture"&ndash;&gt;-->
+                            <!--&lt;!&ndash;type="file">&ndash;&gt;-->
 
-                                <!--<label for="imageUpload">Seleccionar imagen</label>-->
-                                <!--<input class="form-control-file" type="file" [(ngModel)]="participant.picture" (change)="fileEvent($event)" name="imageUpload" id="imageUpload"/>-->
+                            <!--<label for="imageUpload">Seleccionar imagen</label>-->
+                            <!--<input class="form-control-file" type="file" [(ngModel)]="participant.picture" (change)="fileEvent($event)" name="imageUpload" id="imageUpload"/>-->
                             <!--</div>-->
 
                             <!--<h4 _ngcontent-c5="" class="form-section">-->
-                                <!--<i _ngcontent-c5="" class="ft-mail"></i>-->
-                                <!--Categorías de interés-->
+                            <!--<i _ngcontent-c5="" class="ft-mail"></i>-->
+                            <!--Categorías de interés-->
                             <!--</h4>-->
 
                             <!--<div class="form-group">-->
-                                <!--<label for="field_category">Categorías</label>-->
-                                <!--<select class="form-control" id="field_category" multiple name="category"-->
-                                        <!--[(ngModel)]="participant.categories">-->
-                                    <!--<option [ngValue]="getSelected(participant.categories, categoryOption)"-->
-                                            <!--*ngFor="let categoryOption of categories; trackBy: trackCategoryById">{{categoryOption.name}}</option>-->
-                                <!--</select>-->
+                            <!--<label for="field_category">Categorías</label>-->
+                            <!--<select class="form-control" id="field_category" multiple name="category"-->
+                            <!--[(ngModel)]="participant.categories">-->
+                            <!--<option [ngValue]="getSelected(participant.categories, categoryOption)"-->
+                            <!--*ngFor="let categoryOption of categories; trackBy: trackCategoryById">{{categoryOption.name}}</option>-->
+                            <!--</select>-->
                             <!--</div>-->
 
                         </div>
                         <div _ngcontent-c5="" class="row form-actions right">
                             <div class="col-auto">
-                                <button _ngcontent-c5="" class="btn btn-raised btn-warning mr-1" type="button" id="cancel-save" (click)="previousState()">
+                                <button _ngcontent-c5="" class="btn btn-raised btn-warning mr-1" type="button"
+                                        id="cancel-save" (click)="previousState()">
                                     <i _ngcontent-c5="" class="ft-x"></i>
-                                    <fa-icon></fa-icon>Cancelar
+                                    <fa-icon></fa-icon>
+                                    Cancelar
                                 </button>
                             </div>
                             <div [ngbPopover]="popoverText"
                                  triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido."
-                                 *ngIf="editForm.form.invalid || isSaving; else validRegisterBtn"
+                                 *ngIf="editForm.form.invalid || isSaving || !validateImage(); else validRegisterBtn"
                                  class="col-auto">
-                                <button _ngcontent-c5="" class="btn btn-raised btn-primary" type="submit" id="save-entity" [disabled]="true">
+                                <button _ngcontent-c5="" class="btn btn-raised btn-primary" type="submit"
+                                        id="save-entity" [disabled]="true">
                                     <i _ngcontent-c5="" class="ft ft-file-text"></i>
-                                    <fa-icon></fa-icon>Registrar
+                                    <fa-icon></fa-icon>
+                                    Registrar
                                 </button>
                             </div>
                             <ng-template #popoverText>
-                                <small class="display-block">Por favor, asegúrese de que todos los campos estén completos.
+                                <small class="display-block">Por favor, asegúrese de que todos los campos estén
+                                    completos.
                                 </small>
                             </ng-template>
                             <ng-template #validRegisterBtn>
                                 <div class="col-auto">
-                                    <button _ngcontent-c5="" class="btn btn-raised btn-primary" type="submit" id="save-entity">
+                                    <button _ngcontent-c5="" class="btn btn-raised btn-primary" type="submit"
+                                            id="save-entity">
                                         <i _ngcontent-c5="" class="ft ft-file-text"></i>
-                                        <fa-icon></fa-icon>Registrar
+                                        <fa-icon></fa-icon>
+                                        Registrar
                                     </button>
                                 </div>
                             </ng-template>

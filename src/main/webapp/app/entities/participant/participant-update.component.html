@@ -43,6 +43,23 @@
                                 </div>
 
                                 <div _ngcontent-c5="" class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="image">Logo</label>
+
+                                        <img src="{{participant.picture}}" class=" img-border gradient-summer width-100" alt="Card image">
+
+                                        <div class="custom-file center-block d-block">
+                                            <input type="file" class="form-control-file" id="image"
+                                                   (change)="onFileChange($event)"
+                                                   accept="image/x-png,image/jpeg">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div _ngcontent-c5="" class="row">
+
+                                <div _ngcontent-c5="" class="col-md-6">
                                     <div _ngcontent-c5="" class="form-group">
                                         <label _ngcontent-c5="" for="field_gender">Género</label>
                                         <select _ngcontent-c16="" class="form-control" [(ngModel)]="participant.gender"
@@ -60,10 +77,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                            </div>
-
-                            <div _ngcontent-c5="" class="row">
 
                                 <div _ngcontent-c5="" class="col-md-6">
                                     <div _ngcontent-c5="" class="form-group">
