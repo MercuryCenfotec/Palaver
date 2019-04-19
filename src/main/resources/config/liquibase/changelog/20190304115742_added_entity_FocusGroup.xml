@@ -54,6 +54,14 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="is_completed" type="boolean">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="meeting_is_done" type="boolean">
+                <constraints nullable="true" />
+            </column>
+
             <column name="incentive_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -92,17 +100,7 @@
         </createTable>
 
         <addPrimaryKey columnNames="focus_group_id, participant_id" tableName="focus_group_participant"/>
-
-        <loadData encoding="UTF-8"
-                  file="config/liquibase/focus_groups.csv"
-                  separator=";"
-                  tableName="focus_group"/>
-
-        <loadData encoding="UTF-8"
-                  file="config/liquibase/focus_groups_participants.csv"
-                  separator=";"
-                  tableName="focus_group_participant"/>
-
+        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>

@@ -29,11 +29,7 @@ export class IncentiveUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        if (this.incentive.id !== undefined) {
-            this.subscribeToSaveResponse(this.incentiveService.update(this.incentive));
-        } else {
-            this.subscribeToSaveResponse(this.incentiveService.create(this.incentive));
-        }
+        this.subscribeToSaveResponse(this.incentiveService.update(this.incentive));
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IIncentive>>) {
@@ -47,5 +43,12 @@ export class IncentiveUpdateComponent implements OnInit {
 
     protected onSaveError() {
         this.isSaving = false;
+    }
+
+    validateQuantity() {
+        if (this.incentive.quantity > 999 || this.incentive.quantity < 1) {
+            return false;
+        }
+        return true;
     }
 }

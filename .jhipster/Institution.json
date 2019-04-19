@@ -32,6 +32,13 @@
             "relationshipType": "one-to-many",
             "otherEntityRelationshipName": "institution",
             "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipName": "incentives",
+            "otherEntityName": "incentive",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "institution",
+            "otherEntityRelationshipNameUndefined": false
         }
     ],
     "fields": [

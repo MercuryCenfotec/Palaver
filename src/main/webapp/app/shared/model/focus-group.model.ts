@@ -16,6 +16,8 @@ export interface IFocusGroup {
     passingGrade?: number;
     participantsAmount?: number;
     status?: string;
+    isCompleted?: boolean;
+    meetingIsDone?: boolean;
     incentive?: IIncentive;
     institution?: IInstitution;
     categories?: ICategory[];
@@ -35,11 +37,16 @@ export class FocusGroup implements IFocusGroup {
         public passingGrade?: number,
         public participantsAmount?: number,
         public status?: string,
+        public isCompleted?: boolean,
+        public meetingIsDone?: boolean,
         public incentive?: IIncentive,
         public institution?: IInstitution,
         public categories?: ICategory[],
         public participants?: IParticipant[],
         public aptitudeTest?: IAptitudeTest,
         public meeting?: IMeeting
-    ) {}
+    ) {
+        this.isCompleted = this.isCompleted || false;
+        this.meetingIsDone = this.meetingIsDone || false;
+    }
 }

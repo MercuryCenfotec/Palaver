@@ -13,11 +13,11 @@
                         <table _ngcontent-c6="" class="table table-responsive-md text-center">
                             <thead _ngcontent-c6="">
                             <tr _ngcontent-c6="">
+                                <th><span>Nombre</span></th>
                                 <th><span>Fecha de nacimiento</span></th>
                                 <th><span>Género</span></th>
                                 <th><span>Estado civil</span></th>
                                 <!--<th><span>Imagen</span></th>-->
-                                <th><span>Usuario</span></th>
                                 <th><span>Acciones</span></th>
                                 <th></th>
                             </tr>
@@ -25,6 +25,7 @@
                             <tbody _ngcontent-c6="">
 
                             <tr *ngFor="let participant of participants ;trackBy: trackId">
+                                <td>{{participant.user.name}}</td>
                                 <td>{{participant.birthdate | date:'mediumDate'}}</td>
                                 <td><p *ngIf="participant.gender === 'MALE'">Masculino</p>
                                     <p *ngIf="participant.gender === 'FEMALE'">Femenino</p>
@@ -35,11 +36,6 @@
                                     <p *ngIf="participant.civilStatus === 'DIVORCED'">Divorciado/a</p>
                                     <p *ngIf="participant.civilStatus === 'SINGLE'">Soltero/a</p></td>
                                 <!--<td>{{participant.picture}}</td>-->
-                                <td>
-                                    <div *ngIf="participant.user">
-                                        <a [routerLink]="['../user-app', participant.user?.id, 'view' ]">{{participant.user?.name}}</a>
-                                    </div>
-                                </td>
                                 <!--<td>-->
                                     <!--<span *ngFor="let category of participant.categories; let last = last">-->
                                         <!--<a class="form-control-static" [routerLink]="['../category', category?.id, 'view' ]">{{category.id}}</a>-->

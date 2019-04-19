@@ -33,6 +33,7 @@ export class SubadminFormComponent implements OnInit, AfterViewInit {
         this.success = false;
         this.registerAccount = {};
         this.userApp = new UserApp(null, '', '', '', '', '', null);
+        this.userApp.rol = 'subadmin';
     }
 
     ngAfterViewInit() {

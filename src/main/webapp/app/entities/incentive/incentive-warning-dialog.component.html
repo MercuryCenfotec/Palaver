@@ -1,0 +1,17 @@
+<form name="deleteForm" (ngSubmit)="clear()">
+    <div class="modal-header">
+        <h4 class="modal-title">Advertencia</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;
+        </button>
+    </div>
+    <div class="modal-body">
+        <p id="jhi-warning-incentive-heading">No se puede eliminar este incentivo ya que esta siendo utilizado en un
+            grupo de enfoque activo.</p>
+    </div>
+    <div class="modal-footer">
+        <button id="jhi-confirm-warning-incentive" type="submit" class="btn btn-raised btn-info mr-1">
+            <i class="ft-thumbs-up"></i> Entendido
+        </button>
+    </div>
+</form>

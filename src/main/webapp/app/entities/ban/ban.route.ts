@@ -33,7 +33,7 @@ export const banRoute: Routes = [
         path: '',
         component: BanComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN', 'ROLE_SUBADMIN'],
             pageTitle: 'Bans'
         },
         canActivate: [UserRouteAccessService]
