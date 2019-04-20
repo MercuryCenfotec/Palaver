@@ -35,14 +35,18 @@
                                 (floatDescription.dirty || floatDescription.touched)">Este campo es requerido.
                                 </small>
                             </div>
-                            <!--<div class="form-group">
-                                <label class="form-control-label" for="field_logo">Logo</label>
-                                <input type="text" class="form-control" name="logo" id="field_logo"
-                                       [(ngModel)]="institution.logo" required #floatLogo="ngModel"/>
-                                <small class="form-text text-muted danger" *ngIf="!floatLogo.valid && (floatLogo.dirty ||
-                                 floatLogo.touched)">¡Logo requerido!
+                            <div class="form-group">
+                                <label class="form-control-label" for="image">Logo</label>
+
+                                <div class="custom-file center-block d-block">
+                                    <input type="file" class="form-control-file" id="image"
+                                           (change)="onFileChange($event)"
+                                           accept="image/x-png,image/jpeg" required>
+                                </div>
+                                <small class="form-text text-danger"
+                                       *ngIf="!validateImage()">Este campo es requerido.
                                 </small>
-                            </div>-->
+                            </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="field_telephone">Teléfono</label>
                                 <input type="text" class="form-control" name="telephone" id="field_telephone"
@@ -76,7 +80,7 @@
                             </div>
                             <div [ngbPopover]="popoverText"
                                  triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido."
-                                 *ngIf="editForm.form.invalid || isSaving; else validRegisterBtn"
+                                 *ngIf="editForm.form.invalid || isSaving || !validateImage(); else validRegisterBtn"
                                  class="col-auto">
                                 <button type="submit"
                                         [disabled]="true"

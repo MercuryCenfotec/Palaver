@@ -40,6 +40,10 @@ export class FocusGroupService {
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
+    findAllByIncentiveBetwenNow(id: number): Observable<EntityArrayResponseType> {
+        return this.http.get<IFocusGroup[]>(`${this.resourceUrl}/find_by_incentive/${id}`, { observe: 'response' });
+    }
+
     findAllByInstitution(institutionId: number): Observable<EntityArrayResponseType> {
         return this.http.get<IFocusGroup[]>(`${this.resourceUrl}/institution/${institutionId}`, { observe: 'response' });
     }

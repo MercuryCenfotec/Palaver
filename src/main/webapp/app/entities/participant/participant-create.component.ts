@@ -15,16 +15,15 @@ import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { FocusGroupService } from 'app/entities/focus-group';
 import { IUser, LoginService, UserService } from 'app/core';
 import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
-import {BalanceAccountService} from 'app/entities/balance-account';
-import {BalanceAccount} from 'app/shared/model/balance-account.model';
+import { BalanceAccountService } from 'app/entities/balance-account';
+import { BalanceAccount } from 'app/shared/model/balance-account.model';
+import { ImageService } from 'app/shared/util/image.service';
 
 @Component({
     selector: 'jhi-participant-create',
     templateUrl: './participant-create.component.html'
 })
 export class ParticipantCreateComponent implements OnInit {
-    public image;
-
     participant: IParticipant;
     isSaving: boolean;
     user: IUser;
@@ -35,6 +34,7 @@ export class ParticipantCreateComponent implements OnInit {
     categories: ICategory[];
     focusgroups: IFocusGroup[];
     birthdateDp: any;
+    image: any;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
@@ -47,7 +47,8 @@ export class ParticipantCreateComponent implements OnInit {
         protected activatedRoute: ActivatedRoute,
         protected userService: UserService,
         protected config: NgbDatepickerConfig,
-        private balanceService: BalanceAccountService
+        private balanceService: BalanceAccountService,
+        protected imageService: ImageService
     ) {}
 
     ngOnInit() {
@@ -119,7 +120,13 @@ export class ParticipantCreateComponent implements OnInit {
             this.subscribeToSaveResponse(this.participantService.update(this.participant));
         } else {
             this.participant.user = this.userApp;
-            this.subscribeToSaveResponse(this.participantService.create(this.participant));
+            this.imageService.save(this.image).subscribe(
+                res => {},
+                url => {
+                    this.participant.picture = url.error.text;
+                    this.subscribeToSaveResponse(this.participantService.create(this.participant));
+                }
+            );
         }
     }
 
@@ -136,7 +143,7 @@ export class ParticipantCreateComponent implements OnInit {
         this.isSaving = false;
         this.userAppService.findByUserId(this.userApp.user.id).subscribe(newUser => {
             this.balanceAccount.user = newUser;
-            this.balanceService.create(this.balanceAccount).subscribe( () => {
+            this.balanceService.create(this.balanceAccount).subscribe(() => {
                 this.loginService.logout();
                 this.success = true;
             });
@@ -175,28 +182,19 @@ export class ParticipantCreateComponent implements OnInit {
         return option;
     }
 
-    fileEvent(fileInput: any) {
-        /*
-        const file = fileInput.target.files[0];
+    onFileChange(event) {
+        if (event.target.files.length === 0) {
+            this.image = null;
+        } else {
+            this.image = event.target.files[0];
+        }
+    }
 
-        console.log(file);
-
-        AWS.config.region = 'us-east-1'; // Region
-        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-            IdentityPoolId: 'us-east-1:68b4abc4-89a0-4c98-b8ad-481d305b5eca'
-        });
-
-        const s3 = new AWS.S3({
-            apiVersion: '2006-03-01',
-            params: { Bucket: 'palaverapp' }
-        });
-
-        this.image = file.name;
-
-        s3.upload({ Key: file.name, Bucket: 'palaverapp', Body: file, ACL: 'public-read' }, function(err, data) {
-            if (err) {
-                console.log(err, 'there was an error uploading your file');
-            }
-        });*/
+    validateImage() {
+        if (!this.image) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

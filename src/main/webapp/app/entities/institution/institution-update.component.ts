@@ -10,6 +10,7 @@ import { IUserApp } from 'app/shared/model/user-app.model';
 import { UserAppService } from 'app/entities/user-app';
 import { IMembership } from 'app/shared/model/membership.model';
 import { MembershipService } from 'app/entities/membership';
+import { ImageService } from 'app/shared/util/image.service';
 
 @Component({
     selector: 'jhi-institution-update',
@@ -18,6 +19,7 @@ import { MembershipService } from 'app/entities/membership';
 export class InstitutionUpdateComponent implements OnInit {
     institution: IInstitution;
     isSaving: boolean;
+    image: any;
 
     users: IUserApp[];
 
@@ -28,7 +30,8 @@ export class InstitutionUpdateComponent implements OnInit {
         protected institutionService: InstitutionService,
         protected userAppService: UserAppService,
         protected membershipService: MembershipService,
-        protected activatedRoute: ActivatedRoute
+        protected activatedRoute: ActivatedRoute,
+        protected imageService: ImageService
     ) {}
 
     ngOnInit() {
@@ -77,7 +80,17 @@ export class InstitutionUpdateComponent implements OnInit {
     save() {
         this.isSaving = true;
         if (this.institution.id !== undefined) {
-            this.subscribeToSaveResponse(this.institutionService.update(this.institution));
+            if (this.image !== undefined) {
+                this.imageService.save(this.image).subscribe(
+                    res => {},
+                    url => {
+                        this.institution.logo = url.error.text;
+                        this.subscribeToSaveResponse(this.institutionService.update(this.institution));
+                    }
+                );
+            } else {
+                this.subscribeToSaveResponse(this.institutionService.update(this.institution));
+            }
         } else {
             this.subscribeToSaveResponse(this.institutionService.create(this.institution));
         }
@@ -106,5 +119,13 @@ export class InstitutionUpdateComponent implements OnInit {
 
     trackMembershipById(index: number, item: IMembership) {
         return item.id;
+    }
+
+    onFileChange(event) {
+        if (event.target.files.length === 0) {
+            this.image = null;
+        } else {
+            this.image = event.target.files[0];
+        }
     }
 }

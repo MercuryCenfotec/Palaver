@@ -13,7 +13,7 @@ import { IUserApp } from 'app/shared/model/user-app.model';
     selector: 'jhi-balance-account',
     templateUrl: './balance-account.component.html'
 })
-export class BalanceAccountComponent implements OnInit, OnDestroy {
+export class BalanceAccountComponent implements OnInit {
     balanceAccounts: IBalanceAccount[];
     currentAccount: any;
     eventSubscriber: Subscription;
@@ -51,10 +51,6 @@ export class BalanceAccountComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
-    }
-
     trackId(index: number, item: IBalanceAccount) {
         return item.id;
     }
@@ -68,7 +64,7 @@ export class BalanceAccountComponent implements OnInit, OnDestroy {
         const handler = (<any>window).StripeCheckout.configure({
             key: 'pk_test_h6yLV7URu1btctSqXR1Rsn5y00ExJYJNll',
             locale: 'es',
-            token: function(token: any) {
+            token: (token: any) => {
                 parentReference.updateNow(token.id, amountToSubmit);
             }
         });

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { IIncentive } from 'app/shared/model/incentive.model';
 import { IncentiveService } from './incentive.service';
+import { ImageService } from 'app/shared/util/image.service';
 
 @Component({
     selector: 'jhi-incentive-update',
@@ -13,8 +14,13 @@ import { IncentiveService } from './incentive.service';
 export class IncentiveUpdateComponent implements OnInit {
     incentive: IIncentive;
     isSaving: boolean;
+    image: any;
 
-    constructor(protected incentiveService: IncentiveService, protected activatedRoute: ActivatedRoute) {}
+    constructor(
+        protected incentiveService: IncentiveService,
+        protected activatedRoute: ActivatedRoute,
+        protected imageService: ImageService
+    ) {}
 
     ngOnInit() {
         this.isSaving = false;
@@ -29,7 +35,17 @@ export class IncentiveUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        this.subscribeToSaveResponse(this.incentiveService.update(this.incentive));
+        if (this.image !== undefined) {
+            this.imageService.save(this.image).subscribe(
+                res => {},
+                url => {
+                    this.incentive.image = url.error.text;
+                    this.subscribeToSaveResponse(this.incentiveService.update(this.incentive));
+                }
+            );
+        } else {
+            this.subscribeToSaveResponse(this.incentiveService.update(this.incentive));
+        }
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IIncentive>>) {
@@ -50,5 +66,13 @@ export class IncentiveUpdateComponent implements OnInit {
             return false;
         }
         return true;
+    }
+
+    onFileChange(event) {
+        if (event.target.files.length === 0) {
+            this.image = null;
+        } else {
+            this.image = event.target.files[0];
+        }
     }
 }

@@ -1,0 +1,40 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+
+/* ==========================================================================
+Navbar
+========================================================================== */
+
+.navbar {
+    padding: 0.75rem 1.5rem;
+    padding-bottom: 0;
+}
+
+.navbar-version {
+    font-size: 0.65em;
+    color: $navbar-dark-color;
+}
+
+.profile-image {
+    height: 1.75em;
+    width: 1.75em;
+}
+
+.finish-him {
+    height: 250px;
+    float: left;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+/* ==========================================================================
+Logo styles
+========================================================================== */
+.logo-img {
+    height: 45px;
+    width: 125px;
+    display: inline-block;
+    vertical-align: middle;
+    background: url('../../../content/images/palaver.png') no-repeat center center;
+    background-size: contain;
+}

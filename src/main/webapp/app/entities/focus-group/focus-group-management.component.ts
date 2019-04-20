@@ -7,10 +7,14 @@ import { MeetingService } from 'app/entities/meeting';
 import { ParticipantService } from 'app/entities/participant';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
+import { filter, map } from 'rxjs/operators';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ClipboardService } from 'ngx-clipboard';
 import * as moment from 'moment';
 import { BanService } from 'app/entities/ban';
-import { Ban } from 'app/shared/model/ban.model';
+import { Ban, IBan } from 'app/shared/model/ban.model';
+import { NotificationService } from 'app/entities/notification';
+import { Notification } from 'app/shared/model/notification.model';
 
 @Component({
     selector: 'jhi-focus-group-management',
@@ -31,7 +35,8 @@ export class FocusGroupManagementComponent implements OnInit {
         protected meetingsService: MeetingService,
         protected participantService: ParticipantService,
         protected modalService: NgbModal,
-        protected banService: BanService
+        protected banService: BanService,
+        protected notificationService: NotificationService
     ) {}
 
     ngOnInit() {
@@ -90,7 +95,16 @@ export class FocusGroupManagementComponent implements OnInit {
 
         this.banService.create(this.ban).subscribe(newBan => {
             this.focusGroupService.update(this.focusGroup).subscribe(data => {
-                this.ngOnInit();
+                const newNotification = new Notification(
+                    null,
+                    this.participant.user.user.id.toString(),
+                    'GroupExpulsion',
+                    false,
+                    newBan.body.id
+                );
+                this.notificationService.create(newNotification).subscribe(createdNoti => {
+                    this.ngOnInit();
+                });
             });
         });
     }

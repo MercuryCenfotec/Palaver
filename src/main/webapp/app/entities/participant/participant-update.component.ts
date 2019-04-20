@@ -14,6 +14,7 @@ import { CategoryService } from 'app/entities/category';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { FocusGroupService } from 'app/entities/focus-group';
 import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import { ImageService } from 'app/shared/util/image.service';
 
 @Component({
     selector: 'jhi-participant-update',
@@ -29,6 +30,7 @@ export class ParticipantUpdateComponent implements OnInit {
 
     focusgroups: IFocusGroup[];
     birthdateDp: any;
+    image: any;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
@@ -37,7 +39,8 @@ export class ParticipantUpdateComponent implements OnInit {
         protected categoryService: CategoryService,
         protected focusGroupService: FocusGroupService,
         protected activatedRoute: ActivatedRoute,
-        protected config: NgbDatepickerConfig
+        protected config: NgbDatepickerConfig,
+        protected imageService: ImageService
     ) {}
 
     ngOnInit() {
@@ -96,7 +99,17 @@ export class ParticipantUpdateComponent implements OnInit {
     save() {
         this.isSaving = true;
         if (this.participant.id !== undefined) {
-            this.subscribeToSaveResponse(this.participantService.update(this.participant));
+            if (this.image !== undefined) {
+                this.imageService.save(this.image).subscribe(
+                    res => {},
+                    url => {
+                        this.participant.picture = url.error.text;
+                        this.subscribeToSaveResponse(this.participantService.update(this.participant));
+                    }
+                );
+            } else {
+                this.subscribeToSaveResponse(this.participantService.update(this.participant));
+            }
         } else {
             this.subscribeToSaveResponse(this.participantService.create(this.participant));
         }
@@ -140,5 +153,13 @@ export class ParticipantUpdateComponent implements OnInit {
             }
         }
         return option;
+    }
+
+    onFileChange(event) {
+        if (event.target.files.length === 0) {
+            this.image = null;
+        } else {
+            this.image = event.target.files[0];
+        }
     }
 }
