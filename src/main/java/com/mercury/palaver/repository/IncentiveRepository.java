@@ -14,4 +14,5 @@ import java.util.List;
 @Repository
 public interface IncentiveRepository extends JpaRepository<Incentive, Long> {
     List<Incentive> findAllByInstitution_Id(Long id);
+    List<Incentive> findAllByInstitution_IdAndQuantityAfter(Long id, int quantity);
 }

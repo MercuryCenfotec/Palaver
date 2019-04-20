@@ -29,21 +29,21 @@ import { Subscriber } from 'app/shared/util/subscriber';
 export class FocusGroupFormComponent implements OnInit {
     focusGroup: IFocusGroup;
     isSaving: boolean;
-    incentives: IIncentive[];
+    incentives: IIncentive[] = [];
     institutions: IInstitution[];
+    institution: IInstitution;
     categories: ICategory[];
     aptitudeTests: IAptitudeTest[];
     participants: IParticipant[];
     endDateSelected: boolean;
     clonedTest: boolean;
-    isMember = false;
+    isMember = true;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
         protected focusGroupService: FocusGroupService,
         protected incentiveService: IncentiveService,
         protected institutionService: InstitutionService,
-        protected categoryService: CategoryService,
         protected participantService: ParticipantService,
         protected activatedRoute: ActivatedRoute,
         protected userService: UserService,
@@ -87,36 +87,12 @@ export class FocusGroupFormComponent implements OnInit {
                 if (institution.body.membership.id === 2) {
                     this.isMember = true;
                 }
-
-                this.incentiveService.findAllByInstitution(institution.body.id).subscribe(incentives => {
-                    this.incentives = incentives.body;
-                });
+                this.institution = institution.body;
                 this.aptitudeTestService.findAllByInstitution(institution.body.id).subscribe(aptitudeTests => {
                     this.aptitudeTests = aptitudeTests.body;
                 });
             });
         });
-        this.institutionService
-            .query()
-            .pipe(
-                filter((mayBeOk: HttpResponse<IInstitution[]>) => mayBeOk.ok),
-                map((response: HttpResponse<IInstitution[]>) => response.body)
-            )
-            .subscribe((res: IInstitution[]) => (this.institutions = res), (res: HttpErrorResponse) => this.onError(res.message));
-        this.categoryService
-            .query()
-            .pipe(
-                filter((mayBeOk: HttpResponse<ICategory[]>) => mayBeOk.ok),
-                map((response: HttpResponse<ICategory[]>) => response.body)
-            )
-            .subscribe((res: ICategory[]) => (this.categories = res), (res: HttpErrorResponse) => this.onError(res.message));
-        this.participantService
-            .query()
-            .pipe(
-                filter((mayBeOk: HttpResponse<IParticipant[]>) => mayBeOk.ok),
-                map((response: HttpResponse<IParticipant[]>) => response.body)
-            )
-            .subscribe((res: IParticipant[]) => (this.participants = res), (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     previousState() {
@@ -131,7 +107,10 @@ export class FocusGroupFormComponent implements OnInit {
                 if (!this.focusGroup.aptitudeTest) {
                     this.focusGroup.passingGrade = 100;
                 }
-                this.subscribeToSaveResponse(this.focusGroupService.create(this.focusGroup));
+                this.focusGroup.incentive.quantity -= this.focusGroup.participantsAmount;
+                this.incentiveService.update(this.focusGroup.incentive).subscribe(res => {
+                    this.subscribeToSaveResponse(this.focusGroupService.create(this.focusGroup));
+                });
             });
         });
     }
@@ -205,5 +184,20 @@ export class FocusGroupFormComponent implements OnInit {
             return false;
         }
         return true;
+    }
+
+    validateIncentive() {
+        if (this.focusGroup.incentive.quantity < this.focusGroup.participantsAmount || !this.isMember) {
+            this.focusGroup.incentive = null;
+        }
+    }
+
+    loadIncentives() {
+        this.incentiveService
+            .findAllByInstitutionAndQuantity(this.institution.id, this.focusGroup.participantsAmount - 1)
+            .subscribe(incentives => {
+                this.incentives = incentives.body;
+                this.focusGroup.incentive = null;
+            });
     }
 }
