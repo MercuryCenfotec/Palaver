@@ -138,4 +138,15 @@ public class PaymentService {
         balanceAccountRepo.save(targetAccount);
     }
 
+    public void createPayment(BalanceAccount originAccount, BalanceAccount targetAccount, String description, int paymentAmount, boolean onHold) {
+        Payment newPayment = new Payment();
+        newPayment.setDate(LocalDateTime.now().toString());
+        newPayment.setOriginAccount(originAccount);
+        newPayment.setDestinyAccount(targetAccount);
+        newPayment.setDescription(description);
+        newPayment.setAmmount(paymentAmount);
+        newPayment.setOnHold(onHold);
+        paymentRepo.save(newPayment);
+    }
+
 }
