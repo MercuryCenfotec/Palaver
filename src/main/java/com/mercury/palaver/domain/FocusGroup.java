@@ -60,7 +60,6 @@ public class FocusGroup implements Serializable {
     private Boolean meetingIsDone;
 
     @ManyToOne
-    @JsonIgnoreProperties("focusGroups")
     private Incentive incentive;
 
     @ManyToOne

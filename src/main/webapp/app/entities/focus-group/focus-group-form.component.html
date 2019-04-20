@@ -18,10 +18,10 @@
                     </div>
                     <div class="col-sm-4 col-12 col-md-12 col-lg-4">
                         <div class="form-group">
-                            <label class="form-control-label" for="field_amount">Cantidad de participantes</label>
+                            <label class="form-control-label" for="field_name">Cantidad de participantes</label>
                             <input #floatAmount="ngModel" type="number" class="form-control" name="participantsAmount"
                                    id="field_amount"
-                                   [(ngModel)]="focusGroup.participantsAmount" required/>
+                                   [(ngModel)]="focusGroup.participantsAmount" required (change)="loadIncentives()"/>
                             <small class="form-text text-muted danger" *ngIf="!floatAmount.valid && (floatAmount.dirty ||
                                  floatAmount.touched)">Este campo es requerido.
                             </small>
@@ -51,7 +51,7 @@
                                    required [readonly]="true"/>
                             <span class="input-group-append">
                                 <button type="button" class="btn btn-secondary" (click)="beginDateDp.toggle()"><fa-icon
-                                    [icon]="'calendar-alt'"></fa-icon></button>
+                                        [icon]="'calendar-alt'"></fa-icon></button>
                             </span>
                         </div>
                         <small class="form-text text-muted danger" *ngIf="!floatStartDate.valid && (floatStartDate.dirty ||
@@ -67,7 +67,7 @@
                                    required [readonly]="true"/>
                             <span class="input-group-append">
                                 <button type="button" class="btn btn-secondary" (click)="endDateDp.toggle()"><fa-icon
-                                    [icon]="'calendar-alt'"></fa-icon></button>
+                                        [icon]="'calendar-alt'"></fa-icon></button>
                             </span>
                         </div>
                         <small class="form-text text-muted danger" *ngIf="!floatEndDate.valid && (floatEndDate.dirty ||
@@ -105,6 +105,26 @@
                         </small>
                     </div>
                 </div>
+                <h4 class="form-section"><i class="ft-box"></i>Incentivo</h4>
+                <div class="col-xl-12 col-lg-12 col-md-12">
+                    <fieldset class="form-group">
+                        <label for="customSelectIncentive">Incentivos</label>
+                        <select [(ngModel)]="focusGroup.incentive" class="custom-select d-block w-100"
+                                [disabled]="!isMember|| focusGroup.participantsAmount === undefined || focusGroup.participantsAmount < 5"
+                                id="customSelectIncentive" name="incentive" (change)="validateIncentive()">
+                            <option [ngValue]="null" selected>No utilizar incentivo.</option>
+                            <option *ngFor="let incentive of incentives"
+                                    [ngValue]="incentive">{{incentive.name}}</option>
+                        </select>
+                        <small class="display-inline-block form-text text-muted info" *ngIf="!isMember">
+                            Esta funcion solo esta disponible para usuarios con membresia.
+                        </small>
+                        <small class="display-inline-block form-text text-muted info"
+                               *ngIf="isMember && focusGroup.participantsAmount === undefined || focusGroup.participantsAmount === 0">
+                            Debes ingresar una cantidad de participantes valida para seleccionar un incentivo.
+                        </small>
+                    </fieldset>
+                </div>
                 <div *ngIf="focusGroup.aptitudeTest" id="questionCardSection" class="row">
                     <h5 class="col-12 col-md-12 col-sm-12"><i class="ft-clipboard"></i> Preguntas</h5>
                     <p _ngcontent-c24="" class="mb-0">De las preguntas mostradas a continuación, selecciona cada una de
@@ -126,8 +146,8 @@
                                                name="desiredAnswerRadio{{question.id}}" class="custom-control-input"
                                                (change)="desiredAnswer(question, answer)">
                                         <label class="custom-control-label" for="answer{{answer.id}}"><span
-                                            class="display-block"><i
-                                            class="ft-minus"></i> {{answer.answer}}</span></label>
+                                                class="display-block"><i
+                                                class="ft-minus"></i> {{answer.answer}}</span></label>
                                     </div>
                                 </div>
                             </div>

@@ -30,8 +30,9 @@ import { IBalanceAccount } from 'app/shared/model/balance-account.model';
 export class FocusGroupFormComponent implements OnInit {
     focusGroup: IFocusGroup;
     isSaving: boolean;
-    incentives: IIncentive[];
+    incentives: IIncentive[] = [];
     institutions: IInstitution[];
+    institution: IInstitution;
     categories: ICategory[];
     aptitudeTests: IAptitudeTest[];
     participants: IParticipant[];
@@ -42,13 +43,13 @@ export class FocusGroupFormComponent implements OnInit {
     formatedCost: string;
     baseGroupCost = 30000;
     baseParticipantCost = 25000;
+    isMember = true;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
         protected focusGroupService: FocusGroupService,
         protected incentiveService: IncentiveService,
         protected institutionService: InstitutionService,
-        protected categoryService: CategoryService,
         protected participantService: ParticipantService,
         protected activatedRoute: ActivatedRoute,
         protected userService: UserService,
@@ -92,7 +93,10 @@ export class FocusGroupFormComponent implements OnInit {
         this.userService.getUserWithAuthorities().subscribe(user => {
             console.log(user);
             this.institutionService.getByUserUser(user.id).subscribe(institution => {
-                this.focusGroup.institution = institution.body;
+                if (institution.body.membership.id === 2) {
+                    this.isMember = true;
+                }
+                this.institution = institution.body;
                 this.aptitudeTestService.findAllByInstitution(institution.body.id).subscribe(aptitudeTests => {
                     this.aptitudeTests = aptitudeTests.body;
                 });
@@ -117,7 +121,10 @@ export class FocusGroupFormComponent implements OnInit {
                 if (!this.focusGroup.aptitudeTest) {
                     this.focusGroup.passingGrade = 100;
                 }
-                this.subscribeToSaveResponse(this.focusGroupService.create(this.focusGroup));
+                this.focusGroup.incentive.quantity -= this.focusGroup.participantsAmount;
+                this.incentiveService.update(this.focusGroup.incentive).subscribe(res => {
+                    this.subscribeToSaveResponse(this.focusGroupService.create(this.focusGroup));
+                });
             });
         });
     }
@@ -208,5 +215,20 @@ export class FocusGroupFormComponent implements OnInit {
 
     insufficientBalance(): boolean {
         return this.groupCost > this.userBalance.balance;
+    }
+
+    validateIncentive() {
+        if (this.focusGroup.incentive.quantity < this.focusGroup.participantsAmount || !this.isMember) {
+            this.focusGroup.incentive = null;
+        }
+    }
+
+    loadIncentives() {
+        this.incentiveService
+            .findAllByInstitutionAndQuantity(this.institution.id, this.focusGroup.participantsAmount - 1)
+            .subscribe(incentives => {
+                this.incentives = incentives.body;
+                this.focusGroup.incentive = null;
+            });
     }
 }
