@@ -13,6 +13,7 @@ import { MembershipService } from 'app/entities/membership';
 import { IUser, LoginService, UserService } from 'app/core';
 import {BalanceAccountService} from 'app/entities/balance-account';
 import {BalanceAccount} from 'app/shared/model/balance-account.model';
+import {ImageService} from 'app/shared/util/image.service';
 
 @Component({
     selector: 'jhi-institution-form',
@@ -27,6 +28,7 @@ export class InstitutionFormComponent implements OnInit {
     memberships: IMembership[];
     success: boolean;
     balanceAccount = new BalanceAccount(null, 0, 0, 0, 'Cuenta interna', null);
+    image: any;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
@@ -37,7 +39,8 @@ export class InstitutionFormComponent implements OnInit {
         protected membershipService: MembershipService,
         protected activatedRoute: ActivatedRoute,
         protected userService: UserService,
-        private balanceService: BalanceAccountService
+        private balanceService: BalanceAccountService,
+        protected imageService: ImageService
     ) {}
 
     ngOnInit() {
@@ -95,8 +98,13 @@ export class InstitutionFormComponent implements OnInit {
     save() {
         this.isSaving = true;
         this.institution.user = this.userApp;
-        this.institution.logo = 'logo';
-        this.subscribeToSaveResponse(this.institutionService.create(this.institution));
+        this.imageService.save(this.image).subscribe(
+            res => {},
+            url => {
+                this.institution.logo = url.error.text;
+                this.subscribeToSaveResponse(this.institutionService.create(this.institution));
+            }
+        );
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IInstitution>>) {
@@ -125,5 +133,21 @@ export class InstitutionFormComponent implements OnInit {
 
     protected onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
+    }
+
+    onFileChange(event) {
+        if (event.target.files.length === 0) {
+            this.image = null;
+        } else {
+            this.image = event.target.files[0];
+        }
+    }
+
+    validateImage() {
+        if (!this.image) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

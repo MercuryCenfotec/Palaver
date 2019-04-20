@@ -14,7 +14,7 @@
                         </div>
                         <div class="col-2">
                             <div class="align-self-center halfway-fab text-center">
-                                    <img src="https://lh3.googleusercontent.com/2aJfB6trLglywvIh6MSN58qh-r2b-_2GoXk4dWL5fIZmMAWdTN3f98Ugpi6U_glIm0w" class="rounded-circle img-border gradient-summer width-100" alt="Card image">
+                                <img src="{{participant.picture}}" class="rounded-circle img-border gradient-summer width-100" alt="Card image">
                             </div>
                         </div>
                         <div class="col-5">
@@ -51,6 +51,10 @@
                                 <li class="mb-2">
                                     <span class="text-bold-500 primary"><i class="ft ft-calendar"></i> Fecha de nacimiento:</span>
                                     <span class="display-block overflow-hidden">{{participant.birthdate | date}}</span>
+                                </li>
+                                <li class="mb-2" *ngIf="participant.user">
+                                    <span class="text-bold-500 primary"><i class="ft ft-mail"></i> E-mail:</span>
+                                    <span class="display-block overflow-hidden" [routerLink]="['/user-app', participant.user?.id, 'view']">{{participant.user?.mail}}</span>
                                 </li>
                             </ul>
                         </div>
@@ -101,6 +105,10 @@
                                         </div>
                                     </div>
                                 </li>
+                                <li class="mb-2" *ngIf="participant.user">
+                                    <span class="text-bold-500 primary"><i class="ft ft-lock"></i> Identificación:</span>
+                                    <span class="display-block overflow-hidden" [routerLink]="['/user-app', participant.user?.id, 'view']">{{participant.user?.identificationNumber}}</span>
+                                </li>
                                 <!--<li class="mb-2">-->
                                     <!--<span class="text-bold-500 primary"><a><i class="ft ft-user"></i> Género:</a></span>-->
                                     <!--<span class="display-block overflow-hidden">{{participant.gender}}</span>-->
@@ -125,6 +133,10 @@
                                         <span class="display-block overflow-hidden" *ngSwitchCase="'UNDEFINED'">Otro</span>
                                         <span class="display-block overflow-hidden" *ngSwitchDefault>Otro</span>
                                     </div>
+                                </li>
+                                <li class="mb-2" *ngIf="participant.user">
+                                    <span class="text-bold-500 primary"><i class="ft ft-map-pin"></i> Dirección:</span>
+                                    <span class="display-block overflow-hidden" [routerLink]="['/user-app', participant.user?.id, 'view']">{{participant.user?.address}}</span>
                                 </li>
                             </ul>
                         </div>

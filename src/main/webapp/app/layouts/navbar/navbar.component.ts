@@ -145,9 +145,7 @@ export class NavbarComponent implements OnInit {
                     permissions = [
                         'calendarPermissions',
                         'participantPPermissions',
-                        'paymentMethodPermissions',
                         'balancePermissions',
-                        'paymentPermissions',
                         'expulsionPermissions'
                     ];
                     break;
@@ -158,9 +156,7 @@ export class NavbarComponent implements OnInit {
                         'aptitudeTestsPermissions',
                         'focusGroupPermissions',
                         'membershipPermissions',
-                        'paymentMethodPermissions',
-                        'balancePermissions',
-                        'paymentPermissions'
+                        'balancePermissions'
                     ];
                     break;
                 case 'ROLE_SUBADMIN':

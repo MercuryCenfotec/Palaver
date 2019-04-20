@@ -23,7 +23,7 @@
                             <tr *ngFor="let ban of bans; trackBy: trackId">
                                 <td>
                                     <div *ngIf="ban.focusGroup">
-                                        <a [routerLink]="['../focus-group', ban.focusGroup?.id, 'view' ]">{{ban.focusGroup?.name}}</a>
+                                        {{ban.focusGroup?.name}}
                                     </div>
                                 </td>
                                 <td>
@@ -58,7 +58,13 @@
         </button>
     </div>
     <div class="modal-body">
-        <p class="primary text-center d-block  border-top-lighten-4 text-bold-400 py-1">{{ban.reason}}</p>
+        <form class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate>
+            <div class="form-body">
+                <div class="form-group">
+                    <label class="form-control-label" for="field_motive">{{ban.reason}}</label>
+                </div>
+            </div>
+        </form>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary btn-raised" (click)="c('Close click')">Cerrar</button>
@@ -74,9 +80,17 @@
         </button>
     </div>
     <div class="modal-body">
-        <div class="form-group">
-            <p class="primary text-center d-block  border-top-lighten-4 text-bold-400 py-1">¿Consideras que el motivo por el cual te expulsaron no es correcto? Ingresa una queja para alzar la voz.</p>
-            <textarea #txtComplaint type="text" class="form-control" name="description" id="field_description"></textarea>
+        <div class="px-3">
+            <form class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate>
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="form-control-label" for="field_motive">¿Consideras que el motivo por el cual te
+                            expulsaron no es correcto? Ingresa una queja para alzar la voz.</label>
+                        <textarea type="text" class="form-control" name="motive" id="field_motive" required
+                                  #txtComplaint></textarea>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <div class="modal-footer">
