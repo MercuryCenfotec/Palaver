@@ -10,5 +10,6 @@ eg $input-color: red;
 @import '~bootstrap/scss/bootstrap';
 @import '~angular-calendar/scss/angular-calendar';
 @import '../template/sass/app';
-
+@import '~chartist/dist/scss/chartist.scss';
+@import './custom-chartist';
 /* jhipster-needle-scss-add-vendor JHipster will add new css style */

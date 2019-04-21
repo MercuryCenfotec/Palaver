@@ -70,6 +70,15 @@ public class BalanceAccountResource {
      * or with status 500 (Internal Server Error) if the balanceAccount couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
+    @PutMapping("/balance-accounts")
+    public void updateAccount(@Valid @RequestBody BalanceAccount account) throws URISyntaxException {
+        log.debug("REST request to update Institution : {}", account);
+        if (account.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        BalanceAccount result = balanceAccountRepository.save(account);
+    }
+
     @PutMapping("/balance-accounts/{token}/{amount}")
     public ResponseEntity<BalanceAccount> updateBalanceAccount(@Valid @RequestBody BalanceAccount balanceAccount, @PathVariable("token") String token, @PathVariable("amount") int amount) throws URISyntaxException {
         log.debug("REST request to update BalanceAccount : {}", balanceAccount);

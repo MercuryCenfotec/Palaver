@@ -26,6 +26,9 @@ import { UserHomeComponent } from './user-home/user-home.component';
 import { PalaverUserHomeModule } from 'app/user-home/user-home.module';
 import { DashboardInstitutionComponent } from './dashboard-institution/dashboard-institution.component';
 import { PalaverDashboardInstitutionModule } from 'app/dashboard-institution/dashboard-institution.module';
+import { ChartistComponent } from './chartist/chartist.component';
+import { PalaverChartistModule } from 'app/chartist/chartist.module';
+import { ChartistModule } from 'ng-chartist';
 
 registerLocaleData(localeEs);
 
@@ -45,13 +48,15 @@ registerLocaleData(localeEs);
         PalaverUserHomeModule,
         PalaverAccountModule,
         PalaverDashboardInstitutionModule,
+        PalaverChartistModule,
+        ChartistModule,
         Ng2SearchPipeModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
         PalaverEntityModule,
         PalaverAppRoutingModule
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
-    declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
+    declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent, ChartistComponent],
     providers: [
         {
             provide: HTTP_INTERCEPTORS,
