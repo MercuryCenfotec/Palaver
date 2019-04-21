@@ -9,6 +9,8 @@ import { AccountService, UserService } from 'app/core';
 import { TestResultService } from './test-result.service';
 import { FocusGroupService } from 'app/entities/focus-group';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
+import { NotificationService } from 'app/entities/notification';
+import { Notification } from 'app/shared/model/notification.model';
 
 @Component({
     selector: 'jhi-test-result',
@@ -28,13 +30,14 @@ export class TestResultComponent implements OnInit, OnDestroy {
         protected eventManager: JhiEventManager,
         protected accountService: AccountService,
         protected userService: UserService,
-        protected focusGroupService: FocusGroupService
+        protected focusGroupService: FocusGroupService,
+        protected notificationService: NotificationService
     ) {}
 
     loadAll() {
         this.userService.getUserWithAuthorities().subscribe(user => {
             this.focusGroupService.findByCode(user.login).subscribe(group => {
-                this.testResultService.findAllByFocusGroup(group.body.id).subscribe(results => {
+                this.testResultService.findAllByFocusGroupAndStatus(group.body.id, 'EnCurso').subscribe(results => {
                     this.testResults = results.body;
                 });
             });
@@ -82,7 +85,6 @@ export class TestResultComponent implements OnInit, OnDestroy {
     }
 
     acceptParticipant(event: ITestResult) {
-        console.log(this.focusGroups);
         for (let i = 0; i < this.focusGroups.length; i++) {
             if (event.focusGroup.id === this.focusGroups[i].id) {
                 event.focusGroup = this.focusGroups[i];
@@ -90,15 +92,35 @@ export class TestResultComponent implements OnInit, OnDestroy {
         }
         event.focusGroup.participants.push(event.participant);
         this.focusGroupService.update(event.focusGroup).subscribe(data => {
-            this.testResultService.delete(event.id).subscribe(data2 => {
-                this.loadAll();
+            event.status = 'Aceptado';
+            this.testResultService.update(event).subscribe(data2 => {
+                const newNotification = new Notification(
+                    null,
+                    event.participant.user.user.id.toString(),
+                    'GroupAccepted',
+                    false,
+                    event.focusGroup.id
+                );
+                this.notificationService.create(newNotification).subscribe(createdNoti => {
+                    this.loadAll();
+                });
             });
         });
     }
 
     rejectParticipant(event: ITestResult) {
-        this.testResultService.delete(event.id).subscribe(data => {
-            this.loadAll();
+        event.status = 'Rechazado';
+        this.testResultService.update(event).subscribe(data => {
+            const newNotification = new Notification(
+                null,
+                event.participant.user.user.id.toString(),
+                'GroupRejected',
+                false,
+                event.focusGroup.id
+            );
+            this.notificationService.create(newNotification).subscribe(createdNoti => {
+                this.loadAll();
+            });
         });
     }
 }

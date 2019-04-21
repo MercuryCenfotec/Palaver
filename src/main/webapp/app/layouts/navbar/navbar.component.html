@@ -18,6 +18,19 @@
             <div id="navbarSupportedContent" class="collapse navbar-collapse" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">
                 <ul class="navbar-nav ml-auto">
 
+                    <li *ngSwitchCase="true" class="nav-item" ngbDropdown placement="bottom-right">
+                        <a class="nav-link position-relative" id="dropdownBasic2" ngbDropdownToggle (click)="doThis()">
+                            <i class="ft-bell font-medium-3 blue-grey darken-4"></i>
+                            <span class="notification badge badge-pill badge-danger">{{userNotifications.length}}</span>
+                            <p class="d-none">Notificaciones</p>
+                        </a>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="notification-dropdown finish-him" style="width: 500px">
+                            <div class="noti-list" id="plsWork">
+                                <a class="noti-footer primary text-center d-block border-top border-top-blue-grey border-top-lighten-4 text-bold-400 py-1" (click)="clearAllNotifications()">Leer todas las notificaciones</a>
+                            </div>
+                        </div>
+                    </li>
+
                     <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active"
                         [routerLinkActiveOptions]="{exact: true}">
                         <a id="entityMenu" class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" (click)="findActualUser()">
@@ -162,6 +175,20 @@
                                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                                     <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
                                     <span>Pagos</span>
+                                </a>
+                            </li>
+                            <li id="banPermissions" hidden>
+                                <a class="dropdown-item" routerLink="ban" routerLinkActive="active"
+                                   [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                                    <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                                    <span>Suspenciones</span>
+                                </a>
+                            </li>
+                            <li id="expulsionPermissions" hidden>
+                                <a class="dropdown-item" [routerLink]="['participants-expulsions']" routerLinkActive="active"
+                                   [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                                    <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                                    <span>Expulsiones</span>
                                 </a>
                             </li>
                             <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->

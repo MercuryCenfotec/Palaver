@@ -39,4 +39,8 @@ export class TestResultService {
     findAllByFocusGroup(groupId: number): Observable<EntityArrayResponseType> {
         return this.http.get<ITestResult[]>(`${this.resourceUrl}/focus-group/${groupId}`, { observe: 'response' });
     }
+
+    findAllByFocusGroupAndStatus(groupId: number, status: string): Observable<EntityArrayResponseType> {
+        return this.http.get<ITestResult[]>(this.resourceUrl + '/focus-group/' + groupId + '/' + status, { observe: 'response' });
+    }
 }

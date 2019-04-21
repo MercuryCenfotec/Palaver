@@ -1,18 +1,18 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
-import {Subscription} from 'rxjs';
-import {filter, map} from 'rxjs/operators';
-import {JhiEventManager, JhiAlertService} from 'ng-jhipster';
-import {IBalanceAccount} from 'app/shared/model/balance-account.model';
-import {AccountService, UserService} from 'app/core';
-import {BalanceAccountService} from './balance-account.service';
-import {UserAppService} from 'app/entities/user-app';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
+import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { IBalanceAccount } from 'app/shared/model/balance-account.model';
+import { AccountService, UserService } from 'app/core';
+import { BalanceAccountService } from './balance-account.service';
+import { UserAppService } from 'app/entities/user-app';
 
 @Component({
     selector: 'jhi-balance-account',
     templateUrl: './balance-account.component.html'
 })
-export class BalanceAccountComponent implements OnInit, OnDestroy {
+export class BalanceAccountComponent implements OnInit {
     balanceAccounts: IBalanceAccount[];
     currentAccount: any;
     eventSubscriber: Subscription;
@@ -27,8 +27,7 @@ export class BalanceAccountComponent implements OnInit, OnDestroy {
         protected accountService: AccountService,
         protected userService: UserService,
         protected userAppService: UserAppService
-    ) {
-    }
+    ) {}
 
     ngOnInit() {
         this.userService.getUserWithAuthorities().subscribe(user => {
@@ -49,10 +48,6 @@ export class BalanceAccountComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
-    }
-
     trackId(index: number, item: IBalanceAccount) {
         return item.id;
     }
@@ -66,7 +61,7 @@ export class BalanceAccountComponent implements OnInit, OnDestroy {
         const handler = (<any>window).StripeCheckout.configure({
             key: 'pk_test_h6yLV7URu1btctSqXR1Rsn5y00ExJYJNll',
             locale: 'es',
-            token: function(token: any) {
+            token: (token: any) => {
                 parentReference.updateNow(token.id, amountToSubmit);
             }
         });

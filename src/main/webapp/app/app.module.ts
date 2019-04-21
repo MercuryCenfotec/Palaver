@@ -29,6 +29,8 @@ import { PalaverDashboardInstitutionModule } from 'app/dashboard-institution/das
 import { ChartistComponent } from './chartist/chartist.component';
 import { PalaverChartistModule } from 'app/chartist/chartist.module';
 import { ChartistModule } from 'ng-chartist';
+import { ParticipantExpulsionsComponent } from './participant-expulsions/participant-expulsions.component';
+import { PalaverParticipantExpulsionsModule } from 'app/participant-expulsions/participant-expulsions.module';
 
 registerLocaleData(localeEs);
 
@@ -46,6 +48,7 @@ registerLocaleData(localeEs);
         PalaverCoreModule,
         PalaverHomeModule,
         PalaverUserHomeModule,
+        PalaverParticipantExpulsionsModule,
         PalaverAccountModule,
         PalaverDashboardInstitutionModule,
         PalaverChartistModule,
