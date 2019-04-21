@@ -150,4 +150,8 @@ export class InstitutionFormComponent implements OnInit {
             return true;
         }
     }
+
+    closeMe(target) {
+        target.hidden = true;
+    }
 }

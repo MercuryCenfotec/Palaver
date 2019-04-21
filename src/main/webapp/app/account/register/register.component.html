@@ -9,24 +9,49 @@
                     que desea compartir su opinión, especifícalo al final del formulario.
                 </p>
 
-                <div class="alert alert-success" *ngIf="success">
-                    <strong>¡Su registro ha sido exitoso!</strong> Por favor revise su correo para verificar su cuenta.
+                <div *ngIf="success">
+                    <div id="successAlert" #successAlert class="popupunder alert alert-dismissible custom-alert-success">
+                        <button type="button" data-dismiss="alert" class="close" (click)="closeMe(successAlert)">×</button>
+                        <span class="ft-check"></span> <strong>¡Felicidades!</strong>
+                        <hr class="message-inner-separator" style="background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));">
+                        <p>¡Su registro ha sido exitoso!<br> Por favor revise su correo para verificar su cuenta.</p>
+                    </div>
                 </div>
 
-                <div class="alert alert-danger" *ngIf="error">
-                    <strong>¡Registro fallido!</strong> Por favor intente de nuevo.
+                <div *ngIf="error">
+                    <div id="dangerErrorAlert" #dangerErrorAlert class="popupunder alert alert-dismissible custom-alert-danger">
+                        <button type="button" data-dismiss="alert" class="close" (click)="closeMe(dangerErrorAlert)">×</button>
+                        <span class="ft-x"></span> <strong>¡Error!</strong>
+                        <hr class="message-inner-separator" style="background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));">
+                        <p>¡Registro fallido! Por favor intente de nuevo.</p>
+                    </div>
                 </div>
 
-                <div class="alert alert-danger" *ngIf="errorUserExists">
-                    <strong>¡El nombre de usuario ya se encuentra registrado!</strong> Por favor utilice otro.
+                <div *ngIf="errorUserExists">
+                    <div id="warningUserExistsAlert" #warningUserExistsAlert class="popupunder alert alert-dismissible custom-alert-warning">
+                        <button type="button" data-dismiss="alert" class="close" (click)="closeMe(warningUserExistsAlert)">×</button>
+                        <span class="ft-alert-triangle"></span> <strong>¡Atención!</strong>
+                        <hr class="message-inner-separator" style="background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));">
+                        <p>¡El nombre de usuario ya se encuentra registrado!<br>Por favor utilice otro.</p>
+                    </div>
                 </div>
 
-                <div class="alert alert-danger" *ngIf="errorEmailExists">
-                    <strong>¡El correo electrónico ya se encuentra en uso!</strong> Por favor utilice otro.
+                <div *ngIf="errorEmailExists">
+                    <div id="warningEmailExistsAlert" #warningEmailExistsAlert class="popupunder alert alert-dismissible custom-alert-warning">
+                        <button type="button" data-dismiss="alert" class="close" (click)="closeMe(warningEmailExistsAlert)">×</button>
+                        <span class="ft-alert-triangle"></span> <strong>¡Atención!</strong>
+                        <hr class="message-inner-separator" style="background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));">
+                        <p>¡El correo electrónico ya se encuentra en uso!<br>Por favor utilice otro.</p>
+                    </div>
                 </div>
 
-                <div class="alert alert-danger" *ngIf="doNotMatch">
-                    ¡La contraseña y la confirmación no concuerdan!
+                <div *ngIf="doNotMatch">
+                    <div id="warningDoNotMatchAlert" #warningDoNotMatchAlert class="popupunder alert alert-dismissible custom-alert-warning">
+                        <button type="button" data-dismiss="alert" class="close" (click)="closeMe(warningDoNotMatchAlert)">×</button>
+                        <span class="ft-alert-triangle"></span> <strong>¡Atención!</strong>
+                        <hr class="message-inner-separator" style="background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));">
+                        <p>¡La contraseña y la confirmación no concuerdan!<br>Por favor vuelve a intentarlo.</p>
+                    </div>
                 </div>
             </div>
             <div _ngcontent-c24="" class="card-body">
