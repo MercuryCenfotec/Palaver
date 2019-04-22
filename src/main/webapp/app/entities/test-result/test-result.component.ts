@@ -1,16 +1,16 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
-import {Subscription} from 'rxjs';
-import {filter, map} from 'rxjs/operators';
-import {JhiEventManager, JhiAlertService} from 'ng-jhipster';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
+import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
-import {ITestResult} from 'app/shared/model/test-result.model';
-import {AccountService, UserService} from 'app/core';
-import {TestResultService} from './test-result.service';
-import {FocusGroupService} from 'app/entities/focus-group';
-import {IFocusGroup} from 'app/shared/model/focus-group.model';
-import {NotificationService} from 'app/entities/notification';
-import {Notification} from 'app/shared/model/notification.model';
+import { ITestResult } from 'app/shared/model/test-result.model';
+import { AccountService, UserService } from 'app/core';
+import { TestResultService } from './test-result.service';
+import { FocusGroupService } from 'app/entities/focus-group';
+import { IFocusGroup } from 'app/shared/model/focus-group.model';
+import { NotificationService } from 'app/entities/notification';
+import { Notification } from 'app/shared/model/notification.model';
 
 @Component({
     selector: 'jhi-test-result',
@@ -32,8 +32,7 @@ export class TestResultComponent implements OnInit, OnDestroy {
         protected userService: UserService,
         protected focusGroupService: FocusGroupService,
         protected notificationService: NotificationService
-    ) {
-    }
+    ) {}
 
     loadAll() {
         this.userService.getUserWithAuthorities().subscribe(user => {
@@ -95,7 +94,13 @@ export class TestResultComponent implements OnInit, OnDestroy {
         this.focusGroupService.update(event.focusGroup).subscribe(data => {
             event.status = 'Aceptado';
             this.testResultService.update(event).subscribe(data2 => {
-                const newNotification = new Notification(null, event.participant.user.user.id.toString(), 'GroupAccepted', false, event.focusGroup.id);
+                const newNotification = new Notification(
+                    null,
+                    event.participant.user.user.id.toString(),
+                    'GroupAccepted',
+                    false,
+                    event.focusGroup.id
+                );
                 this.notificationService.create(newNotification).subscribe(createdNoti => {
                     this.loadAll();
                 });
@@ -106,7 +111,13 @@ export class TestResultComponent implements OnInit, OnDestroy {
     rejectParticipant(event: ITestResult) {
         event.status = 'Rechazado';
         this.testResultService.update(event).subscribe(data => {
-            const newNotification = new Notification(null, event.participant.user.user.id.toString(), 'GroupRejected', false, event.focusGroup.id);
+            const newNotification = new Notification(
+                null,
+                event.participant.user.user.id.toString(),
+                'GroupRejected',
+                false,
+                event.focusGroup.id
+            );
             this.notificationService.create(newNotification).subscribe(createdNoti => {
                 this.loadAll();
             });

@@ -8,7 +8,7 @@ import { JhiAlertService } from 'ng-jhipster';
 import { IParticipant } from 'app/shared/model/participant.model';
 import { IAptitudeTest } from 'app/shared/model/aptitude-test.model';
 import { AptitudeTestService } from 'app/entities/aptitude-test';
-import moment = require('moment');
+import * as moment from 'moment';
 import { Moment } from 'moment';
 
 @Component({

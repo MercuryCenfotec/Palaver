@@ -60,7 +60,7 @@ export const userAppRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_ADMIN'],
-            pageTitle: 'UserApps'
+            pageTitle: 'Usuarios'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -72,7 +72,7 @@ export const userAppRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Editar Usuario'
+            pageTitle: 'Usuarios'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -96,7 +96,7 @@ export const userAppRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_ADMIN'],
-            pageTitle: 'Subadmin'
+            pageTitle: 'Subadmins'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -111,7 +111,7 @@ export const userAppPopupRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_ADMIN'],
-            pageTitle: 'Eliminacion de usuario'
+            pageTitle: 'Usuarios'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

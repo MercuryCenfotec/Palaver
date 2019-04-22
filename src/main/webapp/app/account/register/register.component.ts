@@ -43,6 +43,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     register() {
         if (this.registerAccount.password !== this.confirmPassword) {
             this.doNotMatch = 'ERROR';
+            this.error = null;
+            this.errorUserExists = null;
+            this.errorEmailExists = null;
         } else {
             this.doNotMatch = null;
             this.error = null;
@@ -81,4 +84,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
 
     previousState() {}
+
+    closeMe(target) {
+        target.hidden = true;
+    }
 }

@@ -15,9 +15,9 @@ import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { FocusGroupService } from 'app/entities/focus-group';
 import { IUser, LoginService, UserService } from 'app/core';
 import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
-import {BalanceAccountService} from 'app/entities/balance-account';
-import {BalanceAccount} from 'app/shared/model/balance-account.model';
-import {ImageService} from 'app/shared/util/image.service';
+import { BalanceAccountService } from 'app/entities/balance-account';
+import { BalanceAccount } from 'app/shared/model/balance-account.model';
+import { ImageService } from 'app/shared/util/image.service';
 
 @Component({
     selector: 'jhi-participant-create',
@@ -143,7 +143,7 @@ export class ParticipantCreateComponent implements OnInit {
         this.isSaving = false;
         this.userAppService.findByUserId(this.userApp.user.id).subscribe(newUser => {
             this.balanceAccount.user = newUser;
-            this.balanceService.create(this.balanceAccount).subscribe( () => {
+            this.balanceService.create(this.balanceAccount).subscribe(() => {
                 this.loginService.logout();
                 this.success = true;
             });
@@ -196,5 +196,9 @@ export class ParticipantCreateComponent implements OnInit {
         } else {
             return true;
         }
+    }
+
+    closeMe(target) {
+        target.hidden = true;
     }
 }

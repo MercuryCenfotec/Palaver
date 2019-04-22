@@ -34,12 +34,16 @@
                 <constraints nullable="false" />
             </column>
 
+            <column name="on_hold" type="boolean">
+                <constraints nullable="true" />
+            </column>
+
             <column name="destiny_account_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
-            <column name="oring_account_id" type="bigint">
-                <constraints nullable="true" />
+            <column name="origin_account_id" type="bigint">
+                <constraints nullable="false" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->

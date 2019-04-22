@@ -14,7 +14,7 @@ import { CategoryService } from 'app/entities/category';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { FocusGroupService } from 'app/entities/focus-group';
 import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
-import {ImageService} from 'app/shared/util/image.service';
+import { ImageService } from 'app/shared/util/image.service';
 
 @Component({
     selector: 'jhi-participant-update',
@@ -99,7 +99,6 @@ export class ParticipantUpdateComponent implements OnInit {
     save() {
         this.isSaving = true;
         if (this.participant.id !== undefined) {
-
             if (this.image !== undefined) {
                 this.imageService.save(this.image).subscribe(
                     res => {},

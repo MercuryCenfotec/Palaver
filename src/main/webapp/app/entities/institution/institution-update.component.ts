@@ -10,7 +10,7 @@ import { IUserApp } from 'app/shared/model/user-app.model';
 import { UserAppService } from 'app/entities/user-app';
 import { IMembership } from 'app/shared/model/membership.model';
 import { MembershipService } from 'app/entities/membership';
-import {ImageService} from 'app/shared/util/image.service';
+import { ImageService } from 'app/shared/util/image.service';
 
 @Component({
     selector: 'jhi-institution-update',
@@ -91,7 +91,6 @@ export class InstitutionUpdateComponent implements OnInit {
             } else {
                 this.subscribeToSaveResponse(this.institutionService.update(this.institution));
             }
-
         } else {
             this.subscribeToSaveResponse(this.institutionService.create(this.institution));
         }

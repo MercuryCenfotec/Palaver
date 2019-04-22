@@ -26,7 +26,7 @@
                                  floatAmount.touched)">Este campo es requerido.
                             </small>
                             <small class="form-text text-muted danger" *ngIf="!validateParticipantsAmount()">
-                                La cantidad tiene que ser un numero entero mayor a 5 y menor o igual a 10.
+                                La cantidad tiene que ser un numero entero mayor o igual a 4 y menor o igual a 12.
                             </small>
                         </div>
                     </div>
@@ -155,7 +155,19 @@
                     </div>
                 </div>
             </div>
-            <h4 class="form-section"></h4>
+            <h4 class="form-section"><i class="ft-credit-card"></i>Costo</h4>
+            <div class="card col-xl-12 col-lg-12 col-md-12">
+                <div class="card-block row">
+                    <h4 class="col-xl-9 col-lg-9 col-md-9 col-sm-9">El costo del grupo de enfoque es de:</h4>
+                    <h4 *ngIf="!focusGroup.participantsAmount; else validParticipantAmount"
+                        class="col-xl-3 col-lg-3 col-md-3 col-sm-3 text-right card-title">25.000,00 CRC.</h4>
+                    <ng-template #validParticipantAmount>
+                        <h4 class="col-xl-3 col-lg-3 col-md-3 col-sm-3 text-right card-title">
+                            {{formatedCost}}.
+                        </h4>
+                    </ng-template>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-auto">
                     <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
@@ -164,26 +176,31 @@
                     </button>
                 </div>
                 <div
-                        *ngIf="editForm.form.invalid || !validateAnswers() || !validEndDate() ||
-                     !validatePassingGrade() || !validateParticipantsAmount(); else validEditBtn"
-                        [ngbPopover]="popoverText"
-                        triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido." class="col-auto">
+                    *ngIf="editForm.form.invalid || isSaving || !validateAnswers() || !validEndDate() ||
+                     !validatePassingGrade() || !validateParticipantsAmount() || insufficientBalance(); else validEditBtn"
+                    [ngbPopover]="popoverText"
+                    triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido." class="col-auto">
                     <button type="submit" id="save-entity-invalid" [disabled]="true"
                             class="btn btn-raised btn-primary">
                         <i class="ft-save"></i>&nbsp;<span> Guardar</span>
                     </button>
                 </div>
                 <ng-template #popoverText>
-                    <small class="display-block">Por favor, asegúrese de que todos los campos estén completos.</small>
-                    <small>Si está usando una prueba de aptitud, necesita asignar una nota mínima y marcar la respuesta
-                        deseada de cada
-                        pregunta.
+                    <small *ngIf="editForm.form.invalid || !validateParticipantsAmount() || !validEndDate()"
+                           class="display-block">
+                        Por favor, asegúrese de que todos los campos estén completos.
+                    </small>
+                    <small *ngIf="!validatePassingGrade() || !validateAnswers()">
+                        Si está usando una prueba de aptitud, necesita asignar una nota mínima y marcar la respuesta
+                        deseada de cada pregunta.
+                    </small>
+                    <small class="display-block" *ngIf="insufficientBalance()">
+                        El balance de su cuenta no es suficiente para crear este grupo de enfoque.
                     </small>
                 </ng-template>
                 <ng-template #validEditBtn>
                     <div class="col-auto">
-                        <button type="submit" id="save-entity-valid"
-                                class="btn btn-raised btn-primary" [disabled]="isSaving">
+                        <button type="submit" id="save-entity-valid" class="btn btn-raised btn-primary">
                             <i class="ft-save"></i>&nbsp;<span> Guardar</span>
                         </button>
                     </div>

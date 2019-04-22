@@ -1,7 +1,10 @@
 package com.mercury.palaver.web.rest;
+
 import com.mercury.palaver.domain.BalanceAccount;
+import com.mercury.palaver.domain.User;
 import com.mercury.palaver.repository.BalanceAccountRepository;
 import com.mercury.palaver.service.MailService;
+import com.mercury.palaver.service.PaymentService;
 import com.mercury.palaver.web.rest.errors.BadRequestAlertException;
 import com.mercury.palaver.web.rest.util.HeaderUtil;
 import com.stripe.Stripe;
@@ -33,11 +36,16 @@ public class BalanceAccountResource {
 
     private final BalanceAccountRepository balanceAccountRepository;
 
+    private final PaymentService paymentService;
+
     private final MailService mailService;
 
-    public BalanceAccountResource(BalanceAccountRepository balanceAccountRepository, MailService mailService) {
+    public BalanceAccountResource(BalanceAccountRepository balanceAccountRepository,
+                                  MailService mailService,
+                                  PaymentService paymentService) {
         this.balanceAccountRepository = balanceAccountRepository;
         this.mailService = mailService;
+        this.paymentService = paymentService;
     }
 
     /**
@@ -105,10 +113,18 @@ public class BalanceAccountResource {
         currency = currency.substring(0, currency.length() - 5);
         currency = "₡ " + currency;
         mailService.sendPaymentEmail(balanceAccount.getUser().getUser(), currency);
+        paymentService.createPayment(balanceAccount, balanceAccount, "Recarga de cuenta interna.", (amount / 100), false);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, balanceAccount.getId().toString()))
             .body(result);
     }
+
+//    @GetMapping("balance-accounts/retrieve/{userId}/{cardNumber}/{amount}")
+//    public void retrieveAccountFunds(@PathVariable("userId") Long userId,
+//                                     @PathVariable("cardNumber") String cardNumber,
+//                                     @PathVariable("amount") String amount) {
+//        paymentService.retrieveAccountFunds(userId, cardNumber, amount);
+//    }
 
     /**
      * GET  /balance-accounts : get all the balanceAccounts.
@@ -152,5 +168,14 @@ public class BalanceAccountResource {
         log.debug("REST request to delete BalanceAccount : {}", id);
         balanceAccountRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/balance-accounts/user-app/user/{id}")
+    public ResponseEntity<BalanceAccount> getBalanceAccountByUserUserId(@Valid @PathVariable Long id) {
+        log.debug("REST request to get BalanceAccount : {}", id);
+        User user = new User();
+        user.setId(id);
+        Optional<BalanceAccount> balanceAccount = balanceAccountRepository.findByUser_User(user);
+        return ResponseUtil.wrapOrNotFound(balanceAccount);
     }
 }

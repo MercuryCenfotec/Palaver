@@ -34,7 +34,7 @@ export const banRoute: Routes = [
         component: BanComponent,
         data: {
             authorities: ['ROLE_ADMIN', 'ROLE_SUBADMIN'],
-            pageTitle: 'Bans'
+            pageTitle: 'Suspenciones'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -45,8 +45,8 @@ export const banRoute: Routes = [
             ban: BanResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Bans'
+            authorities: ['ROLE_ADMIN', 'ROLE_SUBADMIN'],
+            pageTitle: 'Suspenciones'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -57,8 +57,8 @@ export const banRoute: Routes = [
             ban: BanResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Bans'
+            authorities: ['ROLE_ADMIN', 'ROLE_SUBADMIN'],
+            pageTitle: 'Suspenciones'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -69,8 +69,8 @@ export const banRoute: Routes = [
             ban: BanResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Bans'
+            authorities: ['ROLE_ADMIN', 'ROLE_SUBADMIN'],
+            pageTitle: 'Suspenciones'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -84,8 +84,8 @@ export const banPopupRoute: Routes = [
             ban: BanResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Bans'
+            authorities: ['ROLE_ADMIN', 'ROLE_SUBADMIN'],
+            pageTitle: 'Suspenciones'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

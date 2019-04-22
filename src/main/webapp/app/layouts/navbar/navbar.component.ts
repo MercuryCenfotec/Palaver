@@ -1,21 +1,22 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {VERSION} from 'app/app.constants';
-import {AccountService, LoginModalService, LoginService, UserService} from 'app/core';
-import {ProfileService} from 'app/layouts/profiles/profile.service';
-import {IUserApp} from 'app/shared/model/user-app.model';
-import {Participant} from 'app/shared/model/participant.model';
-import {ParticipantService} from 'app/entities/participant';
-import {UserAppService} from 'app/entities/user-app';
-import {InstitutionService} from 'app/entities/institution';
-import {Institution} from 'app/shared/model/institution.model';
-import {IBan} from 'app/shared/model/ban.model';
-import {INotification} from 'app/shared/model/notification.model';
-import {JhiAlertService} from 'ng-jhipster';
-import {FocusGroupService} from 'app/entities/focus-group';
-import {BanService} from 'app/entities/ban';
-import {NotificationService} from 'app/entities/notification';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { VERSION } from 'app/app.constants';
+import { AccountService, LoginModalService, LoginService, UserService } from 'app/core';
+import { ProfileService } from 'app/layouts/profiles/profile.service';
+import { IUserApp } from 'app/shared/model/user-app.model';
+import { Participant } from 'app/shared/model/participant.model';
+import { ParticipantService } from 'app/entities/participant';
+import { UserAppService } from 'app/entities/user-app';
+import { InstitutionService } from 'app/entities/institution';
+import { Institution } from 'app/shared/model/institution.model';
+import { IBan } from 'app/shared/model/ban.model';
+import { INotification } from 'app/shared/model/notification.model';
+import { JhiAlertService } from 'ng-jhipster';
+import { FocusGroupService } from 'app/entities/focus-group';
+import { BanService } from 'app/entities/ban';
+import { NotificationService } from 'app/entities/notification';
+import { MeetingService } from 'app/entities/meeting';
 
 @Component({
     selector: 'jhi-navbar',
@@ -51,15 +52,15 @@ export class NavbarComponent implements OnInit {
         protected focusGroupService: FocusGroupService,
         protected banService: BanService,
         protected modalService: NgbModal,
-        protected notificationService: NotificationService
+        protected notificationService: NotificationService,
+        protected meetingService: MeetingService
     ) {
         this.version = VERSION ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
     }
 
     ngOnInit() {
-        this.currentAccount = this.userService.getUserWithAuthorities().forEach(jhiUser => {
-        });
+        this.currentAccount = this.userService.getUserWithAuthorities().forEach(jhiUser => {});
 
         this.profileService.getProfileInfo().then(profileInfo => {
             this.inProduction = profileInfo.inProduction;
@@ -135,19 +136,12 @@ export class NavbarComponent implements OnInit {
                         'participantPermissions',
                         'institutionPermissions',
                         'membershipPermissions',
-                        'paymentMethodPermissions',
-                        'systemVariablePermissions',
                         'paymentPermissions',
                         'banPermissions'
                     ];
                     break;
                 case 'ROLE_PARTICIPANT':
-                    permissions = [
-                        'calendarPermissions',
-                        'participantPPermissions',
-                        'balancePermissions',
-                        'expulsionPermissions'
-                    ];
+                    permissions = ['calendarPermissions', 'participantPPermissions', 'balancePermissions', 'expulsionPermissions'];
                     break;
                 case 'ROLE_INSTITUTION':
                     permissions = [
@@ -160,11 +154,7 @@ export class NavbarComponent implements OnInit {
                     ];
                     break;
                 case 'ROLE_SUBADMIN':
-                    permissions = [
-                        'participantPermissions',
-                        'institutionPermissions',
-                        'banPermissions'
-                    ];
+                    permissions = ['participantPermissions', 'institutionPermissions', 'banPermissions', 'paymentPermissions'];
                     break;
                 default:
                     break;
@@ -218,12 +208,16 @@ export class NavbarComponent implements OnInit {
                 switch (this.userNotifications[i].type) {
                     case 'GroupAccepted':
                         this.focusGroupService.find(this.userNotifications[i].messageId).subscribe(getIt => {
-                            node.innerHTML = node.innerHTML + '<a class="dropdown-item noti-container py-3">\n' +
+                            node.innerHTML =
+                                node.innerHTML +
+                                '<a class="dropdown-item noti-container py-3">\n' +
                                 '                                        <i class="ft-thumbs-up success float-left d-block font-large-1 mt-4 mr-4"></i>\n' +
                                 '                                        <span class="noti-wrapper">\n' +
                                 '                                        <span class="noti-title line-height-1 d-block text-bold-400 success">¡Felicidades!</span>\n' +
                                 '                                        <span class="noti-text">Has sido aceptado en el grupo de enfoque:</span><br>\n' +
-                                '                                        <span class="noti-text">' + getIt.body.name + '</span>\n' +
+                                '                                        <span class="noti-text">' +
+                                getIt.body.name +
+                                '</span>\n' +
                                 '                                    </span>\n' +
                                 '                                    </a>';
                             ele.appendChild(node);
@@ -231,12 +225,16 @@ export class NavbarComponent implements OnInit {
                         break;
                     case 'GroupRejected':
                         this.focusGroupService.find(this.userNotifications[i].messageId).subscribe(getIt => {
-                            node.innerHTML = node.innerHTML + '<a class="dropdown-item noti-container py-3">\n' +
+                            node.innerHTML =
+                                node.innerHTML +
+                                '<a class="dropdown-item noti-container py-3">\n' +
                                 '                                        <i class="ft-user-x danger float-left d-block font-large-1 mt-4 mr-4"></i>\n' +
                                 '                                        <span class="noti-wrapper">\n' +
                                 '                                        <span class="noti-title line-height-1 d-block text-bold-400 danger">¡Lo sentimos!</span>\n' +
                                 '                                        <span class="noti-text">No te aceptaron en el grupo de enfoque:</span><br>\n' +
-                                '                                        <span class="noti-text">' + getIt.body.name + '</span>\n' +
+                                '                                        <span class="noti-text">' +
+                                getIt.body.name +
+                                '</span>\n' +
                                 '                                    </span>\n' +
                                 '                                    </a>';
                             ele.appendChild(node);
@@ -244,7 +242,9 @@ export class NavbarComponent implements OnInit {
                         break;
                     case 'GroupExpulsion':
                         this.banService.find(this.userNotifications[i].messageId).subscribe(getIt => {
-                            node.innerHTML = node.innerHTML + '<a class="dropdown-item noti-container py-3">\n' +
+                            node.innerHTML =
+                                node.innerHTML +
+                                '<a class="dropdown-item noti-container py-3">\n' +
                                 '                                        <i class="ft-alert-octagon warning float-left d-block font-large-1 mt-4 mr-4"></i>\n' +
                                 '                                        <span class="noti-wrapper">\n' +
                                 '                                        <span class="noti-title line-height-1 d-block text-bold-400 warning">¡Lo sentimos!</span>\n' +
@@ -256,18 +256,27 @@ export class NavbarComponent implements OnInit {
                         });
                         break;
                     case 'CallStart':
-                        node.innerHTML = node.innerHTML + '<a class="dropdown-item noti-container py-3">\n' +
-                            '                                        <i class="ft-video info float-left d-block font-large-1 mt-4 mr-4"></i>\n' +
-                            '                                        <span class="noti-wrapper">\n' +
-                            '                                        <span class="noti-title line-height-1 d-block text-bold-400 info">¡Videollamada iniciada!</span>\n' +
-                            '                                        <span class="noti-text">Ve al calendario para poder unirte.</span>\n' +
-                            '                                    </span>\n' +
-                            '                                    </a>';
-                        ele.appendChild(node);
+                        this.meetingService.find(this.userNotifications[i].messageId).subscribe(getIt => {
+                            node.innerHTML =
+                                node.innerHTML +
+                                '<a class="dropdown-item noti-container py-3">\n' +
+                                '                                        <i class="ft-video info float-left d-block font-large-1 mt-4 mr-4"></i>\n' +
+                                '                                        <span class="noti-wrapper">\n' +
+                                '                                        <span class="noti-title line-height-1 d-block text-bold-400 info">¡Videollamada iniciada!</span>\n' +
+                                '                                        <span class="noti-text">Ve al calendario para poder unirte a:</span><br>\n' +
+                                '                                        <span class="noti-text">' +
+                                getIt.body.name +
+                                '</span>\n' +
+                                '                                    </span>\n' +
+                                '                                    </a>';
+                            ele.appendChild(node);
+                        });
                         break;
 
                     case 'PaymentDone':
-                        node.innerHTML = node.innerHTML + '<a class="dropdown-item noti-container py-3">\n' +
+                        node.innerHTML =
+                            node.innerHTML +
+                            '<a class="dropdown-item noti-container py-3">\n' +
                             '                                        <i class="ft-shopping-cart success float-left d-block font-large-1 mt-4 mr-4"></i>\n' +
                             '                                        <span class="noti-wrapper">\n' +
                             '                                        <span class="noti-title line-height-1 d-block text-bold-400 success">¡Transacción realizada!</span>\n' +
@@ -286,9 +295,7 @@ export class NavbarComponent implements OnInit {
 
     clearAllNotifications() {
         for (let i = 0; i < this.userNotifications.length; i++) {
-            this.notificationService.delete(this.userNotifications[i].id).subscribe( deleted => {
-
-            });
+            this.notificationService.delete(this.userNotifications[i].id).subscribe(deleted => {});
         }
         this.userNotifications = [];
         localStorage.removeItem('notifications');

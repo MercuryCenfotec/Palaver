@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
 import { JhiAlertService } from 'ng-jhipster';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { FocusGroupService } from './focus-group.service';
@@ -21,6 +20,8 @@ import { ITestAnswerOption } from 'app/shared/model/test-answer-option.model';
 import { ITestQuestion } from 'app/shared/model/test-question.model';
 import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Subscriber } from 'app/shared/util/subscriber';
+import { BalanceAccountService } from 'app/entities/balance-account';
+import { IBalanceAccount } from 'app/shared/model/balance-account.model';
 
 @Component({
     selector: 'jhi-focus-group-form',
@@ -38,6 +39,12 @@ export class FocusGroupFormComponent implements OnInit {
     endDateSelected: boolean;
     clonedTest: boolean;
     isMember = false;
+    userBalance: IBalanceAccount;
+    groupCost: number;
+    formatedCost: string;
+    baseGroupCost = 30000;
+    baseParticipantCost = 25000;
+    isMember = true;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
@@ -48,6 +55,7 @@ export class FocusGroupFormComponent implements OnInit {
         protected activatedRoute: ActivatedRoute,
         protected userService: UserService,
         protected aptitudeTestService: AptitudeTestService,
+        protected balanceService: BalanceAccountService,
         protected config: NgbDatepickerConfig,
         private __router: Router,
         protected subscriber: Subscriber<boolean>
@@ -80,9 +88,11 @@ export class FocusGroupFormComponent implements OnInit {
         this.endDateSelected = false;
         this.activatedRoute.data.subscribe(({ focusGroup }) => {
             this.focusGroup = focusGroup;
+            this.calculateCost();
             this.focusGroup.aptitudeTest = null;
         });
         this.userService.getUserWithAuthorities().subscribe(user => {
+            console.log(user);
             this.institutionService.getByUserUser(user.id).subscribe(institution => {
                 if (institution.body.membership.id === 2) {
                     this.isMember = true;
@@ -92,6 +102,10 @@ export class FocusGroupFormComponent implements OnInit {
                 this.institution = institution.body;
                 this.aptitudeTestService.findAllByInstitution(institution.body.id).subscribe(aptitudeTests => {
                     this.aptitudeTests = aptitudeTests.body;
+                });
+                this.balanceService.findByUserId(institution.body.user.id).subscribe(balance => {
+                    this.userBalance = balance.body;
+                    console.log(balance.body);
                 });
             });
         });
@@ -104,8 +118,9 @@ export class FocusGroupFormComponent implements OnInit {
     save() {
         this.isSaving = true;
         this.userService.getUserWithAuthorities().subscribe(data => {
-            this.institutionService.getByUserUser(data.id).subscribe(innerData => {
-                this.focusGroup.institution = innerData.body;
+            this.institutionService.getByUserUser(data.id).subscribe(institution => {
+                console.log(institution);
+                this.focusGroup.institution = institution.body;
                 if (!this.focusGroup.aptitudeTest) {
                     this.focusGroup.passingGrade = 100;
                 }
@@ -176,18 +191,35 @@ export class FocusGroupFormComponent implements OnInit {
         }
     }
 
-    validatePassingGrade() {
+    validatePassingGrade(): boolean {
         if (this.focusGroup.passingGrade > 100 || this.focusGroup.passingGrade < 1) {
             return false;
         }
         return true;
     }
 
-    validateParticipantsAmount() {
-        if (this.focusGroup.participantsAmount < 5 || this.focusGroup.participantsAmount > 10) {
+    validateParticipantsAmount(): boolean {
+        if (this.focusGroup.participantsAmount < 4 || this.focusGroup.participantsAmount > 12) {
             return false;
         }
+        this.calculateCost();
         return true;
+    }
+
+    calculateCost() {
+        const formatter = new Intl.NumberFormat('es', {
+            style: 'currency',
+            currency: 'CRC',
+            minimumFractionDigits: 2
+        });
+        if (this.focusGroup.participantsAmount) {
+            this.groupCost = this.focusGroup.participantsAmount * this.baseParticipantCost + this.baseGroupCost;
+            this.formatedCost = formatter.format(this.groupCost);
+        }
+    }
+
+    insufficientBalance(): boolean {
+        return this.groupCost > this.userBalance.balance;
     }
 
     validateIncentive() {

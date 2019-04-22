@@ -1,14 +1,14 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {IBan} from 'app/shared/model/ban.model';
-import {Subscription} from 'rxjs';
-import {BanService} from 'app/entities/ban';
-import {JhiAlertService, JhiEventManager} from 'ng-jhipster';
-import {AccountService, UserService} from 'app/core';
-import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {filter, map} from 'rxjs/operators';
-import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
-import {ParticipantService} from 'app/entities/participant';
-import {UserAppService} from 'app/entities/user-app';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { IBan } from 'app/shared/model/ban.model';
+import { Subscription } from 'rxjs';
+import { BanService } from 'app/entities/ban';
+import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
+import { AccountService, UserService } from 'app/core';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { filter, map } from 'rxjs/operators';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { ParticipantService } from 'app/entities/participant';
+import { UserAppService } from 'app/entities/user-app';
 
 @Component({
     selector: 'jhi-participant-expulsions',
@@ -16,7 +16,6 @@ import {UserAppService} from 'app/entities/user-app';
     styles: []
 })
 export class ParticipantExpulsionsComponent implements OnInit, OnDestroy {
-
     bans: IBan[];
     currentAccount: any;
     eventSubscriber: Subscription;
@@ -31,8 +30,7 @@ export class ParticipantExpulsionsComponent implements OnInit, OnDestroy {
         protected modalService: NgbModal,
         protected participantService: ParticipantService,
         protected userAppService: UserAppService
-    ) {
-    }
+    ) {}
 
     loadAll() {
         this.userService.getUserWithAuthorities().subscribe(jhiUser => {
@@ -118,10 +116,9 @@ export class ParticipantExpulsionsComponent implements OnInit, OnDestroy {
     sendReport(input, ban: IBan) {
         ban.complaint = input.value;
         if (ban.complaint !== '') {
-            this.banService.update(ban).subscribe( updatedBan => {
+            this.banService.update(ban).subscribe(updatedBan => {
                 this.ngOnInit();
             });
         }
     }
-
 }

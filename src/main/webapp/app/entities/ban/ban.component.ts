@@ -5,10 +5,10 @@ import { filter, map } from 'rxjs/operators';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { IBan } from 'app/shared/model/ban.model';
-import {AccountService, UserService} from 'app/core';
+import { AccountService, UserService } from 'app/core';
 import { BanService } from './ban.service';
-import {IInstitution} from 'app/shared/model/institution.model';
-import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { IInstitution } from 'app/shared/model/institution.model';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'jhi-ban',
@@ -86,7 +86,7 @@ export class BanComponent implements OnInit, OnDestroy {
 
     sendValid(desiredBan: IBan) {
         desiredBan.isValid = true;
-        this.banService.update(desiredBan).subscribe( updatedBan => {
+        this.banService.update(desiredBan).subscribe(updatedBan => {
             this.loadAllValidBansFromInstitution(desiredBan.focusGroup.institution);
         });
     }
@@ -108,10 +108,10 @@ export class BanComponent implements OnInit, OnDestroy {
 
     shouldBeSuspended(institution: IInstitution, validBans: IBan[]) {
         if (validBans.length === 3) {
-            this.userService.find(institution.user.user.login).subscribe( foundUser => {
+            this.userService.find(institution.user.user.login).subscribe(foundUser => {
                 const institutionToSuspend = foundUser.body;
                 institutionToSuspend.activated = false;
-                this.userService.update(institutionToSuspend).subscribe( data => {
+                this.userService.update(institutionToSuspend).subscribe(data => {
                     this.obtainAllSuspendedInstitutionBans(institution);
                 });
             });
@@ -137,9 +137,7 @@ export class BanComponent implements OnInit, OnDestroy {
 
     deleteAllSuspendedInstitutionBans(bans: IBan[]) {
         for (let i = 0; i < bans.length; i++) {
-            this.banService.delete(bans[i].id).subscribe( deleted => {
-
-            });
+            this.banService.delete(bans[i].id).subscribe(deleted => {});
         }
         this.ngOnInit();
         this.ngOnInit();

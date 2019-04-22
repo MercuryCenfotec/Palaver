@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { IIncentive } from 'app/shared/model/incentive.model';
 import { IncentiveService } from './incentive.service';
-import {ImageService} from 'app/shared/util/image.service';
+import { ImageService } from 'app/shared/util/image.service';
 
 @Component({
     selector: 'jhi-incentive-update',
@@ -16,9 +16,11 @@ export class IncentiveUpdateComponent implements OnInit {
     isSaving: boolean;
     image: any;
 
-    constructor(protected incentiveService: IncentiveService,
-                protected activatedRoute: ActivatedRoute,
-                protected imageService: ImageService) {}
+    constructor(
+        protected incentiveService: IncentiveService,
+        protected activatedRoute: ActivatedRoute,
+        protected imageService: ImageService
+    ) {}
 
     ngOnInit() {
         this.isSaving = false;

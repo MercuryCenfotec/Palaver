@@ -35,7 +35,7 @@ export const institutionRoute: Routes = [
         component: InstitutionComponent,
         data: {
             authorities: ['ROLE_ADMIN', 'ROLE_SUBADMIN'],
-            pageTitle: 'Institutions'
+            pageTitle: 'Instituciones'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -47,7 +47,7 @@ export const institutionRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_ADMIN', 'ROLE_INSTITUTION', 'ROLE_SUBADMIN'],
-            pageTitle: 'Institutions'
+            pageTitle: 'Instituciones'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -59,7 +59,7 @@ export const institutionRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_ADMIN', 'ROLE_USER'],
-            pageTitle: 'Institutions'
+            pageTitle: 'Instituciones'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -71,7 +71,7 @@ export const institutionRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_ADMIN', 'ROLE_INSTITUTION', 'ROLE_SUBADMIN'],
-            pageTitle: 'Institutions'
+            pageTitle: 'Instituciones'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -86,7 +86,7 @@ export const institutionPopupRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_ADMIN', 'ROLE_SUBADMIN'],
-            pageTitle: 'Institutions'
+            pageTitle: 'Instituciones'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

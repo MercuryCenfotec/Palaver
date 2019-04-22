@@ -5,6 +5,7 @@ import com.mercury.palaver.PalaverApp;
 import com.mercury.palaver.domain.FocusGroup;
 import com.mercury.palaver.repository.FocusGroupRepository;
 import com.mercury.palaver.service.FocusGroupService;
+import com.mercury.palaver.service.PaymentService;
 import com.mercury.palaver.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -90,6 +91,9 @@ public class FocusGroupResourceIntTest {
     @Mock
     private FocusGroupService focusGroupServiceMock;
 
+    @Mock
+    private PaymentService paymentServiceMock;
+
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
@@ -105,6 +109,8 @@ public class FocusGroupResourceIntTest {
     @Autowired
     private Validator validator;
 
+    private PaymentService paymentService;
+
     private MockMvc restFocusGroupMockMvc;
 
     private FocusGroup focusGroup;
@@ -112,7 +118,7 @@ public class FocusGroupResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final FocusGroupResource focusGroupResource = new FocusGroupResource(focusGroupRepository, focusGroupService);
+        final FocusGroupResource focusGroupResource = new FocusGroupResource(focusGroupRepository, focusGroupService, paymentService);
         this.restFocusGroupMockMvc = MockMvcBuilders.standaloneSetup(focusGroupResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -290,7 +296,7 @@ public class FocusGroupResourceIntTest {
     
     @SuppressWarnings({"unchecked"})
     public void getAllFocusGroupsWithEagerRelationshipsIsEnabled() throws Exception {
-        FocusGroupResource focusGroupResource = new FocusGroupResource(focusGroupRepositoryMock,focusGroupService);
+        FocusGroupResource focusGroupResource = new FocusGroupResource(focusGroupRepositoryMock, focusGroupServiceMock, paymentServiceMock);
         when(focusGroupRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         MockMvc restFocusGroupMockMvc = MockMvcBuilders.standaloneSetup(focusGroupResource)
@@ -307,7 +313,7 @@ public class FocusGroupResourceIntTest {
 
     @SuppressWarnings({"unchecked"})
     public void getAllFocusGroupsWithEagerRelationshipsIsNotEnabled() throws Exception {
-        FocusGroupResource focusGroupResource = new FocusGroupResource(focusGroupRepositoryMock, focusGroupServiceMock);
+        FocusGroupResource focusGroupResource = new FocusGroupResource(focusGroupRepositoryMock, focusGroupServiceMock, paymentServiceMock);
             when(focusGroupRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
             MockMvc restFocusGroupMockMvc = MockMvcBuilders.standaloneSetup(focusGroupResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)

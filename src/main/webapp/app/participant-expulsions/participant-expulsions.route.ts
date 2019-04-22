@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import {ParticipantExpulsionsComponent} from 'app/participant-expulsions/participant-expulsions.component';
+import { ParticipantExpulsionsComponent } from 'app/participant-expulsions/participant-expulsions.component';
 
 export const PARTICIPANT_EXPULSIONS_ROUTE: Route = {
     path: 'participants-expulsions',
