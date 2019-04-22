@@ -45,7 +45,7 @@ public class PaymentService {
             palaverAccount,
             institutionAccount,
             "Devolucion de tarifa de participante - " + group.getName() + "_" + group.getCode(),
-            groupPayment.getAmmount(),
+            25000,
             false
         );
     }

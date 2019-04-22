@@ -194,8 +194,11 @@ export class FocusGroupFormComponent implements OnInit {
     }
 
     validatePassingGrade(): boolean {
-        if (this.focusGroup.passingGrade > 100 || this.focusGroup.passingGrade < 1) {
-            return false;
+        if (this.focusGroup.passingGrade !== null) {
+            if (this.focusGroup.passingGrade > 100 || this.focusGroup.passingGrade < 1) {
+                return false;
+            }
+            return true;
         }
         return true;
     }
