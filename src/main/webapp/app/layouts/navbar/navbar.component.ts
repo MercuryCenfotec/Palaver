@@ -16,7 +16,7 @@ import { JhiAlertService } from 'ng-jhipster';
 import { FocusGroupService } from 'app/entities/focus-group';
 import { BanService } from 'app/entities/ban';
 import { NotificationService } from 'app/entities/notification';
-import {MeetingService} from 'app/entities/meeting';
+import { MeetingService } from 'app/entities/meeting';
 
 @Component({
     selector: 'jhi-navbar',
@@ -256,7 +256,7 @@ export class NavbarComponent implements OnInit {
                         });
                         break;
                     case 'CallStart':
-                        this.meetingService.find(this.userNotifications[i].messageId).subscribe( getIt => {
+                        this.meetingService.find(this.userNotifications[i].messageId).subscribe(getIt => {
                             node.innerHTML =
                                 node.innerHTML +
                                 '<a class="dropdown-item noti-container py-3">\n' +
@@ -264,7 +264,9 @@ export class NavbarComponent implements OnInit {
                                 '                                        <span class="noti-wrapper">\n' +
                                 '                                        <span class="noti-title line-height-1 d-block text-bold-400 info">¡Videollamada iniciada!</span>\n' +
                                 '                                        <span class="noti-text">Ve al calendario para poder unirte a:</span><br>\n' +
-                                '                                        <span class="noti-text">' + getIt.body.name + '</span>\n' +
+                                '                                        <span class="noti-text">' +
+                                getIt.body.name +
+                                '</span>\n' +
                                 '                                    </span>\n' +
                                 '                                    </a>';
                             ele.appendChild(node);

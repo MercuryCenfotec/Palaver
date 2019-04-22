@@ -60,14 +60,14 @@ hr.message-inner-separator {
     margin-bottom: 13px;
     border: 0;
     height: 1px;
-    background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));
-    background-image: -moz-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
-    background-image: -ms-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
-    background-image: -o-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
+    background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+    background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+    background-image: -ms-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+    background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
 }
 
-.popupunder{
-    position:fixed;
+.popupunder {
+    position: fixed;
     bottom: 10px;
     right: 10px;
     z-index: 10;
@@ -75,24 +75,22 @@ hr.message-inner-separator {
     padding: 20px;
 }
 
-.custom-alert-warning{
+.custom-alert-warning {
     background-color: #ffaf40;
     color: #fff;
 }
 
-.custom-alert-danger{
+.custom-alert-danger {
     background-color: #ff6b6b;
     color: #fff;
 }
 
-.custom-alert-success{
+.custom-alert-success {
     background-color: #2ecc71;
     color: #fff;
 }
 
-.custom-alert-info{
+.custom-alert-info {
     background-color: #17c0eb;
     color: #fff;
 }
-
-

@@ -7,7 +7,7 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { IPayment } from 'app/shared/model/payment.model';
 import { AccountService } from 'app/core';
 import { PaymentService } from './payment.service';
-import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'jhi-payment',
