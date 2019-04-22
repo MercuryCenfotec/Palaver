@@ -37,7 +37,7 @@ export class FocusGroupFormComponent implements OnInit {
     participants: IParticipant[];
     endDateSelected: boolean;
     clonedTest: boolean;
-    isMember = true;
+    isMember = false;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
@@ -86,6 +86,8 @@ export class FocusGroupFormComponent implements OnInit {
             this.institutionService.getByUserUser(user.id).subscribe(institution => {
                 if (institution.body.membership.id === 2) {
                     this.isMember = true;
+                } else {
+                    this.isMember = false;
                 }
                 this.institution = institution.body;
                 this.aptitudeTestService.findAllByInstitution(institution.body.id).subscribe(aptitudeTests => {
@@ -107,10 +109,12 @@ export class FocusGroupFormComponent implements OnInit {
                 if (!this.focusGroup.aptitudeTest) {
                     this.focusGroup.passingGrade = 100;
                 }
-                this.focusGroup.incentive.quantity -= this.focusGroup.participantsAmount;
-                this.incentiveService.update(this.focusGroup.incentive).subscribe(res => {
-                    this.subscribeToSaveResponse(this.focusGroupService.create(this.focusGroup));
-                });
+                if (innerData.body.membership.id === 2) {
+                    this.focusGroup.incentive.quantity -= this.focusGroup.participantsAmount;
+                    this.incentiveService.update(this.focusGroup.incentive).subscribe(res => {
+                        this.subscribeToSaveResponse(this.focusGroupService.create(this.focusGroup));
+                    });
+                }
             });
         });
     }

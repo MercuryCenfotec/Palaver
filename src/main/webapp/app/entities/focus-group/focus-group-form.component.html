@@ -110,7 +110,7 @@
                     <fieldset class="form-group">
                         <label for="customSelectIncentive">Incentivos</label>
                         <select [(ngModel)]="focusGroup.incentive" class="custom-select d-block w-100"
-                                [disabled]="!isMember|| focusGroup.participantsAmount === undefined || focusGroup.participantsAmount < 5"
+                                [disabled]="!isMember || focusGroup.participantsAmount === undefined"
                                 id="customSelectIncentive" name="incentive" (change)="validateIncentive()">
                             <option [ngValue]="null" selected>No utilizar incentivo.</option>
                             <option *ngFor="let incentive of incentives"
