@@ -16,6 +16,7 @@ import { JhiAlertService } from 'ng-jhipster';
 import { FocusGroupService } from 'app/entities/focus-group';
 import { BanService } from 'app/entities/ban';
 import { NotificationService } from 'app/entities/notification';
+import {MeetingService} from 'app/entities/meeting';
 
 @Component({
     selector: 'jhi-navbar',
@@ -51,7 +52,8 @@ export class NavbarComponent implements OnInit {
         protected focusGroupService: FocusGroupService,
         protected banService: BanService,
         protected modalService: NgbModal,
-        protected notificationService: NotificationService
+        protected notificationService: NotificationService,
+        protected meetingService: MeetingService
     ) {
         this.version = VERSION ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
@@ -134,8 +136,6 @@ export class NavbarComponent implements OnInit {
                         'participantPermissions',
                         'institutionPermissions',
                         'membershipPermissions',
-                        'paymentMethodPermissions',
-                        'systemVariablePermissions',
                         'paymentPermissions',
                         'banPermissions'
                     ];
@@ -154,7 +154,7 @@ export class NavbarComponent implements OnInit {
                     ];
                     break;
                 case 'ROLE_SUBADMIN':
-                    permissions = ['participantPermissions', 'institutionPermissions', 'banPermissions'];
+                    permissions = ['participantPermissions', 'institutionPermissions', 'banPermissions', 'paymentPermissions'];
                     break;
                 default:
                     break;
@@ -256,16 +256,19 @@ export class NavbarComponent implements OnInit {
                         });
                         break;
                     case 'CallStart':
-                        node.innerHTML =
-                            node.innerHTML +
-                            '<a class="dropdown-item noti-container py-3">\n' +
-                            '                                        <i class="ft-video info float-left d-block font-large-1 mt-4 mr-4"></i>\n' +
-                            '                                        <span class="noti-wrapper">\n' +
-                            '                                        <span class="noti-title line-height-1 d-block text-bold-400 info">¡Videollamada iniciada!</span>\n' +
-                            '                                        <span class="noti-text">Ve al calendario para poder unirte.</span>\n' +
-                            '                                    </span>\n' +
-                            '                                    </a>';
-                        ele.appendChild(node);
+                        this.meetingService.find(this.userNotifications[i].messageId).subscribe( getIt => {
+                            node.innerHTML =
+                                node.innerHTML +
+                                '<a class="dropdown-item noti-container py-3">\n' +
+                                '                                        <i class="ft-video info float-left d-block font-large-1 mt-4 mr-4"></i>\n' +
+                                '                                        <span class="noti-wrapper">\n' +
+                                '                                        <span class="noti-title line-height-1 d-block text-bold-400 info">¡Videollamada iniciada!</span>\n' +
+                                '                                        <span class="noti-text">Ve al calendario para poder unirte a:</span><br>\n' +
+                                '                                        <span class="noti-text">' + getIt.body.name + '</span>\n' +
+                                '                                    </span>\n' +
+                                '                                    </a>';
+                            ele.appendChild(node);
+                        });
                         break;
 
                     case 'PaymentDone':

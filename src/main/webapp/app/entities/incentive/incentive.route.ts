@@ -35,7 +35,7 @@ export const incentiveRoute: Routes = [
         component: IncentiveComponent,
         data: {
             authorities: ['ROLE_INSTITUTION'],
-            pageTitle: 'Incentives'
+            pageTitle: 'Incentivos'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -47,7 +47,7 @@ export const incentiveRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_INSTITUTION'],
-            pageTitle: 'Incentives'
+            pageTitle: 'Incentivos'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -59,7 +59,7 @@ export const incentiveRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_INSTITUTION'],
-            pageTitle: 'Incentives'
+            pageTitle: 'Incentivos'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -71,7 +71,7 @@ export const incentiveRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_INSTITUTION'],
-            pageTitle: 'Incentives'
+            pageTitle: 'Incentivos'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -86,7 +86,7 @@ export const incentivePopupRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_INSTITUTION'],
-            pageTitle: 'Incentives'
+            pageTitle: 'Incentivos'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

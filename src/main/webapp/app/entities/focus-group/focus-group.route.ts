@@ -39,7 +39,7 @@ export const focusGroupRoute: Routes = [
         component: FocusGroupComponent,
         data: {
             authorities: ['ROLE_INSTITUTION'],
-            pageTitle: 'FocusGroups'
+            pageTitle: 'Grupos de enfoque'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -51,7 +51,7 @@ export const focusGroupRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_INSTITUTION'],
-            pageTitle: 'FocusGroups'
+            pageTitle: 'Grupos de enfoque'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -63,7 +63,7 @@ export const focusGroupRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_INSTITUTION'],
-            pageTitle: 'FocusGroups'
+            pageTitle: 'Grupos de enfoque'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -75,7 +75,7 @@ export const focusGroupRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_INSTITUTION'],
-            pageTitle: 'FocusGroups'
+            pageTitle: 'Grupos de enfoque'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -126,7 +126,7 @@ export const focusGroupPopupRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_INSTITUTION'],
-            pageTitle: 'FocusGroups'
+            pageTitle: 'Grupos de enfoque'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -139,7 +139,7 @@ export const focusGroupPopupRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_INSTITUTION'],
-            pageTitle: 'FocusGroups'
+            pageTitle: 'Grupos de enfoque'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

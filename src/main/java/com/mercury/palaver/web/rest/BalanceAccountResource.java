@@ -113,6 +113,7 @@ public class BalanceAccountResource {
         currency = currency.substring(0, currency.length() - 5);
         currency = "₡ " + currency;
         mailService.sendPaymentEmail(balanceAccount.getUser().getUser(), currency);
+        paymentService.createPayment(balanceAccount, balanceAccount, "Recarga de cuenta interna.", (amount / 100), false);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, balanceAccount.getId().toString()))
             .body(result);

@@ -7,6 +7,7 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { IPayment } from 'app/shared/model/payment.model';
 import { AccountService } from 'app/core';
 import { PaymentService } from './payment.service';
+import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'jhi-payment',
@@ -16,12 +17,14 @@ export class PaymentComponent implements OnInit, OnDestroy {
     payments: IPayment[];
     currentAccount: any;
     eventSubscriber: Subscription;
+    pay: IPayment;
 
     constructor(
         protected paymentService: PaymentService,
         protected jhiAlertService: JhiAlertService,
         protected eventManager: JhiEventManager,
-        protected accountService: AccountService
+        protected accountService: AccountService,
+        protected modalService: NgbModal
     ) {}
 
     loadAll() {
@@ -61,5 +64,31 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
     protected onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
+    }
+
+    showDetail(content, pay) {
+        this.pay = pay;
+        this.openModal(content);
+    }
+
+    openModal(content) {
+        this.modalService.open(content).result.then(
+            result => {
+                console.log(`Closed with: ${result}`);
+            },
+            reason => {
+                console.log(`Dismissed ${this.getDismissReason(reason)}`);
+            }
+        );
+    }
+
+    private getDismissReason(reason: any): string {
+        if (reason === ModalDismissReasons.ESC) {
+            return 'by pressing ESC';
+        } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+            return 'by clicking on a backdrop';
+        } else {
+            return `with: ${reason}`;
+        }
     }
 }

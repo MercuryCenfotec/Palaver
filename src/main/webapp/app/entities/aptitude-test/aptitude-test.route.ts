@@ -35,7 +35,7 @@ export const aptitudeTestRoute: Routes = [
         component: AptitudeTestComponent,
         data: {
             authorities: ['ROLE_INSTITUTION', 'ROLE_USER'],
-            pageTitle: 'AptitudeTests'
+            pageTitle: 'Pruebas de aptitud'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -47,7 +47,7 @@ export const aptitudeTestRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_INSTITUTION', 'ROLE_USER'],
-            pageTitle: 'AptitudeTests'
+            pageTitle: 'Pruebas de aptitud'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -59,7 +59,7 @@ export const aptitudeTestRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_INSTITUTION', 'ROLE_USER', 'ROLE_ADMIN'],
-            pageTitle: 'AptitudeTests'
+            pageTitle: 'Pruebas de aptitud'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -71,7 +71,7 @@ export const aptitudeTestRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_INSTITUTION', 'ROLE_USER'],
-            pageTitle: 'AptitudeTests'
+            pageTitle: 'Pruebas de aptitud'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -86,7 +86,7 @@ export const aptitudeTestPopupRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_INSTITUTION', 'ROLE_USER'],
-            pageTitle: 'AptitudeTests'
+            pageTitle: 'Pruebas de aptitud'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
