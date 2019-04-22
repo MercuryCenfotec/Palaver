@@ -80,7 +80,7 @@ export class ActivitiesDetailComponent implements OnInit {
         }
     }
 
-    private goToGroup(event: CalendarEvent) {
+    goToGroup(event: CalendarEvent) {
         console.log(event);
         window.location.href = event.meta;
     }

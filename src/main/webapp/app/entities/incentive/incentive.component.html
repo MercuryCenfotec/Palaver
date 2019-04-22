@@ -1,59 +1,67 @@
-<div>
-    <h2 id="page-heading">
-        <span>Incentives</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-incentive" [routerLink]="['/incentive/new']">
-            <fa-icon [icon]="'plus'"></fa-icon>
-            <span >
-            Create new Incentive
-            </span>
-        </button>
-    </h2>
-    <br/>
-    <div class="table-responsive" *ngIf="incentives">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-            <th><span>ID</span></th>
-            <th><span>Name</span></th>
-            <th><span>Image</span></th>
-            <th><span>Quantity</span></th>
-            <th><span>Description</span></th>
-            <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let incentive of incentives ;trackBy: trackId">
-                <td><a [routerLink]="['/incentive', incentive.id, 'view' ]">{{incentive.id}}</a></td>
-                <td>{{incentive.name}}</td>
-                <td>{{incentive.image}}</td>
-                <td>{{incentive.quantity}}</td>
-                <td>{{incentive.description}}</td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['/incentive', incentive.id, 'view' ]"
-                                class="btn btn-info btn-sm">
-                            <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/incentive', incentive.id, 'edit']"
-                                class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', 'incentive', { outlets: { popup: incentive.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline">Delete</span>
-                        </button>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Incentivos
+                    <button id="jh-create-entity" class="btn btn-raised btn-primary float-right"
+                            [routerLink]="['/incentive/new']">
+                        <i class="ft-plus"></i>
+                        <span>
+                        Registrar un nuevo incentivo
+                    </span>
+                    </button>
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="card-block">
+                    <div class="table-responsive" *ngIf="incentives">
+
+                        <div _ngcontent-c6="" class="input-group">
+                            <div _ngcontent-c6="" class="input-group-prepend">
+                                <i _ngcontent-c16="" class="input-group-text ft-search info" id="basic-addon1"></i>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Buscar por nombre..."
+                                   [(ngModel)]="searchText"/>
+                        </div>
+
+                        <table class="table table-responsive-md text-center">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th><span>Nombre</span></th>
+                                <th><span>Cantidad</span></th>
+                                <th><span>Descripción</span></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let incentive of incentives | incentiveFilter:searchText;">
+                                <td><img class="media-object round-media" src="{{incentive.image}}" alt="Generic placeholder image" style="height: 75px;" /></td>
+                                <td>{{incentive.name}}</td>
+                                <td>{{incentive.quantity}}</td>
+                                <td>{{incentive.description}}</td>
+                                <td>
+                                    <a class="info p-0" data-original-title="" title=""
+                                       [routerLink]="['/incentive', incentive.id, 'view' ]">
+                                        <i class="ft-eye font-medium-3 mr-2"></i>
+                                    </a>
+                                    <a class="success p-0" data-original-title="" title=""
+                                       [routerLink]="['/incentive', incentive.id, 'edit']">
+                                        <i class="ft-edit-2 font-medium-3 mr-2"></i>
+                                    </a>
+                                    <a class="danger p-0" data-original-title="" title=""
+                                       [routerLink]="['/', 'incentive', { outlets: { popup: incentive.id + '/delete'} }]"
+                                       replaceUrl="true"
+                                       queryParamsHandling="merge">
+                                        <i class="ft-x font-medium-3 mr-2"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

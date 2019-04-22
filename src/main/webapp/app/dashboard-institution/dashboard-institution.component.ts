@@ -18,6 +18,8 @@ import swal from 'sweetalert2';
 import { NavbarComponent } from 'app/layouts';
 import { Chart } from 'app/chartist/chartist.component';
 import { ChartEvent, ChartType } from 'ng-chartist';
+import * as moment from 'moment';
+import { Moment } from 'moment';
 
 declare var require: any;
 

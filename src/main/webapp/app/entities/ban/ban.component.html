@@ -5,6 +5,11 @@
                 <h4 class="card-title">
                     Motivos de expulsiones
                 </h4>
+                <p  _ngcontent-c24="" class="mb-0">Evalúa los motivos por los cuales la institución expulsó a un participante y determina si, tanto el
+                    motivo como la queja intrapuesta por el participante son correctas. En caso de que la queja posea
+                    un punto válido, marca el motivo como válido, caso contrario márcalo como inválido. Si la institución
+                    a la cual pertenece el grupo posee tres motivos válidos se le aplicará una suspensión, ¡Por favor sé consciente de la revisión!
+                    Al fin y al cabo es para mantener un orden dentro de la aplicación.</p>
             </div>
             <div class="card-body">
                 <div class="card-block">
@@ -30,7 +35,7 @@
                                 </td>
                                 <td>
                                     <div *ngIf="ban.focusGroup">
-                                        <a [routerLink]="['../focus-group', ban.focusGroup?.id, 'view' ]">{{ban.focusGroup?.name}}</a>
+                                        {{ban.focusGroup?.name}}
                                     </div>
                                 </td>
                                 <td>
@@ -77,7 +82,13 @@
         </button>
     </div>
     <div class="modal-body">
-        <p class="primary text-center d-block  border-top-lighten-4 text-bold-400 py-1">{{ban.reason}}</p>
+        <form class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate>
+            <div class="form-body">
+                <div class="form-group">
+                    <label class="form-control-label">{{ban.reason}}</label>
+                </div>
+            </div>
+        </form>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary btn-raised" (click)="c('Close click')">Cerrar</button>
@@ -93,7 +104,13 @@
         </button>
     </div>
     <div class="modal-body">
-        <p class="primary text-center d-block  border-top-lighten-4 text-bold-400 py-1">{{ban.complaint}}</p>
+        <form class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate>
+            <div class="form-body">
+                <div class="form-group">
+                    <label class="form-control-label">{{ban.complaint}}</label>
+                </div>
+            </div>
+        </form>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary btn-raised" (click)="c('Close click')">Cerrar</button>

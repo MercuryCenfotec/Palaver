@@ -117,4 +117,11 @@ export class FocusGroupManagementComponent implements OnInit {
                 .getDate()
         );
     }
+
+    startMeeting() {
+        window.open(this.meeting.callURL);
+        this.focusGroupService.finishFocusGroup(this.focusGroup.id).subscribe(group => {
+            console.log(group);
+        });
+    }
 }

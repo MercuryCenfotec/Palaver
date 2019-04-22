@@ -33,8 +33,8 @@ export const paymentRoute: Routes = [
         path: '',
         component: PaymentComponent,
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Payments'
+            authorities: ['ROLE_ADMIN', 'ROLE_SUBADMIN'],
+            pageTitle: 'Pagos'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -45,8 +45,8 @@ export const paymentRoute: Routes = [
             payment: PaymentResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Payments'
+            authorities: ['ROLE_ADMIN', 'ROLE_SUBADMIN'],
+            pageTitle: 'Pagos'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -57,8 +57,8 @@ export const paymentRoute: Routes = [
             payment: PaymentResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Payments'
+            authorities: ['ROLE_ADMIN', 'ROLE_SUBADMIN'],
+            pageTitle: 'Pagos'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -69,8 +69,8 @@ export const paymentRoute: Routes = [
             payment: PaymentResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Payments'
+            authorities: ['ROLE_ADMIN', 'ROLE_SUBADMIN'],
+            pageTitle: 'Pagos'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -84,8 +84,8 @@ export const paymentPopupRoute: Routes = [
             payment: PaymentResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Payments'
+            authorities: ['ROLE_ADMIN', 'ROLE_SUBADMIN'],
+            pageTitle: 'Pagos'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

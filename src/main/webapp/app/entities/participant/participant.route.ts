@@ -35,7 +35,7 @@ export const participantRoute: Routes = [
         component: ParticipantComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Participants'
+            pageTitle: 'Participantes'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -47,7 +47,7 @@ export const participantRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Participants'
+            pageTitle: 'Participantes'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -59,7 +59,7 @@ export const participantRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Participants'
+            pageTitle: 'Participantes'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -71,7 +71,7 @@ export const participantRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Participants'
+            pageTitle: 'Participantes'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -86,7 +86,7 @@ export const participantPopupRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Participants'
+            pageTitle: 'Participantes'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

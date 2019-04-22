@@ -1,5 +1,23 @@
 {
-    "name": "Incentive",
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "institution",
+            "otherEntityName": "institution",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "incentive",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipName": "focusGroups",
+            "otherEntityName": "focusGroup",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "incentive",
+            "otherEntityRelationshipNameUndefined": false
+        }
+    ],
     "fields": [
         {
             "fieldName": "name",
@@ -24,14 +42,12 @@
             "fieldType": "String"
         }
     ],
-    "relationships": [],
     "changelogDate": "20190304115737",
-    "entityTableName": "incentive",
     "dto": "no",
-    "pagination": "no",
+    "searchEngine": false,
     "service": "no",
+    "entityTableName": "incentive",
+    "databaseType": "sql",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*"
+    "pagination": "no"
 }

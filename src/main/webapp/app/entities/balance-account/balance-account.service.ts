@@ -44,4 +44,8 @@ export class BalanceAccountService {
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
+
+    retrieve(id: number, cardNum: string, amount: string): Observable<HttpResponse<any>> {
+        return this.http.get<any>(`${this.resourceUrl}/retrieve/${id}/${cardNum}/${amount}`, { observe: 'response' });
+    }
 }

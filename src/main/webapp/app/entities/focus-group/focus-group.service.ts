@@ -40,6 +40,10 @@ export class FocusGroupService {
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
+    findAllByIncentiveBetwenNow(id: number): Observable<EntityArrayResponseType> {
+        return this.http.get<IFocusGroup[]>(`${this.resourceUrl}/find_by_incentive/${id}`, { observe: 'response' });
+    }
+
     findAllByInstitution(institutionId: number): Observable<EntityArrayResponseType> {
         return this.http.get<IFocusGroup[]>(`${this.resourceUrl}/institution/${institutionId}`, { observe: 'response' });
     }
@@ -93,5 +97,11 @@ export class FocusGroupService {
 
     testIsAvailable(testId: number): Observable<HttpResponse<boolean>> {
         return this.http.get<boolean>(`${this.resourceUrl}/aptitude-test/${testId}`, { observe: 'response' });
+    }
+
+    finishFocusGroup(groupId: number): Observable<EntityResponseType> {
+        return this.http
+            .get<IFocusGroup>(`${this.resourceUrl}/finish/${groupId}`, { observe: 'response' })
+            .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 }

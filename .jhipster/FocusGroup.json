@@ -99,6 +99,14 @@
         {
             "fieldName": "status",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "isCompleted",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "meetingIsDone",
+            "fieldType": "Boolean"
         }
     ],
     "changelogDate": "20190304115742",

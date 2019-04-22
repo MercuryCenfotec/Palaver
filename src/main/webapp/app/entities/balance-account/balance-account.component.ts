@@ -7,6 +7,7 @@ import { IBalanceAccount } from 'app/shared/model/balance-account.model';
 import { AccountService, UserService } from 'app/core';
 import { BalanceAccountService } from './balance-account.service';
 import { UserAppService } from 'app/entities/user-app';
+import { IUserApp } from 'app/shared/model/user-app.model';
 
 @Component({
     selector: 'jhi-balance-account',
@@ -19,6 +20,7 @@ export class BalanceAccountComponent implements OnInit {
     balanceAccount: IBalanceAccount;
     actualBalance: IBalanceAccount;
     formatedBalance: string;
+    userApp: IUserApp;
 
     constructor(
         protected balanceAccountService: BalanceAccountService,
@@ -33,6 +35,7 @@ export class BalanceAccountComponent implements OnInit {
         this.userService.getUserWithAuthorities().subscribe(user => {
             this.userAppService.findByUserId(user.id).subscribe(userAppData => {
                 this.balanceAccountService.findByUserId(userAppData.id).subscribe(balance => {
+                    this.userApp = userAppData;
                     this.actualBalance = balance.body;
                     const formatter = new Intl.NumberFormat('es', {
                         style: 'currency',
@@ -78,5 +81,9 @@ export class BalanceAccountComponent implements OnInit {
         this.balanceAccountService.update(this.actualBalance, token, amount).subscribe(() => {
             this.ngOnInit();
         });
+    }
+
+    retrieveFunds() {
+        this.balanceAccountService.retrieve(this.userApp.id, '4000056655665556', '5000').subscribe(() => {});
     }
 }

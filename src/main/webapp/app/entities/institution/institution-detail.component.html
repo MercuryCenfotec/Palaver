@@ -14,7 +14,7 @@
                         </div>
                         <div class="col-2">
                             <div class="align-self-center halfway-fab text-center">
-                                    <img src="https://lh3.googleusercontent.com/2aJfB6trLglywvIh6MSN58qh-r2b-_2GoXk4dWL5fIZmMAWdTN3f98Ugpi6U_glIm0w" class="rounded-circle img-border gradient-summer width-100" alt="Card image">
+                                    <img src="{{institution.logo}}" class="rounded-circle img-border gradient-summer width-100" alt="Card image">
                             </div>
                         </div>
                         <div class="col-5">
@@ -49,7 +49,7 @@
                                     <span class="display-block overflow-hidden">{{institution.name}}</span>
                                 </li>
                                 <li class="mb-2" *ngIf="institution.user">
-                                    <span class="text-bold-500 primary"><i class="ft ft-user"></i> Usuario:</span>
+                                    <span class="text-bold-500 primary"><i class="ft ft-user"></i> Encargado:</span>
                                     <span class="display-block overflow-hidden" [routerLink]="['/user-app', institution.user?.id, 'view']">{{institution.user.name}}</span>
                                 </li>
                                 <li class="mb-2" *ngIf="institution.user">

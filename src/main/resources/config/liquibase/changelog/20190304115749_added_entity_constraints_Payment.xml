@@ -14,9 +14,9 @@
                                  referencedColumnNames="id"
                                  referencedTableName="balance_account"/>
 
-        <addForeignKeyConstraint baseColumnNames="oring_account_id"
+        <addForeignKeyConstraint baseColumnNames="origin_account_id"
                                  baseTableName="payment"
-                                 constraintName="fk_payment_oring_account_id"
+                                 constraintName="fk_payment_origin_account_id"
                                  referencedColumnNames="id"
                                  referencedTableName="balance_account"/>
 

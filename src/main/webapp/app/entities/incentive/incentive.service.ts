@@ -27,6 +27,18 @@ export class IncentiveService {
         return this.http.get<IIncentive>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
+    findAllByInstitutionAndQuantity(id: number, quantity: number): Observable<EntityArrayResponseType> {
+        return this.http.get<IIncentive[]>(`${this.resourceUrl}/find_by_institution/${id}/${quantity}`, {
+            observe: 'response'
+        });
+    }
+
+    findAllByInstitution(id: number): Observable<EntityArrayResponseType> {
+        return this.http.get<IIncentive[]>(`${this.resourceUrl}/find_by_institution/${id}`, {
+            observe: 'response'
+        });
+    }
+
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
         return this.http.get<IIncentive[]>(this.resourceUrl, { params: options, observe: 'response' });
