@@ -18,7 +18,8 @@ import { NavbarComponent } from 'app/layouts';
 import { Chart } from 'app/chartist/chartist.component';
 import { ChartEvent, ChartType } from 'ng-chartist';
 import * as moment from 'moment';
-import { Moment } from 'moment';
+import { IIncentive } from 'app/shared/model/incentive.model';
+import { IncentiveService } from 'app/entities/incentive';
 
 declare var require: any;
 
@@ -40,6 +41,7 @@ export class DashboardInstitutionComponent implements OnInit {
     focusGroups: IFocusGroup[];
     participants: IParticipant[];
     aptitudeTests: IAptitudeTest[];
+    incentives: IIncentive[];
     today: string;
     endedFG = 0;
     onCourseFG = 0;
@@ -59,7 +61,8 @@ export class DashboardInstitutionComponent implements OnInit {
         protected jhiAlertService: JhiAlertService,
         protected aptitudeTestService: AptitudeTestService,
         protected accountService: BalanceAccountService,
-        protected navbarComponent: NavbarComponent
+        protected navbarComponent: NavbarComponent,
+        protected incentiveService: IncentiveService
     ) {}
 
     loadAll() {
@@ -215,6 +218,9 @@ export class DashboardInstitutionComponent implements OnInit {
             this.institutionService.getByUserUser(user.id).subscribe(institution => {
                 this.institution = institution.body;
                 if (this.institution.membership.id === 2) {
+                    this.incentiveService.findAllByInstitution(this.institution.id).subscribe(incentives => {
+                        this.incentives = incentives.body;
+                    });
                     document.getElementById('footerPremium').innerHTML = '';
                     document.getElementById('footerPremium').innerHTML = '<i class="btn ft-check font-medium-4 p-0"></i>';
                 }
