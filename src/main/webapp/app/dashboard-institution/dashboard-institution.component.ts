@@ -15,11 +15,11 @@ import { BalanceAccountService } from 'app/entities/balance-account';
 import { IBalanceAccount } from 'app/shared/model/balance-account.model';
 import swal from 'sweetalert2';
 import { NavbarComponent } from 'app/layouts';
-import { Chart } from 'app/chartist/chartist.component';
 import { ChartEvent, ChartType } from 'ng-chartist';
 import * as moment from 'moment';
 import { IIncentive } from 'app/shared/model/incentive.model';
 import { IncentiveService } from 'app/entities/incentive';
+import * as Chartist from 'chartist';
 
 declare var require: any;
 
@@ -107,18 +107,35 @@ export class DashboardInstitutionComponent implements OnInit {
         document.getElementById('endedFGPercent').style.width = this.endedFGPer + '%';
         document.getElementById('recruitingFGPercent').style.width = this.recruitingFGPer + '%';
 
+        const scopeThis = this;
         this.donutChart = {
+            type: 'Pie',
             data: {
                 series: [this.onCourseFG, this.endedFG, this.recruitingFG]
             },
             options: {
                 donut: true,
+                labelInterpolationFnc: function(value) {
+                    return scopeThis.focusGroups.length + ' grupos';
+                },
                 height: '250px',
                 donutSolid: true,
-                showLabel: false,
                 donutWidth: '20%'
             },
-            type: 'Pie'
+            events: {
+                draw(data: any): void {
+                    if (data.type === 'label') {
+                        if (data.index === 0) {
+                            data.element.attr({
+                                dx: data.element.root().width() / 2,
+                                dy: data.element.root().height() / 2
+                            });
+                        } else {
+                            data.element.remove();
+                        }
+                    }
+                }
+            }
         };
 
         this.lineArea = {
