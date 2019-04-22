@@ -22,7 +22,8 @@
                                 <th><span>Nombre</span></th>
                                 <!--<th><span>Logo</span></th>-->
                                 <th><span>Teléfono</span></th>
-                                <th><span>Usuario</span></th>
+                                <th><span>E-mail</span></th>
+                                <th><span>Encargado</span></th>
                                 <!--<th><span>Membresía</span></th>-->
                                 <th><span>Acciones</span></th>
                             </tr>
@@ -39,11 +40,8 @@
                                 <td>{{institution.name}}</td>
                                 <!--<td>{{institution.logo}}</td>-->
                                 <td>{{institution.telephone}}</td>
-                                <td>
-                                    <div *ngIf="institution.user">
-                                        <a [routerLink]="['../user-app', institution.user?.id, 'view' ]" >{{institution.user?.name}}</a>
-                                    </div>
-                                </td>
+                                <td>{{institution.user.mail}}</td>
+                                <td>{{institution.user.name}}</td>
                                 <!--<td>
                                     <div *ngIf="institution.membership">
                                         <a [routerLink]="['../membership', institution.membership?.id, 'view' ]" >{{institution.membership?.id}}</a>

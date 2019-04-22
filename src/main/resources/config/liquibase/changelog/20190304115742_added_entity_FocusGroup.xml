@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
-    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <property name="now" value="now()" dbms="h2"/>
-    
+
     <property name="now" value="now()" dbms="mysql"/>
     <property name="autoIncrement" value="true"/>
 
@@ -23,54 +23,62 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
 
             <column name="description" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
 
             <column name="begin_date" type="date">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
 
             <column name="end_date" type="date">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
 
             <column name="code" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
 
             <column name="passing_grade" type="integer">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
 
             <column name="participants_amount" type="integer">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
 
             <column name="status" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="is_completed" type="boolean">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="meeting_is_done" type="boolean">
+                <constraints nullable="true"/>
             </column>
 
             <column name="incentive_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
 
             <column name="institution_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
 
             <column name="aptitude_test_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="meeting_id" type="bigint">
-                <constraints unique="true" nullable="true" uniqueConstraintName="ux_focus_group_meeting_id" />
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_focus_group_meeting_id"/>
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        
+
         <createTable tableName="focus_group_category">
             <column name="category_id" type="bigint">
                 <constraints nullable="false"/>
@@ -81,7 +89,7 @@
         </createTable>
 
         <addPrimaryKey columnNames="focus_group_id, category_id" tableName="focus_group_category"/>
-        
+
         <createTable tableName="focus_group_participant">
             <column name="participant_id" type="bigint">
                 <constraints nullable="false"/>

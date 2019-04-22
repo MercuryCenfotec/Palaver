@@ -9,6 +9,8 @@ import { AccountService, UserService } from 'app/core';
 import { TestResultService } from './test-result.service';
 import { FocusGroupService } from 'app/entities/focus-group';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
+import { NotificationService } from 'app/entities/notification';
+import { Notification } from 'app/shared/model/notification.model';
 
 @Component({
     selector: 'jhi-test-result',
@@ -28,7 +30,8 @@ export class TestResultComponent implements OnInit, OnDestroy {
         protected eventManager: JhiEventManager,
         protected accountService: AccountService,
         protected userService: UserService,
-        protected focusGroupService: FocusGroupService
+        protected focusGroupService: FocusGroupService,
+        protected notificationService: NotificationService
     ) {}
 
     loadAll() {
@@ -91,7 +94,16 @@ export class TestResultComponent implements OnInit, OnDestroy {
         this.focusGroupService.update(event.focusGroup).subscribe(data => {
             event.status = 'Aceptado';
             this.testResultService.update(event).subscribe(data2 => {
-                this.loadAll();
+                const newNotification = new Notification(
+                    null,
+                    event.participant.user.user.id.toString(),
+                    'GroupAccepted',
+                    false,
+                    event.focusGroup.id
+                );
+                this.notificationService.create(newNotification).subscribe(createdNoti => {
+                    this.loadAll();
+                });
             });
         });
     }
@@ -99,7 +111,16 @@ export class TestResultComponent implements OnInit, OnDestroy {
     rejectParticipant(event: ITestResult) {
         event.status = 'Rechazado';
         this.testResultService.update(event).subscribe(data => {
-            this.loadAll();
+            const newNotification = new Notification(
+                null,
+                event.participant.user.user.id.toString(),
+                'GroupRejected',
+                false,
+                event.focusGroup.id
+            );
+            this.notificationService.create(newNotification).subscribe(createdNoti => {
+                this.loadAll();
+            });
         });
     }
 }

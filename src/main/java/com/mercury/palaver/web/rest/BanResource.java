@@ -109,4 +109,28 @@ public class BanResource {
         banService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    @GetMapping("/bans/verify/{isValid}")
+    public List<Ban> getAllBansByStatus(@PathVariable boolean isValid) {
+        log.debug("REST request to get all Bans");
+        return banService.findAllByStatus(isValid);
+    }
+
+    @GetMapping("/bans/verify-institution/{isValid}/{instId}")
+    public List<Ban> getAllBansByStatusAndInstitution(@PathVariable("isValid") boolean isValid, @PathVariable("instId") Long instId) {
+        log.debug("REST request to get all Bans");
+        return banService.findAllByStatusAndInstitution(isValid, instId);
+    }
+
+    @GetMapping("/bans/institution-ban/{instId}")
+    public List<Ban> getAllBansByInstitution(@PathVariable("instId") Long instId) {
+        log.debug("REST request to get all Bans");
+        return banService.findAllByInstitution(instId);
+    }
+
+    @GetMapping("/bans/participant-ban/{partiId}")
+    public List<Ban> getAllBansByParticipant(@PathVariable("partiId") Long partiId) {
+        log.debug("REST request to get all Bans");
+        return banService.findAllByParticipant(partiId);
+    }
 }

@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface PaymentRepository extends JpaRepository<Payment, Long> {
-
+    Payment findByDescription(String description);
 }

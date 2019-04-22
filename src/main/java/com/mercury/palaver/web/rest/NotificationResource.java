@@ -109,4 +109,10 @@ public class NotificationResource {
         notificationService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    @GetMapping("/notifications/destiny-user/{userId}")
+    public List<Notification> getAllNotificationsByDestinationUser(@PathVariable String userId) {
+        log.debug("REST request to get all Notifications");
+        return notificationService.findAllByMessage(userId);
+    }
 }

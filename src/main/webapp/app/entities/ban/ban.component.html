@@ -1,70 +1,118 @@
-<div>
-    <h2 id="page-heading">
-        <span>Bans</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-ban" [routerLink]="['/ban/new']">
-            <fa-icon [icon]="'plus'"></fa-icon>
-            <span >
-            Create new Ban
-            </span>
-        </button>
-    </h2>
-    <jhi-alert></jhi-alert>
-    <br/>
-    <div class="table-responsive" *ngIf="bans">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-            <th><span>ID</span></th>
-            <th><span>Reason</span></th>
-            <th><span>Complaint</span></th>
-            <th><span>Is Valid</span></th>
-            <th><span>Participant</span></th>
-            <th><span>Focus Group</span></th>
-            <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let ban of bans ;trackBy: trackId">
-                <td><a [routerLink]="['/ban', ban.id, 'view' ]">{{ban.id}}</a></td>
-                <td>{{ban.reason}}</td>
-                <td>{{ban.complaint}}</td>
-                <td>{{ban.isValid}}</td>
-                <td>
-                    <div *ngIf="ban.participant">
-                        <a [routerLink]="['../participant', ban.participant?.id, 'view' ]" >{{ban.participant?.id}}</a>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">
+                    Motivos de expulsiones
+                </h4>
+                <p  _ngcontent-c24="" class="mb-0">Evalúa los motivos por los cuales la institución expulsó a un participante y determina si, tanto el
+                    motivo como la queja intrapuesta por el participante son correctas. En caso de que la queja posea
+                    un punto válido, marca el motivo como válido, caso contrario márcalo como inválido. Si la institución
+                    a la cual pertenece el grupo posee tres motivos válidos se le aplicará una suspensión, ¡Por favor sé consciente de la revisión!
+                    Al fin y al cabo es para mantener un orden dentro de la aplicación.</p>
+            </div>
+            <div class="card-body">
+                <div class="card-block">
+                    <div class="row">
                     </div>
-                </td>
-                <td>
-                    <div *ngIf="ban.focusGroup">
-                        <a [routerLink]="['../focus-group', ban.focusGroup?.id, 'view' ]" >{{ban.focusGroup?.id}}</a>
+                    <div class="table-responsive" *ngIf="bans">
+                        <table class="table table-responsive-md text-center">
+                            <thead>
+                            <tr>
+                                <th><span>Participante</span></th>
+                                <th><span>Grupo de enfoque</span></th>
+                                <th><span>Motivo</span></th>
+                                <th><span>Queja</span></th>
+                                <th><span>Acciones</span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let ban of bans; trackBy: trackId">
+                                <td>
+                                    <div *ngIf="ban.participant">
+                                        <a [routerLink]="['../participant', ban.participant?.id, 'view' ]">{{ban.participant?.user.name}}</a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div *ngIf="ban.focusGroup">
+                                        {{ban.focusGroup?.name}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div *ngIf="ban.reason.length >= 30">
+                                        <a class="text-bold-500 primary" (click)="showDetail(motive,ban)">Ver más</a>
+                                    </div>
+                                    <div *ngIf="ban.reason.length < 30">
+                                        {{ban.reason}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div *ngIf="ban.complaint.length >= 30">
+                                        <a class="text-bold-500 primary" (click)="showDetail(complaint,ban)">Ver más</a>
+                                    </div>
+                                    <div *ngIf="ban.complaint.length < 30">
+                                        {{ban.complaint}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <button id="btnInvalid" class="btn btn-raised btn-danger mr-1"
+                                            (click)="sendInvalid(ban)">
+                                        <i class="ft-x"></i> No es válido
+                                    </button>
+                                    <button class="btn btn-raised btn-primary" id="btnValid"
+                                            (click)="sendValid(ban)">
+                                        <i class="ft ft-check"></i> Válido
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
-                </td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['/ban', ban.id, 'view' ]"
-                                class="btn btn-info btn-sm">
-                            <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/ban', ban.id, 'edit']"
-                                class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', 'ban', { outlets: { popup: ban.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<ng-template #motive let-c="close" let-d="dismiss">
+    <div class="modal-header" style="background-color: #428bca; color: #fff;">
+        <h4 class="modal-title">Motivo especificado</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate>
+            <div class="form-body">
+                <div class="form-group">
+                    <label class="form-control-label">{{ban.reason}}</label>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-raised" (click)="c('Close click')">Cerrar</button>
+    </div>
+</ng-template>
+
+
+<ng-template #complaint let-c="close" let-d="dismiss">
+    <div class="modal-header" style="background-color: #5bc0de; color: #fff;">
+        <h4 class="modal-title">Queja recibida</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate>
+            <div class="form-body">
+                <div class="form-group">
+                    <label class="form-control-label">{{ban.complaint}}</label>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-raised" (click)="c('Close click')">Cerrar</button>
+    </div>
+</ng-template>

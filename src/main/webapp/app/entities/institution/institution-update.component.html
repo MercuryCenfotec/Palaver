@@ -27,14 +27,17 @@
                                 (floatDescription.dirty || floatDescription.touched)">Este campo es requerido.
                                 </small>
                             </div>
-                            <!--<div class="form-group">
-                                <label class="form-control-label" for="field_logo">Logo</label>
-                                <input type="text" class="form-control" name="logo" id="field_logo"
-                                       [(ngModel)]="institution.logo" required #floatLogo="ngModel"/>
-                                <small class="form-text text-muted danger" *ngIf="!floatLogo.valid && (floatLogo.dirty ||
-                                 floatLogo.touched)">¡Logo requerido!
-                                </small>
-                            </div>-->
+                            <div class="form-group">
+                                <label class="form-control-label" for="image">Logo</label>
+
+                                <img src="{{institution.logo}}" class=" img-border gradient-summer width-100" alt="Card image">
+
+                                <div class="custom-file center-block d-block">
+                                    <input type="file" class="form-control-file" id="image"
+                                           (change)="onFileChange($event)"
+                                           accept="image/x-png,image/jpeg">
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="field_telephone">Teléfono</label>
                                 <input type="text" class="form-control" name="telephone" id="field_telephone"

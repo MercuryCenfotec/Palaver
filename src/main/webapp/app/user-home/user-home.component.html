@@ -2,7 +2,8 @@
     <h4 _ngcontent-c6="" class="card-title">
         Grupos de enfoque
     </h4>
-    <h6>¡Estas empresas necesitan tu opinión sobre sus productos! Si cumples con los requisitos, solicita participar y recibe una recompensa por tu ayuda.</h6>
+    <h6>¡Estas empresas necesitan tu opinión sobre sus productos! Si cumples con los requisitos, solicita participar y
+        recibe una recompensa por tu ayuda.</h6>
 </div>
 <div _ngcontent-c25="" class="row pl-3 pr-3" matchheight="card" ng-reflect-match-height="card" *ngIf="focusGroups">
 
@@ -15,30 +16,77 @@
     </div>
 
     <ng-container *ngIf="( focusGroups | participantFGFilter : searchText) as result">
-        <div _ngcontent-c25="" class="col-md-6 col-sm-12" *ngFor="let focusGroup of result">
+<!--        <div _ngcontent-c25="" class="col-md-6 col-sm-12" *ngFor="let focusGroup of result">-->
+<!--            &lt;!&ndash;<form [routerLink]="['/focus-group', focusGroup.id, 'view']">&ndash;&gt;-->
+<!--            <div _ngcontent-c25="" class="card card-inverse bg-primary text-center gradient-blue-grey-blue"-->
+<!--                 style="height: 312.703px;">-->
+<!--                <div _ngcontent-c25="" class="card-body">-->
+<!--                    <div _ngcontent-c25="" class="card-block pt-3">-->
+<!--                        <div _ngcontent-c25="" class="row d-flex">-->
+<!--                            <div _ngcontent-c25="" class="col align-self-center"-->
+<!--                                 style="min-height: 280px; max-height: 280px;">-->
+<!--                                <img _ngcontent-c25="" alt="element 01"-->
+<!--                                     src="https://res.cloudinary.com/utilisimo/image/upload/v1553384683/logoPeq2_j0gcfm.png"-->
+<!--                                     width="190" style="height: 280px; object-fit: contain;"></div>-->
+<!--                            <div _ngcontent-c25="" class="col align-self-center">-->
+<!--                                <h4 _ngcontent-c25="" class="card-title mt-3">{{focusGroup.name}}</h4>-->
+<!--                                <p _ngcontent-c25="" class="card-text">{{focusGroup.description}}</p>-->
+<!--                                <a _ngcontent-c22="" id="btn-{{focusGroup.id}}"-->
+<!--                                   class="btn btn-raised mr-1 shadow-z-2 gradient-amber-amber"-->
+<!--                                   (click)="askParticipation(focusGroup.id,modalToDisplay)">Participar</a>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash;</form>&ndash;&gt;-->
+<!--        </div>-->
+
+        <div class="col-md-12 col-sm-12" *ngFor="let focusGroup of result">
             <!--<form [routerLink]="['/focus-group', focusGroup.id, 'view']">-->
-                <div _ngcontent-c25="" class="card card-inverse bg-primary text-center gradient-blue-grey-blue" style="height: 312.703px;">
-                    <div _ngcontent-c25="" class="card-body">
-                        <div _ngcontent-c25="" class="card-block pt-3">
-                            <div _ngcontent-c25="" class="row d-flex">
-                                <div _ngcontent-c25="" class="col align-self-center" style="min-height: 280px; max-height: 280px;">
-                                    <img _ngcontent-c25="" alt="element 01" src="https://res.cloudinary.com/utilisimo/image/upload/v1553384683/logoPeq2_j0gcfm.png" width="190" style="height: 280px; object-fit: contain;"></div>
-                                <div _ngcontent-c25="" class="col align-self-center">
-                                    <h4 _ngcontent-c25="" class="card-title mt-3">{{focusGroup.name}}</h4>
-                                    <p _ngcontent-c25="" class="card-text">{{focusGroup.description}}</p>
-                                    <a _ngcontent-c22="" id="btn-{{focusGroup.id}}" class="btn btn-raised mr-1 shadow-z-2 gradient-amber-amber" (click)="askParticipation(focusGroup.id,modalToDisplay)">Participar</a>
+            <div class="card card-inverse bg-primary text-center gradient-blue-grey-blue" >
+                <div class="card-body">
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-sm-8 col-md-8 col-8 col-lg-8 col-xl-8">
+                                <div class="row">
+                                    <div class="col-12 mt-3">
+                                        <h2 class="text-left">{{focusGroup.name}}</h2>
+                                    </div>
+                                    <div class="col-12 mt-3">
+                                        <h5 class="text-left">{{focusGroup.description}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-md-4 col-4 col-lg-4 col-xl-4">
+                                <div class="row">
+                                    <div class="col-12 mt-3 justify-content-center">
+                                        <h5 class="">
+                                            <i class="ft-calendar"></i>
+                                            {{focusGroup.beginDate | date:'mediumDate'}}
+                                            / {{focusGroup.endDate | date:'mediumDate'}}</h5>
+                                    </div>
+                                    <div class="col-8 mt-3 justify-content-center">
+                                        <a id="btn-new-{{focusGroup.id}}"
+                                           class="btn btn-raised mr-1 shadow-z-2 gradient-amber-amber"
+                                           (click)="askParticipation(focusGroup.id,modalToDisplay)">Participar</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
             <!--</form>-->
         </div>
 
-        <div _ngcontent-c25="" class="card card-inverse text-center mr-3 ml-3" style="height: 312.703px;" *ngIf="result.length === 0">
+        <div _ngcontent-c25="" class="card card-inverse text-center mr-3 ml-3" style="height: 312.703px;"
+             *ngIf="result.length === 0">
             <div _ngcontent-c25="" class="card-body">
                 <div _ngcontent-c25="" class="card-block pt-3">
-                    <img _ngcontent-c25="" alt="element 01" src="https://res.cloudinary.com/utilisimo/image/upload/v1553481262/noResult_hhjbda.png" class="width-40-per mt-4">
+                    <img _ngcontent-c25="" alt="element 01"
+                         src="https://res.cloudinary.com/utilisimo/image/upload/v1553481262/noResult_hhjbda.png"
+                         class="width-40-per mt-4">
                 </div>
             </div>
         </div>
@@ -49,6 +97,10 @@
     <div class="card">
         <div class="card-header">
             <h2 class="card-title" id="jhi-institution-heading">{{focusGroup.aptitudeTest.name}}</h2>
+            <p _ngcontent-c24="" class="mb-0">Para poder participar dentro de este grupo de enfoque primero tienes que
+                contestar las preguntas
+                que se muestran a continuación. ¡No te preocupes! La información que se solicita no se registrará en
+                ningún aspecto de la aplicación.</p>
         </div>
         <div class="card-body">
             <div class="px-3">
@@ -60,9 +112,11 @@
                             <div class="form-group">
                                 <div class="custom-control custom-radio custom-control-inline"
                                      *ngFor="let testAnswerOption of testQuestion.answers">
-                                    <input type="radio" id="answer{{testAnswerOption.id}}" name="{{testQuestion.id}}" class="custom-control-input">
+                                    <input type="radio" id="answer{{testAnswerOption.id}}" name="{{testQuestion.id}}"
+                                           class="custom-control-input">
                                     <label class="custom-control-label"
-                                           for="answer{{testAnswerOption.id}}"><span><i class="ft-minus"></i>{{testAnswerOption.answer}}</span></label><br>
+                                           for="answer{{testAnswerOption.id}}"><span><i
+                                        class="ft-minus"></i>{{testAnswerOption.answer}}</span></label><br>
                                 </div>
                             </div>
                         </div>

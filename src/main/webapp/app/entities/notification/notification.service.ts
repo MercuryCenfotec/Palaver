@@ -35,4 +35,8 @@ export class NotificationService {
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
+
+    findAllNotificationsByUser(user: string): Observable<EntityArrayResponseType> {
+        return this.http.get<INotification[]>(this.resourceUrl + '/destiny-user/' + user, { observe: 'response' });
+    }
 }

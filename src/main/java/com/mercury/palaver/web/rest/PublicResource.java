@@ -1,27 +1,15 @@
 package com.mercury.palaver.web.rest;
 
 import com.mercury.palaver.domain.FocusGroup;
-import com.mercury.palaver.domain.Meeting;
 import com.mercury.palaver.repository.FocusGroupRepository;
-import com.mercury.palaver.service.ZoomApiService;
-import com.mercury.palaver.web.rest.errors.BadRequestAlertException;
-import com.mercury.palaver.web.rest.util.HeaderUtil;
+import com.mercury.palaver.service.AwsS3ApiService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.time.ZonedDateTime;
-import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -34,11 +22,11 @@ public class PublicResource {
     private final Logger log = LoggerFactory.getLogger(PublicResource.class);
 
     private final FocusGroupRepository focusGroupRepository;
-    private final ZoomApiService zoomApiService;
+    private final AwsS3ApiService awsS3ApiService;
 
-    public PublicResource(FocusGroupRepository focusGroupRepository, ZoomApiService zoomApiService) {
+    public PublicResource(FocusGroupRepository focusGroupRepository, AwsS3ApiService awsS3ApiService) {
         this.focusGroupRepository = focusGroupRepository;
-        this.zoomApiService = zoomApiService;
+        this.awsS3ApiService = awsS3ApiService;
     }
 
 
@@ -53,6 +41,19 @@ public class PublicResource {
         log.debug("REST request to get FocusGroup by code: {}", code);
         Optional<FocusGroup> focusGroup = focusGroupRepository.findByCode(code);
         return ResponseUtil.wrapOrNotFound(focusGroup);
+    }
+
+
+    /**
+     * POST  /image : Save an image.
+     *
+     * @param file the image to save in the S3 bucket
+     * @return the ResponseEntity with status 201 (Created) and with body the new focusGroup, or with status 400 (Bad Request) if the focusGroup has already an ID
+     */
+    @PostMapping("/image")
+    public ResponseEntity<String> saveImage(@RequestPart(value = "file") MultipartFile file) {
+        String url = this.awsS3ApiService.uploadFile(file);
+        return ResponseEntity.ok().body(url);
     }
 
 

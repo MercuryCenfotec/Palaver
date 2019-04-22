@@ -1,11 +1,15 @@
 package com.mercury.palaver.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -35,6 +39,13 @@ public class Incentive implements Serializable {
     @Column(name = "description")
     private String description;
 
+    @ManyToOne
+    @JsonIgnoreProperties("incentives")
+    private Institution institution;
+
+    @OneToMany(mappedBy = "incentive")
+    @JsonIgnoreProperties("incentive")
+    private Set<FocusGroup> focusGroups = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -94,6 +105,44 @@ public class Incentive implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Institution getInstitution() {
+        return institution;
+    }
+
+    public Incentive institution(Institution institution) {
+        this.institution = institution;
+        return this;
+    }
+
+    public void setInstitution(Institution institution) {
+        this.institution = institution;
+    }
+
+    public Set<FocusGroup> getFocusGroups() {
+        return focusGroups;
+    }
+
+    public Incentive focusGroups(Set<FocusGroup> focusGroups) {
+        this.focusGroups = focusGroups;
+        return this;
+    }
+
+    public Incentive addFocusGroups(FocusGroup focusGroup) {
+        this.focusGroups.add(focusGroup);
+        focusGroup.setIncentive(this);
+        return this;
+    }
+
+    public Incentive removeFocusGroups(FocusGroup focusGroup) {
+        this.focusGroups.remove(focusGroup);
+        focusGroup.setIncentive(null);
+        return this;
+    }
+
+    public void setFocusGroups(Set<FocusGroup> focusGroups) {
+        this.focusGroups = focusGroups;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

@@ -34,7 +34,7 @@ export const testResultRoute: Routes = [
         component: TestResultComponent,
         data: {
             authorities: ['ROLE_GROUP', 'ROLE_ADMIN'],
-            pageTitle: 'TestResults'
+            pageTitle: 'Resultados'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -46,7 +46,7 @@ export const testResultRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_INSTITUTION', 'ROLE_ADMIN'],
-            pageTitle: 'TestResults'
+            pageTitle: 'Resultados'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -58,7 +58,7 @@ export const testResultRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_INSTITUTION', 'ROLE_ADMIN'],
-            pageTitle: 'TestResults'
+            pageTitle: 'Resultados'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -70,7 +70,7 @@ export const testResultRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_INSTITUTION', 'ROLE_ADMIN'],
-            pageTitle: 'TestResults'
+            pageTitle: 'Resultados'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -85,7 +85,7 @@ export const testResultPopupRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_INSTITUTION', 'ROLE_ADMIN'],
-            pageTitle: 'TestResults'
+            pageTitle: 'Resultados'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

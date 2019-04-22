@@ -5,8 +5,9 @@ export interface IPayment {
     date?: string;
     description?: string;
     ammount?: number;
+    onHold?: boolean;
     destinyAccount?: IBalanceAccount;
-    oringAccount?: IBalanceAccount;
+    originAccount?: IBalanceAccount;
 }
 
 export class Payment implements IPayment {
@@ -15,7 +16,10 @@ export class Payment implements IPayment {
         public date?: string,
         public description?: string,
         public ammount?: number,
+        public onHold?: boolean,
         public destinyAccount?: IBalanceAccount,
-        public oringAccount?: IBalanceAccount
-    ) {}
+        public originAccount?: IBalanceAccount
+    ) {
+        this.onHold = this.onHold || false;
+    }
 }

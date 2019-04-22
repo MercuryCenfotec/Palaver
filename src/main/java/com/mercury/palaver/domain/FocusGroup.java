@@ -53,29 +53,36 @@ public class FocusGroup implements Serializable {
     @Column(name = "status")
     private String status;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    @JsonIgnoreProperties("focusGroups")
+    @Column(name = "is_completed")
+    private Boolean isCompleted;
+
+    @Column(name = "meeting_is_done")
+    private Boolean meetingIsDone;
+
+    @ManyToOne
     private Incentive incentive;
 
     @ManyToOne
+    @JsonIgnoreProperties("focusGroups")
     private Institution institution;
 
-    @ManyToMany(cascade = CascadeType.REMOVE)
+    @ManyToMany
     @JoinTable(name = "focus_group_category",
                joinColumns = @JoinColumn(name = "focus_group_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
     private Set<Category> categories = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.REMOVE)
+    @ManyToMany
     @JoinTable(name = "focus_group_participant",
                joinColumns = @JoinColumn(name = "focus_group_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "participant_id", referencedColumnName = "id"))
     private Set<Participant> participants = new HashSet<>();
 
     @ManyToOne
+    @JsonIgnoreProperties("focusGroups")
     private AptitudeTest aptitudeTest;
 
-    @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval=true)
+    @OneToOne
     @JoinColumn(unique = true)
     private Meeting meeting;
 
@@ -190,6 +197,32 @@ public class FocusGroup implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Boolean isIsCompleted() {
+        return isCompleted;
+    }
+
+    public FocusGroup isCompleted(Boolean isCompleted) {
+        this.isCompleted = isCompleted;
+        return this;
+    }
+
+    public void setIsCompleted(Boolean isCompleted) {
+        this.isCompleted = isCompleted;
+    }
+
+    public Boolean isMeetingIsDone() {
+        return meetingIsDone;
+    }
+
+    public FocusGroup meetingIsDone(Boolean meetingIsDone) {
+        this.meetingIsDone = meetingIsDone;
+        return this;
+    }
+
+    public void setMeetingIsDone(Boolean meetingIsDone) {
+        this.meetingIsDone = meetingIsDone;
     }
 
     public Incentive getIncentive() {
@@ -327,6 +360,8 @@ public class FocusGroup implements Serializable {
             ", passingGrade=" + getPassingGrade() +
             ", participantsAmount=" + getParticipantsAmount() +
             ", status='" + getStatus() + "'" +
+            ", isCompleted='" + isIsCompleted() + "'" +
+            ", meetingIsDone='" + isMeetingIsDone() + "'" +
             "}";
     }
 }

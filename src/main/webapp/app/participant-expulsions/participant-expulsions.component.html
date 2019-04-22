@@ -1,0 +1,106 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">
+                    Expulsiones recientes
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="card-block">
+                    <div class="row">
+                    </div>
+                    <div class="table-responsive" *ngIf="bans">
+                        <table class="table table-responsive-md text-center">
+                            <thead>
+                            <tr>
+                                <th><span>Grupo de enfoque</span></th>
+                                <th><span>Motivo</span></th>
+                                <th><span>Acción</span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let ban of bans; trackBy: trackId">
+                                <td>
+                                    <div *ngIf="ban.focusGroup">
+                                        {{ban.focusGroup?.name}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div *ngIf="ban.reason.length >= 30">
+                                        <a class="text-bold-500 primary" (click)="showDetail(motive,ban)">Ver más</a>
+                                    </div>
+                                    <div *ngIf="ban.reason.length < 30">
+                                        {{ban.reason}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <button class="btn btn-raised btn-primary" id="btnValid"
+                                            (click)="showDetail(complaint,ban)">
+                                        <i class="ft ft-check"></i> Imponer queja
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #motive let-c="close" let-d="dismiss">
+    <div class="modal-header" style="background-color: #428bca; color: #fff;">
+        <h4 class="modal-title">Motivo especificado</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate>
+            <div class="form-body">
+                <div class="form-group">
+                    <label class="form-control-label" for="field_motive">{{ban.reason}}</label>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-raised" (click)="c('Close click')">Cerrar</button>
+    </div>
+</ng-template>
+
+
+<ng-template #complaint let-c="close" let-d="dismiss">
+    <div class="modal-header" style="background-color: #5bc0de; color: #fff;">
+        <h4 class="modal-title">Imponer queja</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="px-3">
+            <form class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate>
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="form-control-label" for="field_motive">¿Consideras que el motivo por el cual te
+                            expulsaron no es correcto? Ingresa una queja para alzar la voz.</label>
+                        <textarea type="text" class="form-control" name="motive" id="field_motive" required
+                                  #txtComplaint></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
+                (click)="d('Force cancel')">
+            <i class="ft-x"></i> Cancelar
+        </button>
+        <button class="btn btn-raised btn-primary" type="submit" id="save-entity"
+                (click)="sendReport(txtComplaint,ban); d('Force cancel')">
+            <i class="ft ft-file-text"></i> Enviar reporte
+        </button>
+    </div>
+</ng-template>

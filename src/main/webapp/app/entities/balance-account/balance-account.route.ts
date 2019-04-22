@@ -34,7 +34,7 @@ export const balanceAccountRoute: Routes = [
         component: BalanceAccountComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'BalanceAccounts'
+            pageTitle: 'Balance'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -46,7 +46,7 @@ export const balanceAccountRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'BalanceAccounts'
+            pageTitle: 'Balance'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -58,7 +58,7 @@ export const balanceAccountRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'BalanceAccounts'
+            pageTitle: 'Balance'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -70,7 +70,7 @@ export const balanceAccountRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'BalanceAccounts'
+            pageTitle: 'Balance'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -85,7 +85,7 @@ export const balanceAccountPopupRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'BalanceAccounts'
+            pageTitle: 'Balance'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

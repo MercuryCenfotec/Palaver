@@ -11,8 +11,10 @@ import { filter, map } from 'rxjs/operators';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ClipboardService } from 'ngx-clipboard';
 import * as moment from 'moment';
-import {BanService} from 'app/entities/ban';
-import {Ban, IBan} from 'app/shared/model/ban.model';
+import { BanService } from 'app/entities/ban';
+import { Ban, IBan } from 'app/shared/model/ban.model';
+import { NotificationService } from 'app/entities/notification';
+import { Notification } from 'app/shared/model/notification.model';
 
 @Component({
     selector: 'jhi-focus-group-management',
@@ -23,7 +25,7 @@ export class FocusGroupManagementComponent implements OnInit {
     participants: Participant[];
     participant: IParticipant;
     focusGroup: IFocusGroup;
-    ban =  new Ban(null, '', '', null, null, null);
+    ban = new Ban(null, '', '', null, null, null);
     searchText;
 
     constructor(
@@ -33,7 +35,8 @@ export class FocusGroupManagementComponent implements OnInit {
         protected meetingsService: MeetingService,
         protected participantService: ParticipantService,
         protected modalService: NgbModal,
-        protected banService: BanService
+        protected banService: BanService,
+        protected notificationService: NotificationService
     ) {}
 
     ngOnInit() {
@@ -90,9 +93,18 @@ export class FocusGroupManagementComponent implements OnInit {
         this.ban.focusGroup = this.focusGroup;
         this.ban.participant = this.participant;
 
-        this.banService.create(this.ban).subscribe( newBan => {
+        this.banService.create(this.ban).subscribe(newBan => {
             this.focusGroupService.update(this.focusGroup).subscribe(data => {
-                this.ngOnInit();
+                const newNotification = new Notification(
+                    null,
+                    this.participant.user.user.id.toString(),
+                    'GroupExpulsion',
+                    false,
+                    newBan.body.id
+                );
+                this.notificationService.create(newNotification).subscribe(createdNoti => {
+                    this.ngOnInit();
+                });
             });
         });
     }
@@ -104,5 +116,12 @@ export class FocusGroupManagementComponent implements OnInit {
                 .toDate()
                 .getDate()
         );
+    }
+
+    startMeeting() {
+        window.open(this.meeting.callURL);
+        this.focusGroupService.finishFocusGroup(this.focusGroup.id).subscribe(group => {
+            console.log(group);
+        });
     }
 }

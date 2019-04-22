@@ -11,6 +11,7 @@ import { IncentiveDetailComponent } from './incentive-detail.component';
 import { IncentiveUpdateComponent } from './incentive-update.component';
 import { IncentiveDeletePopupComponent } from './incentive-delete-dialog.component';
 import { IIncentive } from 'app/shared/model/incentive.model';
+import { IncentiveFormComponent } from 'app/entities/incentive/incentive-form.component';
 
 @Injectable({ providedIn: 'root' })
 export class IncentiveResolve implements Resolve<IIncentive> {
@@ -33,8 +34,8 @@ export const incentiveRoute: Routes = [
         path: '',
         component: IncentiveComponent,
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Incentives'
+            authorities: ['ROLE_INSTITUTION'],
+            pageTitle: 'Incentivos'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -45,20 +46,20 @@ export const incentiveRoute: Routes = [
             incentive: IncentiveResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Incentives'
+            authorities: ['ROLE_INSTITUTION'],
+            pageTitle: 'Incentivos'
         },
         canActivate: [UserRouteAccessService]
     },
     {
         path: 'new',
-        component: IncentiveUpdateComponent,
+        component: IncentiveFormComponent,
         resolve: {
             incentive: IncentiveResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Incentives'
+            authorities: ['ROLE_INSTITUTION'],
+            pageTitle: 'Incentivos'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -69,8 +70,8 @@ export const incentiveRoute: Routes = [
             incentive: IncentiveResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Incentives'
+            authorities: ['ROLE_INSTITUTION'],
+            pageTitle: 'Incentivos'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -84,8 +85,8 @@ export const incentivePopupRoute: Routes = [
             incentive: IncentiveResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Incentives'
+            authorities: ['ROLE_INSTITUTION'],
+            pageTitle: 'Incentivos'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
