@@ -176,10 +176,10 @@
                     </button>
                 </div>
                 <div
-                    *ngIf="editForm.form.invalid || isSaving || !validateAnswers() || !validEndDate() ||
+                        *ngIf="editForm.form.invalid ||  !validateAnswers() || !validEndDate() ||
                      !validatePassingGrade() || !validateParticipantsAmount() || insufficientBalance(); else validEditBtn"
-                    [ngbPopover]="popoverText"
-                    triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido." class="col-auto">
+                        [ngbPopover]="popoverText"
+                        triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido." class="col-auto">
                     <button type="submit" id="save-entity-invalid" [disabled]="true"
                             class="btn btn-raised btn-primary">
                         <i class="ft-save"></i>&nbsp;<span> Guardar</span>
@@ -200,7 +200,8 @@
                 </ng-template>
                 <ng-template #validEditBtn>
                     <div class="col-auto">
-                        <button type="submit" id="save-entity-valid" class="btn btn-raised btn-primary">
+                        <button type="submit" id="save-entity-valid" class="btn btn-raised btn-primary"
+                                [disabled]="isSaving">
                             <i class="ft-save"></i>&nbsp;<span> Guardar</span>
                         </button>
                     </div>

@@ -1,5 +1,6 @@
 package com.mercury.palaver.web.rest;
 
+import com.mercury.palaver.domain.AptitudeTest;
 import com.mercury.palaver.domain.FocusGroup;
 import com.mercury.palaver.domain.Institution;
 import com.mercury.palaver.repository.FocusGroupRepository;
