@@ -44,7 +44,6 @@ export class FocusGroupFormComponent implements OnInit {
     formatedCost: string;
     baseGroupCost = 30000;
     baseParticipantCost = 25000;
-    isMember = true;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
