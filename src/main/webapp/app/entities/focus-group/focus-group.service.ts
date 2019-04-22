@@ -91,12 +91,24 @@ export class FocusGroupService {
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
-    isCancelable(groupId: number): Observable<HttpResponse<boolean>> {
+    findByTest(testId: number): Observable<EntityResponseType> {
+        return this.http
+            .get<IFocusGroup>(`${this.resourceUrlPublic}/find-by-test/${testId}`, { observe: 'response' })
+            .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+    }
+
+    isInProcess(groupId: number): Observable<HttpResponse<boolean>> {
         return this.http.get<boolean>(`${this.resourceUrl}/cancelable/${groupId}`, { observe: 'response' });
     }
 
     testIsAvailable(testId: number): Observable<HttpResponse<boolean>> {
         return this.http.get<boolean>(`${this.resourceUrl}/aptitude-test/${testId}`, { observe: 'response' });
+    }
+
+    findByAptitudeTest(testId: number): Observable<EntityResponseType> {
+        return this.http
+            .get<IFocusGroup>(`${this.resourceUrl}/aptitude-test/${testId}`, { observe: 'response' })
+            .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
     finishFocusGroup(groupId: number): Observable<EntityResponseType> {

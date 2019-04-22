@@ -34,6 +34,7 @@ export class NavbarComponent implements OnInit {
     currentAccount: any;
     participant = new Participant(null, null, null, null, '', null, null, null);
     institution = new Institution(null, '', '', '', '', null);
+    membershipId;
     userNotifications: INotification[] = [];
     done = false;
     ban: IBan;
@@ -112,6 +113,7 @@ export class NavbarComponent implements OnInit {
                     if (userApp.rol === 'institution') {
                         this.institutionService.getByUserUser(jhiUser.id).subscribe(foundInstitution => {
                             this.institution = foundInstitution.body;
+                            this.membershipId = foundInstitution.body.membership.id;
                             this.participant.id = 0;
                         });
                     } else if (userApp.rol === 'participant') {
@@ -256,6 +258,16 @@ export class NavbarComponent implements OnInit {
                         });
                         break;
                     case 'CallStart':
+                        node.innerHTML =
+                            node.innerHTML +
+                            '<a class="dropdown-item noti-container py-3">\n' +
+                            '                                        <i class="ft-video info float-left d-block font-large-1 mt-4 mr-4"></i>\n' +
+                            '                                        <span class="noti-wrapper">\n' +
+                            '                                        <span class="noti-title line-height-1 d-block text-bold-400 info">¡Videollamada iniciada!</span>\n' +
+                            '                                        <span class="noti-text">Ve al calendario para poder unirte.</span>\n' +
+                            '                                    </span>\n' +
+                            '                                    </a>';
+                        ele.appendChild(node);
                         this.meetingService.find(this.userNotifications[i].messageId).subscribe(getIt => {
                             node.innerHTML =
                                 node.innerHTML +

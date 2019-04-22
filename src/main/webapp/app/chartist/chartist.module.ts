@@ -9,15 +9,10 @@ import {
     DashboardInstitutionPopup
 } from 'app/dashboard-institution/dashboard-institution-confirm-dialog.component';
 import { NavbarComponent } from 'app/layouts';
-import { ChartistModule } from 'ng-chartist';
-
-const ENTITY_STATES = [...DASHBOARD_INSTITUTION_ROUTE, ...dashboardInstitutionPopupRoute];
 
 @NgModule({
-    imports: [PalaverSharedModule, RouterModule.forChild(ENTITY_STATES), ChartistModule],
-    declarations: [DashboardInstitutionComponent, DashboardInstitutionConfirmDialogComponent, DashboardInstitutionPopup],
-    entryComponents: [DashboardInstitutionComponent, DashboardInstitutionPopup, DashboardInstitutionConfirmDialogComponent],
+    imports: [PalaverSharedModule],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    providers: [NavbarComponent]
+    providers: []
 })
-export class PalaverDashboardInstitutionModule {}
+export class PalaverChartistModule {}

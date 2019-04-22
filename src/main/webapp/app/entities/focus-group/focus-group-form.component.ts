@@ -117,6 +117,7 @@ export class FocusGroupFormComponent implements OnInit {
     save() {
         this.isSaving = true;
         this.userService.getUserWithAuthorities().subscribe(data => {
+            console.log(data);
             this.institutionService.getByUserUser(data.id).subscribe(institution => {
                 console.log(institution);
                 this.focusGroup.institution = institution.body;
@@ -128,6 +129,8 @@ export class FocusGroupFormComponent implements OnInit {
                     this.incentiveService.update(this.focusGroup.incentive).subscribe(res => {
                         this.subscribeToSaveResponse(this.focusGroupService.create(this.focusGroup));
                     });
+                } else {
+                    this.subscribeToSaveResponse(this.focusGroupService.create(this.focusGroup));
                 }
             });
         });
