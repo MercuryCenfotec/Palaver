@@ -152,7 +152,7 @@ export class FocusGroupManagementComponent implements OnInit {
         window.open(this.meeting.callURL);
         this.focusGroupService.finishFocusGroup(this.focusGroup.id).subscribe(group => {
             console.log(group);
-            this.__router.navigate(['/', 'focus-group', 'finished']);
+            this.router.navigate(['/', 'focus-group', 'finished']);
         });
     }
 
