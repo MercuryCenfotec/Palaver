@@ -130,4 +130,8 @@ export class TestResultComponent implements OnInit, OnDestroy {
             });
         });
     }
+
+    closeMe(target) {
+        target.hidden = true;
+    }
 }
