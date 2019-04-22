@@ -48,6 +48,10 @@ export class PasswordResetInitComponent implements OnInit, AfterViewInit {
     }
 
     closeMe(target) {
+        this.errorEmailNotExists = null;
+    }
+
+    closeMeSuccess(target) {
         target.hidden = true;
     }
 }

@@ -95,7 +95,7 @@ export class TestResultComponent implements OnInit, OnDestroy {
         if (event.focusGroup.participants.length === event.focusGroup.participantsAmount) {
             this.quantitySurpassed = true;
         } else {
-            this.quantitySurpassed = false;
+            this.quantitySurpassed = null;
             event.focusGroup.participants.push(event.participant);
             this.focusGroupService.update(event.focusGroup).subscribe(data => {
                 event.status = 'Aceptado';
@@ -132,6 +132,6 @@ export class TestResultComponent implements OnInit, OnDestroy {
     }
 
     closeMe(target) {
-        target.hidden = true;
+        this.quantitySurpassed = null;
     }
 }

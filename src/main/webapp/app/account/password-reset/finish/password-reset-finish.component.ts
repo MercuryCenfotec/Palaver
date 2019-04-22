@@ -68,6 +68,11 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
     }
 
     closeMe(target) {
+        this.doNotMatch = null;
+        this.error = null;
+    }
+
+    closeMeSuccess(target) {
         target.hidden = true;
     }
 }

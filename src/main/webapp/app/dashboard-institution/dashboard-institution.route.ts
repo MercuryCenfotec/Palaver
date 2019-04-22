@@ -4,12 +4,14 @@ import { UserRouteAccessService } from 'app/core';
 import { DashboardInstitutionPopup } from 'app/dashboard-institution/dashboard-institution-confirm-dialog.component';
 import { InstitutionResolve } from 'app/entities/institution';
 
-export const DASHBOARD_INSTITUTION_ROUTE: Route = {
-    path: 'dashboard-institution',
-    component: DashboardInstitutionComponent,
-    data: {
-        authorities: ['ROLE_INSTITUTION'],
-        pageTitle: 'Palaver'
+export const DASHBOARD_INSTITUTION_ROUTE: Routes = [
+    {
+        path: 'dashboard-institution',
+        component: DashboardInstitutionComponent,
+        data: {
+            authorities: ['ROLE_INSTITUTION'],
+            pageTitle: 'Palaver'
+        }
     }
 ];
 
@@ -19,7 +21,7 @@ export const dashboardInstitutionPopupRoute: Routes = [
         component: DashboardInstitutionPopup,
         data: {
             authorities: ['ROLE_INSTITUTION'],
-            pageTitle: 'Institutions'
+            pageTitle: 'Palaver'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

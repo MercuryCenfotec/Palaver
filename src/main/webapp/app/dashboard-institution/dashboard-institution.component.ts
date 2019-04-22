@@ -8,7 +8,6 @@ import { JhiAlertService } from 'ng-jhipster';
 import { IParticipant } from 'app/shared/model/participant.model';
 import { IAptitudeTest } from 'app/shared/model/aptitude-test.model';
 import { AptitudeTestService } from 'app/entities/aptitude-test';
-import moment = require('moment');
 import { Membership } from 'app/shared/model/membership.model';
 import { Observable } from 'rxjs';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
@@ -91,7 +90,7 @@ export class DashboardInstitutionComponent implements OnInit {
             }
 
             for (let i = 0; i < 12; i++) {
-                if (moment(resp.beginDate).format('M') == (i + 1).toString()) {
+                if (moment(resp.beginDate).format('M') === (i + 1).toString()) {
                     this.monthlyGroups[i] += 1;
                 }
             }
@@ -144,7 +143,7 @@ export class DashboardInstitutionComponent implements OnInit {
             },
             events: {
                 created(data: any): void {
-                    var defs = data.svg.elem('defs');
+                    const defs = data.svg.elem('defs');
                     defs.elem('linearGradient', {
                         id: 'gradient',
                         x1: 0,
@@ -215,7 +214,7 @@ export class DashboardInstitutionComponent implements OnInit {
         this.userService.getUserWithAuthorities().subscribe(user => {
             this.institutionService.getByUserUser(user.id).subscribe(institution => {
                 this.institution = institution.body;
-                if (this.institution.membership.id == 2) {
+                if (this.institution.membership.id === 2) {
                     document.getElementById('footerPremium').innerHTML = '';
                     document.getElementById('footerPremium').innerHTML = '<i class="btn ft-check font-medium-4 p-0"></i>';
                 }
