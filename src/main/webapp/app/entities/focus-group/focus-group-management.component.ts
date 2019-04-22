@@ -15,6 +15,7 @@ import { BanService } from 'app/entities/ban';
 import { Ban, IBan } from 'app/shared/model/ban.model';
 import { NotificationService } from 'app/entities/notification';
 import { Notification } from 'app/shared/model/notification.model';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'jhi-focus-group-management',
@@ -36,7 +37,8 @@ export class FocusGroupManagementComponent implements OnInit {
         protected participantService: ParticipantService,
         protected modalService: NgbModal,
         protected banService: BanService,
-        protected notificationService: NotificationService
+        protected notificationService: NotificationService,
+        private __router: Router
     ) {}
 
     ngOnInit() {
@@ -49,6 +51,9 @@ export class FocusGroupManagementComponent implements OnInit {
                 this.meetingsService.findByGroupId(data.body.id).subscribe(meetings => {
                     this.meeting = meetings.body.length ? meetings.body[0] : null;
                 });
+                if (data.body.meetingIsDone) {
+                    this.__router.navigate(['/', 'focus-group', 'finished']);
+                }
             });
         });
     }
@@ -122,6 +127,7 @@ export class FocusGroupManagementComponent implements OnInit {
         window.open(this.meeting.callURL);
         this.focusGroupService.finishFocusGroup(this.focusGroup.id).subscribe(group => {
             console.log(group);
+            this.__router.navigate(['/', 'focus-group', 'finished']);
         });
     }
 }

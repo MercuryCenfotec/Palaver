@@ -31,7 +31,7 @@ public class PaymentService {
         BalanceAccount originAccount = balanceAccountRepo.findByUserId(institutionUserId).get();
         processPayment(
             originAccount,
-            balanceAccountRepo.findByUserId(3L).get(),
+            balanceAccountRepo.findByUserId(1L).get(),
             payment.getDescription(),
             payment.getAmmount(),
             true);
@@ -39,7 +39,7 @@ public class PaymentService {
 
     public void returnParticipantFare(FocusGroup group) {
         Payment groupPayment = paymentRepo.findByDescription("Pago por grupo - " + group.getName() + "_" + group.getCode());
-        BalanceAccount palaverAccount = balanceAccountRepo.findByUserId(3L).get();
+        BalanceAccount palaverAccount = balanceAccountRepo.findByUserId(1L).get();
         BalanceAccount institutionAccount = balanceAccountRepo.findByUserId(group.getInstitution().getId ()).get();
         processPayment(
             palaverAccount,
@@ -52,7 +52,7 @@ public class PaymentService {
 
     public void returnFocusGroupPayment (FocusGroup group) {
         Payment groupPayment = paymentRepo.findByDescription("Pago por grupo - " + group.getName() + "_" + group.getCode());
-        BalanceAccount palaverAccount = balanceAccountRepo.findByUserId(3L).get();
+        BalanceAccount palaverAccount = balanceAccountRepo.findByUserId(1L).get();
         BalanceAccount institutionAccount = balanceAccountRepo.findByUserId(group.getInstitution().getUser().getId()).get();
         processPayment(
             palaverAccount,
@@ -68,7 +68,7 @@ public class PaymentService {
     public void processParticipantsPayment(FocusGroup group) {
         Payment groupPayment = paymentRepo.findByDescription("Pago por grupo - " + group.getName() + "_" + group.getCode());
         BalanceAccount participantAccount;
-        BalanceAccount palaverAccount = balanceAccountRepo.findByUserId(3L).get();
+        BalanceAccount palaverAccount = balanceAccountRepo.findByUserId(1L).get();
         int costPerParticipant = 25000;
         int costPerUse = 30000;
 
