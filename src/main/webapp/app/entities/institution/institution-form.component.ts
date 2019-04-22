@@ -26,6 +26,7 @@ export class InstitutionFormComponent implements OnInit {
     userApp: IUserApp;
     users: IUserApp[];
     memberships: IMembership[];
+    membership: IMembership;
     success: boolean;
     balanceAccount = new BalanceAccount(null, 0, 0, 0, 'Cuenta interna', null);
     image: any;
@@ -54,6 +55,9 @@ export class InstitutionFormComponent implements OnInit {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ institution }) => {
             this.institution = institution;
+        });
+        this.membershipService.find(1).subscribe(membership => {
+            this.membership = membership.body;
         });
         this.userAppService
             .query({ filter: 'institution-is-null' })
@@ -98,13 +102,7 @@ export class InstitutionFormComponent implements OnInit {
     save() {
         this.isSaving = true;
         this.institution.user = this.userApp;
-        this.institution.logo = 'logo';
-
-        const membership = new Membership(1);
-        this.institution.membership = membership;
-
-        this.subscribeToSaveResponse(this.institutionService.create(this.institution));
-
+        this.institution.membership = this.membership;
         this.imageService.save(this.image).subscribe(
             res => {},
             url => {

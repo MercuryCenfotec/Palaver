@@ -54,11 +54,11 @@ export class AptitudeTestDeletePopupComponent implements OnInit, OnDestroy {
                 this.ngbModalRef.componentInstance.aptitudeTest = aptitudeTest;
                 this.ngbModalRef.result.then(
                     result => {
-                        this.router.navigate(['/aptitude-test', { outlets: { popup: null } }]);
+                        this.router.navigate(['/aptitude-test']);
                         this.ngbModalRef = null;
                     },
                     reason => {
-                        this.router.navigate(['/aptitude-test', { outlets: { popup: null } }]);
+                        this.router.navigate(['/aptitude-test']);
                         this.ngbModalRef = null;
                     }
                 );
@@ -67,6 +67,7 @@ export class AptitudeTestDeletePopupComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
+        this.router.navigate(['/aptitude-test']);
         this.ngbModalRef = null;
     }
 }

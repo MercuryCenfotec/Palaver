@@ -126,7 +126,7 @@ public class AptitudeTestResource {
         return aptitudeTestService.findAllAvailableByInstitution(institutionId);
     }
 
-    @GetMapping("/aptitude-tests/is-in-use/{testId}")
+    @GetMapping("/aptitude-tests/in-use/{testId}")
     public ResponseEntity<Boolean> isCancelable(@PathVariable Long testId) {
         return ResponseEntity.ok().body(aptitudeTestService.isInUse(testId));
     }
