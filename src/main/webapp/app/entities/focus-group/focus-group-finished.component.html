@@ -1,18 +1,26 @@
-<form name="deleteForm" (ngSubmit)="confirmDelete(focusGroup.id)">
-    <div class="modal-header">
-        <h4 class="modal-title">Llamada iniciada</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                (click)="clear()">&times;</button>
+<div class="row match-height">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="col-12 d-flex align-items-center justify-content-center">
+                    <div class="card text-center width-700">
+                        <div class="card-body">
+                            <div class="card-block">
+                                <h2 class="">Grupo finalizado.</h2>
+                                <hr/>
+                                <form role="form" (ngSubmit)="endSession()">
+                                    <div class="col-md-12">
+                                        <button type="submit"
+                                                class="btn btn-primary btn-block btn-raised">
+                                            Terminar sesión
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="modal-body">
-        <p id="jhi-delete-focusGroup-heading">¿Está seguro que desea cancelar este grupo de enfoque?</p>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-raised btn-secondary" data-dismiss="modal" (click)="clear()">
-            <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>No, volver.</span>
-        </button>
-        <button id="jhi-confirm-delete-focusGroup" type="submit" class="btn btn-raised btn-danger">
-            <fa-icon [icon]="'times'"></fa-icon>&nbsp;<span>Sí, cancelar.</span>
-        </button>
-    </div>
-</form>
+</div>

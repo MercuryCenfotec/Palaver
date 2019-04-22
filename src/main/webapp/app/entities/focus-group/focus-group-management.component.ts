@@ -52,9 +52,7 @@ export class FocusGroupManagementComponent implements OnInit {
                     this.meeting = meetings.body.length ? meetings.body[0] : null;
                 });
                 if (data.body.meetingIsDone) {
-                    this.__router.navigate(['/', 'focus-group', { outlets: { popup: 'finished' } }]);
-                } else if (false) {
-                } else {
+                    this.__router.navigate(['/', 'focus-group', 'finished']);
                 }
             });
         });
@@ -129,6 +127,7 @@ export class FocusGroupManagementComponent implements OnInit {
         window.open(this.meeting.callURL);
         this.focusGroupService.finishFocusGroup(this.focusGroup.id).subscribe(group => {
             console.log(group);
+            this.__router.navigate(['/', 'focus-group', 'finished']);
         });
     }
 }
