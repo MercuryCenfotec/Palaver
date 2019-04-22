@@ -123,7 +123,7 @@ export class FocusGroupFormComponent implements OnInit {
                 if (!this.focusGroup.aptitudeTest) {
                     this.focusGroup.passingGrade = 100;
                 }
-                if (innerData.body.membership.id === 2) {
+                if (institution.body.membership.id === 2) {
                     this.focusGroup.incentive.quantity -= this.focusGroup.participantsAmount;
                     this.incentiveService.update(this.focusGroup.incentive).subscribe(res => {
                         this.subscribeToSaveResponse(this.focusGroupService.create(this.focusGroup));
