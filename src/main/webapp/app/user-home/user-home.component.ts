@@ -148,14 +148,14 @@ export class UserHomeComponent implements OnInit {
         const testResultsList = this.testResults;
         for (let row = 0; row < testResultsList.length; row++) {
             if (this.participant.id === testResultsList[row].participant.id) {
-                document.getElementById('btn-' + testResultsList[row].focusGroup.id).hidden = true;
+                document.getElementById('btn-new-' + testResultsList[row].focusGroup.id).hidden = true;
             }
         }
 
         for (let i = 0; i < this.focusGroups.length; i++) {
             for (let j = 0; j < this.focusGroups[i].participants.length; j++) {
                 if (this.participant.id === this.focusGroups[i].participants[j].id) {
-                    document.getElementById('btn-' + this.focusGroups[i].id).hidden = true;
+                    document.getElementById('btn-new-' + this.focusGroups[i].id).hidden = true;
                 }
             }
         }

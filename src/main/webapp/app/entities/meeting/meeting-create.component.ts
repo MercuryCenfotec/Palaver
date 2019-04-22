@@ -55,9 +55,22 @@ export class MeetingCreateComponent implements OnInit {
         }();
         this.isSaving = false;
         this.userService.getUserWithAuthorities().subscribe(user => {
-            this.focusGroupService.findByCode(user.login).subscribe(group => {
-                this.focusGroup = group.body;
-            });
+            this.focusGroupService
+                .query()
+                .pipe(
+                    filter((res: HttpResponse<IFocusGroup[]>) => res.ok),
+                    map((res: HttpResponse<IFocusGroup[]>) => res.body)
+                )
+                .subscribe(
+                    (res: IFocusGroup[]) => {
+                        for (let i = 0; i < res.length; i++) {
+                            if (res[i].code === user.login) {
+                                this.focusGroup = res[i];
+                            }
+                        }
+                    },
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
         });
     }
 

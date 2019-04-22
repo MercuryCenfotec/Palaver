@@ -8,7 +8,6 @@ import { JhiAlertService } from 'ng-jhipster';
 import { IParticipant } from 'app/shared/model/participant.model';
 import { IAptitudeTest } from 'app/shared/model/aptitude-test.model';
 import { AptitudeTestService } from 'app/entities/aptitude-test';
-import moment = require('moment');
 import { Membership } from 'app/shared/model/membership.model';
 import { Observable } from 'rxjs';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
@@ -16,10 +15,12 @@ import { BalanceAccountService } from 'app/entities/balance-account';
 import { IBalanceAccount } from 'app/shared/model/balance-account.model';
 import swal from 'sweetalert2';
 import { NavbarComponent } from 'app/layouts';
-import { Chart } from 'app/chartist/chartist.component';
 import { ChartEvent, ChartType } from 'ng-chartist';
 import * as moment from 'moment';
-import { Moment } from 'moment';
+import { IIncentive } from 'app/shared/model/incentive.model';
+import { IncentiveService } from 'app/entities/incentive';
+import * as Chartist from 'chartist';
+import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 declare var require: any;
 
@@ -41,6 +42,7 @@ export class DashboardInstitutionComponent implements OnInit {
     focusGroups: IFocusGroup[];
     participants: IParticipant[];
     aptitudeTests: IAptitudeTest[];
+    incentives: IIncentive[];
     today: string;
     endedFG = 0;
     onCourseFG = 0;
@@ -52,6 +54,7 @@ export class DashboardInstitutionComponent implements OnInit {
     account: IBalanceAccount;
     lineArea: Chart;
     donutChart: Chart;
+    notEnoughCredits: boolean;
 
     constructor(
         protected userService: UserService,
@@ -60,7 +63,9 @@ export class DashboardInstitutionComponent implements OnInit {
         protected jhiAlertService: JhiAlertService,
         protected aptitudeTestService: AptitudeTestService,
         protected accountService: BalanceAccountService,
-        protected navbarComponent: NavbarComponent
+        protected navbarComponent: NavbarComponent,
+        protected incentiveService: IncentiveService,
+        protected modalService: NgbModal
     ) {}
 
     loadAll() {
@@ -91,7 +96,7 @@ export class DashboardInstitutionComponent implements OnInit {
             }
 
             for (let i = 0; i < 12; i++) {
-                if (moment(resp.beginDate).format('M') == (i + 1).toString()) {
+                if (moment(resp.beginDate).format('M') === (i + 1).toString()) {
                     this.monthlyGroups[i] += 1;
                 }
             }
@@ -105,18 +110,35 @@ export class DashboardInstitutionComponent implements OnInit {
         document.getElementById('endedFGPercent').style.width = this.endedFGPer + '%';
         document.getElementById('recruitingFGPercent').style.width = this.recruitingFGPer + '%';
 
+        const scopeThis = this;
         this.donutChart = {
+            type: 'Pie',
             data: {
                 series: [this.onCourseFG, this.endedFG, this.recruitingFG]
             },
             options: {
                 donut: true,
+                labelInterpolationFnc: function(value) {
+                    return scopeThis.focusGroups.length + ' grupos';
+                },
                 height: '250px',
                 donutSolid: true,
-                showLabel: false,
                 donutWidth: '20%'
             },
-            type: 'Pie'
+            events: {
+                draw(data: any): void {
+                    if (data.type === 'label') {
+                        if (data.index === 0) {
+                            data.element.attr({
+                                dx: data.element.root().width() / 2,
+                                dy: data.element.root().height() / 2
+                            });
+                        } else {
+                            data.element.remove();
+                        }
+                    }
+                }
+            }
         };
 
         this.lineArea = {
@@ -144,7 +166,7 @@ export class DashboardInstitutionComponent implements OnInit {
             },
             events: {
                 created(data: any): void {
-                    var defs = data.svg.elem('defs');
+                    const defs = data.svg.elem('defs');
                     defs.elem('linearGradient', {
                         id: 'gradient',
                         x1: 0,
@@ -215,7 +237,10 @@ export class DashboardInstitutionComponent implements OnInit {
         this.userService.getUserWithAuthorities().subscribe(user => {
             this.institutionService.getByUserUser(user.id).subscribe(institution => {
                 this.institution = institution.body;
-                if (this.institution.membership.id == 2) {
+                if (this.institution.membership.id === 2) {
+                    this.incentiveService.findAllByInstitution(this.institution.id).subscribe(incentives => {
+                        this.incentives = incentives.body;
+                    });
                     document.getElementById('footerPremium').innerHTML = '';
                     document.getElementById('footerPremium').innerHTML = '<i class="btn ft-check font-medium-4 p-0"></i>';
                 }
@@ -248,12 +273,7 @@ export class DashboardInstitutionComponent implements OnInit {
                 document.getElementById('footerPremium').innerHTML = '<i class="btn ft-check font-medium-4 p-0"></i>';
                 this.navbarComponent.ngOnInit();
             } else {
-                swal.fire({
-                    type: 'error',
-                    title: 'Oops...',
-                    text: 'Tu cuenta no tiene los fondos suficientes',
-                    footer: '<a href="#/balance-account">¿Recargar cuenta?</a>'
-                });
+                this.notEnoughCredits = true;
             }
         }
     }
@@ -265,4 +285,29 @@ export class DashboardInstitutionComponent implements OnInit {
     protected onSaveSuccess() {}
 
     protected onSaveError() {}
+
+    openModal(content) {
+        this.modalService.open(content).result.then(
+            result => {
+                console.log(`Closed with: ${result}`);
+            },
+            reason => {
+                console.log(`Dismissed ${this.getDismissReason(reason)}`);
+            }
+        );
+    }
+
+    private getDismissReason(reason: any): string {
+        if (reason === ModalDismissReasons.ESC) {
+            return 'by pressing ESC';
+        } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+            return 'by clicking on a backdrop';
+        } else {
+            return `with: ${reason}`;
+        }
+    }
+
+    closeMe(target) {
+        this.notEnoughCredits = null;
+    }
 }

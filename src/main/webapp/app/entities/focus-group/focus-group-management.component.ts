@@ -15,7 +15,8 @@ import { BanService } from 'app/entities/ban';
 import { Ban, IBan } from 'app/shared/model/ban.model';
 import { NotificationService } from 'app/entities/notification';
 import { Notification } from 'app/shared/model/notification.model';
-import { Router } from '@angular/router';
+import {JhiAlertService} from 'ng-jhipster';
+import {NavigationEnd, Router} from '@angular/router';
 
 @Component({
     selector: 'jhi-focus-group-management',
@@ -38,23 +39,43 @@ export class FocusGroupManagementComponent implements OnInit {
         protected modalService: NgbModal,
         protected banService: BanService,
         protected notificationService: NotificationService,
-        private __router: Router
-    ) {}
+        protected jhiAlertService: JhiAlertService,
+        protected router: Router
+    ) {
+        router.events.subscribe(event => {
+            if (event instanceof NavigationEnd) {
+                if (event.url === '/focus-group/management') {
+                    this.ngOnInit();
+                }
+            }
+        });
+    }
 
     ngOnInit() {
+        this.meeting = null;
         this.userService.getUserWithAuthorities().subscribe(user => {
-            this.focusGroupService.findByCode(user.login).subscribe(data => {
-                this.focusGroup = data.body;
-                this.participantService.findByFocusGroup(data.body.id).subscribe(participants => {
-                    this.focusGroup.participants = participants.body;
-                });
-                this.meetingsService.findByGroupId(data.body.id).subscribe(meetings => {
-                    this.meeting = meetings.body.length ? meetings.body[0] : null;
-                });
-                if (data.body.meetingIsDone) {
-                    this.__router.navigate(['/', 'focus-group', 'finished']);
-                }
-            });
+            this.focusGroupService
+                .query()
+                .pipe(
+                    filter((res: HttpResponse<IFocusGroup[]>) => res.ok),
+                    map((res: HttpResponse<IFocusGroup[]>) => res.body)
+                )
+                .subscribe(
+                    (res: IFocusGroup[]) => {
+                        for (let i = 0; i < res.length; i++) {
+                            if (res[i].code === user.login) {
+                                this.focusGroup = res[i];
+                                this.meetingsService.findByGroupId(this.focusGroup.id).subscribe(meetings => {
+                                    this.meeting = meetings.body.length ? meetings.body[0] : null;
+                                });
+                                if (this.focusGroup.meetingIsDone) {
+                                    this.router.navigate(['/', 'focus-group', 'finished']);
+                                }
+                            }
+                        }
+                    },
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
         });
     }
 
@@ -115,19 +136,27 @@ export class FocusGroupManagementComponent implements OnInit {
     }
 
     checkDate() {
-        return (
-            this.meeting.date.toDate().getDate() ===
-            moment()
-                .toDate()
-                .getDate()
-        );
+        if (this.meeting === null) {
+            return;
+        } else {
+            return (
+                this.meeting.date.toDate().getDate() ===
+                moment()
+                    .toDate()
+                    .getDate()
+            );
+        }
     }
 
     startMeeting() {
         window.open(this.meeting.callURL);
         this.focusGroupService.finishFocusGroup(this.focusGroup.id).subscribe(group => {
             console.log(group);
-            this.__router.navigate(['/', 'focus-group', 'finished']);
+            this.router.navigate(['/', 'focus-group', 'finished']);
         });
+    }
+
+    protected onError(errorMessage: string) {
+        this.jhiAlertService.error(errorMessage, null, null);
     }
 }

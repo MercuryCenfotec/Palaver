@@ -118,7 +118,8 @@
 <div _ngcontent-c8="" class="row">
     <div _ngcontent-c8="" class="col-sm-12">
         <div _ngcontent-c8="" class="card shadow-lg mr-3 ml-3">
-            <div _ngcontent-c8="" class="card-header"><h4 _ngcontent-c8="" class="card-title">GRUPOS DE ENFOQUE ANUALES</h4></div>
+            <div _ngcontent-c8="" class="card-header"><h4 _ngcontent-c8="" class="card-title">GRUPOS DE ENFOQUE
+                ANUALES</h4></div>
             <div _ngcontent-c8="" class="card-content">
                 <div _ngcontent-c8="" class="card-body mr-2 ml-2 mb-4">
                     <div _ngcontent-c8="" class="chart-info mb-3 ml-2">
@@ -142,7 +143,8 @@
 
     <div _ngcontent-c6="" class="col-xl-4 col-lg-12">
         <div _ngcontent-c6="" class="card shadow-lg" style="height: 486.875px;">
-            <div _ngcontent-c6="" class="card-header"><h4 _ngcontent-c6="" class="card-title">Estadística grupos de enfoque</h4></div>
+            <div _ngcontent-c6="" class="card-header"><h4 _ngcontent-c6="" class="card-title">Estadística grupos de
+                enfoque</h4></div>
             <div _ngcontent-c6="" class="card-content">
                 <p _ngcontent-c6="" class="font-medium-2 text-muted text-center">Estado de los grupos</p>
                 <div _ngcontent-c6="" class="height-250 donut" id="donut-dashboard-chart">
@@ -152,23 +154,30 @@
                 </div>
                 <div _ngcontent-c6="" class="card-body" style="padding: 1.25rem">
                     <div _ngcontent-c6="" class="row mb-3">
-                        <div _ngcontent-c6="" class="col"><span _ngcontent-c6="" class="mb-1 text-muted d-block">{{onCourseFGPer}}% - En curso</span>
+                        <div _ngcontent-c6="" class="col"><span _ngcontent-c6=""
+                                                                class="mb-1 text-muted d-block">{{onCourseFGPer}}% - En curso</span>
                             <div _ngcontent-c6="" class="progress" style="height: 5px;">
-                                <div id="oncourseFGPercent" _ngcontent-c6="" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0"
+                                <div id="oncourseFGPercent" _ngcontent-c6="" aria-valuemax="100" aria-valuemin="0"
+                                     aria-valuenow="0"
                                      class="progress-bar bg-success" role="progressbar" style="width: 0%;"></div>
                             </div>
                         </div>
                     </div>
                     <div _ngcontent-c6="" class="row mb-2">
-                        <div _ngcontent-c6="" class="col"><span _ngcontent-c6="" class="mb-1 text-muted d-block">{{endedFGPer}}% - Finalizados</span>
+                        <div _ngcontent-c6="" class="col"><span _ngcontent-c6=""
+                                                                class="mb-1 text-muted d-block">{{endedFGPer}}% - Finalizados</span>
                             <div _ngcontent-c6="" class="progress" style="height: 5px;">
-                                <div id="endedFGPercent" _ngcontent-c6="" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0"
-                                     class="progress-bar bg-red bg-lighten-1" role="progressbar" style="width: 0%;"></div>
+                                <div id="endedFGPercent" _ngcontent-c6="" aria-valuemax="100" aria-valuemin="0"
+                                     aria-valuenow="0"
+                                     class="progress-bar bg-red bg-lighten-1" role="progressbar"
+                                     style="width: 0%;"></div>
                             </div>
                         </div>
-                        <div _ngcontent-c6="" class="col"><span _ngcontent-c6="" class="mb-1 text-muted d-block">{{recruitingFGPer}}% - Reclutando</span>
+                        <div _ngcontent-c6="" class="col"><span _ngcontent-c6=""
+                                                                class="mb-1 text-muted d-block">{{recruitingFGPer}}% - Reclutando</span>
                             <div _ngcontent-c6="" class="progress" style="height: 5px;">
-                                <div id="recruitingFGPercent" _ngcontent-c6="" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0"
+                                <div id="recruitingFGPercent" _ngcontent-c6="" aria-valuemax="100" aria-valuemin="0"
+                                     aria-valuenow="0"
                                      class="progress-bar bg-warning" role="progressbar"
                                      style="width: 0%;"></div>
                             </div>
@@ -209,8 +218,16 @@
     <div class="col-xl-8 col-lg-12 col-12">
         <div class="card shadow-lg" style="height: 487px;">
             <div class="card-header">
-                <h4 routerLink="/focus-group" routerLinkActive="active" class="card-title cursor-pointer">Grupos de
-                    enfoque</h4>
+                <h4 class="card-title cursor-pointer">Grupos de
+                    enfoque
+                    <button id="jh-create-entity" class="btn btn-raised btn-primary float-right"
+                            [routerLink]="['/focus-group/new']">
+                        <i class="ft-plus"></i>
+                        <span>
+                            Registrar nuevo grupo de enfoque
+                        </span>
+                    </button>
+                </h4>
             </div>
             <div class="card-body" style="height: 300px; overflow-y: scroll">
                 <table class="table table-responsive-md text-center" *ngIf="focusGroups">
@@ -248,38 +265,41 @@
     <div class="col-xl-8 col-lg-12 col-12">
         <div class="card shadow-lg" style="height: 524px;">
             <div class="card-header">
-                <h4 routerLink="/focus-group" routerLinkActive="active" class="card-title cursor-pointer">Incentivos</h4>
+                <h4 class="card-title cursor-pointer">Incentivos
+                    <button id="jh-create-incentive" *ngIf="institution.membership.id == 2"
+                            class="btn btn-raised btn-primary float-right"
+                            [routerLink]="['/incentive/new']">
+                        <i class="ft-plus"></i>
+                        <span>
+                        Registrar un nuevo incentivo
+                    </span>
+                    </button>
+                </h4>
             </div>
             <div *ngIf="institution.membership.id == 2" class="card-body" style="height: 300px; overflow-y: scroll">
-                <table class="table table-responsive-md text-center" *ngIf="focusGroups">
+                <table class="table table-responsive-md text-center">
                     <thead>
-                        <tr>
-                            <th><span>Nombre</span></th>
-                            <th><span>Descripción</span></th>
-                            <th><span>Código</span></th>
-                            <th><span>Estado</span></th>
-                        </tr>
+                    <tr>
+                        <th></th>
+                        <th><span>Nombre</span></th>
+                        <th><span>Cantidad</span></th>
+                        <th><span>Descripción</span></th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let focusGroup of focusGroups">
-                            <td>{{focusGroup.name}}</td>
-                            <td>{{focusGroup.description}}</td>
-                            <td>{{focusGroup.code}}</td>
-                            <td *ngIf="focusGroup.endDate.toString() < today">
-                                <a class="btn btn-raised btn-round btn-danger" style="cursor: default;">Finalizado</a>
-                            </td>
-                            <td *ngIf="focusGroup.endDate.toString() >= today && focusGroup.beginDate.toString() <= today">
-                                <a class="btn btn-raised btn-round btn-success" style="cursor: default;">En curso</a>
-                            </td>
-                            <td *ngIf="focusGroup.beginDate.toString() > today">
-                                <a class="btn btn-raised btn-round btn-warning" style="cursor: default;">Reclutando</a>
-                            </td>
-                        </tr>
+                    <tr *ngFor="let incentive of incentives">
+                        <td><img class="media-object round-media" src="{{incentive.image}}"
+                                 alt="Generic placeholder image" style="height: 75px;"/></td>
+                        <td>{{incentive.name}}</td>
+                        <td>{{incentive.quantity}}</td>
+                        <td>{{incentive.description}}</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
             <div *ngIf="institution.membership.id == 1" class="card-body" style="height: 300px; overflow-y: scroll">
-                <img src="https://res.cloudinary.com/utilisimo/image/upload/v1555819726/blockedIncentive_depxi8.png" alt="Incentivos bloqueados" class="w-100">
+                <img src="https://res.cloudinary.com/utilisimo/image/upload/v1555819726/blockedIncentive_depxi8.png"
+                     alt="Incentivos bloqueados" class="w-100">
             </div>
         </div>
     </div>
@@ -328,7 +348,7 @@
                             </div>
                         </div>
                         <div _ngcontent-c25="" class="card-footer text-center" id="footerPremium">
-                            <a (click)="obtenerPlanPremium()" class="btn btn-flat btn-primary m-0">Obtener</a>
+                            <a (click)="openModal(confirmationWindow)" class="btn btn-flat btn-primary m-0">Obtener</a>
                         </div>
                     </div>
                 </div>
@@ -336,4 +356,47 @@
         </div>
     </div>
 </div>
+
+<ng-template #confirmationWindow let-c="close" let-d="dismiss">
+    <div class="modal-header" style="background-color: #5cb85c; color: #fff;">
+        <h4 class="modal-title">Confirmación</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="px-3">
+            <form class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate>
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="form-control-label">¿Estás seguro que quieres pagar ₡10.000
+                            por esta membresía?</label>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
+                (click)="d('Force cancel')">
+            <i class="ft-x"></i> Cancelar
+        </button>
+        <button class="btn btn-raised btn-primary" type="submit" id="save-entity"
+                (click)="obtenerPlanPremium(); d('Force cancel')">
+            <i class="ft ft-check"></i> Confirmar
+        </button>
+    </div>
+</ng-template>
+
+<div *ngIf="notEnoughCredits">
+    <div id="warningNotEnoughCreditsAlert" #warningNotEnoughCreditsAlert class="popupunder alert alert-dismissible custom-alert-warning">
+        <button type="button" data-dismiss="alert" class="close" (click)="closeMe(warningNotEnoughCreditsAlert)">×</button>
+        <span class="ft-alert-triangle"></span> <strong>¡Atención!</strong>
+        <hr class="message-inner-separator" style="background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));">
+        <p>¡No posees suficientes fondos para realizar la compra!
+            <strong><a style="color: #fff;" [routerLink]="['/balance-account']" routerLinkActive="active"
+                       [routerLinkActiveOptions]="{ exact: true }">¿Recargar cuenta?</a></strong></p>
+    </div>
+</div>
+
 

@@ -86,6 +86,13 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     previousState() {}
 
     closeMe(target) {
+        this.doNotMatch = null;
+        this.error = null;
+        this.errorUserExists = null;
+        this.errorEmailExists = null;
+    }
+
+    closeMeSuccess(target) {
         target.hidden = true;
     }
 }
