@@ -16,6 +16,7 @@ import { ParticipateComponent } from 'app/entities/focus-group/participate.compo
 import { FocusGroupManagementLoginComponent } from 'app/entities/focus-group/focus-group-management-login.component';
 import { FocusGroupManagementComponent } from 'app/entities/focus-group/focus-group-management.component';
 import { FocusGroupCloneTestPopupComponent } from 'app/entities/focus-group/focus-group-clone-test.component';
+import { FocusGroupFinishedPopupComponent } from 'app/entities/focus-group/focus-group-finished.component';
 
 @Injectable({ providedIn: 'root' })
 export class FocusGroupResolve implements Resolve<IFocusGroup> {
@@ -140,6 +141,19 @@ export const focusGroupPopupRoute: Routes = [
         data: {
             authorities: ['ROLE_INSTITUTION'],
             pageTitle: 'Grupos de enfoque'
+        },
+        canActivate: [UserRouteAccessService],
+        outlet: 'popup'
+    },
+    {
+        path: 'clone-test',
+        component: FocusGroupFinishedPopupComponent,
+        resolve: {
+            focusGroup: FocusGroupResolve
+        },
+        data: {
+            authorities: ['ROLE_INSTITUTION'],
+            pageTitle: 'Grupo terminado'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
