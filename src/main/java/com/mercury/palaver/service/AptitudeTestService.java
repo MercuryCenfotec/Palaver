@@ -122,7 +122,6 @@ public class AptitudeTestService {
         return false;
     }
 
-
     public boolean isInUse(Long testId) {
         AptitudeTest test = new AptitudeTest();
         test.setId(testId);

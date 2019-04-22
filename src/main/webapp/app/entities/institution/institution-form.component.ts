@@ -8,7 +8,7 @@ import { IInstitution } from 'app/shared/model/institution.model';
 import { InstitutionService } from './institution.service';
 import { IUserApp } from 'app/shared/model/user-app.model';
 import { UserAppService } from 'app/entities/user-app';
-import { IMembership } from 'app/shared/model/membership.model';
+import { IMembership, Membership } from 'app/shared/model/membership.model';
 import { MembershipService } from 'app/entities/membership';
 import { IUser, LoginService, UserService } from 'app/core';
 import { BalanceAccountService } from 'app/entities/balance-account';
@@ -26,6 +26,7 @@ export class InstitutionFormComponent implements OnInit {
     userApp: IUserApp;
     users: IUserApp[];
     memberships: IMembership[];
+    membership: IMembership;
     success: boolean;
     balanceAccount = new BalanceAccount(null, 0, 0, 0, 'Cuenta interna', null);
     image: any;
@@ -54,6 +55,9 @@ export class InstitutionFormComponent implements OnInit {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ institution }) => {
             this.institution = institution;
+        });
+        this.membershipService.find(1).subscribe(membership => {
+            this.membership = membership.body;
         });
         this.userAppService
             .query({ filter: 'institution-is-null' })
@@ -98,6 +102,7 @@ export class InstitutionFormComponent implements OnInit {
     save() {
         this.isSaving = true;
         this.institution.user = this.userApp;
+        this.institution.membership = this.membership;
         this.imageService.save(this.image).subscribe(
             res => {},
             url => {

@@ -49,7 +49,7 @@ public class FocusGroupService {
         return focusGroupRepo.save(group);
     }
 
-    public boolean isCancelable(Long groupId) {
+    public boolean isInProcess(Long groupId) {
         Optional<FocusGroup> opt = focusGroupRepo.findById(groupId);
         if (opt.isPresent()) {
             FocusGroup group = opt.get();

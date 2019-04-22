@@ -5,6 +5,7 @@ import { PalaverSharedLibsModule, JhiAlertComponent, JhiAlertErrorComponent } fr
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { NgbDatepickerModule, NgbModalModule, NgbPopoverModule, NgbTimepickerModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { ChartistModule } from 'ng-chartist';
 
 @NgModule({
     imports: [
@@ -13,6 +14,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
             provide: DateAdapter,
             useFactory: adapterFactory
         }),
+        ChartistModule,
         NgbModalModule.forRoot(),
         NgbDatepickerModule.forRoot(),
         NgbTimepickerModule.forRoot(),
@@ -35,3 +37,4 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     ]
 })
 export class PalaverSharedCommonModule {}
+export class ChartsNg2Module {}
