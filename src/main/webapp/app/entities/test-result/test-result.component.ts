@@ -23,6 +23,7 @@ export class TestResultComponent implements OnInit, OnDestroy {
     eventSubscriber: Subscription;
     gradeInput;
     nameInput;
+    quantitySurpassed: boolean;
 
     constructor(
         protected testResultService: TestResultService,
@@ -90,22 +91,28 @@ export class TestResultComponent implements OnInit, OnDestroy {
                 event.focusGroup = this.focusGroups[i];
             }
         }
-        event.focusGroup.participants.push(event.participant);
-        this.focusGroupService.update(event.focusGroup).subscribe(data => {
-            event.status = 'Aceptado';
-            this.testResultService.update(event).subscribe(data2 => {
-                const newNotification = new Notification(
-                    null,
-                    event.participant.user.user.id.toString(),
-                    'GroupAccepted',
-                    false,
-                    event.focusGroup.id
-                );
-                this.notificationService.create(newNotification).subscribe(createdNoti => {
-                    this.loadAll();
+
+        if (event.focusGroup.participants.length === event.focusGroup.participantsAmount) {
+            this.quantitySurpassed = true;
+        } else {
+            this.quantitySurpassed = false;
+            event.focusGroup.participants.push(event.participant);
+            this.focusGroupService.update(event.focusGroup).subscribe(data => {
+                event.status = 'Aceptado';
+                this.testResultService.update(event).subscribe(data2 => {
+                    const newNotification = new Notification(
+                        null,
+                        event.participant.user.user.id.toString(),
+                        'GroupAccepted',
+                        false,
+                        event.focusGroup.id
+                    );
+                    this.notificationService.create(newNotification).subscribe(createdNoti => {
+                        this.loadAll();
+                    });
                 });
             });
-        });
+        }
     }
 
     rejectParticipant(event: ITestResult) {
