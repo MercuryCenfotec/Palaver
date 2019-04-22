@@ -1,3 +1,6 @@
 id;balance;debit_balance;credit_balance;description;user_id
-2;0;0;0;Palaver internal account;3
+1;0;0;0;Palaver internal account;1
+2;0;0;0;Institution account;2
+3;0;0;0;Participant account;3
+
 
