@@ -8,9 +8,13 @@
                             <div class="card-block">
                                 <h2 class="">Ingrese su código de grupo</h2>
                                 <hr/>
-                                <div class="alert alert-danger" *ngIf="authenticationError===true">
-                                    <strong>¡Fallo al autentificar el código!</strong> Por favor revise sus credenciales y
-                                    vuelva a intentar.
+                                <div *ngIf="authenticationError===true">
+                                    <div id="dangerErrorAlert" #dangerErrorAlert class="popupunder alert alert-dismissible custom-alert-danger">
+                                        <button type="button" data-dismiss="alert" class="close" (click)="closeMe(dangerErrorAlert)">×</button>
+                                        <span class="ft-x"></span> <strong>¡Error!</strong>
+                                        <hr class="message-inner-separator" style="background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));">
+                                        <p>¡Fallo al autentificar el código! Por favor asegúrese de que el código sea el correcto.</p>
+                                    </div>
                                 </div>
                                 <form role="form" (ngSubmit)="login()">
                                     <div class="form-group">

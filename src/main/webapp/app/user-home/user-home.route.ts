@@ -5,6 +5,7 @@ export const USER_HOME_ROUTE: Route = {
     path: 'participant-home',
     component: UserHomeComponent,
     data: {
-        authorities: ['ROLE_USER']
+        authorities: ['ROLE_USER'],
+        pageTitle: 'Palaver'
     }
 };
