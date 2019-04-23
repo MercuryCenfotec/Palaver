@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <!--Esto le da un margen a la izquiera para que no lo tape el menu lateral-->
         <div class="">
-            <a class="navbar-brand logo"(click)="logoRedirection()">
+            <a class="navbar-brand logo" (click)="logoRedirection()">
                 <span class="logo-img"></span>
             </a>
         </div>
@@ -15,7 +15,8 @@
                 <fa-icon icon="bars"></fa-icon>
             </a>
 
-            <div id="navbarSupportedContent" class="collapse navbar-collapse" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">
+            <div id="navbarSupportedContent" class="collapse navbar-collapse" [ngbCollapse]="isNavbarCollapsed"
+                 [ngSwitch]="isAuthenticated()">
                 <ul class="navbar-nav ml-auto">
 
                     <li *ngSwitchCase="true" class="nav-item" ngbDropdown placement="bottom-right">
@@ -24,16 +25,19 @@
                             <span class="notification badge badge-pill badge-danger">{{userNotifications.length}}</span>
                             <p class="d-none">Notificaciones</p>
                         </a>
-                        <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="notification-dropdown finish-him" style="width: 500px">
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="notification-dropdown finish-him"
+                             style="width: 500px">
                             <div class="noti-list" id="plsWork">
-                                <a class="noti-footer primary text-center d-block border-top border-top-blue-grey border-top-lighten-4 text-bold-400 py-1" (click)="clearAllNotifications()">Leer todas las notificaciones</a>
+                                <a class="noti-footer primary text-center d-block border-top border-top-blue-grey border-top-lighten-4 text-bold-400 py-1"
+                                   (click)="clearAllNotifications()">Leer todas las notificaciones</a>
                             </div>
                         </div>
                     </li>
 
                     <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active"
                         [routerLinkActiveOptions]="{exact: true}">
-                        <a id="entityMenu" class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" (click)="findActualUser()">
+                        <a id="entityMenu" class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);"
+                           (click)="findActualUser()">
                             <span>
                                 <fa-icon icon="th-list"></fa-icon>
                                 <span>
@@ -59,14 +63,16 @@
                                 </a>
                             </li>
                             <li id="participantPPermissions" hidden *ngIf="participant">
-                                <a class="dropdown-item" [routerLink]="['/participant', participant.id, 'view' ]" routerLinkActive="active"
+                                <a class="dropdown-item" [routerLink]="['/participant', participant.id, 'view' ]"
+                                   routerLinkActive="active"
                                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                                     <fa-icon icon="user" fixedWidth="true"></fa-icon>
                                     <span>Mi perfil</span>
                                 </a>
                             </li>
                             <li id="institutionPPermissions" hidden *ngIf="institution">
-                                <a class="dropdown-item" [routerLink]="['/institution', institution.id, 'view' ]" routerLinkActive="active"
+                                <a class="dropdown-item" [routerLink]="['/institution', institution.id, 'view' ]"
+                                   routerLinkActive="active"
                                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                                     <fa-icon icon="user" fixedWidth="true"></fa-icon>
                                     <span>Mi perfil</span>
@@ -87,7 +93,8 @@
                                 </a>
                             </li>
                             <li id="incentivePermissions" hidden>
-                                <a *ngIf="membershipId == 2" class="dropdown-item" routerLink="incentive" routerLinkActive="active"
+                                <a *ngIf="membershipId == 2" class="dropdown-item" routerLink="incentive"
+                                   routerLinkActive="active"
                                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                                     <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
                                     <span>Incentivos</span>
@@ -185,10 +192,18 @@
                                 </a>
                             </li>
                             <li id="expulsionPermissions" hidden>
-                                <a class="dropdown-item" [routerLink]="['participants-expulsions']" routerLinkActive="active"
+                                <a class="dropdown-item" [routerLink]="['participants-expulsions']"
+                                   routerLinkActive="active"
                                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                                     <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
                                     <span>Expulsiones</span>
+                                </a>
+                            </li>
+                            <li id="chatPermissions" hidden>
+                                <a class="dropdown-item" [routerLink]="['chat']" routerLinkActive="active"
+                                   [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                                    <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                                    <span>Chat</span>
                                 </a>
                             </li>
                             <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
@@ -196,7 +211,8 @@
                     </li>
 
                     <!--User nav item-->
-                    <li ngbDropdown class="nav-item dropdown pointer" placement="bottom-right" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <li ngbDropdown class="nav-item dropdown pointer" placement="bottom-right" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{exact: true}">
                         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);">
                             <i class="ft-user font-medium-3 blue-grey darken-4"></i>
                             <!--Agregar class="d-none" para quitar el texto-->
@@ -205,13 +221,15 @@
 
                         <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
                             <li *ngSwitchCase="true">
-                                <a routerLink="settings" routerLinkActive="active" (click)="collapseNavbar()" class="dropdown-item py-1">
+                                <a routerLink="settings" routerLinkActive="active" (click)="collapseNavbar()"
+                                   class="dropdown-item py-1">
                                     <i class="ft-settings mr-2"></i>
                                     <span>Ajustes</span>
                                 </a>
                             </li>
                             <li *ngSwitchCase="true">
-                                <a routerLink="password" routerLinkActive="active" (click)="collapseNavbar()" class="dropdown-item py-1">
+                                <a routerLink="password" routerLinkActive="active" (click)="collapseNavbar()"
+                                   class="dropdown-item py-1">
                                     <i class="ft-edit mr-2"></i>
                                     <span>Cambiar contraseña</span>
                                 </a>
