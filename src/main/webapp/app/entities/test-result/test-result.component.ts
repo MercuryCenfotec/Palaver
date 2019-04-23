@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 
 import { ITestResult } from 'app/shared/model/test-result.model';
 import { AccountService, UserService } from 'app/core';
@@ -12,10 +12,7 @@ import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { NotificationService } from 'app/entities/notification';
 import { Notification } from 'app/shared/model/notification.model';
 import { ChatService } from 'app/entities/chat';
-import { Chat, IChat } from 'app/shared/model/chat.model';
-import { IParticipant } from 'app/shared/model/participant.model';
-import { IMessage } from 'app/shared/model/message.model';
-import moment = require('moment');
+import { Chat } from 'app/shared/model/chat.model';
 
 @Component({
     selector: 'jhi-test-result',
