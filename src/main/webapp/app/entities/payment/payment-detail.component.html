@@ -24,8 +24,8 @@
                 </dd>
                 <dt><span>Oring Account</span></dt>
                 <dd>
-                    <div *ngIf="payment.oringAccount">
-                        <a [routerLink]="['/balance-account', payment.oringAccount?.id, 'view']">{{payment.oringAccount?.id}}</a>
+                    <div *ngIf="payment.originAccount">
+                        <a [routerLink]="['/balance-account', payment.originAccount?.id, 'view']">{{payment.originAccount?.id}}</a>
                     </div>
                 </dd>
             </dl>
