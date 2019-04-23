@@ -9,7 +9,8 @@ export const DASHBOARD_INSTITUTION_ROUTE: Routes = [
         path: 'dashboard-institution',
         component: DashboardInstitutionComponent,
         data: {
-            authorities: ['ROLE_INSTITUTION']
+            authorities: ['ROLE_INSTITUTION'],
+            pageTitle: 'Palaver'
         }
     }
 ];
@@ -20,7 +21,7 @@ export const dashboardInstitutionPopupRoute: Routes = [
         component: DashboardInstitutionPopup,
         data: {
             authorities: ['ROLE_INSTITUTION'],
-            pageTitle: 'Institutions'
+            pageTitle: 'Palaver'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

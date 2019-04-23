@@ -71,4 +71,8 @@ export class FocusGroupManagementLoginComponent implements OnInit {
             }
         );
     }
+
+    closeMe(target) {
+        this.authenticationError = null;
+    }
 }

@@ -15,6 +15,7 @@ export class PasswordResetInitComponent implements OnInit, AfterViewInit {
     constructor(private passwordResetInitService: PasswordResetInitService, private elementRef: ElementRef, private renderer: Renderer) {}
 
     ngOnInit() {
+        this.success = null;
         this.resetAccount = {};
     }
 
@@ -25,6 +26,7 @@ export class PasswordResetInitComponent implements OnInit, AfterViewInit {
     requestReset() {
         this.error = null;
         this.errorEmailNotExists = null;
+        this.success = null;
 
         this.passwordResetInitService.save(this.resetAccount.email).subscribe(
             () => {
@@ -39,5 +41,17 @@ export class PasswordResetInitComponent implements OnInit, AfterViewInit {
                 }
             }
         );
+    }
+
+    previousState() {
+        window.location.href = '';
+    }
+
+    closeMe(target) {
+        this.errorEmailNotExists = null;
+    }
+
+    closeMeSuccess(target) {
+        target.hidden = true;
     }
 }

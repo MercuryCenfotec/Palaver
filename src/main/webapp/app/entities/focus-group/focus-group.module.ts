@@ -22,6 +22,7 @@ import {
     FocusGroupTestDialogPopupComponent
 } from 'app/entities/focus-group/focus-group-test-dialog.component';
 import { FocusGroupCloneTestComponent, FocusGroupCloneTestPopupComponent } from 'app/entities/focus-group/focus-group-clone-test.component';
+import { FocusGroupFinishedComponent } from 'app/entities/focus-group/focus-group-finished.component';
 
 const ENTITY_STATES = [...focusGroupRoute, ...focusGroupPopupRoute];
 
@@ -42,7 +43,8 @@ const ENTITY_STATES = [...focusGroupRoute, ...focusGroupPopupRoute];
         FocusGroupTestDialogComponent,
         FocusGroupTestDialogPopupComponent,
         FocusGroupCloneTestComponent,
-        FocusGroupCloneTestPopupComponent
+        FocusGroupCloneTestPopupComponent,
+        FocusGroupFinishedComponent
     ],
     entryComponents: [
         FocusGroupComponent,
@@ -55,7 +57,8 @@ const ENTITY_STATES = [...focusGroupRoute, ...focusGroupPopupRoute];
         FocusGroupTestDialogPopupComponent,
         ParticipateComponent,
         FocusGroupManagementLoginComponent,
-        FocusGroupManagementComponent
+        FocusGroupManagementComponent,
+        FocusGroupFinishedComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
