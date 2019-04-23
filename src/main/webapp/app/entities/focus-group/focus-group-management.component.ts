@@ -154,6 +154,14 @@ export class FocusGroupManagementComponent implements OnInit {
             console.log(group);
             this.router.navigate(['/', 'focus-group', 'finished']);
         });
+
+        for (let i = 0; i < this.focusGroup.participants.length; i++) {
+            const newNotification = new Notification(null, this.focusGroup.participants[i].user.user.id.toString(), 'CallStart', false, this.meeting.id);
+            this.notificationService.create(newNotification).subscribe(createdNoti => {
+
+            });
+        }
+
     }
 
     protected onError(errorMessage: string) {
