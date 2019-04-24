@@ -247,7 +247,7 @@ export class DashboardInstitutionComponent implements OnInit {
                 this.aptitudeTestService.findAllByInstitution(institution.body.id).subscribe(aptitudeTests => {
                     this.aptitudeTests = aptitudeTests.body;
                 });
-                this.accountService.findByUserId(institution.body.id).subscribe(account => {
+                this.accountService.findByUserId(this.institution.user.id).subscribe(account => {
                     this.account = account.body;
                 });
             });

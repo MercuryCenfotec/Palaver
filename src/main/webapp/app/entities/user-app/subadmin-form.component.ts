@@ -86,4 +86,15 @@ export class SubadminFormComponent implements OnInit, AfterViewInit {
     previousState() {
         window.history.back();
     }
+
+    closeMe(target) {
+        this.doNotMatch = null;
+        this.error = null;
+        this.errorUserExists = null;
+        this.errorEmailExists = null;
+    }
+
+    closeMeSuccess(target) {
+        target.hidden = true;
+    }
 }

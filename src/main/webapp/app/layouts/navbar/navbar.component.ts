@@ -137,7 +137,6 @@ export class NavbarComponent implements OnInit {
                         'userAppPermissions',
                         'participantPermissions',
                         'institutionPermissions',
-                        'membershipPermissions',
                         'paymentPermissions',
                         'banPermissions'
                     ];
@@ -157,7 +156,6 @@ export class NavbarComponent implements OnInit {
                         'incentivePermissions',
                         'aptitudeTestsPermissions',
                         'focusGroupPermissions',
-                        'membershipPermissions',
                         'balancePermissions'
                     ];
                     break;
