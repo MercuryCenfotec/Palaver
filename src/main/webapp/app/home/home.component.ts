@@ -37,6 +37,12 @@ export class HomeComponent implements OnInit {
                     case 'participant':
                         this.router.navigate(['/participant-home']);
                         break;
+                    case 'admin':
+                        this.router.navigate(['/dashboard-admin']);
+                        break;
+                    case 'subadmin':
+                        this.router.navigate(['/ban']);
+                        break;
                     default:
                         break;
                 }

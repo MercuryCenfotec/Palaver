@@ -120,7 +120,7 @@ export class FocusGroupManagementComponent implements OnInit {
         this.ban.participant = this.participant;
 
         this.banService.create(this.ban).subscribe(newBan => {
-            this.focusGroupService.refundParticipantAmount(this.focusGroup).subscribe(data => {
+            this.focusGroupService.update(this.focusGroup).subscribe(data => {
                 const newNotification = new Notification(
                     null,
                     this.participant.user.user.id.toString(),
@@ -156,12 +156,15 @@ export class FocusGroupManagementComponent implements OnInit {
         });
 
         for (let i = 0; i < this.focusGroup.participants.length; i++) {
-            const newNotification = new Notification(null, this.focusGroup.participants[i].user.user.id.toString(), 'CallStart', false, this.meeting.id);
-            this.notificationService.create(newNotification).subscribe(createdNoti => {
-
-            });
+            const newNotification = new Notification(
+                null,
+                this.focusGroup.participants[i].user.user.id.toString(),
+                'CallStart',
+                false,
+                this.meeting.id
+            );
+            this.notificationService.create(newNotification).subscribe(createdNoti => {});
         }
-
     }
 
     protected onError(errorMessage: string) {

@@ -137,7 +137,6 @@ export class NavbarComponent implements OnInit {
                         'userAppPermissions',
                         'participantPermissions',
                         'institutionPermissions',
-                        'membershipPermissions',
                         'paymentPermissions',
                         'banPermissions'
                     ];
@@ -157,7 +156,6 @@ export class NavbarComponent implements OnInit {
                         'incentivePermissions',
                         'aptitudeTestsPermissions',
                         'focusGroupPermissions',
-                        'membershipPermissions',
                         'balancePermissions'
                     ];
                     break;
@@ -183,7 +181,7 @@ export class NavbarComponent implements OnInit {
             for (let i = 0; i < jhiUser.authorities.length; i++) {
                 switch (jhiUser.authorities[i]) {
                     case 'ROLE_ADMIN':
-                        this.router.navigate(['']);
+                        this.router.navigate(['dashboard-admin']);
                         break;
                     case 'ROLE_PARTICIPANT':
                         this.router.navigate(['participant-home']);
@@ -192,7 +190,7 @@ export class NavbarComponent implements OnInit {
                         this.router.navigate(['dashboard-institution']);
                         break;
                     case 'ROLE_SUBADMIN':
-                        this.router.navigate(['']);
+                        this.router.navigate(['/ban']);
                         break;
                     case 'ROLE_GROUP':
                         this.router.navigate(['focus-group/management']);

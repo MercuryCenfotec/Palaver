@@ -4,7 +4,7 @@
         <p  _ngcontent-c24="" class="mb-0">Cuenta perteneciente a: {{actualBalance.user.name}}</p>
         <br/>
     </div>
-<div>
+<div *ngIf="actualBalance.user.rol !== 'participant'">
     <div class="col-xl-3 col-lg-6 col-12" style="float: right; display:inline-block;">
         <div class="card bg-danger">
             <div class="card-body">
@@ -16,8 +16,7 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-raised shadow-z-2 btn-success" (click)="retrieveFunds()"><i class="ft-plus"></i>Retirar fondos</button>
-            </div>
+                </div>
         </div>
     </div>
     <div>
@@ -156,4 +155,31 @@
             </tbody>
         </table>
     </div>-->
+</div>
+
+<div *ngIf="actualBalance.user.rol === 'participant'">
+    <div class="jumbotron text-xs-center" style="margin-left: 30px; margin-right: 30px;">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h1 class="display-3">₡{{formatedBalance}}</h1>
+        <p class="lead"><strong>Saldo actual.</strong></p>
+        <button class="btn btn-raised shadow-z-2 btn-success" (click)="retrieveFunds()"><i class="ft-plus"></i>Retirar fondos</button>
+        <hr>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
 </div>

@@ -136,6 +136,15 @@ export class ChatComponent implements OnInit {
 
     // chat user list click event function
     setActive(event, chat: IChat) {
+        this.activeChat = chat;
+        if (this.isFocusGroup) {
+            this.activeChatUser = chat.participant.user.name;
+            this.activeChatUserImg = chat.participant.picture;
+        } else {
+            this.activeChatUser = chat.focusGroup.name;
+            this.activeChatUserImg = chat.focusGroup.institution.logo;
+        }
+
         const hElement: HTMLElement = this.elRef.nativeElement;
         // now you can simply get your elements with their class name
         const allAnchors = hElement.getElementsByClassName('list-group-item');

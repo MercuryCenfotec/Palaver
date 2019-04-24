@@ -28,7 +28,7 @@
                                         {{pay.description}}
                                     </div>
                                 </td>
-                                <td>{{pay.ammount}}</td>
+                                <td>{{pay.ammount | currency: 'CRC'}}</td>
                                 <td>{{pay.destinyAccount.user.name}}</td>
                                 <td>{{pay.originAccount.user.name}}</td>
                             </tr>
