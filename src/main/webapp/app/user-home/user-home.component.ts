@@ -14,6 +14,8 @@ import { ParticipantService } from 'app/entities/participant';
 import { TestResultService } from 'app/entities/test-result';
 import { TestQuestionService } from 'app/entities/test-question';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment';
+import { group } from '@angular/animations';
 
 @Component({
     selector: 'jhi-user-home',
@@ -206,5 +208,9 @@ export class UserHomeComponent implements OnInit {
         }
         grade = grade / this.testQuestions.length;
         return grade;
+    }
+
+    showGroup(group: IFocusGroup) {
+        return !group.beginDate.isBefore(moment.now());
     }
 }
