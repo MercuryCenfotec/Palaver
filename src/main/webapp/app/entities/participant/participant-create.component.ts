@@ -57,7 +57,7 @@ export class ParticipantCreateComponent implements OnInit {
         this.success = false;
         // Deshabilitar fechas futuras
         const currentDate = new Date();
-        this.config.maxDate = { year: currentDate.getFullYear() - 5, month: 12, day: 31 };
+        this.config.maxDate = { year: currentDate.getFullYear() - 18, month: 12, day: 31 };
         this.config.outsideDays = 'hidden';
 
         this.userService.getUserWithAuthorities().subscribe(data => {
