@@ -27,7 +27,7 @@
                                     <h6 class="list-group-item-heading"
                                         [textContent]="isFocusGroup ? chat.participant.user.name : chat.focusGroup.name ">
                                         <span class="font-small-3 float-right primary"
-                                              *ngIf="chat.lastSend!== null">{{chat.lastSend.toDate().toLocaleDateString()}}</span>
+                                              *ngIf="chat.lastSend!== null">{{chat.lastSend}}</span>
                                     </h6>
                                     <p class="list-group-item-text text-muted">
                                     <i *ngIf="chat.lastMessage !== null"
