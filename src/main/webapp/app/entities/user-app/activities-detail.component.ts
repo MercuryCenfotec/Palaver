@@ -86,17 +86,20 @@ export class ActivitiesDetailComponent implements OnInit {
     }
 
     setCalendarEvent(meeting: IMeeting): any {
+        const fecha: Date = meeting.date.toDate();
+        const hora: number = meeting.time.toDate().getTime();
+        const end = fecha;
         const calendarEvent: CalendarEvent = new class implements CalendarEvent {
             end: Date;
             start: Date;
             title: string;
         }();
-        const end = meeting.time.toDate();
+        fecha.setTime(hora);
         end.setHours(end.getHours() + 2);
 
         calendarEvent.id = meeting.id;
         calendarEvent.actions = this.actions;
-        calendarEvent.start = meeting.time.toDate();
+        calendarEvent.start = fecha;
         calendarEvent.end = end;
         calendarEvent.title = meeting.name;
         calendarEvent.color = colors.blue;

@@ -32,6 +32,10 @@
                                         Este campo es requerido.
                                     </small>
                                 </div>
+                                <small class="form-text text-muted danger" *ngIf="validateDate()">
+                                    La fecha de la reunión tiene que estar dentro del reango del grupo de enfoque.
+                                </small>
+
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="field_time">Hora</label>
