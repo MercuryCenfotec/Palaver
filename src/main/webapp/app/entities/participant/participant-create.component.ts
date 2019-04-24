@@ -13,8 +13,8 @@ import { ICategory } from 'app/shared/model/category.model';
 import { CategoryService } from 'app/entities/category';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { FocusGroupService } from 'app/entities/focus-group';
-import { IUser, LoginService, UserService } from 'app/core';
-import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import {IUser, LoginModalService, LoginService, UserService} from 'app/core';
+import {NgbDatepickerConfig, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import { BalanceAccountService } from 'app/entities/balance-account';
 import { BalanceAccount } from 'app/shared/model/balance-account.model';
 import { ImageService } from 'app/shared/util/image.service';
@@ -35,6 +35,7 @@ export class ParticipantCreateComponent implements OnInit {
     focusgroups: IFocusGroup[];
     birthdateDp: any;
     image: any;
+    modalRef: NgbModalRef;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
@@ -48,7 +49,8 @@ export class ParticipantCreateComponent implements OnInit {
         protected userService: UserService,
         protected config: NgbDatepickerConfig,
         private balanceService: BalanceAccountService,
-        protected imageService: ImageService
+        protected imageService: ImageService,
+        protected loginModalService: LoginModalService
     ) {}
 
     ngOnInit() {
@@ -200,5 +202,9 @@ export class ParticipantCreateComponent implements OnInit {
 
     closeMe(target) {
         target.hidden = true;
+    }
+
+    login() {
+        this.modalRef = this.loginModalService.open();
     }
 }
