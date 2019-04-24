@@ -143,7 +143,13 @@ export class NavbarComponent implements OnInit {
                     ];
                     break;
                 case 'ROLE_PARTICIPANT':
-                    permissions = ['calendarPermissions', 'participantPPermissions', 'balancePermissions', 'expulsionPermissions'];
+                    permissions = [
+                        'calendarPermissions',
+                        'participantPPermissions',
+                        'balancePermissions',
+                        'expulsionPermissions',
+                        'chatPermissions'
+                    ];
                     break;
                 case 'ROLE_INSTITUTION':
                     permissions = [
@@ -157,6 +163,10 @@ export class NavbarComponent implements OnInit {
                     break;
                 case 'ROLE_SUBADMIN':
                     permissions = ['participantPermissions', 'institutionPermissions', 'banPermissions', 'paymentPermissions'];
+                    break;
+
+                case 'ROLE_GROUP':
+                    permissions = ['chatPermissions'];
                     break;
                 default:
                     break;
@@ -185,8 +195,7 @@ export class NavbarComponent implements OnInit {
                         this.router.navigate(['']);
                         break;
                     case 'ROLE_GROUP':
-                        this.loginService.logout();
-                        this.router.navigate(['']);
+                        this.router.navigate(['focus-group/management']);
                         break;
                     default:
                         break;

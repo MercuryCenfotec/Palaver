@@ -11,8 +11,11 @@ import com.stripe.model.Payout;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -37,20 +40,31 @@ public class PaymentService {
             true);
     }
 
+    public List<Payment> getAllGroupPaymentsByCurrentMonth() {
+        ArrayList<Payment> payments = new ArrayList<>(paymentRepo.findAllByDescriptionContaining("Cuota por uso de la aplicacion - "));
+        ArrayList<Payment> filteredLst = new ArrayList<>();
+        for (Payment payment : payments) {
+            if (LocalDateTime.parse(payment.getDate()).getMonth().equals(LocalDateTime.now().getMonth())) {
+                filteredLst.add(payment);
+            }
+        }
+        return filteredLst;
+    }
+
     public void returnParticipantFare(FocusGroup group) {
         Payment groupPayment = paymentRepo.findByDescription("Pago por grupo - " + group.getName() + "_" + group.getCode());
         BalanceAccount palaverAccount = balanceAccountRepo.findByUserId(1L).get();
-        BalanceAccount institutionAccount = balanceAccountRepo.findByUserId(group.getInstitution().getId ()).get();
+        BalanceAccount institutionAccount = balanceAccountRepo.findByUserId(group.getInstitution().getId()).get();
         processPayment(
             palaverAccount,
             institutionAccount,
             "Devolucion de tarifa de participante - " + group.getName() + "_" + group.getCode(),
-            groupPayment.getAmmount(),
+            25000,
             false
         );
     }
 
-    public void returnFocusGroupPayment (FocusGroup group) {
+    public void returnFocusGroupPayment(FocusGroup group) {
         Payment groupPayment = paymentRepo.findByDescription("Pago por grupo - " + group.getName() + "_" + group.getCode());
         BalanceAccount palaverAccount = balanceAccountRepo.findByUserId(1L).get();
         BalanceAccount institutionAccount = balanceAccountRepo.findByUserId(group.getInstitution().getUser().getId()).get();
@@ -132,9 +146,9 @@ public class PaymentService {
         newPayment.setAmmount(paymentAmount);
         newPayment.setOnHold(onHold);
         paymentRepo.save(newPayment);
-        originAccount.setBalance(originAccount.getBalance()-paymentAmount);
+        originAccount.setBalance(originAccount.getBalance() - paymentAmount);
         balanceAccountRepo.save(originAccount);
-        targetAccount.setBalance(targetAccount.getBalance()+paymentAmount);
+        targetAccount.setBalance(targetAccount.getBalance() + paymentAmount);
         balanceAccountRepo.save(targetAccount);
     }
 

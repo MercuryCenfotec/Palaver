@@ -1,6 +1,7 @@
 package com.mercury.palaver.web.rest;
 import com.mercury.palaver.domain.Payment;
 import com.mercury.palaver.repository.PaymentRepository;
+import com.mercury.palaver.service.PaymentService;
 import com.mercury.palaver.web.rest.errors.BadRequestAlertException;
 import com.mercury.palaver.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -29,8 +30,11 @@ public class PaymentResource {
 
     private final PaymentRepository paymentRepository;
 
-    public PaymentResource(PaymentRepository paymentRepository) {
+    private final PaymentService paymentService;
+
+    public PaymentResource(PaymentRepository paymentRepository, PaymentService paymentService) {
         this.paymentRepository = paymentRepository;
+        this.paymentService = paymentService;
     }
 
     /**
@@ -82,6 +86,12 @@ public class PaymentResource {
     public List<Payment> getAllPayments() {
         log.debug("REST request to get all Payments");
         return paymentRepository.findAll();
+    }
+
+    @GetMapping("/payments/focus-groups/curr-month")
+    public List<Payment> getAllGroupPaymentsByCurrentMonth() {
+        log.debug("REST request to get all Payments");
+        return paymentService.getAllGroupPaymentsByCurrentMonth();
     }
 
     /**

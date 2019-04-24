@@ -4,6 +4,7 @@ import com.mercury.palaver.PalaverApp;
 
 import com.mercury.palaver.domain.Payment;
 import com.mercury.palaver.repository.PaymentRepository;
+import com.mercury.palaver.service.PaymentService;
 import com.mercury.palaver.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -67,6 +68,8 @@ public class PaymentResourceIntTest {
     @Autowired
     private Validator validator;
 
+    private PaymentService paymentService;
+
     private MockMvc restPaymentMockMvc;
 
     private Payment payment;
@@ -74,7 +77,7 @@ public class PaymentResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PaymentResource paymentResource = new PaymentResource(paymentRepository);
+        final PaymentResource paymentResource = new PaymentResource(paymentRepository, paymentService);
         this.restPaymentMockMvc = MockMvcBuilders.standaloneSetup(paymentResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

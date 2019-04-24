@@ -187,4 +187,17 @@ public class FocusGroupResource {
         return ResponseEntity.ok().body(focusGroupService.finishFocusGroup(groupId));
     }
 
+    @PutMapping("/focus-groups/refund-participant-fare")
+    public ResponseEntity<FocusGroup> removeParticapantAndRefundFare(@Valid @RequestBody FocusGroup group) throws URISyntaxException {
+        log.debug("REST request to remove participant and refund of FocusGroup : {}", group);
+        if (group.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        paymentService.returnParticipantFare(group);
+        FocusGroup result = focusGroupRepository.save(group);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, group.getId().toString()))
+            .body(result);
+    }
+
 }

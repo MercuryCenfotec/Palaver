@@ -10,10 +10,11 @@ import { IUserApp } from 'app/shared/model/user-app.model';
 import { UserAppService } from 'app/entities/user-app';
 import { IMembership, Membership } from 'app/shared/model/membership.model';
 import { MembershipService } from 'app/entities/membership';
-import { IUser, LoginService, UserService } from 'app/core';
+import { IUser, LoginModalService, LoginService, UserService } from 'app/core';
 import { BalanceAccountService } from 'app/entities/balance-account';
 import { BalanceAccount } from 'app/shared/model/balance-account.model';
 import { ImageService } from 'app/shared/util/image.service';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'jhi-institution-form',
@@ -30,6 +31,7 @@ export class InstitutionFormComponent implements OnInit {
     success: boolean;
     balanceAccount = new BalanceAccount(null, 0, 0, 0, 'Cuenta interna', null);
     image: any;
+    modalRef: NgbModalRef;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
@@ -41,7 +43,8 @@ export class InstitutionFormComponent implements OnInit {
         protected activatedRoute: ActivatedRoute,
         protected userService: UserService,
         private balanceService: BalanceAccountService,
-        protected imageService: ImageService
+        protected imageService: ImageService,
+        protected loginModalService: LoginModalService
     ) {}
 
     ngOnInit() {
@@ -158,5 +161,9 @@ export class InstitutionFormComponent implements OnInit {
 
     closeMe(target) {
         target.hidden = true;
+    }
+
+    login() {
+        this.modalRef = this.loginModalService.open();
     }
 }

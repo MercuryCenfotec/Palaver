@@ -21,7 +21,6 @@ export class FocusGroupService {
 
     create(focusGroup: IFocusGroup): Observable<EntityResponseType> {
         const copy = this.convertDateFromClient(focusGroup);
-        console.log(focusGroup);
         return this.http
             .post<IFocusGroup>(this.resourceUrl, copy, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
@@ -114,6 +113,14 @@ export class FocusGroupService {
     finishFocusGroup(groupId: number): Observable<EntityResponseType> {
         return this.http
             .get<IFocusGroup>(`${this.resourceUrl}/finish/${groupId}`, { observe: 'response' })
+            .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+    }
+
+    refundParticipantAmount(group: IFocusGroup): Observable<EntityResponseType> {
+        const copy = this.convertDateFromClient(group);
+        console.log(group);
+        return this.http
+            .put<IFocusGroup>(`${this.resourceUrl}/refund-participant-fare`, copy, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 }

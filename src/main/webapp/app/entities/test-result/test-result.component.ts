@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 
 import { ITestResult } from 'app/shared/model/test-result.model';
 import { AccountService, UserService } from 'app/core';
@@ -11,6 +11,8 @@ import { FocusGroupService } from 'app/entities/focus-group';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { NotificationService } from 'app/entities/notification';
 import { Notification } from 'app/shared/model/notification.model';
+import { ChatService } from 'app/entities/chat';
+import { Chat } from 'app/shared/model/chat.model';
 
 @Component({
     selector: 'jhi-test-result',
@@ -32,7 +34,8 @@ export class TestResultComponent implements OnInit, OnDestroy {
         protected accountService: AccountService,
         protected userService: UserService,
         protected focusGroupService: FocusGroupService,
-        protected notificationService: NotificationService
+        protected notificationService: NotificationService,
+        protected chatService: ChatService
     ) {}
 
     loadAll() {
@@ -86,6 +89,7 @@ export class TestResultComponent implements OnInit, OnDestroy {
     }
 
     acceptParticipant(event: ITestResult) {
+        const chat: Chat = new Chat(null, null, null, event.participant, event.focusGroup, null);
         for (let i = 0; i < this.focusGroups.length; i++) {
             if (event.focusGroup.id === this.focusGroups[i].id) {
                 event.focusGroup = this.focusGroups[i];
@@ -108,7 +112,9 @@ export class TestResultComponent implements OnInit, OnDestroy {
                         event.focusGroup.id
                     );
                     this.notificationService.create(newNotification).subscribe(createdNoti => {
-                        this.loadAll();
+                        this.chatService.create(chat).subscribe(resChat => {
+                            this.loadAll();
+                        });
                     });
                 });
             });

@@ -20,6 +20,7 @@ import * as moment from 'moment';
 import { IIncentive } from 'app/shared/model/incentive.model';
 import { IncentiveService } from 'app/entities/incentive';
 import * as Chartist from 'chartist';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 declare var require: any;
 
@@ -53,6 +54,7 @@ export class DashboardInstitutionComponent implements OnInit {
     account: IBalanceAccount;
     lineArea: Chart;
     donutChart: Chart;
+    notEnoughCredits: boolean;
 
     constructor(
         protected userService: UserService,
@@ -62,7 +64,8 @@ export class DashboardInstitutionComponent implements OnInit {
         protected aptitudeTestService: AptitudeTestService,
         protected accountService: BalanceAccountService,
         protected navbarComponent: NavbarComponent,
-        protected incentiveService: IncentiveService
+        protected incentiveService: IncentiveService,
+        protected modalService: NgbModal
     ) {}
 
     loadAll() {
@@ -270,12 +273,7 @@ export class DashboardInstitutionComponent implements OnInit {
                 document.getElementById('footerPremium').innerHTML = '<i class="btn ft-check font-medium-4 p-0"></i>';
                 this.navbarComponent.ngOnInit();
             } else {
-                swal.fire({
-                    type: 'error',
-                    title: 'Oops...',
-                    text: 'Tu cuenta no tiene los fondos suficientes',
-                    footer: '<a href="#/balance-account">¿Recargar cuenta?</a>'
-                });
+                this.notEnoughCredits = true;
             }
         }
     }
@@ -287,4 +285,29 @@ export class DashboardInstitutionComponent implements OnInit {
     protected onSaveSuccess() {}
 
     protected onSaveError() {}
+
+    openModal(content) {
+        this.modalService.open(content).result.then(
+            result => {
+                console.log(`Closed with: ${result}`);
+            },
+            reason => {
+                console.log(`Dismissed ${this.getDismissReason(reason)}`);
+            }
+        );
+    }
+
+    private getDismissReason(reason: any): string {
+        if (reason === ModalDismissReasons.ESC) {
+            return 'by pressing ESC';
+        } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+            return 'by clicking on a backdrop';
+        } else {
+            return `with: ${reason}`;
+        }
+    }
+
+    closeMe(target) {
+        this.notEnoughCredits = null;
+    }
 }

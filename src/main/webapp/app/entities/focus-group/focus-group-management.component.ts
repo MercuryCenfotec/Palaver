@@ -15,8 +15,8 @@ import { BanService } from 'app/entities/ban';
 import { Ban, IBan } from 'app/shared/model/ban.model';
 import { NotificationService } from 'app/entities/notification';
 import { Notification } from 'app/shared/model/notification.model';
-import {JhiAlertService} from 'ng-jhipster';
-import {NavigationEnd, Router} from '@angular/router';
+import { JhiAlertService } from 'ng-jhipster';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
     selector: 'jhi-focus-group-management',
@@ -120,7 +120,7 @@ export class FocusGroupManagementComponent implements OnInit {
         this.ban.participant = this.participant;
 
         this.banService.create(this.ban).subscribe(newBan => {
-            this.focusGroupService.update(this.focusGroup).subscribe(data => {
+            this.focusGroupService.refundParticipantAmount(this.focusGroup).subscribe(data => {
                 const newNotification = new Notification(
                     null,
                     this.participant.user.user.id.toString(),
@@ -154,6 +154,17 @@ export class FocusGroupManagementComponent implements OnInit {
             console.log(group);
             this.router.navigate(['/', 'focus-group', 'finished']);
         });
+
+        for (let i = 0; i < this.focusGroup.participants.length; i++) {
+            const newNotification = new Notification(
+                null,
+                this.focusGroup.participants[i].user.user.id.toString(),
+                'CallStart',
+                false,
+                this.meeting.id
+            );
+            this.notificationService.create(newNotification).subscribe(createdNoti => {});
+        }
     }
 
     protected onError(errorMessage: string) {

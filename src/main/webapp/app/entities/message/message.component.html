@@ -31,7 +31,6 @@
                 <td>{{message.isRead}}</td>
                 <td>{{message.message}}</td>
                 <td>{{message.isFocusGroup}}</td>
-                <td>{{message.lastMessage}}</td>
                 <td>
                     <div *ngIf="message.chat">
                         <a [routerLink]="['../chat', message.chat?.id, 'view' ]" >{{message.chat?.id}}</a>
