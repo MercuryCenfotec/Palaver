@@ -6,6 +6,8 @@ import { filter, map } from 'rxjs/operators';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { IUserApp } from 'app/shared/model/user-app.model';
 import { UserAppService } from 'app/entities/user-app';
+import { BalanceAccountService } from 'app/entities/balance-account';
+import { IBalanceAccount } from 'app/shared/model/balance-account.model';
 
 export interface Chart {
     type: ChartType;
@@ -29,13 +31,23 @@ export class DashboardAdminComponent implements OnInit {
     countPart = 0;
     countInst = 0;
     countSub = 0;
+    account: IBalanceAccount;
     BarChart: Chart;
 
-    constructor(protected userService: UserService, protected userAppService: UserAppService) {}
+    constructor(
+        protected userService: UserService,
+        protected userAppService: UserAppService,
+        protected accountService: BalanceAccountService
+    ) {}
 
     loadAll() {
         this.userService.getUserWithAuthorities().subscribe(user => {
             this.admin = user;
+            this.userAppService.findByUserId(user.id).subscribe(resp => {
+                this.accountService.findByUserId(resp.id).subscribe(account => {
+                    this.account = account.body;
+                });
+            });
         });
         this.userAppService
             .query()
