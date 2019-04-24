@@ -88,6 +88,7 @@ public class FocusGroupService {
             group.setAptitudeTest(null);
         }
         paymentService.processParticipantsPayment(group);
+        group.setMeetingIsDone(true);
         return focusGroupRepo.save(group);
     }
 
