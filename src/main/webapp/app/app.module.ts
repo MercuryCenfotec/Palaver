@@ -29,6 +29,8 @@ import { PalaverDashboardInstitutionModule } from 'app/dashboard-institution/das
 import { ChartistModule } from 'ng-chartist';
 import { ParticipantExpulsionsComponent } from './participant-expulsions/participant-expulsions.component';
 import { PalaverParticipantExpulsionsModule } from 'app/participant-expulsions/participant-expulsions.module';
+import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.component';
+import { PalaverDashboardAdminModule } from 'app/dashboard-admin/dashboard-admin.module';
 
 registerLocaleData(localeEs);
 
@@ -49,6 +51,7 @@ registerLocaleData(localeEs);
         PalaverParticipantExpulsionsModule,
         PalaverAccountModule,
         PalaverDashboardInstitutionModule,
+        PalaverDashboardAdminModule,
         ChartistModule,
         Ng2SearchPipeModule,
         // jhipster-needle-angular-add-module JHipster will add new module here

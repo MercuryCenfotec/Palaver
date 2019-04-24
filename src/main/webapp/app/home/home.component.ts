@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
-import {LoginModalService, AccountService, Account, UserService} from 'app/core';
-import {UserAppService} from 'app/entities/user-app';
-import {Router} from '@angular/router';
+import { LoginModalService, AccountService, Account, UserService } from 'app/core';
+import { UserAppService } from 'app/entities/user-app';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'jhi-home',
@@ -30,19 +30,21 @@ export class HomeComponent implements OnInit {
         this.registerAuthenticationSuccess();
         this.userService.getUserWithAuthorities().subscribe(user => {
             this.userAppService.findByUserId(user.id).subscribe(userApp => {
-                        switch (userApp.rol) {
-                            case 'institution':
-                                this.router.navigate(['/dashboard-institution']);
-                                break;
-                            case 'participant':
-                                this.router.navigate(['/participant-home']);
-                                break;
-                            default:
-                                break;
-                        }
-
-                });
+                switch (userApp.rol) {
+                    case 'institution':
+                        this.router.navigate(['/dashboard-institution']);
+                        break;
+                    case 'participant':
+                        this.router.navigate(['/participant-home']);
+                        break;
+                    case 'admin':
+                        this.router.navigate(['/dashboard-admin']);
+                        break;
+                    default:
+                        break;
+                }
             });
+        });
     }
 
     registerAuthenticationSuccess() {
