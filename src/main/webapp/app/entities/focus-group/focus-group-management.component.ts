@@ -120,7 +120,7 @@ export class FocusGroupManagementComponent implements OnInit {
         this.ban.participant = this.participant;
 
         this.banService.create(this.ban).subscribe(newBan => {
-            this.focusGroupService.refundParticipantAmount(this.focusGroup).subscribe(data => {
+            this.focusGroupService.update(this.focusGroup).subscribe(data => {
                 const newNotification = new Notification(
                     null,
                     this.participant.user.user.id.toString(),
