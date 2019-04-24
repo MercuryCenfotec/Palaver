@@ -112,4 +112,8 @@ export class MeetingCreateComponent implements OnInit {
     protected onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
     }
+
+    validateDate(): boolean {
+        return this.meeting.date.isAfter(this.focusGroup.endDate) || this.meeting.date.isBefore(this.focusGroup.beginDate);
+    }
 }
