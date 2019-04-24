@@ -1,5 +1,60 @@
 {
-    "name": "FocusGroup",
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "incentive",
+            "otherEntityName": "incentive",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "focusGroup",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "institution",
+            "otherEntityName": "institution",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "focusGroup",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "focusGroup",
+            "relationshipName": "category",
+            "otherEntityName": "category",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "focusGroup",
+            "relationshipName": "participant",
+            "otherEntityName": "participant",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "aptitudeTest",
+            "otherEntityName": "aptitudeTest",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "focusGroup",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipName": "meeting",
+            "otherEntityName": "meeting",
+            "relationshipType": "one-to-one",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "useJPADerivedIdentifier": false,
+            "otherEntityRelationshipName": "focusGroup",
+            "otherEntityRelationshipNameUndefined": false
+        }
+    ],
     "fields": [
         {
             "fieldName": "name",
@@ -36,54 +91,30 @@
         {
             "fieldName": "passingGrade",
             "fieldType": "Integer"
-        }
-    ],
-    "relationships": [
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "incentive",
-            "otherEntityName": "incentive",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "focusGroup"
         },
         {
-            "relationshipType": "many-to-one",
-            "relationshipName": "institution",
-            "otherEntityName": "institution",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "focusGroup"
+            "fieldName": "participantsAmount",
+            "fieldType": "Integer"
         },
         {
-            "relationshipType": "many-to-many",
-            "otherEntityRelationshipName": "focusGroup",
-            "relationshipName": "category",
-            "otherEntityName": "category",
-            "otherEntityField": "id",
-            "ownerSide": true
+            "fieldName": "status",
+            "fieldType": "String"
         },
         {
-            "relationshipType": "many-to-many",
-            "otherEntityRelationshipName": "focusGroup",
-            "relationshipName": "participant",
-            "otherEntityName": "participant",
-            "otherEntityField": "id",
-            "ownerSide": true
+            "fieldName": "isCompleted",
+            "fieldType": "Boolean"
         },
         {
-            "relationshipType": "many-to-one",
-            "relationshipName": "aptitudeTest",
-            "otherEntityName": "aptitudeTest",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "focusGroup"
+            "fieldName": "meetingIsDone",
+            "fieldType": "Boolean"
         }
     ],
     "changelogDate": "20190304115742",
-    "entityTableName": "focus_group",
     "dto": "no",
-    "pagination": "no",
+    "searchEngine": false,
     "service": "no",
+    "entityTableName": "focus_group",
+    "databaseType": "sql",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*"
+    "pagination": "no"
 }

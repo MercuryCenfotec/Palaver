@@ -26,6 +26,11 @@ import { UserHomeComponent } from './user-home/user-home.component';
 import { PalaverUserHomeModule } from 'app/user-home/user-home.module';
 import { DashboardInstitutionComponent } from './dashboard-institution/dashboard-institution.component';
 import { PalaverDashboardInstitutionModule } from 'app/dashboard-institution/dashboard-institution.module';
+import { ChartistModule } from 'ng-chartist';
+import { ParticipantExpulsionsComponent } from './participant-expulsions/participant-expulsions.component';
+import { PalaverParticipantExpulsionsModule } from 'app/participant-expulsions/participant-expulsions.module';
+import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.component';
+import { PalaverDashboardAdminModule } from 'app/dashboard-admin/dashboard-admin.module';
 
 registerLocaleData(localeEs);
 
@@ -43,8 +48,11 @@ registerLocaleData(localeEs);
         PalaverCoreModule,
         PalaverHomeModule,
         PalaverUserHomeModule,
+        PalaverParticipantExpulsionsModule,
         PalaverAccountModule,
         PalaverDashboardInstitutionModule,
+        PalaverDashboardAdminModule,
+        ChartistModule,
         Ng2SearchPipeModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
         PalaverEntityModule,

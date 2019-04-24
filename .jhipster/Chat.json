@@ -1,0 +1,53 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "participant",
+            "otherEntityName": "participant",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "id",
+            "otherEntityRelationshipNameUndefined": false,
+            "otherEntityRelationshipName": "chat"
+        },
+        {
+            "relationshipName": "focusGroup",
+            "otherEntityName": "focusGroup",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "id",
+            "otherEntityRelationshipNameUndefined": false,
+            "otherEntityRelationshipName": "chat"
+        },
+        {
+            "relationshipName": "message",
+            "otherEntityName": "message",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "chat",
+            "otherEntityRelationshipNameUndefined": false
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "lastSend",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "lastMessage",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20190415064432",
+    "dto": "no",
+    "searchEngine": false,
+    "service": "serviceClass",
+    "entityTableName": "chat",
+    "databaseType": "sql",
+    "jpaMetamodelFiltering": false,
+    "pagination": "no"
+}

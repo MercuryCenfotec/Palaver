@@ -1,0 +1,19 @@
+<form name="deleteForm" (ngSubmit)="confirmCloning()">
+    <div class="modal-header">
+        <h4 class="modal-title">Prueba de aptitud en uso</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <p id="jhi-delete-focusGroup-heading">La prueba de aptitud seleccionada está siendo usada por otro grupo de enfoque.</p>
+        <p>Si desea utilizar esta prueba de enfoque, se creará una copia de la prueba y se registrará bajo su institución.</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-raised btn-secondary" data-dismiss="modal" (click)="clear()">
+            <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>No, volver.</span>
+        </button>
+        <button id="jhi-confirm-delete-focusGroup" type="submit" class="btn btn-raised btn-danger">
+            <fa-icon [icon]="'times'"></fa-icon>&nbsp;<span>Sí, crear copia.</span>
+        </button>
+    </div>
+</form>

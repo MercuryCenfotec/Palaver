@@ -2,7 +2,27 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Resultados de pruebas</h4>
+                <div *ngIf="quantitySurpassed">
+                    <div id="warningAlert" #warningAlert class="popupunder alert alert-dismissible custom-alert-warning">
+                        <button type="button" data-dismiss="alert" class="close" (click)="closeMe(warningAlert)">×</button>
+                        <span class="ft-alert-triangle"></span> <strong>¡Atención!</strong>
+                        <hr class="message-inner-separator" style="background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));">
+                        <p>El grupo de enfoque ya posee la cantidad de participantes especificada.</p>
+                    </div>
+                </div>
+                <h4 class="card-title">
+                    Resultados de pruebas
+                    <button id="go-back" class="btn btn-raised btn-primary float-right"
+                            [routerLink]="['/focus-group/management']">
+                        <i class="ft-arrow-left"></i>
+                        <span>
+                            Volver
+                        </span>
+                    </button>
+                </h4>
+                <p _ngcontent-c24="" class="mb-0">Estos participantes solicitaron participar dentro del grupo de enfoque. ¡Evalúa sus calificaciones y
+                    acepta a los que hayan cumplido con la espectativa!</p>
+                <p _ngcontent-c24="" class="mb-0">De la misma manera puedes rechazar a aquellos que lamentablemente no hayan cumplido con lo esperado.</p>
             </div>
             <div class="card-body">
                 <div class="card-block">
@@ -50,7 +70,7 @@
                                 </td>-->
                                 <td>
                                     <div *ngIf="testResult.focusGroup">
-                                        <a [routerLink]="['../focus-group', testResult.focusGroup?.id, 'view' ]">{{testResult.focusGroup?.passingGrade}}</a>
+                                        {{testResult.focusGroup?.passingGrade}}
                                     </div>
                                 </td>
                                 <td>

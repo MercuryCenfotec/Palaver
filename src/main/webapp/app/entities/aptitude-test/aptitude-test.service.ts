@@ -32,6 +32,10 @@ export class AptitudeTestService {
         return this.http.get<IAptitudeTest[]>(`${this.resourceUrl}/institution/${institutionId}`, { observe: 'response' });
     }
 
+    findAllAvailableByInstitution(institutionId: number): Observable<EntityArrayResponseType> {
+        return this.http.get<IAptitudeTest[]>(`${this.resourceUrl}/institution/available/${institutionId}`, { observe: 'response' });
+    }
+
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
         return this.http.get<IAptitudeTest[]>(this.resourceUrl, { params: options, observe: 'response' });
@@ -39,5 +43,9 @@ export class AptitudeTestService {
 
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    }
+
+    isInUse(testId: number): Observable<HttpResponse<boolean>> {
+        return this.http.get<boolean>(`${this.resourceUrl}/in-use/${testId}`, { observe: 'response' });
     }
 }

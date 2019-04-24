@@ -35,7 +35,7 @@ export const meetingRoute: Routes = [
         component: MeetingComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Meetings'
+            pageTitle: 'Reuniones'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -47,7 +47,7 @@ export const meetingRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Meetings'
+            pageTitle: 'Reuniones'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -59,7 +59,7 @@ export const meetingRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_GROUP'],
-            pageTitle: 'Meetings'
+            pageTitle: 'Reuniones'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -71,7 +71,7 @@ export const meetingRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Meetings'
+            pageTitle: 'Reuniones'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -86,7 +86,7 @@ export const meetingPopupRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Meetings'
+            pageTitle: 'Reuniones'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

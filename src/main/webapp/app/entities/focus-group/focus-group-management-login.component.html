@@ -2,29 +2,47 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
+                <div *ngIf="authenticationError===true">
+                    <div id="dangerErrorAlert" #dangerErrorAlert class="popupunder alert alert-dismissible custom-alert-danger">
+                        <button type="button" data-dismiss="alert" class="close" (click)="closeMe(dangerErrorAlert)">×</button>
+                        <span class="ft-x"></span> <strong>¡Error!</strong>
+                        <hr class="message-inner-separator" style="background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));">
+                        <p>¡Fallo al autentificar el código! Por favor asegúrese de que el código sea el correcto.</p>
+                    </div>
+                </div>
                 <div class="col-12 d-flex align-items-center justify-content-center">
-                    <div class="card gradient-indigo-purple text-center width-700">
+                    <div class="card text-center width-700">
                         <div class="card-body">
                             <div class="card-block">
-                                <h2 class="white">Ingrese su codigo de grupo</h2>
+                                <h2 class="">Ingrese su código de grupo</h2>
                                 <hr/>
                                 <form role="form" (ngSubmit)="login()">
-
-                                    <div class="alert alert-warning" *ngIf="authenticationError">
-                                        <strong>¡Fallo al autentificar el codigo!</strong> Por favor revise sus credenciales y
-                                        vuelva a intentar.
-                                    </div>
                                     <div class="form-group">
                                         <div class="col-md-12">
                                             <input type="text" class="form-control" name="code" id="code"
-                                                   placeholder="Codigo de grupo" required [(ngModel)]="code" [(ngModel)]="password" [(ngModel)]="username">
+                                                   placeholder="Código de grupo" required [(ngModel)]="code" [(ngModel)]="password" [(ngModel)]="username">
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div [ngbPopover]="popoverText"
+                                         triggers="mouseenter:mouseleave" popoverTitle="Código inválido."
+                                         *ngIf="code === undefined; else validRegisterBtn"
+                                         class="col-md-12">
+                                        <button type="submit"
+                                                [disabled]="true"
+                                                class="btn btn-primary btn-block btn-raised">Confirmar
+                                        </button>
+                                    </div>
+                                    <ng-template #popoverText>
+                                        <small class="display-block">Por favor, asegúrese de ingresar un código.
+                                        </small>
+                                    </ng-template>
+                                    <ng-template #validRegisterBtn>
                                         <div class="col-md-12">
-                                            <button [disabled]="code === undefined" type="submit" class="btn btn-pink btn-block btn-raised">Confirmar</button>
+                                            <button type="submit"
+                                                    class="btn btn-primary btn-block btn-raised">Confirmar
+                                            </button>
                                         </div>
-                                    </div>
+                                    </ng-template>
                                 </form>
                             </div>
                         </div>

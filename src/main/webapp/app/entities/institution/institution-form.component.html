@@ -1,16 +1,23 @@
 <div class="card">
     <div class="card-header">
-        <h2 class="card-title" id="jhi-institution-heading">Instituciones</h2>
+        <div *ngIf="success">
+            <div id="successAlert" #successAlert class="popupunder alert alert-dismissible custom-alert-success">
+                <button type="button" data-dismiss="alert" class="close" (click)="closeMe(successAlert)">×</button>
+                <span class="ft-check"></span> <strong>¡Felicidades!</strong>
+                <hr class="message-inner-separator" style="background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));">
+                <p>¡Su registro ha sido exitoso!</p>
+            </div>
+        </div>
     </div>
     <div class="card-body">
         <div class="px-3">
             <form class="form ng-untouched ng-pristine ng-valid" name="editForm" role="form" novalidate
-                  (ngSubmit)="save()" #editForm="ngForm">
+                  (ngSubmit)="save()" #editForm="ngForm" *ngIf="!success">
                 <div class="row justify-content-md-center">
                     <div class="col-md-6">
+                        <h2 class="card-title" id="jhi-institution-heading">Instituciones</h2>
                         <div class="form-body">
                             <h4 class="form-section"><i class="ft-user"></i>Registro</h4>
-                            <jhi-alert-error></jhi-alert-error>
                             <div class="form-group" [hidden]="!institution.id">
                                 <label for="id">ID</label>
                                 <input type="text" class="form-control" id="id" name="id"
@@ -21,7 +28,7 @@
                                 <input type="text" class="form-control" name="name" id="field_name"
                                        [(ngModel)]="institution.name" required #floatName="ngModel"/>
                                 <small class="form-text text-muted danger" *ngIf="!floatName.valid && (floatName.dirty ||
-                                 floatName.touched)">¡Nombre requerido!
+                                 floatName.touched)">Este campo es requerido.
                                 </small>
                             </div>
                             <div class="form-group">
@@ -30,24 +37,33 @@
                                           [(ngModel)]="institution.description" required #floatDescription="ngModel"
                                           [ngModelOptions]="{updateOn: 'blur'}"></textarea>
                                 <small class="form-text text-muted danger" *ngIf="!floatDescription.valid &&
-                                (floatDescription.dirty || floatDescription.touched)">¡Descripción requerida!
+                                (floatDescription.dirty || floatDescription.touched)">Este campo es requerido.
                                 </small>
                             </div>
-                            <!--<div class="form-group">
-                                <label class="form-control-label" for="field_logo">Logo</label>
-                                <input type="text" class="form-control" name="logo" id="field_logo"
-                                       [(ngModel)]="institution.logo" required #floatLogo="ngModel"/>
-                                <small class="form-text text-muted danger" *ngIf="!floatLogo.valid && (floatLogo.dirty ||
-                                 floatLogo.touched)">¡Logo requerido!
+                            <div class="form-group">
+                                <label class="form-control-label" for="image">Logo</label>
+
+                                <div class="custom-file center-block d-block">
+                                    <input type="file" class="form-control-file" id="image"
+                                           (change)="onFileChange($event)"
+                                           accept="image/x-png,image/jpeg" required>
+                                </div>
+                                <small class="form-text text-danger"
+                                       *ngIf="!validateImage()">Este campo es requerido.
                                 </small>
-                            </div>-->
+                            </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="field_telephone">Teléfono</label>
                                 <input type="text" class="form-control" name="telephone" id="field_telephone"
-                                       [(ngModel)]="institution.telephone" required #floatTelephone="ngModel"/>
-                                <small class="form-text text-muted danger" *ngIf="!floatTelephone.valid && (floatTelephone.dirty ||
-                                 floatTelephone.touched)">¡Telefono requerido!
-                                </small>
+                                       [(ngModel)]="institution.telephone" required #floatTelephone="ngModel" minlength="7"/>
+                                <div class="form-text text-muted danger" *ngIf="(floatTelephone.dirty || floatTelephone.touched) && floatTelephone.invalid">
+                                    <small class="form-text text-muted danger" *ngIf="floatTelephone.errors.required">
+                                        Este campo es requerido.
+                                    </small>
+                                    <small class="form-text text-danger" *ngIf="floatTelephone.errors.minlength">
+                                        Tu teléfono debe tener al menos 7 caracteres de largo.
+                                    </small>
+                                </div>
                             </div>
                             <!--<div class="form-group">
                                 <label class="form-control-label" for="field_membership">Membresía</label>
@@ -60,22 +76,67 @@
                                 </select>
                             </div>-->
                         </div>
-                        <div class="form-actions">
-                            <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
-                                    (click)="previousState()">
-                                <i class="ft-x"></i> Cancelar
-                            </button>
-                            <button class="btn btn-raised btn-primary" type="submit" id="save-entity"
-                                    [disabled]="editForm.form.invalid || isSaving">
-                                <i class="ft ft-file-text"></i> Registrar
-                            </button>
-
+                        <div class="row">
+                            <div class="col-auto">
+                                <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
+                                        (click)="previousState()">
+                                    <i class="ft-x"></i> Cancelar
+                                </button>
+                            </div>
+                            <div [ngbPopover]="popoverText"
+                                 triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido."
+                                 *ngIf="editForm.form.invalid || isSaving || !validateImage(); else validRegisterBtn"
+                                 class="col-auto">
+                                <button type="submit"
+                                        [disabled]="true"
+                                        class="btn btn-raised btn-primary">
+                                    <i class="ft ft-file-text"></i> Registrar
+                                </button>
+                            </div>
+                            <ng-template #popoverText>
+                                <small class="display-block">Por favor, asegúrese de que todos los campos estén completos.
+                                </small>
+                            </ng-template>
+                            <ng-template #validRegisterBtn>
+                                <div class="col-auto">
+                                    <button type="submit" id="save-entity"
+                                            class="btn btn-raised btn-primary">
+                                        <i class="ft ft-file-text"></i> Registrar
+                                    </button>
+                                </div>
+                            </ng-template>
                         </div>
                     </div>
 
                 </div>
             </form>
         </div>
+    </div>
+</div>
+
+<div *ngIf="success">
+    <div class="jumbotron text-xs-center" style="margin-left: 30px; margin-right: 30px;">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h1 class="display-3">¡Perfecto!</h1>
+        <p class="lead">Por favor <strong><a class="alert-link" (click)="login()">inicie sesión</a></strong> nuevamente.</p>
+        <hr>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
     </div>
 </div>
 

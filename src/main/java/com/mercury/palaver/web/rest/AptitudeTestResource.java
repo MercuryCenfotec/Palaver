@@ -71,7 +71,7 @@ public class AptitudeTestResource {
         if (aptitudeTest.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        AptitudeTest result = aptitudeTestRepository.save(aptitudeTest);
+        AptitudeTest result = aptitudeTestService.update(aptitudeTest);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, aptitudeTest.getId().toString()))
             .body(result);
@@ -110,7 +110,7 @@ public class AptitudeTestResource {
     @DeleteMapping("/aptitude-tests/{id}")
     public ResponseEntity<Void> deleteAptitudeTest(@PathVariable Long id) {
         log.debug("REST request to delete AptitudeTest : {}", id);
-        aptitudeTestRepository.deleteById(id);
+        aptitudeTestService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
@@ -120,7 +120,13 @@ public class AptitudeTestResource {
         return aptitudeTestService.findAllByInstitution(institutionId);
     }
 
-    @GetMapping("/aptitude-tests/is-in-use/{testId}")
+    @GetMapping("/aptitude-tests/institution/available/{institutionId}")
+    public List<AptitudeTest> getAllAvailableAptitudeTestsByInstitution(@PathVariable Long institutionId) {
+        log.debug("REST request to get all AptitudeTests");
+        return aptitudeTestService.findAllAvailableByInstitution(institutionId);
+    }
+
+    @GetMapping("/aptitude-tests/in-use/{testId}")
     public ResponseEntity<Boolean> isCancelable(@PathVariable Long testId) {
         return ResponseEntity.ok().body(aptitudeTestService.isInUse(testId));
     }

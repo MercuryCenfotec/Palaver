@@ -64,15 +64,12 @@ public class InstitutionResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/institutions")
-    public ResponseEntity<Institution> updateInstitution(@Valid @RequestBody Institution institution) throws URISyntaxException {
+    public void updateInstitution(@Valid @RequestBody Institution institution) throws URISyntaxException {
         log.debug("REST request to update Institution : {}", institution);
         if (institution.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         Institution result = institutionRepository.save(institution);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, institution.getId().toString()))
-            .body(result);
     }
 
     /**

@@ -14,7 +14,7 @@ export class FocusGroupDetailComponent implements OnInit {
     focusGroup: IFocusGroup;
     searchText;
 
-    isCancelable: boolean;
+    inProcess: boolean;
     constructor(
         protected activatedRoute: ActivatedRoute,
         private _clipboardService: ClipboardService,
@@ -30,7 +30,7 @@ export class FocusGroupDetailComponent implements OnInit {
             console.log(participants.body);
             this.focusGroup.participants = participants.body;
         });
-        this.validateCancelable();
+        this.isInProcess();
     }
 
     previousState() {
@@ -41,9 +41,9 @@ export class FocusGroupDetailComponent implements OnInit {
         this._clipboardService.copyFromContent(this.focusGroup.code);
     }
 
-    validateCancelable() {
-        this.focusGroupService.isCancelable(this.focusGroup.id).subscribe(data => {
-            this.isCancelable = data.body;
+    isInProcess() {
+        this.focusGroupService.isInProcess(this.focusGroup.id).subscribe(data => {
+            this.inProcess = data.body;
         });
     }
 }

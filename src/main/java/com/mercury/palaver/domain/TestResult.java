@@ -26,6 +26,10 @@ public class TestResult implements Serializable {
     @Column(name = "grade", nullable = false)
     private String grade;
 
+    @NotNull
+    @Column(name = "status", nullable = false)
+    private String status;
+
     @ManyToOne
     @JsonIgnoreProperties("testResults")
     private FocusGroup focusGroup;
@@ -54,6 +58,19 @@ public class TestResult implements Serializable {
 
     public void setGrade(String grade) {
         this.grade = grade;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public TestResult status(String status) {
+        this.status = status;
+        return this;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public FocusGroup getFocusGroup() {
@@ -108,6 +125,7 @@ public class TestResult implements Serializable {
         return "TestResult{" +
             "id=" + getId() +
             ", grade='" + getGrade() + "'" +
+            ", status='" + getStatus() + "'" +
             "}";
     }
 }

@@ -46,13 +46,15 @@ public class Institution implements Serializable {
     private UserApp user;
 
     @OneToMany(mappedBy = "institution")
-    @JsonIgnoreProperties("institution")
     private Set<AptitudeTest> aptitudeTests = new HashSet<>();
-
     @ManyToOne
     @JsonIgnoreProperties("institutions")
     private Membership membership;
 
+    @OneToMany(mappedBy = "institution")
+    private Set<FocusGroup> focusGroups = new HashSet<>();
+    @OneToMany(mappedBy = "institution")
+    private Set<Incentive> incentives = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -163,6 +165,56 @@ public class Institution implements Serializable {
 
     public void setMembership(Membership membership) {
         this.membership = membership;
+    }
+
+    public Set<FocusGroup> getFocusGroups() {
+        return focusGroups;
+    }
+
+    public Institution focusGroups(Set<FocusGroup> focusGroups) {
+        this.focusGroups = focusGroups;
+        return this;
+    }
+
+    public Institution addFocusGroup(FocusGroup focusGroup) {
+        this.focusGroups.add(focusGroup);
+        focusGroup.setInstitution(this);
+        return this;
+    }
+
+    public Institution removeFocusGroup(FocusGroup focusGroup) {
+        this.focusGroups.remove(focusGroup);
+        focusGroup.setInstitution(null);
+        return this;
+    }
+
+    public void setFocusGroups(Set<FocusGroup> focusGroups) {
+        this.focusGroups = focusGroups;
+    }
+
+    public Set<Incentive> getIncentives() {
+        return incentives;
+    }
+
+    public Institution incentives(Set<Incentive> incentives) {
+        this.incentives = incentives;
+        return this;
+    }
+
+    public Institution addIncentives(Incentive incentive) {
+        this.incentives.add(incentive);
+        incentive.setInstitution(this);
+        return this;
+    }
+
+    public Institution removeIncentives(Incentive incentive) {
+        this.incentives.remove(incentive);
+        incentive.setInstitution(null);
+        return this;
+    }
+
+    public void setIncentives(Set<Incentive> incentives) {
+        this.incentives = incentives;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

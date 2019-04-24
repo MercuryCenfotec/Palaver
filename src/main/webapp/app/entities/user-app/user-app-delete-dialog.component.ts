@@ -28,10 +28,9 @@ export class UserAppDeleteDialogComponent {
 
     confirmDelete(id: number) {
         this.userAppService.delete(id).subscribe(response => {
-            // this.userService.delete(this.userApp.user.login).subscribe(result=>{})
             this.eventManager.broadcast({
                 name: 'userAppListModification',
-                content: 'Deleted an userApp'
+                content: 'Se elimino el usuario'
             });
             this.activeModal.dismiss(true);
         });

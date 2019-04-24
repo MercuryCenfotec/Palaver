@@ -7,12 +7,14 @@ import { JhiEventManager } from 'ng-jhipster';
 import { PalaverTestModule } from '../../../test.module';
 import { TestQuestionDeleteDialogComponent } from 'app/entities/test-question/test-question-delete-dialog.component';
 import { TestQuestionService } from 'app/entities/test-question/test-question.service';
+import { ITestQuestion } from 'app/shared/model/test-question.model';
 
 describe('Component Tests', () => {
     describe('TestQuestion Management Delete Component', () => {
         let comp: TestQuestionDeleteDialogComponent;
         let fixture: ComponentFixture<TestQuestionDeleteDialogComponent>;
         let service: TestQuestionService;
+        let testQuestion: ITestQuestion;
         let mockEventManager: any;
         let mockActiveModal: any;
 
@@ -38,7 +40,7 @@ describe('Component Tests', () => {
                     spyOn(service, 'delete').and.returnValue(of({}));
 
                     // WHEN
-                    comp.confirmDelete(123);
+                    comp.confirmDelete(testQuestion);
                     tick();
 
                     // THEN

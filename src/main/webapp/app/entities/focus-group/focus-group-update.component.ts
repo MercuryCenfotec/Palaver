@@ -15,6 +15,7 @@ import { ICategory } from 'app/shared/model/category.model';
 import { CategoryService } from 'app/entities/category';
 import { IParticipant } from 'app/shared/model/participant.model';
 import { ParticipantService } from 'app/entities/participant';
+import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'jhi-focus-group-update',
@@ -41,8 +42,18 @@ export class FocusGroupUpdateComponent implements OnInit {
         protected institutionService: InstitutionService,
         protected categoryService: CategoryService,
         protected participantService: ParticipantService,
-        protected activatedRoute: ActivatedRoute
-    ) {}
+        protected activatedRoute: ActivatedRoute,
+        protected config: NgbDatepickerConfig
+    ) {
+        const current = new Date();
+        config.minDate = {
+            year: current.getFullYear(),
+            month: current.getMonth() + 1,
+            day: current.getDate()
+        };
+        config.maxDate = { year: 2099, month: 12, day: 31 };
+        config.outsideDays = 'hidden';
+    }
 
     ngOnInit() {
         this.isSaving = false;
@@ -131,5 +142,16 @@ export class FocusGroupUpdateComponent implements OnInit {
             }
         }
         return option;
+    }
+
+    validEndDate(): boolean {
+        return this.focusGroup.endDate > this.focusGroup.beginDate;
+    }
+
+    validateParticipantsAmount() {
+        if (this.focusGroup.participantsAmount < 5 || this.focusGroup.participantsAmount > 10) {
+            return false;
+        }
+        return true;
     }
 }

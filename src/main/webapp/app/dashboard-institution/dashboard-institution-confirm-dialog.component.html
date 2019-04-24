@@ -1,0 +1,18 @@
+<form name="confirmForm" (ngSubmit)="obtenerPlanPremium()">
+    <div class="modal-header">
+        <h4 class="modal-title">Confirmar acción</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <p id="jhi-confirm-membership-heading">¿Deseas pagar <strong>$20</strong> por la membresía premium?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-raised btn-warning mr-1" data-dismiss="modal" (click)="clear()">
+            <i class="ft-x"></i> Cancelar
+        </button>
+        <button id="jhi-confirm-membership" type="submit" class="btn btn-raised btn-success mr-1">
+            <i class="ft-alert-triangle"></i> Pagar
+        </button>
+    </div>
+</form>

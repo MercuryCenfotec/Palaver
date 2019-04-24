@@ -133,4 +133,22 @@ export class AptitudeTestFormComponent implements OnInit {
     validateQuestions(): boolean {
         return this.aptitudeTest.questions.length !== 0;
     }
+
+    repeatedQuestion(): boolean {
+        for (const question of this.aptitudeTest.questions) {
+            if (question.question === this.newQuestion.question) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    repeatedAnswer() {
+        for (const answer of this.newQuestion.answers) {
+            if (answer.answer === this.newAnswer.answer) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

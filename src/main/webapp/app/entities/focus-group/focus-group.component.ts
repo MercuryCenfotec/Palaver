@@ -31,7 +31,6 @@ export class FocusGroupComponent implements OnInit, OnDestroy {
     loadAll() {
         this.userService.getUserWithAuthorities().subscribe(user => {
             this.institutionService.getByUserUser(user.id).subscribe(institution => {
-                console.log(institution.body);
                 this.focusGroupService.findAllByInstitution(institution.body.id).subscribe(groups => {
                     this.focusGroups = groups.body;
                 });

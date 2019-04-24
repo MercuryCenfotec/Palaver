@@ -1,3 +1,4 @@
 id;name;identification_number;mail;address;rol;user_id
-1;Institution;1234567;institution@localhost;address;institution;5
-2;Participant;1234567;participant@localhost;address;participant;6
+1;palaveradmin;111111111;admin@localhost;palaver;admin;3
+2;Institution;1234567;institution@localhost;address;institution;5
+3;Participant;1234567;participant@localhost;address;participant;6

@@ -33,6 +33,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         this.success = false;
         this.registerAccount = {};
         this.userApp = new UserApp(null, '', '', '', '', '', null);
+        this.userApp.rol = 'participant';
     }
 
     ngAfterViewInit() {
@@ -42,6 +43,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     register() {
         if (this.registerAccount.password !== this.confirmPassword) {
             this.doNotMatch = 'ERROR';
+            this.error = null;
+            this.errorUserExists = null;
+            this.errorEmailExists = null;
         } else {
             this.doNotMatch = null;
             this.error = null;
@@ -80,4 +84,15 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
 
     previousState() {}
+
+    closeMe(target) {
+        this.doNotMatch = null;
+        this.error = null;
+        this.errorUserExists = null;
+        this.errorEmailExists = null;
+    }
+
+    closeMeSuccess(target) {
+        target.hidden = true;
+    }
 }

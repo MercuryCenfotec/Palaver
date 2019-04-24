@@ -15,4 +15,5 @@ import java.util.List;
 @Repository
 public interface TestResultRepository extends JpaRepository<TestResult, Long> {
     List<TestResult> findAllByFocusGroup(FocusGroup group);
+    List<TestResult> findAllByFocusGroupAndStatus(FocusGroup group, String status);
 }

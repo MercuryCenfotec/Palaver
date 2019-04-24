@@ -6,32 +6,138 @@
                 <h4 class="form-section"><i class="ft-info"></i>Información de la pregunta</h4>
                 <div class="form-group">
                     <label class="form-control-label" for="field_question">Pregunta</label>
-                    <input #floatQuestion="ngModel" type="text" class="form-control" name="question" id="field_question"
+                    <input #floatQuestion="ngModel" [class.ng-invalid]="repeatedQuestion()" type="text"
+                           class="form-control" name="question" id="field_question"
                            [(ngModel)]="testQuestion.question" required/>
                     <small class="form-text text-muted danger" *ngIf="!floatQuestion.valid && (floatQuestion.dirty ||
-                                 floatQuestion.touched)">¡Pregunta requerida!
+                                 floatQuestion.touched)">
+                        Este campo es requerido.
                     </small>
+                    <small class="form-text text-muted danger" *ngIf="repeatedQuestion()">
+                        No puede haber preguntas repetidas.
+                    </small>
+                </div>
+                <div id="addAnswersSection">
+                    <div>
+                        <h4 class="form-section"><i class="ft-plus"></i>Agregar respuestas</h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-9 col-9 col-md-9 col-lg-9">
+                            <input #floatAnswer="ngModel" type="text" class="form-control"
+                                   id="newAnswer" [class.ng-invalid]="repeatedNewAnswer()"
+                                   [(ngModel)]="newAnswer.answer"/>
+                            <small class="form-text text-muted danger" *ngIf="!floatAnswer.valid && (floatAnswer.dirty ||
+                                 floatAnswer.touched)">
+                                Este campo es requerido.
+                            </small>
+                            <small *ngIf="repeatedNewAnswer() && newAnswer.answer" class="form-text text-muted danger">
+                                No puede haber respuestas repetidas.
+                            </small>
+                        </div>
+                        <div class="col-sm-3 col-3 col-md-3 col-lg-3 text-right">
+                            <div *ngIf="!newAnswer.answer || repeatedNewAnswer(); else validCreateBtn"
+                                 [ngbPopover]="popoverInvalidAnswer"
+                                 triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido." class="col-auto">
+                                <button type="submit" id="new-entity-invalid" [disabled]="true"
+                                        class="btn btn-raised btn-success">
+                                    <i class="ft-plus"></i><span> Agregar</span>
+                                </button>
+                            </div>
+                            <ng-template #popoverInvalidAnswer>
+                                <small *ngIf="!newAnswer.answer">
+                                    Asegúrese de escribir una respuesta antes de agregarla.
+                                </small>
+                                <small *ngIf="repeatedNewAnswer()">
+                                    No puede haber respuestas repetidas.
+                                </small>
+                            </ng-template>
+                            <ng-template #validCreateBtn>
+                                <div class="col-auto">
+                                    <button type="button" id="create-answer-entity"
+                                            class="btn btn-raised btn-success"
+                                            (click)="addAnswerToQuestion()">
+                                        <i class="ft-plus"></i><span> Agregar</span>
+                                    </button>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
                 </div>
                 <div>
                     <h4 class="form-section"><i class="ft-info"></i>Información de las respuestas</h4>
                 </div>
-                <div class="form-group" *ngFor="let answer of testQuestion.answers; let i = index">
-                    <label class="form-control-label" for="field_answer{{answer.id}}">Respuesta #{{i}}</label>
-                    <input #floatAnswer="ngModel" type="text" class="form-control" name="answer{{i}}" id="field_answer{{answer.id}}"
-                           [(ngModel)]="answer.answer"/>
-                    <small class="form-text text-muted danger" *ngIf="!floatAnswer.valid && (floatAnswer.dirty ||
-                                 floatAnswer.touched)">¡Respuesta requerida!
-                    </small>
+                <div class="form-group" *ngFor="let answer of testQuestion.answers; let ind = index">
+                    <div *ngIf="answer.answer !== 'delete'">
+                        <label class="form-control-label" for="field_answer{{answer.id}}">Respuesta</label>
+                        <div class="row">
+                            <div class="col-sm-9 col-9 col-md-9 col-lg-9">
+                                <input type="text" class="form-control" name="answer{{ind}}"
+                                       id="field_answer{{answer.id}}"
+                                       [(ngModel)]="answer.answer"/>
+                                <small class="form-text text-muted danger" *ngIf="!answer.answer">
+                                    Este campo es requerido.
+                                </small>
+                                <small *ngIf="repeatedEditedAnswer(answer)" class="form-text text-muted danger">
+                                    No puede haber respuestas repetidas.
+                                </small>
+                            </div>
+                            <div class="col-sm-3 col-3 col-md-3 col-lg-3 text-right">
+                                <div *ngIf="!validAnswersLength(); else validDeleteBtn"
+                                     ngbPopover="Una pregunta tiene que tener como mínimo 2 respuestas."
+                                     triggers="mouseenter:mouseleave" popoverTitle="Mínimo alcanzado." class="col-auto">
+                                    <button type="submit" id="delete-entity-invalid" [disabled]="true"
+                                            class="btn btn-raised btn-warning">
+                                        <i class="ft-trash-2"></i><span> Eliminar</span>
+                                    </button>
+                                </div>
+                                <ng-template #validDeleteBtn>
+                                    <div class="col-auto">
+                                        <button type="button" id="delete-answer-entity"
+                                                (click)="removeAnswer(answer)"
+                                                class="btn btn-raised btn-danger">
+                                            <i class="ft-trash-2"></i><span> Eliminar</span>
+                                        </button>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div>
-                <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1" (click)="previousState()">
-                    <i class="ft-x"></i>&nbsp;<span> Cancelar</span>
-                </button>
-                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving"
-                        class="btn btn-raised btn-primary">
-                    <i class="ft-save"></i>&nbsp;<span> Editar</span>
-                </button>
+            <div class="row">
+                <div class="col-auto">
+                    <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
+                            (click)="previousState()">
+                        <i class="ft-x"></i><span> Cancelar</span>
+                    </button>
+                </div>
+                <div [ngbPopover]="popoverText"
+                     triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido."
+                     *ngIf="editForm.form.invalid || isSaving || repeatedQuestion() || repeatedNewAnswer() || repeatedAnswers(); else validRegisterBtn"
+                     class="col-auto">
+                    <button type="submit" id="save-entity-invalid" class="btn btn-raised btn-primary"
+                            [disabled]="true">
+                        <i class="ft-save"></i><span> Completar edición</span>
+                    </button>
+                </div>
+                <ng-template #popoverText>
+                    <small class="display-block" *ngIf="editForm.form.invalid">
+                        Asegúrese de que todos los campos estén completos.
+                    </small>
+                    <small class="display-block" *ngIf="repeatedQuestion()">
+                        Asegúrese de que no hayan preguntas repetidas.
+                    </small>
+                    <small class="display-block" *ngIf="repeatedAnswers() || repeatedNewAnswer()">
+                        Asegúrese de que no hayan respuestas repetidas.
+                    </small>
+                </ng-template>
+                <ng-template #validRegisterBtn>
+                    <div class="col-auto">
+                        <button type="submit" id="save-entity-valid" class="btn btn-raised btn-primary">
+                            <i class="ft-save"></i><span> Completar edición</span>
+                        </button>
+                    </div>
+                </ng-template>
             </div>
         </form>
     </div>

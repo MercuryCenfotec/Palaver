@@ -34,4 +34,8 @@ export class ActivateComponent implements OnInit {
     login() {
         this.modalRef = this.loginModalService.open();
     }
+
+    closeMe(target) {
+        target.hidden = true;
+    }
 }

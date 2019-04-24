@@ -34,13 +34,17 @@ public class Payment implements Serializable {
     @Column(name = "ammount", nullable = false)
     private Integer ammount;
 
+    @Column(name = "on_hold")
+    private Boolean onHold;
+
     @ManyToOne
     @JsonIgnoreProperties("payments")
     private BalanceAccount destinyAccount;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties("payments")
-    private BalanceAccount oringAccount;
+    private BalanceAccount originAccount;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -90,6 +94,19 @@ public class Payment implements Serializable {
         this.ammount = ammount;
     }
 
+    public Boolean isOnHold() {
+        return onHold;
+    }
+
+    public Payment onHold(Boolean onHold) {
+        this.onHold = onHold;
+        return this;
+    }
+
+    public void setOnHold(Boolean onHold) {
+        this.onHold = onHold;
+    }
+
     public BalanceAccount getDestinyAccount() {
         return destinyAccount;
     }
@@ -103,17 +120,17 @@ public class Payment implements Serializable {
         this.destinyAccount = balanceAccount;
     }
 
-    public BalanceAccount getOringAccount() {
-        return oringAccount;
+    public BalanceAccount getOriginAccount() {
+        return originAccount;
     }
 
-    public Payment oringAccount(BalanceAccount balanceAccount) {
-        this.oringAccount = balanceAccount;
+    public Payment originAccount(BalanceAccount balanceAccount) {
+        this.originAccount = balanceAccount;
         return this;
     }
 
-    public void setOringAccount(BalanceAccount balanceAccount) {
-        this.oringAccount = balanceAccount;
+    public void setOriginAccount(BalanceAccount balanceAccount) {
+        this.originAccount = balanceAccount;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -144,6 +161,7 @@ public class Payment implements Serializable {
             ", date='" + getDate() + "'" +
             ", description='" + getDescription() + "'" +
             ", ammount=" + getAmmount() +
+            ", onHold='" + isOnHold() + "'" +
             "}";
     }
 }

@@ -72,7 +72,7 @@ public class TestQuestionResource {
         if (testQuestion.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        TestQuestion result = testQuestionService.save(testQuestion);
+        TestQuestion result = testQuestionService.update(testQuestion);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, testQuestion.getId().toString()))
             .body(result);
@@ -111,7 +111,7 @@ public class TestQuestionResource {
     @DeleteMapping("/test-questions/{id}")
     public ResponseEntity<Void> deleteTestQuestion(@PathVariable Long id) {
         log.debug("REST request to delete TestQuestion : {}", id);
-        testQuestionRepository.deleteById(id);
+        testQuestionService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 

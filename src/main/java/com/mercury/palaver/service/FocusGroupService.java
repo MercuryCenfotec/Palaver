@@ -1,8 +1,7 @@
 package com.mercury.palaver.service;
 
-import com.mercury.palaver.domain.FocusGroup;
-import com.mercury.palaver.domain.TestAnswerOption;
-import com.mercury.palaver.domain.TestQuestion;
+import com.mercury.palaver.domain.*;
+import com.mercury.palaver.repository.AptitudeTestRepository;
 import com.mercury.palaver.repository.FocusGroupRepository;
 import com.mercury.palaver.repository.TestAnswerOptionRepository;
 import com.mercury.palaver.service.util.DateUtil;
@@ -20,29 +19,37 @@ public class FocusGroupService {
     private final TestAnswerOptionRepository testAnswerOptionRepo;
     private final FocusGroupRepository focusGroupRepo;
     private final UserService userService;
+    private final AptitudeTestService aptitudeTestService;
+    private final AptitudeTestRepository aptitudeTestRepo;
+    private final PaymentService paymentService;
 
-    public FocusGroupService(TestAnswerOptionRepository testAnswerOptionRepo, FocusGroupRepository focusGroupRepo, UserService userService) {
+    public FocusGroupService(TestAnswerOptionRepository testAnswerOptionRepo,
+                             FocusGroupRepository focusGroupRepo,
+                             UserService userService,
+                             AptitudeTestService aptitudeTestService,
+                             PaymentService paymentService,
+                             AptitudeTestRepository aptitudeTestRepo) {
         this.testAnswerOptionRepo = testAnswerOptionRepo;
         this.focusGroupRepo = focusGroupRepo;
         this.userService = userService;
+        this.aptitudeTestService = aptitudeTestService;
+        this.aptitudeTestRepo = aptitudeTestRepo;
+        this.paymentService = paymentService;
     }
 
     public FocusGroup save(FocusGroup group) {
         String code = MD5.getMd5(group.getName() + DateUtil.getDate());
         userService.registerGroupManagementUser(code);
         group.setCode(code);
-        group = focusGroupRepo.save(group);
-        if (group.getAptitudeTest() != null) {
-            for (TestQuestion question : group.getAptitudeTest().getQuestions()) {
-                for (TestAnswerOption answer : question.getAnswers()) {
-                    if (answer.isDesired()) testAnswerOptionRepo.save(answer);
-                }
-            }
-        }
-        return group;
+        if (group.getAptitudeTest() != null) processAptitudeTest(group);
+        Payment groupPayment = new Payment();
+        groupPayment.setAmmount((group.getParticipantsAmount() * 25000) + 30000);
+        groupPayment.setDescription("Pago por grupo - " + group.getName() + "_" + group.getCode());
+        paymentService.saveFocusGroupPayment(groupPayment, group.getInstitution().getUser().getId());
+        return focusGroupRepo.save(group);
     }
 
-    public boolean isCancelable(Long groupId) {
+    public boolean isInProcess(Long groupId) {
         Optional<FocusGroup> opt = focusGroupRepo.findById(groupId);
         if (opt.isPresent()) {
             FocusGroup group = opt.get();
@@ -52,5 +59,47 @@ public class FocusGroupService {
             return true;
         }
         return false;
+    }
+
+    public boolean testIsAvailable(Long testId) {
+        AptitudeTest test = new AptitudeTest();
+        test.setId(testId);
+        Optional<FocusGroup> opt = focusGroupRepo.findByAptitudeTest(test);
+        return !opt.isPresent();
+    }
+
+    private void processAptitudeTest(FocusGroup group) {
+        if (!aptitudeTestService.testIsAvailable(group.getAptitudeTest().getId())) {
+            group.getAptitudeTest().setName("Copia - " + group.getAptitudeTest().getName());
+            group.setAptitudeTest(aptitudeTestService.clone(group.getAptitudeTest()));
+        } else {
+            for (TestQuestion question : group.getAptitudeTest().getQuestions()) {
+                for (TestAnswerOption answer : question.getAnswers()) {
+                    if (answer.isDesired()) testAnswerOptionRepo.save(answer);
+                }
+            }
+        }
+    }
+
+    public FocusGroup finishFocusGroup(Long groupId) {
+        FocusGroup group = focusGroupRepo.findById(groupId).get();
+        if (group.getAptitudeTest() != null) {
+            cleanTestAnswers(group);
+            group.setAptitudeTest(null);
+        }
+        paymentService.processParticipantsPayment(group);
+        group.setMeetingIsDone(true);
+        return focusGroupRepo.save(group);
+    }
+
+    public void cleanTestAnswers(FocusGroup group) {
+        for (TestQuestion question : group.getAptitudeTest().getQuestions()) {
+            for (TestAnswerOption answer : question.getAnswers()) {
+                if (answer.isDesired()) {
+                    answer.setDesired(false);
+                    testAnswerOptionRepo.save(answer);
+                }
+            }
+        }
     }
 }

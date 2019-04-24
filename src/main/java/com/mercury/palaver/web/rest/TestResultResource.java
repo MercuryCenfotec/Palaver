@@ -118,4 +118,12 @@ public class TestResultResource {
         group.setId(groupId);
         return testResultRepository.findAllByFocusGroup(group);
     }
+
+    @GetMapping("/test-results/focus-group/{groupId}/{status}")
+    public List<TestResult> getAllTestResultsByStatus(@PathVariable("groupId") Long groupId, @PathVariable("status") String status) {
+        log.debug("REST request to get all TestResults by status");
+        FocusGroup group = new FocusGroup();
+        group.setId(groupId);
+        return testResultRepository.findAllByFocusGroupAndStatus(group, status);
+    }
 }

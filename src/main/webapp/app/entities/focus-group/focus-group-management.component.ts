@@ -11,6 +11,12 @@ import { filter, map } from 'rxjs/operators';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ClipboardService } from 'ngx-clipboard';
 import * as moment from 'moment';
+import { BanService } from 'app/entities/ban';
+import { Ban, IBan } from 'app/shared/model/ban.model';
+import { NotificationService } from 'app/entities/notification';
+import { Notification } from 'app/shared/model/notification.model';
+import { JhiAlertService } from 'ng-jhipster';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
     selector: 'jhi-focus-group-management',
@@ -21,6 +27,7 @@ export class FocusGroupManagementComponent implements OnInit {
     participants: Participant[];
     participant: IParticipant;
     focusGroup: IFocusGroup;
+    ban = new Ban(null, '', '', null, null, null);
     searchText;
 
     constructor(
@@ -29,20 +36,46 @@ export class FocusGroupManagementComponent implements OnInit {
         protected focusGroupService: FocusGroupService,
         protected meetingsService: MeetingService,
         protected participantService: ParticipantService,
-        protected modalService: NgbModal
-    ) {}
+        protected modalService: NgbModal,
+        protected banService: BanService,
+        protected notificationService: NotificationService,
+        protected jhiAlertService: JhiAlertService,
+        protected router: Router
+    ) {
+        router.events.subscribe(event => {
+            if (event instanceof NavigationEnd) {
+                if (event.url === '/focus-group/management') {
+                    this.ngOnInit();
+                }
+            }
+        });
+    }
 
     ngOnInit() {
+        this.meeting = null;
         this.userService.getUserWithAuthorities().subscribe(user => {
-            this.focusGroupService.findByCode(user.login).subscribe(data => {
-                this.focusGroup = data.body;
-                this.participantService.findByFocusGroup(data.body.id).subscribe(participants => {
-                    this.focusGroup.participants = participants.body;
-                });
-                this.meetingsService.findByGroupId(data.body.id).subscribe(meetings => {
-                    this.meeting = meetings.body.length ? meetings.body[0] : null;
-                });
-            });
+            this.focusGroupService
+                .query()
+                .pipe(
+                    filter((res: HttpResponse<IFocusGroup[]>) => res.ok),
+                    map((res: HttpResponse<IFocusGroup[]>) => res.body)
+                )
+                .subscribe(
+                    (res: IFocusGroup[]) => {
+                        for (let i = 0; i < res.length; i++) {
+                            if (res[i].code === user.login) {
+                                this.focusGroup = res[i];
+                                this.meetingsService.findByGroupId(this.focusGroup.id).subscribe(meetings => {
+                                    this.meeting = meetings.body.length ? meetings.body[0] : null;
+                                });
+                                if (this.focusGroup.meetingIsDone) {
+                                    this.router.navigate(['/', 'focus-group', 'finished']);
+                                }
+                            }
+                        }
+                    },
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
         });
     }
 
@@ -82,19 +115,59 @@ export class FocusGroupManagementComponent implements OnInit {
                 this.focusGroup.participants.splice(i, 1);
             }
         }
+        this.ban.reason = input.value;
+        this.ban.focusGroup = this.focusGroup;
+        this.ban.participant = this.participant;
 
-        this.focusGroupService.update(this.focusGroup).subscribe(data => {
-            this.ngOnInit();
-            this.ngOnInit();
+        this.banService.create(this.ban).subscribe(newBan => {
+            this.focusGroupService.refundParticipantAmount(this.focusGroup).subscribe(data => {
+                const newNotification = new Notification(
+                    null,
+                    this.participant.user.user.id.toString(),
+                    'GroupExpulsion',
+                    false,
+                    newBan.body.id
+                );
+                this.notificationService.create(newNotification).subscribe(createdNoti => {
+                    this.ngOnInit();
+                });
+            });
         });
     }
 
     checkDate() {
-        return (
-            this.meeting.date.toDate().getDate() ===
-            moment()
-                .toDate()
-                .getDate()
-        );
+        if (this.meeting === null) {
+            return;
+        } else {
+            return (
+                this.meeting.date.toDate().getDate() ===
+                moment()
+                    .toDate()
+                    .getDate()
+            );
+        }
+    }
+
+    startMeeting() {
+        window.open(this.meeting.callURL);
+        this.focusGroupService.finishFocusGroup(this.focusGroup.id).subscribe(group => {
+            console.log(group);
+            this.router.navigate(['/', 'focus-group', 'finished']);
+        });
+
+        for (let i = 0; i < this.focusGroup.participants.length; i++) {
+            const newNotification = new Notification(
+                null,
+                this.focusGroup.participants[i].user.user.id.toString(),
+                'CallStart',
+                false,
+                this.meeting.id
+            );
+            this.notificationService.create(newNotification).subscribe(createdNoti => {});
+        }
+    }
+
+    protected onError(errorMessage: string) {
+        this.jhiAlertService.error(errorMessage, null, null);
     }
 }

@@ -62,4 +62,17 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
     login() {
         this.modalRef = this.loginModalService.open();
     }
+
+    previousState() {
+        window.location.href = '';
+    }
+
+    closeMe(target) {
+        this.doNotMatch = null;
+        this.error = null;
+    }
+
+    closeMeSuccess(target) {
+        target.hidden = true;
+    }
 }

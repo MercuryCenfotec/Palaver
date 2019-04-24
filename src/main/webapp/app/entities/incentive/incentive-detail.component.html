@@ -1,39 +1,41 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <div *ngIf="incentive">
-            <h2><span>Incentive</span> {{incentive.id}}</h2>
-            <hr>
-            <jhi-alert-error></jhi-alert-error>
-            <dl class="row-md jh-entity-details">
-                <dt><span>Name</span></dt>
-                <dd>
-                    <span>{{incentive.name}}</span>
-                </dd>
-                <dt><span>Image</span></dt>
-                <dd>
-                    <span>{{incentive.image}}</span>
-                </dd>
-                <dt><span>Quantity</span></dt>
-                <dd>
-                    <span>{{incentive.quantity}}</span>
-                </dd>
-                <dt><span>Description</span></dt>
-                <dd>
-                    <span>{{incentive.description}}</span>
-                </dd>
-            </dl>
-
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
-            </button>
-
-            <button type="button"
-                    [routerLink]="['/incentive', incentive.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
-            </button>
+<div class="row match-height">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="px-3">
+                    <div class="row justify-content-md-center">
+                        <div class="col-md-6">
+                            <div *ngIf="incentive">
+                                <h4 class="text-bold-500 primary"><i class="ft-package"></i> Información del incentivo</h4>
+                                <hr>
+                                <div class="card-block">
+                                    <div class="mb-3">
+                                        <span class="text-bold-500 primary">Nombre</span>
+                                        <span class="display-block overflow-hidden">{{incentive.name}}</span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <span class="text-bold-500 primary">Cantidad</span>
+                                        <span class="display-block overflow-hidden">{{incentive.quantity}}</span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <span class="text-bold-500 primary">Descripción</span>
+                                        <span
+                                            class="display-block overflow-hidden">{{incentive.description}}</span>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-raised btn-info mr-1"
+                                        (click)="previousState()">
+                                    <i class="ft-chevron-left"></i> Atrás
+                                </button>
+                                <button type="button" [routerLink]="['/incentive', incentive.id, 'edit']"
+                                        class="btn btn-raised btn-success">
+                                    <i class="ft-edit"></i> Modificar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

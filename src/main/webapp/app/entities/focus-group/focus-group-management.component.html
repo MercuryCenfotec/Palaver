@@ -37,7 +37,7 @@
                             </ul>
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
-                            <a *ngIf="checkDate()" href="{{meeting.callURL}}"><i class="ft-video"></i> Iniciar llamada.</a>
+                            <a *ngIf="checkDate()" (click)="startMeeting()"><i class="ft-video"></i> Iniciar llamada.</a>
                         </div>
                     </div>
                     <hr>
@@ -63,11 +63,11 @@
         </div>
         <div class="row my-4 justify-content-between">
             <div class="input-group col-6">
-                <div class="input-group-prepend">
-                    <i class="input-group-text ft-search info" id="basic-addon1"></i>
-                    <input type="text" class="form-control" placeholder="Buscar por nombre..."
-                           [(ngModel)]="searchText"/>
-                </div>
+<!--                <div class="input-group-prepend">-->
+<!--                    <i class="input-group-text ft-search info" id="basic-addon1"></i>-->
+<!--                    <input type="text" class="form-control" placeholder="Buscar por nombre..."-->
+<!--                           [(ngModel)]="searchText"/>-->
+<!--                </div>-->
             </div>
             <div class="col-4">
                 <button class="btn btn-raised btn-primary float-right"
@@ -113,7 +113,7 @@
                        [(ngModel)]="searchText"/>
             </div>
             <div *ngIf="focusGroup.participants; else noParticipants">
-                <div *ngIf="(focusGroup.participants | participantFilter:searchText) as items" class="col-12 mb-3">
+                <div *ngIf="(focusGroup.participants | participantFilter:searchText) as items" class="col-12 mb-3 row">
                     <div *ngFor="let participant of items"
                          class="col-sm-12 col-12 col-md-8 col-lg-6 col-xl-6">
                         <div class="card shadow-lg">
@@ -123,7 +123,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="card-block text-center">
-                                    <h4 class="card-title">{{participant.user.user.firstName}} {{participant.user.user.lastName}}</h4>
+                                    <h4 class="card-title">{{participant.user.name}}</h4>
                                     <p class="category text-gray font-small-4">{{participant.user.mail}}</p>
                                     <a class="btn btn-lg gradient-pomegranate font-small-2 white p-2 mr-2 btn-hoverable"
                                        (click)="expulsion(participant, modalToDisplay)">Expulsar
@@ -147,7 +147,7 @@
                     </div>
                 </div>
                 <div *ngIf="items.length === 0" class="card-block">
-                    <span class="display-block overflow-hidden">No se encontraron resultados.</span>
+<!--                    <span class="display-block overflow-hidden">No se encontraron resultados.</span>-->
                 </div>
             </div>
         </div>
@@ -161,7 +161,6 @@
 
 
 <ng-template #modalToDisplay let-c="close" let-d="dismiss">
-    <div class="card">
         <div class="card-header">
             <h2 class="card-title" id="jhi-institution-heading">Expulsión de participante</h2>
         </div>
@@ -189,5 +188,4 @@
                 </form>
             </div>
         </div>
-    </div>
 </ng-template>

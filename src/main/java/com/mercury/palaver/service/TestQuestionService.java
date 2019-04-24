@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -40,5 +41,32 @@ public class TestQuestionService {
             testAnswerOptionRepo.save(answer);
         }
         return question;
+    }
+
+    public TestQuestion update(TestQuestion question) {
+        TestQuestion tempQuestion = new TestQuestion();
+        tempQuestion.setId(question.getId());
+        tempQuestion.setQuestion(question.getQuestion());
+        tempQuestion.setAptitudeTest(question.getAptitudeTest());
+        for (TestAnswerOption answer : question.getAnswers()) {
+            if (answer.getAnswer().equals("delete")) {
+                testAnswerOptionRepo.delete(answer);
+            } else {
+                tempQuestion.addAnswers(answer);
+            }
+        }
+        return save(tempQuestion);
+    }
+
+    public boolean delete(Long questionId) {
+        Optional<TestQuestion> opt = testQuestionRepo.findById(questionId);
+        if (opt.isPresent()) {
+            TestQuestion question = opt.get();
+            for (TestAnswerOption answer : testAnswerOptionRepo.findAllByTestQuestion(question))
+                testAnswerOptionRepo.delete(answer);
+            testQuestionRepo.delete(question);
+            return true;
+        }
+        return false;
     }
 }

@@ -29,6 +29,10 @@ export class AptitudeTestComponent implements OnInit, OnDestroy {
     ) {}
 
     loadByInstitution() {
+        this.loadAll();
+    }
+
+    loadAll() {
         this.userService.getUserWithAuthorities().subscribe(user => {
             this.institutionService.getByUserUser(user.id).subscribe(institution => {
                 this.aptitudeTestService.findAllByInstitution(institution.body.id).subscribe(aptitudeTests => {
@@ -36,21 +40,6 @@ export class AptitudeTestComponent implements OnInit, OnDestroy {
                 });
             });
         });
-    }
-
-    loadAll() {
-        this.aptitudeTestService
-            .query()
-            .pipe(
-                filter((res: HttpResponse<IAptitudeTest[]>) => res.ok),
-                map((res: HttpResponse<IAptitudeTest[]>) => res.body)
-            )
-            .subscribe(
-                (res: IAptitudeTest[]) => {
-                    this.aptitudeTests = res;
-                },
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
     }
 
     ngOnInit() {

@@ -1,0 +1,50 @@
+.lineArea .ct-series-a .ct-area {
+    fill-opacity: 0.7;
+    fill: url(#gradient) !important;
+}
+.lineArea .ct-series-b .ct-area {
+    fill: url(#gradient) !important;
+    fill-opacity: 0.9;
+}
+.lineArea .ct-line {
+    stroke-width: 0px;
+}
+.lineArea .ct-point {
+    stroke-width: 0px;
+}
+.ct-label {
+    font-size: 0.9rem;
+}
+.ct-series-a .ct-slice-donut-solid {
+    fill: #0cc27e;
+}
+.ct-series-b .ct-slice-donut-solid {
+    fill: #ef5350;
+}
+.ct-series-c .ct-slice-donut-solid {
+    fill: #ff8d60;
+}
+.ct-chart-donut .ct-label {
+    font-size: 20px;
+}
+// Bar Chart CSS Starts
+
+.BarChart .ct-series-a .ct-bar:nth-of-type(4n + 1) {
+    stroke: url(#gradient7);
+}
+.BarChart .ct-series-a .ct-bar:nth-of-type(4n + 2) {
+    stroke: url(#gradient5);
+}
+.BarChart .ct-series-a .ct-bar:nth-of-type(4n + 3) {
+    stroke: url(#gradient6);
+}
+.BarChart .ct-series-a .ct-bar:nth-of-type(4n + 4) {
+    stroke: url(#gradient4);
+}
+.BarChartShadow {
+    -webkit-filter: drop-shadow(0px 20px 8px rgba(0, 0, 0, 0.3));
+    filter: drop-shadow(
+        0px 20px 8px rgba(0, 0, 0, 0.3)
+    ); /* Same syntax as box-shadow, except
+                                                       for the spread property */
+}

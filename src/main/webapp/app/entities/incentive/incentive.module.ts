@@ -9,8 +9,11 @@ import {
     IncentiveDeletePopupComponent,
     IncentiveDeleteDialogComponent,
     incentiveRoute,
-    incentivePopupRoute
+    incentivePopupRoute,
+    IncentiveWarningDialogComponent
 } from './';
+import { IncentiveFormComponent } from 'app/entities/incentive/incentive-form.component';
+import { IncentiveFilterPipe } from 'app/entities/incentive/filter.pipe';
 
 const ENTITY_STATES = [...incentiveRoute, ...incentivePopupRoute];
 
@@ -21,9 +24,18 @@ const ENTITY_STATES = [...incentiveRoute, ...incentivePopupRoute];
         IncentiveDetailComponent,
         IncentiveUpdateComponent,
         IncentiveDeleteDialogComponent,
+        IncentiveDeletePopupComponent,
+        IncentiveFormComponent,
+        IncentiveFilterPipe,
+        IncentiveWarningDialogComponent
+    ],
+    entryComponents: [
+        IncentiveComponent,
+        IncentiveUpdateComponent,
+        IncentiveDeleteDialogComponent,
+        IncentiveWarningDialogComponent,
         IncentiveDeletePopupComponent
     ],
-    entryComponents: [IncentiveComponent, IncentiveUpdateComponent, IncentiveDeleteDialogComponent, IncentiveDeletePopupComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PalaverIncentiveModule {}

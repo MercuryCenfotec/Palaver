@@ -4,6 +4,8 @@ import com.mercury.palaver.PalaverApp;
 
 import com.mercury.palaver.domain.BalanceAccount;
 import com.mercury.palaver.repository.BalanceAccountRepository;
+import com.mercury.palaver.service.MailService;
+import com.mercury.palaver.service.PaymentService;
 import com.mercury.palaver.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -56,6 +58,11 @@ public class BalanceAccountResourceIntTest {
     private BalanceAccountRepository balanceAccountRepository;
 
     @Autowired
+    private MailService mailService;
+
+    private PaymentService paymentService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -77,7 +84,7 @@ public class BalanceAccountResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final BalanceAccountResource balanceAccountResource = new BalanceAccountResource(balanceAccountRepository);
+        final BalanceAccountResource balanceAccountResource = new BalanceAccountResource(balanceAccountRepository, mailService, paymentService);
         this.restBalanceAccountMockMvc = MockMvcBuilders.standaloneSetup(balanceAccountResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

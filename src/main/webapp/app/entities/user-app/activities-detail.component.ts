@@ -39,7 +39,7 @@ export class ActivitiesDetailComponent implements OnInit {
 
     actions: CalendarEventAction[] = [
         {
-            label: '<i class="ft ft-video"></i>',
+            label: '<i class="ft ft-video" hidden></i>',
             onClick: ({ event }: { event: CalendarEvent }): void => {}
         }
     ];
@@ -80,7 +80,7 @@ export class ActivitiesDetailComponent implements OnInit {
         }
     }
 
-    public goToGroup(event: CalendarEvent) {
+    goToGroup(event: CalendarEvent) {
         console.log(event);
         window.location.href = event.meta;
     }

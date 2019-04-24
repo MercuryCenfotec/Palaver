@@ -17,20 +17,24 @@ export class TestQuestionDeleteDialogComponent {
     constructor(
         protected testQuestionService: TestQuestionService,
         public activeModal: NgbActiveModal,
-        protected eventManager: JhiEventManager
+        protected eventManager: JhiEventManager,
+        protected router: Router
     ) {}
 
     clear() {
         this.activeModal.dismiss('cancel');
     }
 
-    confirmDelete(id: number) {
-        this.testQuestionService.delete(id).subscribe(response => {
+    confirmDelete(question: ITestQuestion) {
+        console.log(question);
+        this.testQuestionService.delete(question.id).subscribe(response => {
             this.eventManager.broadcast({
                 name: 'testQuestionListModification',
                 content: 'Deleted an testQuestion'
             });
             this.activeModal.dismiss(true);
+            console.log(question.aptitudeTest.id);
+            this.router.navigate(['/aptitude-test', question.aptitudeTest.id, 'edit']);
         });
     }
 }
@@ -52,13 +56,14 @@ export class TestQuestionDeletePopupComponent implements OnInit, OnDestroy {
                     backdrop: 'static'
                 });
                 this.ngbModalRef.componentInstance.testQuestion = testQuestion;
+                console.log(testQuestion);
                 this.ngbModalRef.result.then(
                     result => {
-                        this.router.navigate(['/test-question', { outlets: { popup: null } }]);
+                        // this.router.navigate(['/test-question', { outlets: { popup: null } }]);
                         this.ngbModalRef = null;
                     },
                     reason => {
-                        this.router.navigate(['/test-question', { outlets: { popup: null } }]);
+                        // this.router.navigate(['/test-question', { outlets: { popup: null } }]);
                         this.ngbModalRef = null;
                     }
                 );

@@ -95,6 +95,22 @@ import { RouterModule } from '@angular/router';
             {
                 path: 'focus-group',
                 loadChildren: './focus-group/focus-group.module#PalaverFocusGroupModule'
+            },
+            {
+                path: 'notification',
+                loadChildren: './notification/notification.module#PalaverNotificationModule'
+            },
+            {
+                path: 'ban',
+                loadChildren: './ban/ban.module#PalaverBanModule'
+            },
+            {
+                path: 'message',
+                loadChildren: './message/message.module#PalaverMessageModule'
+            },
+            {
+                path: 'chat',
+                loadChildren: './chat/chat.module#PalaverChatModule'
             }
             /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
         ])

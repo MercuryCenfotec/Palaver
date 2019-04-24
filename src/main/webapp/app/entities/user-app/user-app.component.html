@@ -13,7 +13,6 @@
             </div>
             <div class="card-body">
                 <div class="card-block">
-                    <jhi-alert></jhi-alert>
                     <div class="table-responsive" *ngIf="userApps">
 
                         <div _ngcontent-c6="" class="input-group">
@@ -28,10 +27,10 @@
                             <thead>
                             <tr>
                                 <!--<th><span></span></th>-->
-                                <th><span>Nombre usuario</span></th>
+                                <th><span>Nombre de usuario</span></th>
                                 <th><span>Nombre</span></th>
                                 <th><span>Identificación</span></th>
-                                <th><span>Correo electronico</span></th>
+                                <th><span>Correo electrónico</span></th>
                                 <th><span>Rol</span></th>
                                 <th><span>Activo</span></th>
                                 <th></th>
@@ -39,37 +38,39 @@
                             </thead>
                             <tbody>
                             <tr *ngFor="let userApp of userApps | filter:searchText; trackBy: trackId">
+                                <ng-container *ngIf="userApp.rol !== 'admin'">
+                                    <td>{{userApp.user?.login}}</td>
+                                    <td>{{userApp.name}}</td>
+                                    <td>{{userApp.identificationNumber}}</td>
+                                    <td>{{userApp.mail}}</td>
+                                    <td><p *ngIf="userApp.rol === 'institution'">Institución</p>
+                                        <p *ngIf="userApp.rol === 'participant'">Participante</p>
+                                        <p *ngIf="userApp.rol === 'subadmin'">Sub-administrador</p></td>
+                                    <td><p *ngIf="userApp.user.activated === true">Sí</p>
+                                        <p *ngIf="userApp.user.activated ===false">No</p></td>
+                                    <td>
+                                        <a class="info p-0" data-original-title="" title=""
+                                           [routerLink]="['/user-app', userApp.id, 'view' ]">
+                                            <i class="ft-eye font-medium-3 mr-2"></i>
+                                        </a>
+                                        <a class="success p-0" data-original-title="" title=""
+                                           [routerLink]="['/user-app', userApp.id, 'edit']">
+                                            <i class="ft-edit-2 font-medium-3 mr-2"></i>
+                                        </a>
+                                        <a class="danger p-0" data-original-title="" title=""
+                                           [routerLink]="['/', 'user-app', { outlets: { popup: userApp.id + '/delete'} }]"
+                                           replaceUrl="true"
+                                           queryParamsHandling="merge">
+                                            <i class="ft-x font-medium-3 mr-2"></i>
+                                        </a>
+                                    </td>
+                                </ng-container>
                                 <!--<td>
                                     <div class="custom-control custom-checkbox m-0">
                                         <input type="checkbox" class="custom-control-input" id="{{userApp.id}}">
                                         <label class="custom-control-label" for="{{userApp.id}}"></label>
                                     </div>
                                 </td>-->
-                                <td>{{userApp.user?.login}}</td>
-                                <td>{{userApp.name}}</td>
-                                <td>{{userApp.identificationNumber}}</td>
-                                <td>{{userApp.mail}}</td>
-                                <td><p *ngIf="userApp.rol === 'institution'">Institución</p>
-                                    <p *ngIf="userApp.rol === 'participant'">Participante</p>
-                                    <p *ngIf="userApp.rol === 'subadmin'">Sub-administrador</p></td>
-                                <td><p *ngIf="userApp.user.activated === true">Sí</p>
-                                    <p *ngIf="userApp.user.activated ===false">No</p></td>
-                                <td>
-                                    <a class="info p-0" data-original-title="" title=""
-                                       [routerLink]="['/user-app', userApp.id, 'view' ]">
-                                        <i class="ft-user font-medium-3 mr-2"></i>
-                                    </a>
-                                    <a class="success p-0" data-original-title="" title=""
-                                       [routerLink]="['/user-app', userApp.id, 'edit']">
-                                        <i class="ft-edit-2 font-medium-3 mr-2"></i>
-                                    </a>
-                                    <a class="danger p-0" data-original-title="" title=""
-                                       [routerLink]="['/', 'user-app', { outlets: { popup: userApp.id + '/delete'} }]"
-                                       replaceUrl="true"
-                                       queryParamsHandling="merge">
-                                        <i class="ft-x font-medium-3 mr-2"></i>
-                                    </a>
-                                </td>
                             </tr>
                             </tbody>
                         </table>

@@ -2,29 +2,42 @@
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
             <div class="row justify-content-md-center"></div>
-            <h2 id="jhi-focus-group-heading">Creación de grupos de enfoque</h2>
+            <h2 id="jhi-focus-group-heading">Grupo de enfoque</h2>
             <div>
-                <h4 class="form-section"><i class="ft-users"></i>Información</h4>
-                <div class="form-group" [hidden]="true">
-                    <label for="id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id"
-                           [(ngModel)]="focusGroup.id" readonly/>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_name">Nombre</label>
-                    <input #floatName="ngModel" type="text" class="form-control" name="name" id="field_name"
-                           [(ngModel)]="focusGroup.name" required/>
-                    <small class="form-text text-muted danger" *ngIf="!floatName.valid && (floatName.dirty ||
-                                 floatName.touched)">¡Nombre requerido!
-                    </small>
+                <h4 class="form-section"><i class="ft-info"></i>Información</h4>
+                <div class="row">
+                    <div class="col-sm-8 col-8 col-md-8 col-lg-8">
+                        <div class="form-group">
+                            <label class="form-control-label" for="field_name">Nombre</label>
+                            <input #floatName="ngModel" type="text" class="form-control" name="name" id="field_name"
+                                   [(ngModel)]="focusGroup.name" required/>
+                            <small class="form-text text-muted danger" *ngIf="!floatName.valid && (floatName.dirty ||
+                                 floatName.touched)">Este campo es requerido.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-12 col-md-12 col-lg-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="field_name">Cantidad de participantes</label>
+                            <input #floatAmount="ngModel" type="number" class="form-control" name="participantsAmount"
+                                   id="field_amount"
+                                   [(ngModel)]="focusGroup.participantsAmount" required (change)="loadIncentives()"/>
+                            <small class="form-text text-muted danger" *ngIf="!floatAmount.valid && (floatAmount.dirty ||
+                                 floatAmount.touched)">Este campo es requerido.
+                            </small>
+                            <small class="form-text text-muted danger" *ngIf="!validateParticipantsAmount()">
+                                La cantidad tiene que ser un numero entero mayor o igual a 4 y menor o igual a 12.
+                            </small>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_description">Descripción</label>
-                    <input #floatDescription="ngModel" type="text" class="form-control" name="description"
-                           id="field_description"
-                           [(ngModel)]="focusGroup.description" required/>
+                    <textarea #floatDescription="ngModel" type="text" class="form-control" name="description"
+                              id="field_description" [ngModelOptions]="{updateOn: 'blur'}"
+                              [(ngModel)]="focusGroup.description" required></textarea>
                     <small class="form-text text-muted danger" *ngIf="!floatDescription.valid && (floatDescription.dirty ||
-                                 floatDescription.touched)">¡Descripción requerida!
+                                 floatDescription.touched)">Este campo es requerido.
                     </small>
                 </div>
 
@@ -38,27 +51,31 @@
                                    required [readonly]="true"/>
                             <span class="input-group-append">
                                 <button type="button" class="btn btn-secondary" (click)="beginDateDp.toggle()"><fa-icon
-                                    [icon]="'calendar-alt'"></fa-icon></button>
+                                        [icon]="'calendar-alt'"></fa-icon></button>
                             </span>
                         </div>
                         <small class="form-text text-muted danger" *ngIf="!floatStartDate.valid && (floatStartDate.dirty ||
-                                 floatStartDate.touched)">¡Fecha de inicio requerida!
+                                 floatStartDate.touched)">Este campo es requerido.
                         </small>
                     </div>
                     <div class="form-group col-lg-6 col-md-6 col-sm-12">
                         <label class="form-control-label" for="field_endDate">Fecha de finalización estimada</label>
                         <div class="input-group">
                             <input #floatEndDate="ngModel" id="field_endDate" type="text" class="form-control"
-                                   name="endDate" ngbDatepicker
+                                   name="endDate" ngbDatepicker (change)="endDateSelected = true"
                                    #endDateDp="ngbDatepicker" [(ngModel)]="focusGroup.endDate"
                                    required [readonly]="true"/>
                             <span class="input-group-append">
                                 <button type="button" class="btn btn-secondary" (click)="endDateDp.toggle()"><fa-icon
-                                    [icon]="'calendar-alt'"></fa-icon></button>
+                                        [icon]="'calendar-alt'"></fa-icon></button>
                             </span>
                         </div>
                         <small class="form-text text-muted danger" *ngIf="!floatEndDate.valid && (floatEndDate.dirty ||
-                                 floatEndDate.touched)">¡Fecha de finalización requerida!
+                                 floatEndDate.touched)">Este campo es requerido.
+                        </small>
+                        <small class="form-text text-muted danger" *ngIf="!floatEndDate.valid && (floatEndDate.dirty ||
+                                 floatEndDate.touched) || !validEndDate()">
+                            La fecha de finalización tiene que ser posterior a la fecha inicial.
                         </small>
                     </div>
                 </div>
@@ -67,15 +84,53 @@
                     <fieldset class="form-group">
                         <label for="customSelect">Pruebas de aptitud</label>
                         <select [(ngModel)]="focusGroup.aptitudeTest" class="custom-select d-block w-100"
-                                id="customSelect" name="aptitudeTest">
-                            <option [ngValue]="null" >No utilizar prueba de aptitud.</option>
+                                id="customSelect" name="aptitudeTest" (change)="validateTest()">
+                            <option [ngValue]="null">No utilizar prueba de aptitud.</option>
                             <option *ngFor="let aptitudeTest of aptitudeTests"
                                     [ngValue]="aptitudeTest">{{aptitudeTest.name}}</option>
                         </select>
                     </fieldset>
                 </div>
+                <div class="col-xl-4 col-lg-4 col-md-4">
+                    <div *ngIf="focusGroup.aptitudeTest" class="form-group">
+                        <label class="form-control-label" for="field-grade">Nota mínima para participar</label>
+                        <input #floatGrade="ngModel" type="number" class="form-control"
+                               name="passing_grade" id="field-grade" maxlength="3"
+                               [(ngModel)]="focusGroup.passingGrade" required/>
+                        <small class="display-inline-block form-text text-muted danger" *ngIf="!floatGrade.valid && (floatGrade.dirty ||
+                                 floatGrade.touched)">Este campo es requerido.
+                        </small>
+                        <small class="display-inline-block form-text text-muted danger" *ngIf="!validatePassingGrade()">
+                            La nota tiene que ser un número positivo mayor que 0 y menor o igual a 100.
+                        </small>
+                    </div>
+                </div>
+                <h4 class="form-section"><i class="ft-box"></i>Incentivo</h4>
+                <div class="col-xl-12 col-lg-12 col-md-12">
+                    <fieldset class="form-group">
+                        <label for="customSelectIncentive">Incentivos</label>
+                        <select [(ngModel)]="focusGroup.incentive" class="custom-select d-block w-100"
+                                [disabled]="!isMember || focusGroup.participantsAmount === undefined"
+                                id="customSelectIncentive" name="incentive" (change)="validateIncentive()">
+                            <option [ngValue]="null" selected>No utilizar incentivo.</option>
+                            <option *ngFor="let incentive of incentives"
+                                    [ngValue]="incentive">{{incentive.name}}</option>
+                        </select>
+                        <small class="display-inline-block form-text text-muted info" *ngIf="!isMember">
+                            Esta funcion solo esta disponible para usuarios con membresia.
+                        </small>
+                        <small class="display-inline-block form-text text-muted info"
+                               *ngIf="isMember && focusGroup.participantsAmount === undefined || focusGroup.participantsAmount === 0">
+                            Debes ingresar una cantidad de participantes valida para seleccionar un incentivo.
+                        </small>
+                    </fieldset>
+                </div>
                 <div *ngIf="focusGroup.aptitudeTest" id="questionCardSection" class="row">
                     <h5 class="col-12 col-md-12 col-sm-12"><i class="ft-clipboard"></i> Preguntas</h5>
+                    <p _ngcontent-c24="" class="mb-0">De las preguntas mostradas a continuación, selecciona cada una de
+                        las respuestas que deseas que sean las esperadas que los participantes respondan. ¡Solo puedes
+                        seleccionar una respuesta preferida por pregunta!
+                    </p>
                     <hr>
                     <div class="card-block col-12">
                         <div id="question{{questionInd}}" class="card bg-blue-grey bg-lighten-5"
@@ -91,8 +146,8 @@
                                                name="desiredAnswerRadio{{question.id}}" class="custom-control-input"
                                                (change)="desiredAnswer(question, answer)">
                                         <label class="custom-control-label" for="answer{{answer.id}}"><span
-                                            class="display-block"><i
-                                            class="ft-minus"></i> {{answer.answer}}</span></label>
+                                                class="display-block"><i
+                                                class="ft-minus"></i> {{answer.answer}}</span></label>
                                     </div>
                                 </div>
                             </div>
@@ -100,15 +155,57 @@
                     </div>
                 </div>
             </div>
-            <div>
-                <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
-                        (click)="previousState()">
-                    <i class="ft-x"></i>&nbsp;<span> Cancelar</span>
-                </button>
-                <button type="submit" id="save-entity" class="btn btn-raised btn-primary"
-                        [disabled]="editForm.form.invalid || isSaving || !validateAnswers()">
-                    <i class="ft-save"></i>&nbsp;<span> Registrar</span>
-                </button>
+            <h4 class="form-section"><i class="ft-credit-card"></i>Costo</h4>
+            <div class="card col-xl-12 col-lg-12 col-md-12">
+                <div class="card-block row">
+                    <h4 class="col-xl-9 col-lg-9 col-md-9 col-sm-9">El costo del grupo de enfoque es de:</h4>
+                    <h4 *ngIf="!focusGroup.participantsAmount; else validParticipantAmount"
+                        class="col-xl-3 col-lg-3 col-md-3 col-sm-3 text-right card-title">25.000,00 CRC.</h4>
+                    <ng-template #validParticipantAmount>
+                        <h4 class="col-xl-3 col-lg-3 col-md-3 col-sm-3 text-right card-title">
+                            {{formatedCost}}.
+                        </h4>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-auto">
+                    <button type="button" id="cancel-save" class="btn btn-raised btn-warning mr-1"
+                            (click)="previousState()">
+                        <i class="ft-x"></i>&nbsp;<span> Cancelar</span>
+                    </button>
+                </div>
+                <div
+                        *ngIf="editForm.form.invalid ||  !validateAnswers() || !validEndDate() ||
+                     !validatePassingGrade() || !validateParticipantsAmount() || insufficientBalance(); else validEditBtn"
+                        [ngbPopover]="popoverText"
+                        triggers="mouseenter:mouseleave" popoverTitle="Formulario inválido." class="col-auto">
+                    <button type="submit" id="save-entity-invalid" [disabled]="true"
+                            class="btn btn-raised btn-primary">
+                        <i class="ft-save"></i>&nbsp;<span> Guardar</span>
+                    </button>
+                </div>
+                <ng-template #popoverText>
+                    <small *ngIf="editForm.form.invalid || !validateParticipantsAmount() || !validEndDate()"
+                           class="display-block">
+                        Por favor, asegúrese de que todos los campos estén completos.
+                    </small>
+                    <small *ngIf="!validatePassingGrade() || !validateAnswers()">
+                        Si está usando una prueba de aptitud, necesita asignar una nota mínima y marcar la respuesta
+                        deseada de cada pregunta.
+                    </small>
+                    <small class="display-block" *ngIf="insufficientBalance()">
+                        El balance de su cuenta no es suficiente para crear este grupo de enfoque.
+                    </small>
+                </ng-template>
+                <ng-template #validEditBtn>
+                    <div class="col-auto">
+                        <button type="submit" id="save-entity-valid" class="btn btn-raised btn-primary"
+                                [disabled]="isSaving">
+                            <i class="ft-save"></i>&nbsp;<span> Guardar</span>
+                        </button>
+                    </div>
+                </ng-template>
             </div>
         </form>
     </div>

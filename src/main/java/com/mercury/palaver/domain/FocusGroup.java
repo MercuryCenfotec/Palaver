@@ -47,8 +47,19 @@ public class FocusGroup implements Serializable {
     @Column(name = "passing_grade")
     private Integer passingGrade;
 
+    @Column(name = "participants_amount")
+    private Integer participantsAmount;
+
+    @Column(name = "status")
+    private String status;
+
+    @Column(name = "is_completed")
+    private Boolean isCompleted;
+
+    @Column(name = "meeting_is_done")
+    private Boolean meetingIsDone;
+
     @ManyToOne
-    @JsonIgnoreProperties("focusGroups")
     private Incentive incentive;
 
     @ManyToOne
@@ -70,6 +81,10 @@ public class FocusGroup implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties("focusGroups")
     private AptitudeTest aptitudeTest;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Meeting meeting;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -156,6 +171,58 @@ public class FocusGroup implements Serializable {
 
     public void setPassingGrade(Integer passingGrade) {
         this.passingGrade = passingGrade;
+    }
+
+    public Integer getParticipantsAmount() {
+        return participantsAmount;
+    }
+
+    public FocusGroup participantsAmount(Integer participantsAmount) {
+        this.participantsAmount = participantsAmount;
+        return this;
+    }
+
+    public void setParticipantsAmount(Integer participantsAmount) {
+        this.participantsAmount = participantsAmount;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public FocusGroup status(String status) {
+        this.status = status;
+        return this;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Boolean isIsCompleted() {
+        return isCompleted;
+    }
+
+    public FocusGroup isCompleted(Boolean isCompleted) {
+        this.isCompleted = isCompleted;
+        return this;
+    }
+
+    public void setIsCompleted(Boolean isCompleted) {
+        this.isCompleted = isCompleted;
+    }
+
+    public Boolean isMeetingIsDone() {
+        return meetingIsDone;
+    }
+
+    public FocusGroup meetingIsDone(Boolean meetingIsDone) {
+        this.meetingIsDone = meetingIsDone;
+        return this;
+    }
+
+    public void setMeetingIsDone(Boolean meetingIsDone) {
+        this.meetingIsDone = meetingIsDone;
     }
 
     public Incentive getIncentive() {
@@ -246,6 +313,19 @@ public class FocusGroup implements Serializable {
     public void setAptitudeTest(AptitudeTest aptitudeTest) {
         this.aptitudeTest = aptitudeTest;
     }
+
+    public Meeting getMeeting() {
+        return meeting;
+    }
+
+    public FocusGroup meeting(Meeting meeting) {
+        this.meeting = meeting;
+        return this;
+    }
+
+    public void setMeeting(Meeting meeting) {
+        this.meeting = meeting;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -278,6 +358,10 @@ public class FocusGroup implements Serializable {
             ", endDate='" + getEndDate() + "'" +
             ", code='" + getCode() + "'" +
             ", passingGrade=" + getPassingGrade() +
+            ", participantsAmount=" + getParticipantsAmount() +
+            ", status='" + getStatus() + "'" +
+            ", isCompleted='" + isIsCompleted() + "'" +
+            ", meetingIsDone='" + isMeetingIsDone() + "'" +
             "}";
     }
 }

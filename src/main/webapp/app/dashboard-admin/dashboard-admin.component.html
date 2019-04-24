@@ -1,0 +1,324 @@
+<!--Statistics cards Starts-->
+<div class="row pl-3 pr-3" *ngIf="admin">
+    <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <div class="card gradient-blackberry">
+            <div class="card-body">
+                <div class="card-block pt-2 pb-0">
+                    <div class="media">
+                        <div class="media-body white text-left" *ngIf="account">
+                            <h3 class="font-large-1 mb-0">{{account.balance | currency: 'CRC'}}</h3>
+                            <span>Balance</span>
+                        </div>
+                        <div class="media-body white text-left" *ngIf="!account">
+                            <h3 class="font-large-1 mb-0">₡0</h3>
+                            <span>Balance</span>
+                        </div>
+                        <div class="media-right white text-right">
+                            <i class="icon-pie-chart font-large-1"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="height-75 mb-2">
+                    <img class="w-100 mt-2"
+                         src="https://res.cloudinary.com/utilisimo/image/upload/v1554946647/graphCard_dxtfwr.png"
+                         alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <div class="card gradient-ibiza-sunset white">
+            <div class="card-body">
+                <div class="card-block pt-2 pb-0">
+                    <div class="media">
+                        <div class="media-body white text-left" *ngIf="participants">
+                            <h3 class="font-large-1 mb-0">{{participants.length}}</h3>
+                            <span>Participantes registrados</span>
+                        </div>
+                        <div class="media-body white text-left" *ngIf="!participants">
+                            <h3 class="font-large-1 mb-0">0</h3>
+                            <span>Participantes registrados</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="height-75 mb-2">
+                    <img class="w-100 mt-2"
+                         src="https://res.cloudinary.com/utilisimo/image/upload/v1554946647/graphCard_dxtfwr.png"
+                         alt="">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <div class="card gradient-green-tea">
+            <div class="card-body">
+                <div class="card-block pt-2 pb-0">
+                    <div class="media">
+                        <div class="media-body white text-left" *ngIf="institutions">
+                            <h3 class="font-large-1 mb-0">{{institutions.length}}</h3>
+                            <span>Instituciones registradas</span>
+                        </div>
+                        <div class="media-body white text-left" *ngIf="!institutions">
+                            <h3 class="font-large-1 mb-0">0</h3>
+                            <span>Instituciones registradas</span>
+                        </div>
+                        <div class="media-right white text-right">
+                            <i class="icon-graph font-large-1"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="height-75 mb-2">
+                    <img class="w-100 mt-2"
+                         src="https://res.cloudinary.com/utilisimo/image/upload/v1554946647/graphCard_dxtfwr.png"
+                         alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <div class="card gradient-pomegranate">
+            <div class="card-body">
+                <div class="card-block pt-2 pb-0">
+                    <div class="media">
+                        <div class="media-body white text-left" *ngIf="userApps">
+                            <h3 class="font-large-1 mb-0">{{userApps.length}}</h3>
+                            <span>Usuarios totales</span>
+                        </div>
+                        <div class="media-body white text-left" *ngIf="!userApps">
+                            <h3 class="font-large-1 mb-0">0</h3>
+                            <span>Usuarios totales</span>
+                        </div>
+                        <div class="media-right white text-right">
+                            <i class="icon-bulb font-large-1"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="height-75 mb-2">
+                    <img class="w-100 mt-2"
+                         src="https://res.cloudinary.com/utilisimo/image/upload/v1554946647/graphCard_dxtfwr.png"
+                         alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Statistics cards Ends-->
+
+<!--Gradient graph start-->
+<!--<div _ngcontent-c8="" class="row">-->
+    <!--<div _ngcontent-c8="" class="col-sm-12">-->
+        <!--<div _ngcontent-c8="" class="card shadow-lg mr-3 ml-3">-->
+            <!--<div _ngcontent-c8="" class="card-header"><h4 _ngcontent-c8="" class="card-title">GRUPOS DE ENFOQUE-->
+                <!--ANUALES</h4></div>-->
+            <!--<div _ngcontent-c8="" class="card-content">-->
+                <!--<div _ngcontent-c8="" class="card-body mr-2 ml-2 mb-4">-->
+                    <!--<div _ngcontent-c8="" class="chart-info mb-3 ml-2">-->
+                        <!--<span _ngcontent-c8="" class="gradient-mint d-inline-block rounded-circle mr-1 ml-2"-->
+                              <!--style="width:15px; height:15px;"></span>-->
+                        <!--Grupos creados-->
+                    <!--</div>-->
+                    <!--<div id="line-area" class="height-350 lineArea">-->
+                        <!--<x-chartist [data]="lineArea.data" [type]="lineArea.type" [options]="lineArea.options"-->
+                                    <!--[responsiveOptions]="lineArea.responsiveOptions" [events]="lineArea.events">-->
+                        <!--</x-chartist>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!--Gradient graph end-->
+
+<div class="row pr-3 pl-3" matchHeight="card">
+
+    <div class="col-xl-4 col-lg-12">
+        <div class="card shadow-lg">
+            <div class="card-header">
+                <h4 class="card-title">Usuarios</h4>
+            </div>
+            <div class="card-body">
+
+                <p class="font-medium-2 text-muted text-center">Cantidad de usuarios por tipo</p>
+                <div id="bar-chart" class="height-250 BarChartShadow BarChart">
+                    <x-chartist class="position-absolute" style="bottom: 20px; width: 101%" [data]="BarChart.data" [type]="BarChart.type" [options]="BarChart.options"
+                                [responsiveOptions]="BarChart.responsiveOptions" [events]="BarChart.events">
+                    </x-chartist>
+                </div>
+
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col text-center" *ngIf="participants">
+                            <span class="gradient-pomegranate d-block rounded-circle mx-auto mb-2" style="width:10px; height:10px;"></span>
+                            <span class="font-large-1 d-block mb-2">{{participants.length}}</span>
+                            <span>Participantes</span>
+                        </div>
+                        <div class="col text-center" *ngIf="!participants">
+                            <span class="gradient-pomegranate d-block rounded-circle mx-auto mb-2" style="width:10px; height:10px;"></span>
+                            <span class="font-large-1 d-block mb-2">0</span>
+                            <span>Participantes</span>
+                        </div>
+                        <div class="col text-center" *ngIf="institutions">
+                            <span class="gradient-green-tea d-block rounded-circle mx-auto mb-2" style="width:10px; height:10px;"></span>
+                            <span class="font-large-1 d-block mb-2">{{institutions.length}}</span>
+                            <span>Instituciones</span>
+                        </div>
+                        <div class="col text-center" *ngIf="!institutions">
+                            <span class="gradient-green-tea d-block rounded-circle mx-auto mb-2" style="width:10px; height:10px;"></span>
+                            <span class="font-large-1 d-block mb-2">0</span>
+                            <span>Instituciones</span>
+                        </div>
+                        <div class="col text-center" *ngIf="subadmins">
+                            <span class="gradient-blackberry d-block rounded-circle mx-auto mb-2" style="width:10px; height:10px;"></span>
+                            <span class="font-large-1 d-block mb-2">{{subadmins.length}}</span>
+                            <span>Subadministrador</span>
+                        </div>
+                        <div class="col text-center" *ngIf="!subadmins">
+                            <span class="gradient-blackberry d-block rounded-circle mx-auto mb-2" style="width:10px; height:10px;"></span>
+                            <span class="font-large-1 d-block mb-2">0</span>
+                            <span>Sub</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-8 col-lg-12 col-12">
+        <div class="card shadow-lg" style="height: 479px;">
+            <div class="card-header">
+                <h4 class="card-title cursor-pointer">Usuarios
+                </h4>
+            </div>
+            <div class="card-body" style="height: 300px; overflow-y: scroll">
+                <table class="table table-responsive-md text-center" *ngIf="userApps">
+                    <thead>
+                    <tr>
+                        <th><span>Nombre</span></th>
+                        <th><span>Identificación</span></th>
+                        <th><span>Correo electrónico</span></th>
+                        <th><span>Rol</span></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let user of userApps">
+                        <ng-container *ngIf="user.rol != 'admin'">
+                            <td>{{user.name}}</td>
+                            <td>{{user.identificationNumber}}</td>
+                            <td>{{user.mail}}</td>
+                            <td *ngIf="user.rol == 'participant'">
+                                <a class="btn btn-raised btn-round btn-primary gradient-blueberry" style="cursor: default;">Participante</a>
+                            </td>
+                            <td *ngIf="user.rol == 'institution'">
+                                <a class="btn btn-raised btn-round btn-primary gradient-purple-amber" style="cursor: default;">Institución</a>
+                            </td>
+                            <td *ngIf="user.rol == 'subadmin'">
+                                <a class="btn btn-raised btn-round btn-warning gradient-purple-love" style="cursor: default;">Subadministrador</a>
+                            </td>
+                        </ng-container>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div class="row pr-3 pl-3" matchHeight="card">-->
+    <!--<div class="col-xl-8 col-lg-12 col-12">-->
+        <!--<div class="card shadow-lg" style="height: 524px;">-->
+            <!--<div class="card-header">-->
+                <!--<h4 class="card-title cursor-pointer">Incentivos-->
+                    <!--<button id="jh-create-incentive" *ngIf="institution.membership.id == 2"-->
+                            <!--class="btn btn-raised btn-primary float-right"-->
+                            <!--[routerLink]="['/incentive/new']">-->
+                        <!--<i class="ft-plus"></i>-->
+                        <!--<span>-->
+                        <!--Registrar un nuevo incentivo-->
+                    <!--</span>-->
+                    <!--</button>-->
+                <!--</h4>-->
+            <!--</div>-->
+            <!--<div *ngIf="institution.membership.id == 2" class="card-body" style="height: 300px; overflow-y: scroll">-->
+                <!--<table class="table table-responsive-md text-center">-->
+                    <!--<thead>-->
+                    <!--<tr>-->
+                        <!--<th></th>-->
+                        <!--<th><span>Nombre</span></th>-->
+                        <!--<th><span>Cantidad</span></th>-->
+                        <!--<th><span>Descripción</span></th>-->
+                    <!--</tr>-->
+                    <!--</thead>-->
+                    <!--<tbody>-->
+                    <!--<tr *ngFor="let incentive of incentives">-->
+                        <!--<td><img class="media-object round-media" src="{{incentive.image}}"-->
+                                 <!--alt="Generic placeholder image" style="height: 75px;"/></td>-->
+                        <!--<td>{{incentive.name}}</td>-->
+                        <!--<td>{{incentive.quantity}}</td>-->
+                        <!--<td>{{incentive.description}}</td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                <!--</table>-->
+            <!--</div>-->
+            <!--<div *ngIf="institution.membership.id == 1" class="card-body" style="height: 300px; overflow-y: scroll">-->
+                <!--<img src="https://res.cloudinary.com/utilisimo/image/upload/v1555819726/blockedIncentive_depxi8.png"-->
+                     <!--alt="Incentivos bloqueados" class="w-100">-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div _ngcontent-c26="" class="col-lg-4 col-md-6 col-sm-12">-->
+        <!--<div _ngcontent-c25="" class="card row text-center shadow-lg">-->
+
+            <!--<div class="card-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">-->
+                <!--<h4 class="card-title cursor-pointer">Membresías</h4>-->
+            <!--</div>-->
+
+            <!--<div _ngcontent-c25="" class="col-12 p-0 rounded">-->
+                <!--<div _ngcontent-c25="" class="card-group shadow-lg rounded" style="margin: 18px 0 0 0;">-->
+
+                    <!--<div _ngcontent-c25="" class="card m-0 rounded-bottom"-->
+                         <!--style="box-shadow: 0 6px 0 0 rgba(0,0,0,.01), 0 15px 32px 0 rgba(0,0,0,.06);">-->
+                        <!--<div _ngcontent-c25="" class="card-content">-->
+                            <!--<div class="text-center">-->
+                                <!--<img _ngcontent-c25="" alt="Card image cap"-->
+                                     <!--class="card-img-top img-fluid width-80-per mt-3" src="../assets/img/GRATIS.png">-->
+                            <!--</div>-->
+                            <!--<div _ngcontent-c25="" class="card-body" style="padding: 1.5rem;">-->
+                                <!--<h4 _ngcontent-c25="" class="card-title">Básica</h4>-->
+                                <!--<p _ngcontent-c25="" class="card-text">-->
+                                    <!--La <strong>membresía básica</strong> otorga permiso de hacer uso básico de la-->
+                                    <!--aplicación.-->
+                                <!--</p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div _ngcontent-c25="" class="card-footer text-center">-->
+                            <!--<i class="btn ft-check font-medium-4 p-0"></i>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div _ngcontent-c25="" class="card m-0 rounded-bottom"-->
+                         <!--style="box-shadow: 0 6px 0 0 rgba(0,0,0,.01), 0 15px 32px 0 rgba(0,0,0,.06);">-->
+                        <!--<div _ngcontent-c25="" class="card-content">-->
+                            <!--<div class="text-center">-->
+                                <!--<img _ngcontent-c25="" alt="Card image cap"-->
+                                     <!--class="card-img-top img-fluid width-80-per mt-3" src="../assets/img/premium.png">-->
+                            <!--</div>-->
+                            <!--<div _ngcontent-c25="" class="card-body" style="padding: 1.5rem;">-->
+                                <!--<h4 _ngcontent-c25="" class="card-title">Premium</h4>-->
+                                <!--<p _ngcontent-c25="" class="card-text">-->
+                                    <!--Por ‎₡10.000, la <strong>membresía premium</strong> otorga el permiso extra de crear-->
+                                    <!--tus propios incentivos.-->
+                                <!--</p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div _ngcontent-c25="" class="card-footer text-center" id="footerPremium">-->
+                            <!--<a (click)="obtenerPlanPremium()" class="btn btn-flat btn-primary m-0">Obtener</a>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+

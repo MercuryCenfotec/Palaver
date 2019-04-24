@@ -1,8 +1,15 @@
 package com.mercury.palaver.web.rest;
+
 import com.mercury.palaver.domain.BalanceAccount;
+import com.mercury.palaver.domain.User;
 import com.mercury.palaver.repository.BalanceAccountRepository;
+import com.mercury.palaver.service.MailService;
+import com.mercury.palaver.service.PaymentService;
 import com.mercury.palaver.web.rest.errors.BadRequestAlertException;
 import com.mercury.palaver.web.rest.util.HeaderUtil;
+import com.stripe.Stripe;
+import com.stripe.exception.*;
+import com.stripe.model.Charge;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +20,8 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import java.util.List;
-import java.util.Optional;
+import java.text.NumberFormat;
+import java.util.*;
 
 /**
  * REST controller for managing BalanceAccount.
@@ -29,8 +36,16 @@ public class BalanceAccountResource {
 
     private final BalanceAccountRepository balanceAccountRepository;
 
-    public BalanceAccountResource(BalanceAccountRepository balanceAccountRepository) {
+    private final PaymentService paymentService;
+
+    private final MailService mailService;
+
+    public BalanceAccountResource(BalanceAccountRepository balanceAccountRepository,
+                                  MailService mailService,
+                                  PaymentService paymentService) {
         this.balanceAccountRepository = balanceAccountRepository;
+        this.mailService = mailService;
+        this.paymentService = paymentService;
     }
 
     /**
@@ -62,16 +77,63 @@ public class BalanceAccountResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/balance-accounts")
-    public ResponseEntity<BalanceAccount> updateBalanceAccount(@Valid @RequestBody BalanceAccount balanceAccount) throws URISyntaxException {
+    public void updateAccount(@Valid @RequestBody BalanceAccount account) throws URISyntaxException {
+        log.debug("REST request to update Institution : {}", account);
+        if (account.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        BalanceAccount result = balanceAccountRepository.save(account);
+    }
+
+    @PutMapping("/balance-accounts/{token}/{amount}")
+    public ResponseEntity<BalanceAccount> updateBalanceAccount(@Valid @RequestBody BalanceAccount balanceAccount, @PathVariable("token") String token, @PathVariable("amount") int amount) throws URISyntaxException {
         log.debug("REST request to update BalanceAccount : {}", balanceAccount);
         if (balanceAccount.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+
+        Stripe.apiKey = "sk_test_s2qDEcoQUSxQXRLehHfwlJYL00xHAbrFhK";
+        String paymentToken = token;
+
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("amount", amount);
+        params.put("currency", "crc");
+        params.put("description", "Recarga de cuenta interna.");
+        params.put("source", paymentToken);
+        try {
+            Charge charge = Charge.create(params);
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
+        } catch (InvalidRequestException e) {
+            e.printStackTrace();
+        } catch (APIConnectionException e) {
+            e.printStackTrace();
+        } catch (CardException e) {
+            e.printStackTrace();
+        } catch (APIException e) {
+            e.printStackTrace();
+        }
+
+        int newAmount = balanceAccount.getBalance() + (amount / 100);
+        balanceAccount.setBalance(newAmount);
         BalanceAccount result = balanceAccountRepository.save(balanceAccount);
+        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.GERMANY);
+        String currency = format.format((amount / 100));
+        currency = currency.substring(0, currency.length() - 5);
+        currency = "₡ " + currency;
+        mailService.sendPaymentEmail(balanceAccount.getUser().getUser(), currency);
+        paymentService.createPayment(balanceAccount, balanceAccount, "Recarga de cuenta interna.", (amount / 100), false);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, balanceAccount.getId().toString()))
             .body(result);
     }
+
+//    @GetMapping("balance-accounts/retrieve/{userId}/{cardNumber}/{amount}")
+//    public void retrieveAccountFunds(@PathVariable("userId") Long userId,
+//                                     @PathVariable("cardNumber") String cardNumber,
+//                                     @PathVariable("amount") String amount) {
+//        paymentService.retrieveAccountFunds(userId, cardNumber, amount);
+//    }
 
     /**
      * GET  /balance-accounts : get all the balanceAccounts.
@@ -97,6 +159,13 @@ public class BalanceAccountResource {
         return ResponseUtil.wrapOrNotFound(balanceAccount);
     }
 
+    @GetMapping("/balance-accounts/user-app/{id}")
+    public ResponseEntity<BalanceAccount> getBalanceAccountByUserId(@Valid @PathVariable Long id) {
+        log.debug("REST request to get BalanceAccount : {}", id);
+        Optional<BalanceAccount> balanceAccount = balanceAccountRepository.findByUserId(id);
+        return ResponseUtil.wrapOrNotFound(balanceAccount);
+    }
+
     /**
      * DELETE  /balance-accounts/:id : delete the "id" balanceAccount.
      *
@@ -108,5 +177,14 @@ public class BalanceAccountResource {
         log.debug("REST request to delete BalanceAccount : {}", id);
         balanceAccountRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/balance-accounts/user-app/user/{id}")
+    public ResponseEntity<BalanceAccount> getBalanceAccountByUserUserId(@Valid @PathVariable Long id) {
+        log.debug("REST request to get BalanceAccount : {}", id);
+        User user = new User();
+        user.setId(id);
+        Optional<BalanceAccount> balanceAccount = balanceAccountRepository.findByUser_User(user);
+        return ResponseUtil.wrapOrNotFound(balanceAccount);
     }
 }

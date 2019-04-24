@@ -1,4 +1,5 @@
 package com.mercury.palaver.web.rest;
+
 import com.mercury.palaver.domain.Incentive;
 import com.mercury.palaver.repository.IncentiveRepository;
 import com.mercury.palaver.web.rest.errors.BadRequestAlertException;
@@ -48,8 +49,8 @@ public class IncentiveResource {
         }
         Incentive result = incentiveRepository.save(incentive);
         return ResponseEntity.created(new URI("/api/incentives/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+                .body(result);
     }
 
     /**
@@ -69,8 +70,8 @@ public class IncentiveResource {
         }
         Incentive result = incentiveRepository.save(incentive);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, incentive.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, incentive.getId().toString()))
+                .body(result);
     }
 
     /**
@@ -82,6 +83,30 @@ public class IncentiveResource {
     public List<Incentive> getAllIncentives() {
         log.debug("REST request to get all Incentives");
         return incentiveRepository.findAll();
+    }
+
+    /**
+     * GET  /incentives/find_by_institution/:id : get the "id" of the incentive's institution.
+     *
+     * @param id the id of the institution of the incentive to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the incentive, or with status 404 (Not Found)
+     */
+    @GetMapping("/incentives/find_by_institution/{id}")
+    public List<Incentive> getIncentiveByInstitution(@PathVariable Long id) {
+        log.debug("REST request to get Incentive by institution id: {}", id);
+        return incentiveRepository.findAllByInstitution_Id(id);
+    }
+
+    /**
+     * GET  /incentives/find_by_institution/:id/:quantity : get the "id" of the incentive's institution.
+     *
+     * @param id the id of the institution of the incentive to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the incentive, or with status 404 (Not Found)
+     */
+    @GetMapping("/incentives/find_by_institution/{id}/{quantity}")
+    public List<Incentive> getIncentiveAndInstitutionAndQuatity(@PathVariable Long id, @PathVariable int quantity) {
+        log.debug("REST request to get Incentive by institution id and quantity: {}", id);
+        return incentiveRepository.findAllByInstitution_IdAndQuantityAfter(id, quantity);
     }
 
     /**

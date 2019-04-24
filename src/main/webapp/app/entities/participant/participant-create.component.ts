@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -13,38 +13,53 @@ import { ICategory } from 'app/shared/model/category.model';
 import { CategoryService } from 'app/entities/category';
 import { IFocusGroup } from 'app/shared/model/focus-group.model';
 import { FocusGroupService } from 'app/entities/focus-group';
-// import * as AWS from 'aws-sdk';
-import { IUser, UserService } from 'app/core';
+import { IUser, LoginModalService, LoginService, UserService } from 'app/core';
+import { NgbDatepickerConfig, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { BalanceAccountService } from 'app/entities/balance-account';
+import { BalanceAccount } from 'app/shared/model/balance-account.model';
+import { ImageService } from 'app/shared/util/image.service';
 
 @Component({
     selector: 'jhi-participant-create',
     templateUrl: './participant-create.component.html'
 })
 export class ParticipantCreateComponent implements OnInit {
-    public image;
-
     participant: IParticipant;
     isSaving: boolean;
     user: IUser;
     userApp: IUserApp;
     users: IUserApp[];
-
+    success: boolean;
+    balanceAccount = new BalanceAccount(null, 0, 0, 0, 'Cuenta interna', null);
     categories: ICategory[];
-
     focusgroups: IFocusGroup[];
     birthdateDp: any;
+    image: any;
+    modalRef: NgbModalRef;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
+        private loginService: LoginService,
         protected participantService: ParticipantService,
         protected userAppService: UserAppService,
+        protected router: Router,
         protected categoryService: CategoryService,
         protected focusGroupService: FocusGroupService,
         protected activatedRoute: ActivatedRoute,
-        protected userService: UserService
+        protected userService: UserService,
+        protected config: NgbDatepickerConfig,
+        private balanceService: BalanceAccountService,
+        protected imageService: ImageService,
+        protected loginModalService: LoginModalService
     ) {}
 
     ngOnInit() {
+        this.success = false;
+        // Deshabilitar fechas futuras
+        const currentDate = new Date();
+        this.config.maxDate = { year: currentDate.getFullYear() - 18, month: 12, day: 31 };
+        this.config.outsideDays = 'hidden';
+
         this.userService.getUserWithAuthorities().subscribe(data => {
             this.user = data;
             this.userAppService.findByUserId(this.user.id).subscribe(userAppData => {
@@ -97,7 +112,8 @@ export class ParticipantCreateComponent implements OnInit {
     }
 
     previousState() {
-        window.history.back();
+        window.location.href = '';
+        this.loginService.logout();
     }
 
     save() {
@@ -106,7 +122,13 @@ export class ParticipantCreateComponent implements OnInit {
             this.subscribeToSaveResponse(this.participantService.update(this.participant));
         } else {
             this.participant.user = this.userApp;
-            this.subscribeToSaveResponse(this.participantService.create(this.participant));
+            this.imageService.save(this.image).subscribe(
+                res => {},
+                url => {
+                    this.participant.picture = url.error.text;
+                    this.subscribeToSaveResponse(this.participantService.create(this.participant));
+                }
+            );
         }
     }
 
@@ -121,7 +143,14 @@ export class ParticipantCreateComponent implements OnInit {
 
     protected onSaveSuccess() {
         this.isSaving = false;
-        this.previousState();
+        this.userAppService.findByUserId(this.userApp.user.id).subscribe(newUser => {
+            this.balanceAccount.user = newUser;
+            this.balanceService.create(this.balanceAccount).subscribe(() => {
+                this.loginService.logout();
+                this.success = true;
+            });
+        });
+        // this.router.navigate(['/participant-home']);
     }
 
     protected onSaveError() {
@@ -155,28 +184,27 @@ export class ParticipantCreateComponent implements OnInit {
         return option;
     }
 
-    fileEvent(fileInput: any) {
-        /*
-        const file = fileInput.target.files[0];
+    onFileChange(event) {
+        if (event.target.files.length === 0) {
+            this.image = null;
+        } else {
+            this.image = event.target.files[0];
+        }
+    }
 
-        console.log(file);
+    validateImage() {
+        if (!this.image) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
-        AWS.config.region = 'us-east-1'; // Region
-        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-            IdentityPoolId: 'us-east-1:68b4abc4-89a0-4c98-b8ad-481d305b5eca'
-        });
+    closeMe(target) {
+        target.hidden = true;
+    }
 
-        const s3 = new AWS.S3({
-            apiVersion: '2006-03-01',
-            params: { Bucket: 'palaverapp' }
-        });
-
-        this.image = file.name;
-
-        s3.upload({ Key: file.name, Bucket: 'palaverapp', Body: file, ACL: 'public-read' }, function(err, data) {
-            if (err) {
-                console.log(err, 'there was an error uploading your file');
-            }
-        });*/
+    login() {
+        this.modalRef = this.loginModalService.open();
     }
 }

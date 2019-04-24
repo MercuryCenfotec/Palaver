@@ -1,5 +1,24 @@
 {
-    "name": "TestResult",
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "focusGroup",
+            "otherEntityName": "focusGroup",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "testResult",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "participant",
+            "otherEntityName": "participant",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "testResult",
+            "otherEntityRelationshipNameUndefined": false
+        }
+    ],
     "fields": [
         {
             "fieldName": "grade",
@@ -7,31 +26,21 @@
             "fieldValidateRules": [
                 "required"
             ]
-        }
-    ],
-    "relationships": [
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "focusGroup",
-            "otherEntityName": "focusGroup",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "testResult"
         },
         {
-            "relationshipType": "many-to-one",
-            "relationshipName": "participant",
-            "otherEntityName": "participant",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "testResult"
+            "fieldName": "status",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "changelogDate": "20190304115739",
-    "entityTableName": "test_result",
     "dto": "no",
-    "pagination": "no",
+    "searchEngine": false,
     "service": "no",
+    "entityTableName": "test_result",
+    "databaseType": "sql",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*"
+    "pagination": "no"
 }

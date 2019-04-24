@@ -33,6 +33,7 @@ export class SubadminFormComponent implements OnInit, AfterViewInit {
         this.success = false;
         this.registerAccount = {};
         this.userApp = new UserApp(null, '', '', '', '', '', null);
+        this.userApp.rol = 'subadmin';
     }
 
     ngAfterViewInit() {
@@ -84,5 +85,16 @@ export class SubadminFormComponent implements OnInit, AfterViewInit {
 
     previousState() {
         window.history.back();
+    }
+
+    closeMe(target) {
+        this.doNotMatch = null;
+        this.error = null;
+        this.errorUserExists = null;
+        this.errorEmailExists = null;
+    }
+
+    closeMeSuccess(target) {
+        target.hidden = true;
     }
 }

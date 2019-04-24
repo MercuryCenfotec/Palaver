@@ -21,6 +21,8 @@ import {
     FocusGroupTestDialogComponent,
     FocusGroupTestDialogPopupComponent
 } from 'app/entities/focus-group/focus-group-test-dialog.component';
+import { FocusGroupCloneTestComponent, FocusGroupCloneTestPopupComponent } from 'app/entities/focus-group/focus-group-clone-test.component';
+import { FocusGroupFinishedComponent } from 'app/entities/focus-group/focus-group-finished.component';
 
 const ENTITY_STATES = [...focusGroupRoute, ...focusGroupPopupRoute];
 
@@ -39,18 +41,24 @@ const ENTITY_STATES = [...focusGroupRoute, ...focusGroupPopupRoute];
         FocusGroupFilterPipe,
         ParticipantFilterPipe,
         FocusGroupTestDialogComponent,
-        FocusGroupTestDialogPopupComponent
+        FocusGroupTestDialogPopupComponent,
+        FocusGroupCloneTestComponent,
+        FocusGroupCloneTestPopupComponent,
+        FocusGroupFinishedComponent
     ],
     entryComponents: [
         FocusGroupComponent,
         FocusGroupUpdateComponent,
         FocusGroupDeleteDialogComponent,
         FocusGroupDeletePopupComponent,
+        FocusGroupCloneTestComponent,
+        FocusGroupCloneTestPopupComponent,
         FocusGroupTestDialogComponent,
         FocusGroupTestDialogPopupComponent,
         ParticipateComponent,
         FocusGroupManagementLoginComponent,
-        FocusGroupManagementComponent
+        FocusGroupManagementComponent,
+        FocusGroupFinishedComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
