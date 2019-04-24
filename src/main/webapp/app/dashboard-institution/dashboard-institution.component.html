@@ -263,7 +263,7 @@
 
 <div class="row pr-3 pl-3" matchHeight="card">
     <div class="col-xl-8 col-lg-12 col-12">
-        <div class="card shadow-lg" style="height: 524px;">
+        <div class="card shadow-lg" style="height: 550px;">
             <div class="card-header">
                 <h4 class="card-title cursor-pointer">Incentivos
                     <button id="jh-create-incentive" *ngIf="institution.membership.id == 2"
@@ -298,8 +298,15 @@
                 </table>
             </div>
             <div *ngIf="institution.membership.id == 1" class="card-body" style="height: 300px; overflow-y: scroll">
-                <img src="https://res.cloudinary.com/utilisimo/image/upload/v1555819726/blockedIncentive_depxi8.png"
-                     alt="Incentivos bloqueados" class="w-100">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                    <div class="hovereffect" style="height: 550px; width: 1100px; margin-bottom:20px;">
+                        <img class="img-responsive" src="https://100blackmen.org/wp-content/uploads/2016/09/Board-Meeting-Room_dark.jpg" alt="">
+                        <div class="overlay">
+                            <h2 style="font-size: 30px;">¡No disponible!</h2>
+                            <p style="font-size: 20px;">Lo sentimos necesitas membresía Premium para poder acceder a esta funcionalidad.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
