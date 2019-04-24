@@ -10,11 +10,11 @@ import { IUserApp } from 'app/shared/model/user-app.model';
 import { UserAppService } from 'app/entities/user-app';
 import { IMembership, Membership } from 'app/shared/model/membership.model';
 import { MembershipService } from 'app/entities/membership';
-import {IUser, LoginModalService, LoginService, UserService} from 'app/core';
+import { IUser, LoginModalService, LoginService, UserService } from 'app/core';
 import { BalanceAccountService } from 'app/entities/balance-account';
 import { BalanceAccount } from 'app/shared/model/balance-account.model';
 import { ImageService } from 'app/shared/util/image.service';
-import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'jhi-institution-form',

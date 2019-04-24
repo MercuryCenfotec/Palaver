@@ -183,7 +183,7 @@ export class NavbarComponent implements OnInit {
             for (let i = 0; i < jhiUser.authorities.length; i++) {
                 switch (jhiUser.authorities[i]) {
                     case 'ROLE_ADMIN':
-                        this.router.navigate(['']);
+                        this.router.navigate(['dashboard-admin']);
                         break;
                     case 'ROLE_PARTICIPANT':
                         this.router.navigate(['participant-home']);
