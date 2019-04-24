@@ -63,13 +63,13 @@ export class DashboardAdminComponent implements OnInit {
 
     loadInfo() {
         this.userApps.forEach(resp => {
-            if (resp.rol == 'participant') {
+            if (resp.rol === 'participant') {
                 this.participants.push(resp);
                 this.countPart += 1;
-            } else if (resp.rol == 'institution') {
+            } else if (resp.rol === 'institution') {
                 this.institutions.push(resp);
                 this.countInst += 1;
-            } else if (resp.rol == 'subadmin') {
+            } else if (resp.rol === 'subadmin') {
                 this.subadmins.push(resp);
                 this.countSub += 1;
             }
@@ -99,7 +99,7 @@ export class DashboardAdminComponent implements OnInit {
                     {
                         seriesBarDistance: 5,
                         axisX: {
-                            labelInterpolationFnc: function(value) {
+                            labelInterpolationFnc: value => {
                                 return value[0];
                             }
                         }
@@ -108,7 +108,7 @@ export class DashboardAdminComponent implements OnInit {
             ],
             events: {
                 created(data: any): void {
-                    var defs = data.svg.elem('defs');
+                    const defs = data.svg.elem('defs');
                     defs.elem('linearGradient', {
                         id: 'gradient4',
                         x1: 0,
@@ -176,7 +176,6 @@ export class DashboardAdminComponent implements OnInit {
                         });
                 },
                 draw(data: any): void {
-                    var barHorizontalCenter, barVerticalCenter, label, value;
                     if (data.type === 'bar') {
                         data.element.attr({
                             y1: 195,

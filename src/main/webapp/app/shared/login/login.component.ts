@@ -76,6 +76,10 @@ export class JhiLoginModalComponent implements AfterViewInit {
                                         break;
                                     case 'admin':
                                         this.router.navigate(['dashboard-admin']);
+                                        break;
+                                    case 'subadmin':
+                                        this.router.navigate(['ban']);
+                                        break;
                                 }
                             } else {
                                 switch (userApp.rol) {
@@ -88,6 +92,9 @@ export class JhiLoginModalComponent implements AfterViewInit {
                                         break;
                                     case 'admin':
                                         this.router.navigate(['/dashboard-admin']);
+                                        break;
+                                    case 'subadmin':
+                                        this.router.navigate(['/ban']);
                                         break;
                                 }
                             }

@@ -192,7 +192,7 @@ export class NavbarComponent implements OnInit {
                         this.router.navigate(['dashboard-institution']);
                         break;
                     case 'ROLE_SUBADMIN':
-                        this.router.navigate(['']);
+                        this.router.navigate(['/ban']);
                         break;
                     case 'ROLE_GROUP':
                         this.router.navigate(['focus-group/management']);

@@ -2,29 +2,49 @@
     <div _ngcontent-c24="" class="col-md-12">
         <div _ngcontent-c24="" class="card">
             <div _ngcontent-c24="" class="card-header">
-                <h4 _ngcontent-c24="" class="card-title" id="horz-layout-colored-controls">Sub-Admin</h4>
-                <p _ngcontent-c24="" class="mb-0">¡Registra un sub administrador por si necesitas ayuda para manejar
-                    ciertos aspectos de la aplicación!
-                </p>
-
-                <div class="alert alert-success" *ngIf="success">
-                    <strong>¡Su registro ha sido exitoso!</strong> Por favor revise su correo para verificar su cuenta.
+                <div *ngIf="success">
+                    <div id="successAlert" #successAlert class="popupunder alert alert-dismissible custom-alert-success">
+                        <button type="button" data-dismiss="alert" class="close" (click)="closeMeSuccess(successAlert)">×</button>
+                        <span class="ft-check"></span> <strong>¡Felicidades!</strong>
+                        <hr class="message-inner-separator" style="background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));">
+                        <p>¡Su registro ha sido exitoso!</p>
+                    </div>
                 </div>
 
-                <div class="alert alert-danger" *ngIf="error">
-                    <strong>¡Registro fallido!</strong> Por favor intente de nuevo.
+                <div *ngIf="error">
+                    <div id="dangerErrorAlert" #dangerErrorAlert class="popupunder alert alert-dismissible custom-alert-danger">
+                        <button type="button" data-dismiss="alert" class="close" (click)="closeMe(dangerErrorAlert)">×</button>
+                        <span class="ft-x"></span> <strong>¡Error!</strong>
+                        <hr class="message-inner-separator" style="background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));">
+                        <p>¡Registro fallido! Por favor intente de nuevo.</p>
+                    </div>
                 </div>
 
-                <div class="alert alert-danger" *ngIf="errorUserExists">
-                    <strong>¡El nombre de usuario ya se encuentra registrado!</strong> Por favor utilice otro.
+                <div *ngIf="errorUserExists">
+                    <div id="warningUserExistsAlert" #warningUserExistsAlert class="popupunder alert alert-dismissible custom-alert-warning">
+                        <button type="button" data-dismiss="alert" class="close" (click)="closeMe(warningUserExistsAlert)">×</button>
+                        <span class="ft-alert-triangle"></span> <strong>¡Atención!</strong>
+                        <hr class="message-inner-separator" style="background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));">
+                        <p>¡El nombre de usuario ya se encuentra registrado!<br>Por favor utilice otro.</p>
+                    </div>
                 </div>
 
-                <div class="alert alert-danger" *ngIf="errorEmailExists">
-                    <strong>¡El correo electrónico ya se encuentra en uso!</strong> Por favor utilice otro.
+                <div *ngIf="errorEmailExists">
+                    <div id="warningEmailExistsAlert" #warningEmailExistsAlert class="popupunder alert alert-dismissible custom-alert-warning">
+                        <button type="button" data-dismiss="alert" class="close" (click)="closeMe(warningEmailExistsAlert)">×</button>
+                        <span class="ft-alert-triangle"></span> <strong>¡Atención!</strong>
+                        <hr class="message-inner-separator" style="background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));">
+                        <p>¡El correo electrónico ya se encuentra en uso!<br>Por favor utilice otro.</p>
+                    </div>
                 </div>
 
-                <div class="alert alert-danger" *ngIf="doNotMatch">
-                    ¡La contraseña y la confirmación no concuerdan!
+                <div *ngIf="doNotMatch">
+                    <div id="warningDoNotMatchAlert" #warningDoNotMatchAlert class="popupunder alert alert-dismissible custom-alert-warning">
+                        <button type="button" data-dismiss="alert" class="close" (click)="closeMe(warningDoNotMatchAlert)">×</button>
+                        <span class="ft-alert-triangle"></span> <strong>¡Atención!</strong>
+                        <hr class="message-inner-separator" style="background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));">
+                        <p>¡La contraseña y la confirmación no concuerdan!<br>Por favor vuelve a intentarlo.</p>
+                    </div>
                 </div>
             </div>
             <div _ngcontent-c24="" class="card-body">
@@ -32,6 +52,10 @@
                     <form class="form orm-horizontal ng-untouched ng-pristine ng-valid" name="form" role="form"
                           (ngSubmit)="register()" #registerForm="ngForm"
                           *ngIf="!success">
+                        <h4 _ngcontent-c24="" class="card-title" id="horz-layout-colored-controls">Sub-Admin</h4>
+                        <p _ngcontent-c24="" class="mb-0">¡Registra un sub administrador por si necesitas ayuda para manejar
+                            ciertos aspectos de la aplicación!
+                        </p>
                         <div _ngcontent-c24="" class="form-body">
                             <h4 _ngcontent-c24="" class="form-section">
                                 <i _ngcontent-c24="" class="ft-mail"></i>
@@ -254,3 +278,30 @@
         </div>
     </div>
 </div>
+
+<div *ngIf="success">
+    <div class="jumbotron text-xs-center" style="margin-left: 30px; margin-right: 30px;">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h1 class="display-3">¡Muchas gracias!</h1>
+        <p class="lead"><strong>Por favor revise su correo para verificar su cuenta.</strong></p>
+        <hr>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+</div>
+

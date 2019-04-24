@@ -6,7 +6,7 @@
                 <div class="card-block pt-2 pb-0">
                     <div class="media">
                         <div class="media-body white text-left" *ngIf="account">
-                            <h3 class="font-large-1 mb-0">₡{{account.balance}}</h3>
+                            <h3 class="font-large-1 mb-0">{{account.balance | currency: 'CRC'}}</h3>
                             <span>Balance</span>
                         </div>
                         <div class="media-body white text-left" *ngIf="!account">
